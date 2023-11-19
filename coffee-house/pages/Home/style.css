@@ -1,4 +1,60 @@
+:root {
+  --text-dark: #403F3D;
+  --text-light: #E1D4C9;
+  --text-accent: #B0907A;
+  --background-body: #E1D4C9;
+  --background-container: #665F55;
+  --background-backdrop: #403F3DCC;
+  --border-light: #C1B6AD;
+  --border-dark: #665F55;
+}
 
+.favorite {
+  padding: 0px 25px 100px;
+}
+
+.favorite__content {
+  display: flex;
+  padding: 100px;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 40px;
+  border-radius: 40px;
+  background: url('../../assets/images/img-hero.jpg') lightgray 50% / cover no-repeat;
+}
+
+.favorite__title {
+  max-width: 530px;
+  font-size: 72px;
+  line-height: 105%;
+  color: var(--background-body);
+}
+
+.favorite__title span {
+  color: var(--text-accent);
+  font-style: italic;
+}
+
+.favorite__text {
+  max-width: 530px;
+  line-height: 150%;
+  color: var(--background-body);
+}
+
+.favorite__button {
+  max-width: 200px;
+  display: inline-block;
+  border: none;
+  background-color: var(--background-body);
+  padding: 23px 78px;
+  border-radius: 100px;
+}
+
+.favorite__button:hover {
+  cursor: pointer;
+  /* padding: 23px 92px 23px 64px; */
+  background: var(--background-body) url('../../assets/icons/coffee-cup.svg') 125px 22px no-repeat;
+}
 
 
 
