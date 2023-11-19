@@ -1,0 +1,29 @@
+:root {
+  --text-dark: #403F3D;
+  --text-light: #E1D4C9;
+  --text-accent: #B0907A;
+  --background-body: #E1D4C9;
+  --background-container: #665F55;
+  --background-backdrop: #403F3DCC;
+  --border-light: #C1B6AD;
+  --border-dark: #665F55;
+}
+
+body {
+  font-family: "Inter";
+  color: var(--text-dark);
+}
+
+[class*="__container"] {
+  /* min-width: 14400px; + safety padding = 1310*/
+  max-width: 1470px;
+  margin: 0 auto;
+  padding: 0 15px; 
+}
+
+.site-wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+}
