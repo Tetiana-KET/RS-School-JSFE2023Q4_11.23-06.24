@@ -9,6 +9,10 @@
   --border-dark: #665F55;
 }
 
+.menu__link:hover.menu__link::after {
+  opacity: 1;
+}
+
 .favorite {
   padding: 0px 25px 100px;
 }
@@ -42,18 +46,31 @@
 }
 
 .favorite__button {
-  max-width: 200px;
-  display: inline-block;
+  width: 200px;
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
   border: none;
   background-color: var(--background-body);
-  padding: 23px 78px;
+  padding: 23px 64px;
   border-radius: 100px;
+  transition: all 1.5s;
+}
+
+.button-menu__icon {
+  position: absolute;
+  right: 32%;
+  visibility: hidden;
+}
+
+.favorite__button:hover .button-menu__icon {
+  visibility: visible;
 }
 
 .favorite__button:hover {
   cursor: pointer;
-  /* padding: 23px 92px 23px 64px; */
-  background: var(--background-body) url('../../assets/icons/coffee-cup.svg') 125px 22px no-repeat;
+  justify-content: flex-start;
 }
 
 
