@@ -36,6 +36,11 @@ h2 {
   line-height: 125%; 
 }
 
+[class*="__title"]>span {
+  color: var(--text-accent);
+  font-style: italic;
+}
+
 .site-wrapper {
   min-height: 100%;
   display: flex;
@@ -144,11 +149,6 @@ h2 {
 
 .offer__title {
   margin-bottom: 40px;
-}
-
-.offer__title>span {
-  color: var(--text-accent);
-  font-style: italic;
 }
 
 .offer__socials {
