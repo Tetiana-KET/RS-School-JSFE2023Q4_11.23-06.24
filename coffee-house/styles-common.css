@@ -96,19 +96,24 @@ h2 {
 }
 
 .nav__item::after,
-.menu__link::after {
+.menu__link::after,
+.contacts__link::after {
   opacity: 0;
   content: '';
   position: absolute;
   display: block;
-  width: 100%;	
+  width: 5%;	
   height: 2px;
   background-color: var(--text-dark);
   bottom: 0px;
+  right: 50%;
+  transition: all ease-in-out 0.3s;
 }
 
 .nav__item:hover.nav__item::after {
   opacity: 1;
+  width: 100%;
+  right: 0%;
 }
 
 .menu__link::after {
@@ -153,6 +158,19 @@ h2 {
   max-height: 60px;
 }
 
+.socials__item {
+  border-radius: 50%;
+  transition: all 0.8s;
+}
+
+.socials__item:hover svg path {
+  stroke: var(--text-dark);
+}
+
+.socials__item:hover {
+  background-color: var(--background-body)
+}
+
 .footer__contacts-info {
   flex: 0 1 46%;
   padding: 35px 0px 35px 4px;
@@ -175,6 +193,10 @@ h2 {
   line-height: 150%;
 }
 
+.contacts__link {
+  position: relative;
+}
+
 .contacts__link,
 .item-hours {
   padding-left: 27px;
@@ -191,3 +213,15 @@ h2 {
 .item-hours {
   background: url('./assets/icons/clock.svg') no-repeat;
 }
+
+.contacts__link::after {
+  background-color: var(--background-body);
+  bottom: -5px;
+}
+
+.contacts__link:hover.contacts__link::after {
+  opacity: 1;
+  width: 100%;
+  right: 0%;
+} 
+

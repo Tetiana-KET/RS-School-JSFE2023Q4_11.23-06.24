@@ -11,6 +11,8 @@
 
 .menu__link:hover.menu__link::after {
   opacity: 1;
+  width: 100%;
+  right: 0%;
 }
 
 .favorite {
@@ -53,7 +55,7 @@
   align-items: center;
   border: none;
   background-color: var(--background-body);
-  padding: 23px 64px;
+  padding: 21px 64px;
   border-radius: 100px;
   transition: all 1.5s;
 }
@@ -62,15 +64,31 @@
   position: absolute;
   right: 32%;
   visibility: hidden;
+  opacity: 0;
+}
+
+.button-menu__text {
+  font-weight: 600;
+  line-height: 150%;
+  transition: all 0.3s;
+}
+
+.button-menu__icon {
+  transition: opacity ease-in 0.8s;
 }
 
 .favorite__button:hover .button-menu__icon {
   visibility: visible;
+  opacity: 1;
+}
+
+.favorite__button:hover .button-menu__text {
+  transform: translateX(-14px);
 }
 
 .favorite__button:hover {
   cursor: pointer;
-  justify-content: flex-start;
+  /* justify-content: flex-start; */
 }
 
 
