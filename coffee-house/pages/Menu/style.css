@@ -8,6 +8,34 @@
   bottom: 16px;
 }
 
+.menu {
+}
+.menu__title {
+}
+.menu__triggers-wrap {
+}
+.trigger {
+}
+.menu__type {
+}
+.menu__type-label {
+}
+.menu__items {
+}
+.menu__item {
+}
+.menu-item {
+}
+.menu-item__img {
+}
+.menu-item__description {
+}
+.menu-item__title {
+}
+.menu-item__text {
+}
+.menu-item__price {
+}
 .menu__link[disabled] {
   cursor: default;
 }
