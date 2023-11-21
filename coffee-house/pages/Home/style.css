@@ -1,0 +1,272 @@
+:root {
+  --text-dark: #403F3D;
+  --text-light: #E1D4C9;
+  --text-accent: #B0907A;
+  --background-body: #E1D4C9;
+  --background-container: #665F55;
+  --background-backdrop: #403F3DCC;
+  --border-light: #C1B6AD;
+  --border-dark: #665F55;
+}
+
+.menu__link:hover.menu__link::after {
+  opacity: 1;
+  width: 100%;
+  right: 0%;
+}
+
+.about {
+  padding: 0px 25px 100px;
+}
+
+.about__content {
+  display: flex;
+  padding: 100px;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 40px;
+  border-radius: 40px;
+  background: url('../../assets/images/img-hero.jpg') lightgray 50% / cover no-repeat;
+}
+
+.about__title {
+  max-width: 530px;
+  font-size: 72px;
+  line-height: 105%;
+  color: var(--background-body);
+}
+
+.about__text {
+  max-width: 530px;
+  line-height: 150%;
+  color: var(--background-body);
+}
+
+.about__button {
+  width: 200px;
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: var(--background-body);
+  padding: 21px 64px;
+  border-radius: 100px;
+  transition: all 1.5s;
+}
+
+.button-menu__icon {
+  position: absolute;
+  right: 32%;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.button-menu__text {
+  font-weight: 600;
+  line-height: 150%;
+  transition: all 0.3s;
+}
+
+.button-menu__icon {
+  transition: opacity ease-in 0.8s;
+}
+
+.about__button:hover .button-menu__icon {
+  visibility: visible;
+  opacity: 1;
+}
+
+.about__button:hover .button-menu__text {
+  transform: translateX(-14px);
+}
+
+.about__button:hover {
+  cursor: pointer;
+}
+
+/* S E C T I O N   F A V O R I T E */
+
+.favorite {
+  margin-bottom: 50px;
+}
+
+.favorite__container {
+  position: relative;
+}
+
+.favorite__title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.favorite__slider {
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.slider__items {
+  display: flex;
+}
+
+.slider__item {
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item__img {
+  max-width: 480px;
+  margin-bottom: 16px;
+}
+
+.item__title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 125%;
+  margin-bottom: 16px;
+}
+
+.item__text {
+  max-width: 480px;
+  line-height: 150%;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.item__price {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 125%;
+}
+
+.pagination__items {
+  display: flex;
+  justify-content: center;
+  column-gap: 12px;
+}
+
+.pagination__item {
+  width: 40px;
+  height: 4px;
+  border-radius: 100px;
+  background: var(--border-light);
+}
+
+.pagination__item_active {
+  background: var(--border-dark);
+}
+
+.favorite__arrows {
+  position: absolute;
+  top: 50.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 100px;
+  border: 1px solid var(--border-dark);
+  transition: all 0.5s;
+}
+
+.arrow-left {
+  left: 44px;
+}
+
+.arrow-right {
+  right: 45px;
+}
+
+.favorite__arrows:hover {
+  background-color: var(--background-container);
+  cursor: pointer;
+}
+
+.favorite__arrows:hover svg path {
+  stroke: var(--background-body);
+}
+
+/* S E C T I O N   G A L L E R Y */
+
+.gallery {
+  padding-top: 50px;
+  margin-bottom: 100px;
+}
+
+.gallery__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery__title {
+  max-width: 1360px;
+  margin-bottom: 38px;
+}
+.gallery__photos {
+  max-width: 1360px;
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows:  430px 120px 430px;
+  gap: 40px;
+  grid-template-areas: "photo-1 photo-3"
+                       "photo-1 photo-4"
+                       "photo-2 photo-4";
+}
+.gallery__photo {
+  overflow: hidden;
+  border-radius: 20px;
+}
+.gallery__photo img {
+  transform: scale(1.1);
+  object-position: 0px -105px;
+  transition: all 0.5s;
+}
+
+.gallery__photo:first-child {
+  grid-area: photo-1;
+}
+
+.gallery__photo:nth-child(2) {
+  grid-area: photo-2;
+}
+
+.gallery__photo:nth-child(3) {
+  grid-area: photo-3;
+}
+
+.gallery__photo:last-child {
+  grid-area: photo-4;
+}
+
+.gallery__photo_big img {
+  object-position: 0px -32px;
+}
+
+.gallery__photo:hover img {
+  transform: scale(1.0);
+}
+
+
+
+
+@media (max-width: 767.98px) {
+  
+}
+@media (max-width: 560px) {
+
+}
+
+@media (max-width: 991.98px) {
+
+}
+
+@media (max-width: 767.98px) {
+  
+}
+@media (max-width: 550px) {
+
+}
