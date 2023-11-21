@@ -250,7 +250,79 @@
   transform: scale(1.0);
 }
 
+/* M O B I L E   A P P S */
 
+.apps {
+  margin-bottom: 56px;
+}
+
+.apps__container {
+  display: flex;
+  gap: 100px;
+  padding: 0 40px;
+}
+
+.apps__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  max-width: 630px;
+}
+
+.apps__text {
+  line-height: 150%;
+}
+
+.apps__buttons {
+  display: flex;
+  max-width: 420px;
+  gap: 20px;
+}
+
+.apps__btn {
+  flex: 0 0 48%;
+  padding: 12px 20px;
+  border-radius: 100px;
+  border: 1px solid var(--border-dark);
+  font-weight: 600;
+  transition: all 0.8s;
+}
+.apps__btn svg {
+  transition: all 0.8s;
+}
+
+.button__content {
+  display: flex;
+  gap: 8px;
+}
+
+.button__description,
+.button__title {
+  display: block;
+}
+
+.button__description {
+  font-size: 10px;
+  line-height: 140%;
+}
+
+.button__title {
+  line-height: 150%;
+}
+
+.apps__image {
+  max-width: 630px;
+}
+
+.apps__btn:hover {
+  background-color: var(--border-dark);
+  color: var(--background-body);
+}
+
+.apps__btn:hover svg path {
+  fill: var(--background-body);
+}
 
 
 @media (max-width: 767.98px) {
