@@ -14,10 +14,12 @@
 }
 
 .about__content {
+  max-width: 1360px;
+  margin: 0 auto;
   display: flex;
   padding: 100px;
   flex-direction: column;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   row-gap: 40px;
   border-radius: 40px;
   background: url('../../assets/images/img-hero.jpg') lightgray 50% / cover no-repeat;

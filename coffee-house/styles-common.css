@@ -24,10 +24,8 @@ body.no-scroll {
 }
 
 [class*="__container"] {
-  /* min-width: 14400px; + safety padding = 1310*/
-  max-width: 1470px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 15px; 
 }
 
 h2 {
