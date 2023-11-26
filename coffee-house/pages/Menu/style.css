@@ -8,9 +8,142 @@
   bottom: 16px;
 }
 
-.menu__link[disabled] {
+.menu__title {
+  max-width: 800px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 125%;
+  margin-bottom: 38px;
+}
+
+.menu__triggers-wrap {
+  display: flex;
+  max-width: 361px;
+  margin: 0 auto;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.trigger {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border-radius: 100px;
+  border: 1px solid var(--border-light);
+  padding: 8px 16px 8px 8px;
+  transition: all 0.5s;
+}
+
+.trigger__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--border-light);
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  transition: all 0.5s;
+}
+
+.menu__type-input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+.menu__type-label {
+  font-weight: 600;
+  line-height: 150%;
+}
+
+.menu__type_checked {
+  background: var(--background-container);
+  color: var(--text-light);
+}
+
+.menu__type_checked .trigger__icon-wrap {
+  background-color: var(--background-body);
+}
+
+.menu__items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(auto, 506px);
+  column-gap: 2.9%; /* 43/1440 */
+  row-gap: 40px;
+  padding: 0 26px;
+  margin-bottom: 60px;
+}
+.menu__item {
+  border-radius: 40px;
+  border: 1px solid var(--border-light, #C1B6AD);
+}
+
+.menu-item__img-wrap {
+  border-radius: 40px;
+  overflow: hidden;
+  max-width: 310px;
+  max-height: 310px;
+  margin-bottom: 19px;
+}
+.menu-item__img-wrap img {
+  width: 100%;
+  height: auto;
+  transition: all 0.5s;
+  transform: scale(1.1);
+}
+.menu-item__description {
+  height: 35%;
+  padding: 0 19px 20px 19px;
+  position: relative;
+}
+.menu-item__title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 125%;
+  margin-bottom: 12px;
+}
+.menu-item__text {
+  line-height: 147%
+}
+
+.menu-item__price {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 125%;
+  position: absolute;
+  bottom: 19px;
+  left: 19px;
+}
+
+
+.trigger:hover,
+.menu__type-label:hover {
+  cursor: pointer;
+}
+
+.trigger:hover {
+  background: var(--background-container);
+  color: var(--text-light);
+}
+
+.trigger:hover .trigger__icon-wrap {
+  background-color: var(--background-body);
+}
+
+.menu__link[disabled],
+.menu__type_checked[disabled],
+.menu__type_checked[disabled]>.menu__type-label {
   cursor: default;
 }
+
+.menu-item__img-wrap:hover img {
+  transform: scale(1.0);
+}
+
+
 @media (max-width: 767.98px) {
 
 }
