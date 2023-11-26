@@ -114,10 +114,20 @@ h2 {
   transition: all ease-in-out 0.3s;
 }
 
-.nav__item:hover.nav__item::after {
-  opacity: 1;
-  width: 100%;
-  right: 0%;
+@media (hover: hover) {
+  .nav__item:hover.nav__item::after {
+    opacity: 1;
+    width: 100%;
+    right: 0%;
+  }
+}
+
+@media (hover: none) {
+  .nav__item:active.nav__item::after {
+    opacity: 1;
+    width: 100%;
+    right: 0%;
+  }
 }
 
 .menu__link::after {
@@ -160,12 +170,24 @@ h2 {
   transition: all 0.8s;
 }
 
-.socials__item:hover svg path {
-  stroke: var(--text-dark);
+@media (hover: hover) {
+  .socials__item:hover svg path {
+    stroke: var(--text-dark);
+  }
+
+  .socials__item:hover {
+    background-color: var(--background-body)
+  }
 }
 
-.socials__item:hover {
-  background-color: var(--background-body)
+@media (hover: none) {
+  .socials__item:active svg path {
+    stroke: var(--text-dark);
+  }
+
+  .socials__item:active {
+    background-color: var(--background-body)
+  }
 }
 
 .footer__contacts-info {
@@ -216,9 +238,18 @@ h2 {
   bottom: -5px;
 }
 
-.contacts__link:hover.contacts__link::after {
-  opacity: 1;
-  width: 100%;
-  right: 0%;
-} 
+@media (hover: hover) {
+  .contacts__link:hover.contacts__link::after {
+    opacity: 1;
+    width: 100%;
+    right: 0%;
+  } 
+}
 
+@media (hover: none) {
+  .contacts__link:active.contacts__link::after {
+    opacity: 1;
+    width: 100%;
+    right: 0%;
+  } 
+}
