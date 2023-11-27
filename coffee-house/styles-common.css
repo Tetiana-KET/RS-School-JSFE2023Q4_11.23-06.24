@@ -346,3 +346,23 @@ h2 {
     padding: 34px 0px;
   }
 }
+
+@media (max-width: 550px) {
+  .header__container {
+    padding: 20px 16px;
+  }
+
+  .footer__container {
+    padding: 42px 16px;
+  }
+
+  .footer__content-wrap {
+    padding: 60px 14px 30px 15px;
+    gap: 9px;
+  }
+
+  .offer__title {
+    max-width: 316px;
+    font-size: 32px;
+  }
+}
