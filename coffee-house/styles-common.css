@@ -50,6 +50,7 @@ h2 {
   padding: 20px 40px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .header__logo-wrap {
@@ -62,6 +63,11 @@ h2 {
 }
 
 .header__nav {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.nav__body {
   display: flex;
   justify-content: center;
   flex: 1 1 auto;
@@ -88,7 +94,7 @@ h2 {
   position: relative;
   display: flex;
   align-items: center;
-  background: url('./assets/icons/coffee-cup.svg') 52px 15px no-repeat;
+  background: url('./assets/icons/coffee-cup.svg') 52px 0px no-repeat;
   font-weight: 600;
   line-height: 150%;
 }
@@ -112,11 +118,86 @@ h2 {
   transition: all ease-in-out 0.3s;
 }
 
+.header__burger {
+  flex-direction: column;
+  gap: 7px;
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  border: 1px solid var(--border-dark);
+  background-color: transparent;
+  transition: all 0.5s;
+  display: none;
+}
+
+.header__burger span {
+  display: flex;
+}
+
+
+@media (max-width: 1000px) {
+  .header__container {
+    padding: 20px 40px;
+  }
+
+  .header__burger {
+    display: flex;
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  .header__nav_open {
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    top: 96px;
+    display: flex;
+    padding: 60px 40px 100px;
+    flex-direction: column;
+    align-items: center;
+    gap: 93px;
+    flex: 1 1 auto;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 125%; 
+    background: var(--background-body);
+  }
+
+  .header__nav_open .nav__list {
+    flex-direction: column;
+    width: 100%;
+    gap: 52px;
+  }
+
+  .header__nav_open .header__menu {
+    background-position: 103px 3px;
+    background-size: 40px 40px;
+  }
+
+  .header__nav_open .header__menu>a {
+    padding-right: 57px;
+  }
+}
+
 @media (hover: hover) {
   .nav__item:hover.nav__item::after {
     opacity: 1;
     width: 100%;
     right: 0%;
+  }
+
+  .header__burger:hover {
+    background-color: var(--background-container);
+    cursor: pointer;
+  }
+
+  .header__burger:hover svg path {
+    stroke: var(--background-body);
   }
 }
 
@@ -128,9 +209,7 @@ h2 {
   }
 }
 
-.menu__link::after {
-  bottom: 16px;
-}
+
 
 /* FOOTER */
 
