@@ -74,12 +74,12 @@ h2 {
 }
 
 .nav__list {
-  width: 62%; /* 732/1188 */
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  column-gap: 5.46%; /* 40/732 */
+  column-gap: 3.46%;
   row-gap: 5px;
 }
 
@@ -137,7 +137,7 @@ h2 {
 }
 
 
-@media (max-width: 1000px) {
+@media (max-width: 768px) {
   .header__container {
     padding: 20px 40px;
   }
@@ -364,5 +364,48 @@ h2 {
   .offer__title {
     max-width: 316px;
     font-size: 32px;
+  }
+}
+
+@media (max-width: 360px) {
+  
+  .footer__container {
+    padding: 33px 7px;
+  }
+
+  .footer__content-wrap {
+    padding: 40px 9px;
+    gap: 9px;
+  }
+
+  .offer__title {
+    font-size: 28px;
+  }
+
+  .offer__socials {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    max-height: none;
+    flex-wrap: wrap;
+  }
+
+  .footer__contacts-info {
+    padding: 23px 0px;
+  }
+
+  .contacts__title {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .contacts__list {
+    font-size: 12px;
+  }
+ 
+  .contacts__link, .item-hours {
+    padding-left: 17px;
+    background-position: 0px 0px;
+    background-size: 14px 14px;
   }
 }
