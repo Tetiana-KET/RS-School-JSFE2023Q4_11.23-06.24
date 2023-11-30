@@ -50,6 +50,7 @@ h2 {
   padding: 20px 40px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .header__logo-wrap {
@@ -62,18 +63,23 @@ h2 {
 }
 
 .header__nav {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.nav__body {
   display: flex;
   justify-content: center;
   flex: 1 1 auto;
 }
 
 .nav__list {
-  width: 62%; /* 732/1188 */
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  column-gap: 5.46%; /* 40/732 */
+  column-gap: 3.46%;
   row-gap: 5px;
 }
 
@@ -88,7 +94,7 @@ h2 {
   position: relative;
   display: flex;
   align-items: center;
-  background: url('./assets/icons/coffee-cup.svg') 52px 15px no-repeat;
+  background: url('./assets/icons/coffee-cup.svg') 52px 0px no-repeat;
   font-weight: 600;
   line-height: 150%;
 }
@@ -112,25 +118,98 @@ h2 {
   transition: all ease-in-out 0.3s;
 }
 
+.header__burger {
+  flex-direction: column;
+  gap: 7px;
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
+  border: 1px solid var(--border-dark);
+  background-color: transparent;
+  transition: all 0.5s;
+  display: none;
+}
+
+.header__burger span {
+  display: flex;
+}
+
+
+@media (max-width: 768px) {
+  .header__container {
+    padding: 20px 40px;
+  }
+
+  .header__burger {
+    display: flex;
+  }
+
+  .header__nav {
+    display: none;
+  }
+
+  .header__nav_open {
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    top: 96px;
+    display: flex;
+    padding: 60px 40px 100px;
+    flex-direction: column;
+    align-items: center;
+    gap: 93px;
+    flex: 1 1 auto;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 125%; 
+    background: var(--background-body);
+  }
+
+  .header__nav_open .nav__list {
+    flex-direction: column;
+    width: 100%;
+    gap: 52px;
+  }
+
+  .header__nav_open .header__menu {
+    background-position: 103px 3px;
+    background-size: 40px 40px;
+  }
+
+  .header__nav_open .header__menu>a {
+    padding-right: 57px;
+  }
+}
+
 @media (hover: hover) {
   .nav__item:hover.nav__item::after {
     opacity: 1;
     width: 100%;
     right: 0%;
   }
+
+  .header__burger:hover {
+    background-color: var(--background-container);
+    cursor: pointer;
+  }
+
+  .header__burger:hover svg path {
+    stroke: var(--background-body);
+  }
 }
 
-@media (hover: none) {
+/* @media (hover: none) {
   .nav__item:active.nav__item::after {
     opacity: 1;
     width: 100%;
     right: 0%;
   }
-}
+} */
 
-.menu__link::after {
-  bottom: 16px;
-}
+
 
 /* FOOTER */
 
@@ -178,7 +257,7 @@ h2 {
   }
 }
 
-@media (hover: none) {
+/* @media (hover: none) {
   .socials__item:active svg path {
     stroke: var(--text-dark);
   }
@@ -186,7 +265,7 @@ h2 {
   .socials__item:active {
     background-color: var(--background-body)
   }
-}
+} */
 
 .footer__contacts-info {
   flex: 0 1 46%;
@@ -244,10 +323,89 @@ h2 {
   } 
 }
 
-@media (hover: none) {
+/* @media (hover: none) {
   .contacts__link:active.contacts__link::after {
     opacity: 1;
     width: 100%;
     right: 0%;
   } 
+} */
+
+@media (max-width: 1000px) {
+  .footer__container {
+    padding: 41px;
+  }
+
+  .footer__content-wrap {
+    flex-direction: column;
+    padding: 100px 40px 69px 60px;
+    gap: 68px;
+  }
+
+  .footer__contacts-info {
+    padding: 34px 0px;
+  }
+}
+
+@media (max-width: 550px) {
+  .header__container {
+    padding: 20px 16px;
+  }
+
+  .footer__container {
+    padding: 42px 16px;
+  }
+
+  .footer__content-wrap {
+    padding: 60px 14px 30px 15px;
+    gap: 9px;
+  }
+
+  .offer__title {
+    max-width: 316px;
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 360px) {
+  
+  .footer__container {
+    padding: 33px 7px;
+  }
+
+  .footer__content-wrap {
+    padding: 40px 9px;
+    gap: 9px;
+  }
+
+  .offer__title {
+    font-size: 28px;
+  }
+
+  .offer__socials {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    max-height: none;
+    flex-wrap: wrap;
+  }
+
+  .footer__contacts-info {
+    padding: 23px 0px;
+  }
+
+  .contacts__title {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+
+  .contacts__list {
+    font-size: 12px;
+  }
+ 
+  .contacts__link, .item-hours {
+    padding-left: 17px;
+    background-position: 0px 0px;
+    background-size: 14px 14px;
+  }
 }

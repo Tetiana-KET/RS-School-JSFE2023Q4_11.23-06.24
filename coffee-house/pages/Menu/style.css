@@ -5,11 +5,11 @@
   width: 100%;	
   height: 2px;
   background-color: var(--text-dark);
-  bottom: 16px;
+  bottom: -2px;
 }
 
 .menu__title {
-  max-width: 800px;
+  max-width: 55%;
   text-align: center;
   margin: 0 auto;
   font-size: 60px;
@@ -124,6 +124,10 @@
   left: 19px;
 }
 
+.menu__refresh-btn {
+  display: none;
+}
+
 @media (hover: hover) {
   .trigger:hover .trigger__icon-wrap {
     background-color: var(--background-body);
@@ -138,11 +142,13 @@
     background: var(--background-container);
     color: var(--text-light);
   }
+  
   .menu-item:hover.menu-item img,
   .menu-item__img-wrap:hover img {
     transform: scale(1.0);
     cursor: pointer;
   }
+
   .menu-item:hover {
     cursor: pointer;
   }
@@ -154,22 +160,78 @@
   cursor: default;
 }
 
+@media (max-width: 1000px) {
 
-@media (max-width: 767.98px) {
-
-}
-
-@media (max-width: 560px) {
-
-}
-
-@media (max-width: 991.98px) {
+  .menu__title {
+    max-width: 89%;
+  }
 
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 768px) {
+
+  .menu__items {
+    display: grid;
+    max-width: 688px;
+    grid-template-columns: minmax(35%, 310px) minmax(35%, 310px);
+    grid-template-rows: minmax(auto, 506px) minmax(auto, 506px);
+    column-gap: 6%;
+    padding: 0 15px;
+    margin: 0 auto 40px;
+  }
+
+  .menu__item:nth-child(5),
+  .menu__item:nth-child(6),
+  .menu__item:nth-child(7),
+  .menu__item:nth-child(8) {
+    display: none;
+  }
+
+  .menu__refresh-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border-radius: 100px;
+    border: 1px solid var(--border-dark);
+    background-color: transparent;
+    margin-bottom: 58px;
+  }
   
 }
-@media (max-width: 550px) {
 
+@media (max-width: 450px) {
+
+  .menu__title {
+    font-size: 32px;
+    max-width: 91%;
+  }
+
+  .menu__triggers-wrap {
+    max-width: 348px;
+    gap: 7px;
+  }
+
+  .menu__items {
+    grid-template-columns: 310px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 360px) {
+
+  .menu__triggers-wrap {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .trigger {
+    width: 65%;
+  }
+
+  .menu__items {
+    grid-template-columns: minmax(auto, 310px);
+  }
 }

@@ -17,19 +17,33 @@
     <header class="header">
       <div class="header__container">
         <div class="header__logo-wrap">
-          <a href="../Home/index.html" class="header__logo"><img src="../../assets/icons/logo.png" alt="logo"></a>
+          <img class="header__logo" src="../../assets/icons/logo.png" alt="logo">
         </div>
         <nav class="header__nav nav">
-          <ul class="nav__list">
+          <div class="nav__body">
+            <ul class="nav__list">
             <li class="nav__item"><a href="#favorite" class="nav__link">Favorite coffee</a></li>
             <li class="nav__item"><a href="#gallery" class="nav__link">About</a></li>
             <li class="nav__item"><a href="#mobile-apps" class="nav__link">Mobile app</a></li>
             <li class="nav__item"><a href="#contacts" class="nav__link">Contact us</a></li>
           </ul>
+          </div>
+          <div class="header__menu">
+            <a href="../Menu/index.html" class="menu__link">Menu</a>
+          </div>
         </nav>
-        <div class="header__menu">
-          <a href="../Menu/index.html" class="menu__link">Menu</a>
-        </div>
+         <button class="header__burger" type="button">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="2" viewBox="0 0 18 2" fill="none">
+               <path d="M1 1H17" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="2" viewBox="0 0 18 2" fill="none">
+                <path d="M1 1H17" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
       </div>
     </header>
     <main class="page">
