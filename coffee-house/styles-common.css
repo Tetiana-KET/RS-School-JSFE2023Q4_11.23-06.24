@@ -133,7 +133,11 @@ h2 {
 }
 
 .header__burger span {
-  display: flex;
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: var(--text-dark);
+  border-radius: 100px;
 }
 
 
@@ -196,8 +200,8 @@ h2 {
     cursor: pointer;
   }
 
-  .header__burger:hover svg path {
-    stroke: var(--background-body);
+  .header__burger:hover .burger__line {
+    background-color: var(--background-body);
   }
 }
 
