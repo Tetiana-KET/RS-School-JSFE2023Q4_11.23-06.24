@@ -66,6 +66,7 @@
 
 .menu__type_checked .trigger__icon-wrap {
   background-color: var(--background-body);
+  cursor: default;
 }
 
 .menu__items {
@@ -128,11 +129,6 @@
   display: none;
 }
 
-.menu__link.disabled,
-.menu__type_checked.disabled,
-.menu__type_checked.disabled>.menu__type-label {
-  cursor: default;
-}
 
 @media (max-width: 1000px) {
 
@@ -243,4 +239,11 @@
   .menu__refresh-btn:hover {
     background-color: var(--border-dark);
   }
+}
+
+.menu__link.disabled,
+.menu__type_checked.disabled,
+.menu__type_checked.disabled>.menu__type-label,
+.menu__type_checked .trigger__icon-wrap img {
+  cursor: default;
 }
