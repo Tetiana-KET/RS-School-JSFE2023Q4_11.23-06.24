@@ -135,6 +135,16 @@
   .menu__title {
     max-width: 89%;
   }
+
+  .menu__items {
+    display: grid;
+    max-width: 688px;
+    grid-template-columns: minmax(35%, 310px) minmax(35%, 310px);
+    grid-template-rows: minmax(auto, 506px) minmax(auto, 506px);
+    column-gap: 6%;
+    padding: 0 15px;
+    margin: 0 auto 40px;
+  }
 }
 
 @media (max-width: 768px) {
