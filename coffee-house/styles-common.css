@@ -244,8 +244,12 @@ h2 {
 
 .socials__item {
   border-radius: 50%;
-  transition: all 0.8s;
+  transition: all 0.6s;
 }
+
+.socials__item:hover svg path {
+    transition: all 0.6s;
+  }
 
 @media (hover: hover) {
   .socials__item:hover svg path {
