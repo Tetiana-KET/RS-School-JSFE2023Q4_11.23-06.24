@@ -156,10 +156,31 @@
   height: 4px;
   border-radius: 100px;
   background: var(--border-light);
+  position: relative;
 }
 
-.pagination__item_active {
+.pagination__item_active::after {
+  display: block;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  max-width: 100%;
+  height: 100%;
   background: var(--border-dark);
+  border-radius: 100px;
+  animation: moving;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+}
+
+@keyframes moving {
+  0% {
+    width: 0%
+  } 100% {
+    width: 100%;
+  }
 }
 
 .favorite__arrows {

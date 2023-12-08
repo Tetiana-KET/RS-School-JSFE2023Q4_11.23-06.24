@@ -58,28 +58,47 @@ window.addEventListener('DOMContentLoaded', () => {
 		let dotIndex = 0;
 		let translateX = 0;
 		let width = slider.clientWidth;
+		let timer;
+
+		function setActiveDot(dotIndex) {
+			sliderDots.forEach((dot) => {
+				dot.classList.remove('pagination__item_active');
+			});
+			sliderDots[dotIndex].classList.add('pagination__item_active');
+		}
 
 		function setNextSlide() {
 			position += 1;
+			dotIndex +=1;
 
 			if (position >= sliderItems.length) {
 				position = 0;
+				dotIndex = position;
 			}
 			moveSlider();
+			setActiveDot(dotIndex);
+			autoMove();
 		}
 
 		function setPrevSlide() {
 			position -= 1;
+			dotIndex-=1;
 
 			if (position < 0) {
 				position = sliderItems.length -1;
+				dotIndex = position;
 			}
 			moveSlider();
+			setActiveDot(dotIndex);
 		}
 
 		function moveSlider () {
 			translateX = -position * width;
 			sliderTrack.style.transform = `translateX( ${translateX}px)`;
+		}
+
+		function autoMove () {
+			timer = setTimeout(setNextSlide, 5000);
 		}
 
 		arrows.forEach( arrow => {
@@ -91,7 +110,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				}
 			})
 		});
-		moveSlider();
+		autoMove();
 	}
 
 
