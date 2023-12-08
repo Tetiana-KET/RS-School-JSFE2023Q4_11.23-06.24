@@ -1,12 +1,11 @@
 "use strict"
 window.addEventListener('DOMContentLoaded', () => {
 
+	initSlider();
+
   const body = document.body;
   const burgerButton = document.querySelector('.header__burger');
   const headerBurgerMenu = document.querySelector('.nav__body');
-  const overlay = document.querySelector('.overlay');
-
-
 
 	function lockBodyScroll () {
 		body.classList.add('no-scroll');
@@ -43,7 +42,61 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
+	// SLIDER
+	function initSlider () {
+		
+		const slider = document.querySelector('.slider');
+		const sliderTrack = document.querySelector('.slider__items'); //LINE
+		const sliderItems = Array.from(document.querySelectorAll('.slider__item'));
+		const sliderDots = Array.from(document.querySelectorAll('.pagination__item'));
+		const activeSliderDot = document.querySelector('.pagination__item_active');
+		const arrowLeft = document.querySelector('.arrow-left');
+		const arrowRight = document.querySelector('.arrow-right');
+		const arrows = document.querySelectorAll('.favorite__arrows');
+
+		let position = 0;
+		let dotIndex = 0;
+		let translateX = 0;
+		let width = slider.clientWidth;
+
+		function setNextSlide() {
+			position += 1;
+
+			if (position >= sliderItems.length) {
+				position = 0;
+			}
+			moveSlider();
+		}
+
+		function setPrevSlide() {
+			position -= 1;
+
+			if (position < 0) {
+				position = sliderItems.length -1;
+			}
+			moveSlider();
+		}
+
+		function moveSlider () {
+			translateX = -position * width;
+			sliderTrack.style.transform = `translateX( ${translateX}px)`;
+		}
+
+		arrows.forEach( arrow => {
+			arrow.addEventListener('click', (e) => {
+				if (e.target.closest('.arrow-left')) {
+					setPrevSlide();
+				} else if (e.target.closest('.arrow-right')) {
+					setNextSlide();
+				}
+			})
+		});
+		moveSlider();
+	}
+
+
   window.addEventListener('resize', checkBurgerMenu);
+	window.addEventListener('resize', initSlider);
 
   body.addEventListener('click', (e) => {
 
@@ -58,8 +111,5 @@ window.addEventListener('DOMContentLoaded', () => {
 				toggleHeaderMenu();
 			}
 		}
-
-    
-		
   });
 })
