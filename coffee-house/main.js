@@ -46,7 +46,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	function initSlider () {
 		
 		const slider = document.querySelector('.slider');
-		const sliderTrack = document.querySelector('.slider__items'); //LINE
+		const sliderTrack = document.querySelector('.slider__items');
 		const sliderItems = Array.from(document.querySelectorAll('.slider__item'));
 		const sliderDots = Array.from(document.querySelectorAll('.pagination__item'));
 		const activeSliderDot = document.querySelector('.pagination__item_active');
@@ -68,6 +68,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		function setNextSlide() {
+			clearTimeout(timer);
 			position += 1;
 			dotIndex +=1;
 
@@ -104,9 +105,13 @@ window.addEventListener('DOMContentLoaded', () => {
 		arrows.forEach( arrow => {
 			arrow.addEventListener('click', (e) => {
 				if (e.target.closest('.arrow-left')) {
+					clearTimeout(timer);
 					setPrevSlide();
+					autoMove();
 				} else if (e.target.closest('.arrow-right')) {
+
 					setNextSlide();
+					
 				}
 			})
 		});
