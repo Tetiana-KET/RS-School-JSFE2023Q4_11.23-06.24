@@ -132,7 +132,6 @@
 }
 
 .item__text {
-  /* max-width: 480px; */
   line-height: 150%;
   margin-bottom: 16px;
   text-align: center;
@@ -159,9 +158,7 @@
   position: relative;
 }
 
-.pagination__item_active::after {
-  display: block;
-  content: '';
+.pagination__progress {
   position: absolute;
   top: 0;
   left: 0;
@@ -170,17 +167,6 @@
   height: 100%;
   background: var(--border-dark);
   border-radius: 100px;
-  animation: moving;
-  animation-duration: 5s;
-  animation-timing-function: linear;
-}
-
-@keyframes moving {
-  0% {
-    width: 0%
-  } 100% {
-    width: 100%;
-  }
 }
 
 .favorite__arrows {

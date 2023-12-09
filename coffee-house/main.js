@@ -1,7 +1,7 @@
 "use strict"
 window.addEventListener('DOMContentLoaded', () => {
 
-	initSlider();
+	// initSlider();
 
   const body = document.body;
   const burgerButton = document.querySelector('.header__burger');
@@ -43,84 +43,118 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// SLIDER
-	function initSlider () {
-		
-		const slider = document.querySelector('.slider');
-		const sliderTrack = document.querySelector('.slider__items');
-		const sliderItems = Array.from(document.querySelectorAll('.slider__item'));
-		const sliderDots = Array.from(document.querySelectorAll('.pagination__item'));
-		const activeSliderDot = document.querySelector('.pagination__item_active');
-		const arrowLeft = document.querySelector('.arrow-left');
-		const arrowRight = document.querySelector('.arrow-right');
-		const arrows = document.querySelectorAll('.favorite__arrows');
 
-		let position = 0;
-		let dotIndex = 0;
-		let translateX = 0;
-		let width = slider.clientWidth;
-		let timer;
+	const arrows = document.querySelectorAll('.favorite__arrows');
+	const slider = document.querySelector('.slider');
+	const sliderTrack = document.querySelector('.slider__items');
+	const sliderItems = Array.from(document.querySelectorAll('.slider__item'));
+	const sliderDots = Array.from(
+		document.querySelectorAll('.pagination__item')
+	);
 
-		function setActiveDot(dotIndex) {
-			sliderDots.forEach((dot) => {
-				dot.classList.remove('pagination__item_active');
-			});
-			sliderDots[dotIndex].classList.add('pagination__item_active');
-		}
+	let position = 0;
+	let dotIndex = 0;
+	let translateX = 0;
+	let width = slider.clientWidth;
+	let progressIntervalId;
 
-		function setNextSlide() {
-			clearTimeout(timer);
-			position += 1;
-			dotIndex +=1;
+	function setActiveDot(dotIndex) {
+		clearInterval(progressIntervalId);
 
-			if (position >= sliderItems.length) {
-				position = 0;
-				dotIndex = position;
-			}
-			moveSlider();
-			setActiveDot(dotIndex);
-			autoMove();
-		}
+		sliderDots.forEach(dot => {
 
-		function setPrevSlide() {
-			position -= 1;
-			dotIndex-=1;
-
-			if (position < 0) {
-				position = sliderItems.length -1;
-				dotIndex = position;
-			}
-			moveSlider();
-			setActiveDot(dotIndex);
-		}
-
-		function moveSlider () {
-			translateX = -position * width;
-			sliderTrack.style.transform = `translateX( ${translateX}px)`;
-		}
-
-		function autoMove () {
-			timer = setTimeout(setNextSlide, 5000);
-		}
-
-		arrows.forEach( arrow => {
-			arrow.addEventListener('click', (e) => {
-				if (e.target.closest('.arrow-left')) {
-					clearTimeout(timer);
-					setPrevSlide();
-					autoMove();
-				} else if (e.target.closest('.arrow-right')) {
-
-					setNextSlide();
-					
-				}
-			})
+			dot.classList.remove('pagination__item_active');
+			dot.querySelector('.pagination__progress').style.width = '0%';
 		});
-		autoMove();
+
+		sliderDots[dotIndex].classList.add('pagination__item_active');
+		resetProgress();
 	}
+
+	function setNextSlide() {
+		position += 1;
+		dotIndex += 1;
+
+		if (position >= sliderItems.length) {
+			position = 0;
+			dotIndex = position;
+		}
+
+		moveSlider();
+		setActiveDot(dotIndex);
+	}
+
+	function setPrevSlide() {
+		position -= 1;
+		dotIndex -= 1;
+
+		if (position < 0) {
+			position = sliderItems.length - 1;
+			dotIndex = position;
+		}
+
+		moveSlider();
+		setActiveDot(dotIndex);
+	}
+
+	function moveSlider() {
+		translateX = -position * width;
+		sliderTrack.style.transform = `translateX( ${translateX}px)`;
+	}
+
+	function progressRun(progressWidth = 0) {
+		const activeSliderDot = document.querySelector('.pagination__item_active');
+		const paginationProgress = activeSliderDot.querySelector(
+			'.pagination__progress'
+		);
+
+		let paginationProgressWidth = parseInt(progressWidth);
+
+		progressIntervalId = setInterval(() => {
+
+			if (paginationProgressWidth > 100) {
+				
+				clearInterval(progressIntervalId);
+				paginationProgressWidth = 0;
+				paginationProgress.style.width = paginationProgressWidth + 'px';
+				setNextSlide();
+			} else {
+				paginationProgressWidth += 1;
+				paginationProgress.style.width = paginationProgressWidth + '%';
+			}
+		}, 50);
+	}
+
+	progressRun();
+
+	function resetProgress() {
+		clearInterval(progressIntervalId);
+
+		progressRun(
+			document.querySelector(
+				'.pagination__item.pagination__item_active>.pagination__progress'
+			).style.width
+		);
+	}
+
+	arrows.forEach(arrow => {
+		arrow.addEventListener('click', e => {
+			if (e.target.closest('.arrow-left')) {
+				setPrevSlide();
+			} else if (e.target.closest('.arrow-right')) {
+				setNextSlide();
+			}
+		});
+	});
 
 
   window.addEventListener('resize', checkBurgerMenu);
-	window.addEventListener('resize', initSlider);
+
+	window.addEventListener('resize', () => {
+		
+		width = slider.clientWidth;
+		resetProgress();
+	});
 
   body.addEventListener('click', (e) => {
 
