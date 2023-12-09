@@ -1,22 +1,20 @@
 "use strict"
 window.addEventListener('DOMContentLoaded', () => {
-
 	// initSlider();
 
-  const body = document.body;
-  const burgerButton = document.querySelector('.header__burger');
-  const headerBurgerMenu = document.querySelector('.nav__body');
+	const body = document.body;
+	const burgerButton = document.querySelector('.header__burger');
+	const headerBurgerMenu = document.querySelector('.nav__body');
 
-	function lockBodyScroll () {
+	function lockBodyScroll() {
 		body.classList.add('no-scroll');
 	}
 
-	function unlockBodyScroll () {
+	function unlockBodyScroll() {
 		body.classList.remove('no-scroll');
 	}
 
-  function toggleHeaderMenu () {
-
+	function toggleHeaderMenu() {
 		if (burgerButton.classList.contains('menu-open')) {
 			closeBurgerMenu();
 		} else {
@@ -24,19 +22,19 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	function openBurgerMenu () {
+	function openBurgerMenu() {
 		headerBurgerMenu.classList.add('header__nav_open');
 		burgerButton.classList.add('menu-open');
 		lockBodyScroll();
 	}
 
-	function closeBurgerMenu () {
+	function closeBurgerMenu() {
 		headerBurgerMenu.classList.remove('header__nav_open');
 		burgerButton.classList.remove('menu-open');
 		unlockBodyScroll();
 	}
 
-	function checkBurgerMenu () {
+	function checkBurgerMenu() {
 		if (window.screen.width >= 769) {
 			closeBurgerMenu();
 		}
@@ -48,9 +46,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	const slider = document.querySelector('.slider');
 	const sliderTrack = document.querySelector('.slider__items');
 	const sliderItems = Array.from(document.querySelectorAll('.slider__item'));
-	const sliderDots = Array.from(
-		document.querySelectorAll('.pagination__item')
-	);
+	const sliderDots = Array.from(document.querySelectorAll('.pagination__item'));
 
 	let position = 0;
 	let dotIndex = 0;
@@ -62,7 +58,6 @@ window.addEventListener('DOMContentLoaded', () => {
 		clearInterval(progressIntervalId);
 
 		sliderDots.forEach(dot => {
-
 			dot.classList.remove('pagination__item_active');
 			dot.querySelector('.pagination__progress').style.width = '0%';
 		});
@@ -111,9 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		let paginationProgressWidth = parseInt(progressWidth);
 
 		progressIntervalId = setInterval(() => {
-
 			if (paginationProgressWidth > 100) {
-				
 				clearInterval(progressIntervalId);
 				paginationProgressWidth = 0;
 				paginationProgress.style.width = paginationProgressWidth + 'px';
@@ -137,6 +130,20 @@ window.addEventListener('DOMContentLoaded', () => {
 		);
 	}
 
+	function pauseProcess () {
+		clearInterval(progressIntervalId);
+	}
+
+	// EVENT LISTENERS
+	slider.addEventListener('mouseleave', () => {
+		resetProgress();
+	});
+
+	slider.addEventListener('mouseover', () => {
+		pauseProcess();
+		clearInterval(progressIntervalId);
+	});
+
 	arrows.forEach(arrow => {
 		arrow.addEventListener('click', e => {
 			if (e.target.closest('.arrow-left')) {
@@ -147,17 +154,14 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 
-
-  window.addEventListener('resize', checkBurgerMenu);
+	window.addEventListener('resize', checkBurgerMenu);
 
 	window.addEventListener('resize', () => {
-		
 		width = slider.clientWidth;
 		resetProgress();
 	});
 
-  body.addEventListener('click', (e) => {
-
+	body.addEventListener('click', e => {
 		if (window.screen.width <= 768) {
 			if (
 				e.target.classList.contains('burger') ||
@@ -169,5 +173,5 @@ window.addEventListener('DOMContentLoaded', () => {
 				toggleHeaderMenu();
 			}
 		}
-  });
+	});
 })
