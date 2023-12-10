@@ -52,7 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	let dotIndex = 0;
 	let translateX = 0;
 	let width = slider.clientWidth;
-	let progressIntervalId;
+	let progressIntervalId = null;
 
 	function setActiveDot(dotIndex) {
 		clearInterval(progressIntervalId);
@@ -74,7 +74,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			position = 0;
 			dotIndex = position;
 		}
-
 		moveSlider();
 		setActiveDot(dotIndex);
 	}
@@ -87,7 +86,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			position = sliderItems.length - 1;
 			dotIndex = position;
 		}
-
 		moveSlider();
 		setActiveDot(dotIndex);
 	}
@@ -130,10 +128,44 @@ window.addEventListener('DOMContentLoaded', () => {
 		);
 	}
 
-	function pauseProcess () {
+	function pauseProcess() {
 		clearInterval(progressIntervalId);
 	}
 
+	let touchStartX = null;
+	let touchEndX = null;
+	let touchStartY = null;
+	let touchEndY = null;
+	let swipeDirectionX = null;
+	let swipeDirectionY = null;
+
+	function getTouchStart(e) {
+		touchStartX = Math.floor(e.touches[0].clientX);
+		touchStartY = Math.floor(e.touches[0].clientY);
+		pauseProcess();
+	}
+
+	function touchEndHandler(e) {
+
+		touchEndX = Math.floor(e.changedTouches[0].clientX);
+		touchEndY = Math.floor(e.changedTouches[0].clientY);
+
+		swipeDirectionX = touchStartX - touchEndX;
+		swipeDirectionY = touchStartY - touchEndY;
+
+		if (Math.abs(swipeDirectionY) < Math.abs(swipeDirectionX)) {
+
+			if (swipeDirectionX > 0) {
+				setNextSlide();
+				resetProgress();
+			}
+			if (swipeDirectionX < 0) {
+				setPrevSlide();
+				resetProgress();
+			}
+		}
+		resetProgress();
+	}
 	// EVENT LISTENERS
 	slider.addEventListener('mouseleave', () => {
 		resetProgress();
@@ -152,6 +184,14 @@ window.addEventListener('DOMContentLoaded', () => {
 				setNextSlide();
 			}
 		});
+	});
+
+	slider.addEventListener('touchstart', e => {
+		getTouchStart(e);
+	});
+
+	slider.addEventListener('touchend', e => {
+		touchEndHandler(e);
 	});
 
 	window.addEventListener('resize', checkBurgerMenu);
