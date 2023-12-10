@@ -1,6 +1,6 @@
 "use strict"
+
 window.addEventListener('DOMContentLoaded', () => {
-	// initSlider();
 
 	const body = document.body;
 	const burgerButton = document.querySelector('.header__burger');
