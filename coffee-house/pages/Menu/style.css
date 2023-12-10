@@ -76,6 +76,7 @@
   row-gap: 40px;
   padding: 0 40px;
   margin-bottom: 60px;
+  transition: opacity .5s ease-out;
 }
 
 .menu__item {
@@ -132,6 +133,7 @@
 .menu__type_checked.disabled,
 .menu__type_checked.disabled>.menu__type-label {
   cursor: default;
+  pointer-events: none;
 }
 
 @media (max-width: 1000px) {
@@ -160,7 +162,7 @@
     display: none;
   }
 
-  .menu__refresh-btn {
+  .menu__refresh-btn_visible {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -173,7 +175,6 @@
     margin-bottom: 58px;
     transition: all 0.8s;
   }
-  
 }
 
 @media (max-width: 450px) {

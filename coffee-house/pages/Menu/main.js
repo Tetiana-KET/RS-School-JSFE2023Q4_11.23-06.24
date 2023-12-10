@@ -1,11 +1,20 @@
 "use strict"
+
 import productsData from './products.js';
-console.log(productsData);
+import createMenuCard from './menuCardTemplate.js';
+
 window.addEventListener('DOMContentLoaded', () => {
 
 	const body = document.body;
 	const burgerButton = document.querySelector('.header__burger');
 	const headerBurgerMenu = document.querySelector('.nav__body');
+
+	const menuRefreshBtn = document.querySelector('.menu__refresh-btn');
+	const menuTriggers = Array.from(document.querySelectorAll('.trigger'));
+	const menuList = document.querySelector('.menu__items');
+	let currentItems = [];
+	let chosenCategory = 'coffee';
+
 
 	function lockBodyScroll() {
 		body.classList.add('no-scroll');
@@ -41,9 +50,56 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
+	function getCurrentItems() {
+		currentItems = productsData.filter(
+			item => item.category === chosenCategory
+		);
+	}
+	getCurrentItems();
+
+	function createMenuItem(item, i) {
+		const menuItem = document.createElement('figure');
+		menuItem.classList.add('menu__item', 'menu-item');
+		menuItem.innerHTML = createMenuCard(chosenCategory, i, item);
+		menuList.append(menuItem);
+	}
+
+	function createPageContent(currItems) {
+		menuList.innerHTML = '';
+		currItems.forEach((item, i) => {
+			createMenuItem(item, i);
+		});
+	}
+	createPageContent(currentItems);
+
 	// EVENT LISTENERS
 
+	menuTriggers.forEach((trigger) => {
+		trigger.addEventListener('click', () => {
+			menuTriggers.forEach((btn) => {
+				btn.classList.remove('menu__type_checked', 'disabled');
+			});
+			trigger.classList.add('menu__type_checked', 'disabled');
+			chosenCategory = trigger.textContent.trim().toLowerCase();
+			menuList.style.opacity = 0;
+			setTimeout(() => {
+				getCurrentItems();
+				createPageContent(currentItems);
+				menuList.style.opacity = 1;
+			}, 300);
+		})	
+	});
+
 	window.addEventListener('resize', checkBurgerMenu);
+
+	window.addEventListener('resize', () => {
+		if (window.screen.width <= 768) {
+			menuRefreshBtn.classList.add('menu__refresh-btn_visible');
+		}
+		if (window.screen.width > 768) {
+			menuRefreshBtn.classList.remove('menu__refresh-btn_visible');
+		}
+	});
 
 	body.addEventListener('click', e => {
 		if (window.screen.width <= 768) {
