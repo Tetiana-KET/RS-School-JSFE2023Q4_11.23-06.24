@@ -35,6 +35,7 @@
   top: 0;
   left: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
 .about__title {
@@ -190,6 +191,10 @@
   right: 45px;
 }
 
+.arrow_disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
 /* S E C T I O N   G A L L E R Y */
 
 .gallery {

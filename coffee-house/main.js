@@ -43,6 +43,8 @@ window.addEventListener('DOMContentLoaded', () => {
 	// SLIDER
 
 	const arrows = document.querySelectorAll('.favorite__arrows');
+	const arrowRight = document.querySelector('.arrow-right');
+	const arrowLeft = document.querySelector('.arrow-left');
 	const slider = document.querySelector('.slider');
 	const sliderTrack = document.querySelector('.slider__items');
 	const sliderItems = Array.from(document.querySelectorAll('.slider__item'));
@@ -53,6 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	let translateX = 0;
 	let width = slider.clientWidth;
 	let progressIntervalId = null;
+	let arrowsSetTimeout = null;
 
 	function setActiveDot(dotIndex) {
 		clearInterval(progressIntervalId);
@@ -67,6 +70,8 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 	function setNextSlide() {
+		arrowRight.classList.add('arrow_disabled');
+
 		position += 1;
 		dotIndex += 1;
 
@@ -76,9 +81,13 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 		moveSlider();
 		setActiveDot(dotIndex);
+		setTimeout(() => {
+			arrowRight.classList.remove('arrow_disabled');
+		}, 500)
 	}
 
 	function setPrevSlide() {
+		arrowLeft.classList.add('arrow_disabled');
 		position -= 1;
 		dotIndex -= 1;
 
@@ -88,6 +97,9 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 		moveSlider();
 		setActiveDot(dotIndex);
+		setTimeout(() => {
+			arrowLeft.classList.remove('arrow_disabled');
+		}, 500)
 	}
 
 	function moveSlider() {
