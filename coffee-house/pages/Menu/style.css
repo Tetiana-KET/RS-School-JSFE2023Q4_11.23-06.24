@@ -1,3 +1,7 @@
+body {
+  position: relative;
+}
+
 .header__menu::after {
   content: '';
   position: absolute;
@@ -155,30 +159,39 @@
 /* MODAL */
 
 .modal {
-  position: absolute;
-  z-index: -100;
+  position: fixed;
+  z-index: 100;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-  background-color: var(--background-backdrop, rgba(64, 63, 61, 0.80));
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  transform: scale(0);
-  transition: transform 0.2s, opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  transition: all 0.5s;
+}
+
+.modal__overlay {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: var(--background-backdrop, rgba(64, 63, 61, 0.80));
 }
 
 .modal_active {
   opacity: 1;
   visibility: visible;
-  transform: scale(1);
   z-index: 100;
 }
 
 .modal__content {
+  position: relative;
+  z-index: 2;
   max-width: 800px;
   min-width: 310px;
   display: flex;

@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	let currentItems = [];
 	let chosenCategory = 'coffee';
 
-
+	const modal = document.querySelector('.modal');
 
 	function lockBodyScroll() {
 		body.classList.add('no-scroll');
@@ -64,6 +64,19 @@ window.addEventListener('DOMContentLoaded', () => {
 		menuItem.classList.add('menu__item', 'menu-item');
 		menuItem.innerHTML = createMenuCard(chosenCategory, i, item);
 		menuList.append(menuItem);
+		menuItem.addEventListener('click', () =>
+			showModal()
+		);
+	}
+
+	function showModal() {
+		modal.classList.add('modal_active');
+		lockBodyScroll();
+	}
+
+	function hideModal() {
+		modal.classList.remove('modal_active');
+		unlockBodyScroll();
 	}
 
 	function createPageContent(currItems) {
@@ -145,6 +158,9 @@ window.addEventListener('DOMContentLoaded', () => {
 				e.stopPropagation();
 				toggleHeaderMenu();
 			}
+		}
+		if ((e.target.classList.contains('modal__overlay')) || (e.target.classList.contains('modal-close'))) {
+			hideModal();
 		}
 	});
 })
