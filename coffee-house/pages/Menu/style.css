@@ -233,7 +233,7 @@ body {
 .modal-card__additive-wrap {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .card__additive__title {
@@ -338,6 +338,20 @@ body {
   }
 }
 
+@media (max-width: 850px) {
+  .modal__content {
+    max-width: 688px;
+  }
+
+  .btn-wrap_additive {
+    max-width: 320px;
+  }
+
+  .modal-card__text-explain {
+    margin-top: -5px;
+  }
+}
+
 @media (max-width: 768px) {
   .menu__items {
     position: relative;
@@ -352,6 +366,21 @@ body {
   }
 }
 
+@media (max-width: 700px) {
+  .modal-card__img-wrap {
+    display: none;
+  }
+ 
+  .modal__content {
+    max-width: 95%;
+    min-width: 310px;
+    display: flex;
+    column-gap: 20px;
+    border-radius: 40px;
+    background: var(--background-body, #E1D4C9);
+    padding: 16px;
+  }
+}
 @media (max-width: 450px) {
 
   .menu__title {

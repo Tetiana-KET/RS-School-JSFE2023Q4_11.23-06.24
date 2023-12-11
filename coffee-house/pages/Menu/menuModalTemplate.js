@@ -41,7 +41,7 @@ function createMenuModalTemplate (card, item) {
 
             <div class="modal-card__additive-wrap">
               <h4 class="card__additive__title">Additives</h4>
-              <div class="modal__btn-wrap">
+              <div class="modal__btn-wrap btn-wrap_additive">
                 <button class="modal-card__btn modal-btn additive__btn">
                  <span class="modal-btn__title">1</span>
                  <span class="modal-btn__text">${item.additives[0].name}</span>

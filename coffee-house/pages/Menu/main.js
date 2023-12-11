@@ -87,6 +87,11 @@ window.addEventListener('DOMContentLoaded', () => {
 				btn.classList.add('modal-card__btn_active');
 				let additionalPrice = parseFloat(Object.values(item.sizes)[i]['add-price']);
 				updateTotalPrice(initialPrice, additionalPrice);
+
+				additiveBtns.forEach((btn) => {
+					btn.classList.remove('modal-card__btn_active');
+					btn.removeAttribute('selected');
+				});
 			});
 		});
 
