@@ -76,25 +76,48 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		const sizeBtns = document.querySelectorAll('.size__btn');
 		const additiveBtns = document.querySelectorAll('.additive__btn');
+		
 		let initialPrice = parseFloat(item.price);
-		let additionalPrice;
-
+	
 		sizeBtns.forEach((btn, i) => {
 			btn.addEventListener('click', () => {
 				sizeBtns.forEach(btn => {
 					btn.classList.remove('modal-card__btn_active');
 				});
 				btn.classList.add('modal-card__btn_active');
-				additionalPrice = parseFloat(Object.values(item.sizes)[i]['add-price']);
+				let additionalPrice = parseFloat(Object.values(item.sizes)[i]['add-price']);
 				updateTotalPrice(initialPrice, additionalPrice);
 			});
 		});
+
+		additiveBtns.forEach((btn, i) => {
+
+			btn.addEventListener('click', () => {
+				let additionalPrice = parseFloat(Object.values(item.additives)[i]['add-price']);
+				const totalPrice = document.querySelector('.price-sum');
+
+				if (btn.hasAttribute('selected')) {
+					btn.classList.remove('modal-card__btn_active');
+					btn.removeAttribute('selected');
+					let initialPrice = Number(totalPrice.textContent.slice(1));
+					initialPrice -= additionalPrice;
+					totalPrice.textContent = `$${initialPrice.toFixed(2)}`;
+				} else {
+					btn.classList.add('modal-card__btn_active');
+					btn.setAttribute('selected', true);
+					let initialPrice = Number(totalPrice.textContent.slice(1));
+					initialPrice += additionalPrice;
+					totalPrice.textContent = `$${initialPrice.toFixed(2)}`;
+				}
+			});
+		});
 	}
-	
+
 	function updateTotalPrice(initial, additional) {
 		const totalPrice = document.querySelector('.price-sum');
 		const finalCost = (initial + additional).toFixed(2);
 		totalPrice.textContent = `$${finalCost}`;
+		initial = finalCost;
 	}
 
 	function showModal() {

@@ -278,6 +278,11 @@ body {
   color: var(--text-light);
 }
 
+.additive__btn.modal-card__btn_active {
+  pointer-events: all;
+  cursor: pointer;
+}
+
 .modal-btn__title {
   border-radius: 100px;
   background: var(--border-light, #C1B6AD);

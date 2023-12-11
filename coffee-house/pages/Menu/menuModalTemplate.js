@@ -43,17 +43,17 @@ function createMenuModalTemplate (card, item) {
               <h4 class="card__additive__title">Additives</h4>
               <div class="modal__btn-wrap">
                 <button class="modal-card__btn modal-btn additive__btn">
-                <span class="modal-btn__title">1</span>
-                <span class="modal-btn__text">${item.additives[0].name}</span>
-              </button>
-              <button class="modal-card__btn modal-btn additive__btn">
-                <span class="modal-btn__title">2</span>
-                <span class="modal-btn__text">${item.additives[1].name}</span>
-              </button>
-              <button class="modal-card__btn modal-btn additive__btn">
-                <span class="modal-btn__title">3</span>
-                <span class="modal-btn__text">${item.additives[2].name}</span>
-              </button>
+                 <span class="modal-btn__title">1</span>
+                 <span class="modal-btn__text">${item.additives[0].name}</span>
+                </button>
+                <button class="modal-card__btn modal-btn additive__btn">
+                 <span class="modal-btn__title">2</span>
+                 <span class="modal-btn__text">${item.additives[1].name}</span>
+                </button>
+                <button class="modal-card__btn modal-btn additive__btn">
+                  <span class="modal-btn__title">3</span>
+                  <span class="modal-btn__text">${item.additives[2].name}</span>
+                </button>
               </div>
             </div>
             <div class="modal-card__price">
