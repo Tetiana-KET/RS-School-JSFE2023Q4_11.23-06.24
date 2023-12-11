@@ -2,6 +2,7 @@
 
 import productsData from './products.js';
 import createMenuCard from './menuCardTemplate.js';
+import createMenuModalTemplate from './menuModalTemplate.js';
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -17,6 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	let chosenCategory = 'coffee';
 
 	const modal = document.querySelector('.modal');
+	const modalContent = document.querySelector('.modal__content');
 
 	function lockBodyScroll() {
 		body.classList.add('no-scroll');
@@ -64,10 +66,15 @@ window.addEventListener('DOMContentLoaded', () => {
 		menuItem.classList.add('menu__item', 'menu-item');
 		menuItem.innerHTML = createMenuCard(chosenCategory, i, item);
 		menuList.append(menuItem);
-		menuItem.addEventListener('click', () =>
-			showModal()
-		);
+		menuItem.addEventListener('click', () => {
+			createModalContent(menuItem, item);
+			showModal();
+		});
 	}
+
+	function createModalContent (card, item) {
+		modalContent.innerHTML = createMenuModalTemplate(card, item);
+	};
 
 	function showModal() {
 		modal.classList.add('modal_active');
