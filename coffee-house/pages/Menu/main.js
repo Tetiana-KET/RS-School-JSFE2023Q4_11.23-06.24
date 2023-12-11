@@ -2,9 +2,9 @@
 
 import productsData from './products.js';
 import createMenuCard from './menuCardTemplate.js';
+import createMenuModalTemplate from './menuModalTemplate.js';
 
 window.addEventListener('DOMContentLoaded', () => {
-
 	const body = document.body;
 	const burgerButton = document.querySelector('.header__burger');
 	const headerBurgerMenu = document.querySelector('.nav__body');
@@ -16,7 +16,8 @@ window.addEventListener('DOMContentLoaded', () => {
 	let currentItems = [];
 	let chosenCategory = 'coffee';
 
-
+	const modal = document.querySelector('.modal');
+	const modalContent = document.querySelector('.modal__content');
 
 	function lockBodyScroll() {
 		body.classList.add('no-scroll');
@@ -64,6 +65,74 @@ window.addEventListener('DOMContentLoaded', () => {
 		menuItem.classList.add('menu__item', 'menu-item');
 		menuItem.innerHTML = createMenuCard(chosenCategory, i, item);
 		menuList.append(menuItem);
+		menuItem.addEventListener('click', () => {
+			createModalContent(menuItem, item);
+			showModal();
+		});
+	}
+
+	function createModalContent(card, item) {
+		modalContent.innerHTML = createMenuModalTemplate(card, item);
+
+		const sizeBtns = document.querySelectorAll('.size__btn');
+		const additiveBtns = document.querySelectorAll('.additive__btn');
+		
+		let initialPrice = parseFloat(item.price);
+	
+		sizeBtns.forEach((btn, i) => {
+			btn.addEventListener('click', () => {
+				sizeBtns.forEach(btn => {
+					btn.classList.remove('modal-card__btn_active');
+				});
+				btn.classList.add('modal-card__btn_active');
+				let additionalPrice = parseFloat(Object.values(item.sizes)[i]['add-price']);
+				updateTotalPrice(initialPrice, additionalPrice);
+
+				additiveBtns.forEach((btn) => {
+					btn.classList.remove('modal-card__btn_active');
+					btn.removeAttribute('selected');
+				});
+			});
+		});
+
+		additiveBtns.forEach((btn, i) => {
+
+			btn.addEventListener('click', () => {
+				let additionalPrice = parseFloat(Object.values(item.additives)[i]['add-price']);
+				const totalPrice = document.querySelector('.price-sum');
+
+				if (btn.hasAttribute('selected')) {
+					btn.classList.remove('modal-card__btn_active');
+					btn.removeAttribute('selected');
+					let initialPrice = Number(totalPrice.textContent.slice(1));
+					initialPrice -= additionalPrice;
+					totalPrice.textContent = `$${initialPrice.toFixed(2)}`;
+				} else {
+					btn.classList.add('modal-card__btn_active');
+					btn.setAttribute('selected', true);
+					let initialPrice = Number(totalPrice.textContent.slice(1));
+					initialPrice += additionalPrice;
+					totalPrice.textContent = `$${initialPrice.toFixed(2)}`;
+				}
+			});
+		});
+	}
+
+	function updateTotalPrice(initial, additional) {
+		const totalPrice = document.querySelector('.price-sum');
+		const finalCost = (initial + additional).toFixed(2);
+		totalPrice.textContent = `$${finalCost}`;
+		initial = finalCost;
+	}
+
+	function showModal() {
+		modal.classList.add('modal_active');
+		lockBodyScroll();
+	}
+
+	function hideModal() {
+		modal.classList.remove('modal_active');
+		unlockBodyScroll();
 	}
 
 	function createPageContent(currItems) {
@@ -83,23 +152,23 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 	createPageContent(currentItems);
 
-	function hideAdditionalItems () {
+	function hideAdditionalItems() {
 		Array.from(menuList.children)
 			.slice(cardsPerPage)
 			.forEach(el => el.classList.add('menu__items_hidden'));
 	}
 
-	function loadMoreItems () {
-		Array.from(menuList.children).forEach((item) => {
+	function loadMoreItems() {
+		Array.from(menuList.children).forEach(item => {
 			item.classList.remove('menu__items_hidden');
 		});
 	}
 
 	// EVENT LISTENERS
 
-	menuTriggers.forEach((trigger) => {
+	menuTriggers.forEach(trigger => {
 		trigger.addEventListener('click', () => {
-			menuTriggers.forEach((btn) => {
+			menuTriggers.forEach(btn => {
 				btn.classList.remove('menu__type_checked', 'disabled');
 			});
 			trigger.classList.add('menu__type_checked', 'disabled');
@@ -110,7 +179,7 @@ window.addEventListener('DOMContentLoaded', () => {
 				createPageContent(currentItems);
 				menuList.style.opacity = 1;
 			}, 300);
-		})	
+		});
 	});
 
 	window.addEventListener('resize', checkBurgerMenu);
@@ -145,6 +214,12 @@ window.addEventListener('DOMContentLoaded', () => {
 				e.stopPropagation();
 				toggleHeaderMenu();
 			}
+		}
+		if (
+			e.target.classList.contains('modal__overlay') ||
+			e.target.classList.contains('modal-close')
+		) {
+			hideModal();
 		}
 	});
 })
