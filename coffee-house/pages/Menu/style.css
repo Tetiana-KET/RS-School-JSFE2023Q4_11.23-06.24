@@ -469,5 +469,4 @@ body {
 .menu__type_checked.disabled>.menu__type-label,
 .menu__type_checked .trigger__icon-wrap img {
   cursor: default;
-  pointer-events: none;
 }
