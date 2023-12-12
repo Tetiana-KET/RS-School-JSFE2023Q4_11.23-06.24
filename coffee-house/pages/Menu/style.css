@@ -95,7 +95,7 @@ body {
   position: absolute;
   opacity: 0;
   visibility: hidden;
-  transform: scale(1) translateY(-200%);
+  transform: scale(0) translateY(-200%);
 }
 
 .menu-item__img-wrap {
