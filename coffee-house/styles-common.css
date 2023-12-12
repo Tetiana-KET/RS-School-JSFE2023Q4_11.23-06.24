@@ -182,6 +182,7 @@ h2 {
     line-height: 125%; 
     background: var(--background-body);
     transition: 0.5s all linear;
+    overflow-y: auto;
   }
 
   .header__nav_open {
