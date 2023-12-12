@@ -379,6 +379,10 @@
     transform: scale(1.0);
   }
 
+  .slider:hover {
+    cursor: pointer;
+  }
+
   .apps__btn:hover {
     background-color: var(--border-dark);
     color: var(--background-body);
