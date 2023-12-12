@@ -55,7 +55,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	let translateX = 0;
 	let width = slider.clientWidth;
 	let progressIntervalId = null;
-	let arrowsSetTimeout = null;
 
 	function setActiveDot(dotIndex) {
 		clearInterval(progressIntervalId);
@@ -203,6 +202,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	});
 
 	slider.addEventListener('touchend', e => {
+		e.preventDefault();
 		touchEndHandler(e);
 	});
 
