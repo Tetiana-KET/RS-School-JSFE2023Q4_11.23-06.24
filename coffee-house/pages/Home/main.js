@@ -174,9 +174,42 @@ window.addEventListener('DOMContentLoaded', () => {
 				setPrevSlide();
 				resetProgress();
 			}
+			touchStartX = null;
+			touchEndX = null;
+			touchStartY = null;
+			touchEndY = null;
+			swipeDirectionX = null;
+			swipeDirectionY = null;
 		}
 		resetProgress();
 	}
+
+	function getMouseTouchStart(e) {
+		touchStartX = Math.floor(e.clientX);
+	}
+
+	function mouseMoveHandler(e) {
+		if (!touchStartX) {
+			return false;
+		}
+
+		 touchEndX = Math.floor(e.clientX);
+		 swipeDirectionX = touchStartX - touchEndX;
+
+		if (swipeDirectionX > 0) {
+			setNextSlide();
+			resetProgress();
+		}
+		if (swipeDirectionX < 0) {
+			setPrevSlide();
+			resetProgress();
+		}
+		touchStartX = null;
+		swipeDirectionX = null;
+		touchEndX = null;
+		resetProgress();
+	}
+
 	// EVENT LISTENERS
 	slider.addEventListener('mouseleave', () => {
 		resetProgress();
@@ -186,6 +219,17 @@ window.addEventListener('DOMContentLoaded', () => {
 		pauseProcess();
 		clearInterval(progressIntervalId);
 	});
+
+	slider.addEventListener('mousedown', getMouseTouchStart);
+	slider.addEventListener('mousemove', mouseMoveHandler);
+	slider.addEventListener('mouseup', () => {
+		setTimeout(()=>{
+			touchStartX = null;
+			swipeDirectionX = null;
+			touchEndX = null;
+		}, 1)
+	});
+	
 
 	arrows.forEach(arrow => {
 		arrow.addEventListener('click', e => {
