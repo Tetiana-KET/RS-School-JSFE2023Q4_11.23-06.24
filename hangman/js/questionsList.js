@@ -288,3 +288,4 @@ const questionsList = [
 		hint: 'a plane figure bounded by one curved line',
 	},
 ];
+export default questionsList;
