@@ -10,8 +10,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 1440px;
-  padding: 25px;
+  max-width: 1540px;
+  padding: 50px;
   margin: auto;
   gap: 30px;
   background-color:#ffffff;
@@ -100,7 +100,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  height: 200px;
+  height: 250px;
   gap: 5px;
   padding: 5px;
 }
@@ -218,11 +218,15 @@
 }
 
 @media (max-width: 767.98px) {
+
   
 }
 
 @media (max-width: 550px) {
-
+  .keyboard__key {
+    width: calc(100% / 7 - 6px);
+    height: calc(100% / 4 - 10px);
+  }
 }
 
 @media (max-width: 359px) {
