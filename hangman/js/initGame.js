@@ -124,7 +124,7 @@ function initGame() {
 		const key = document.createElement('button');
 		key.setAttribute('type', 'button');
 		key.setAttribute('data', `${elem}`);
-		key.classList.add('keyboard__key');
+		key.classList.add('button', 'keyboard__key');
 		key.textContent = arr[i];
 		keyboard.append(key);
 	});
