@@ -1,18 +1,17 @@
 import questionsList from './questionsList.js';
 import {initGame} from './initGame.js';
 import { createGameOverModal, showGameOverModal } from './gameOverModal.js';
-// import name from './name.js';
 
 window.addEventListener('DOMContentLoaded', function () {
 	initGame();
-	createGameOverModal();
-	showGameOverModal();
 
-	getRandomQuestion();
+	let currentWord  = null;
+	const keyboard = document.querySelector('.keyboard');
+
 	function getRandomQuestion() {
 		const random = Math.floor(Math.random() * questionsList.length);
 		const { word, hint } = questionsList[random];
-
+		currentWord = word;
 		const hintText = document.querySelector('.hint__title-text');
 		hintText.textContent = `${hint}`;
 
@@ -29,11 +28,25 @@ window.addEventListener('DOMContentLoaded', function () {
 		// CORRECT WORD IN MODAL
 		const textContentAnswer = document.querySelector('.modal-content__answer');
 		textContentAnswer.textContent = `${word}`;
-
 		console.log(`The correct word was: "${word}"`);
 	}
-});
 
-// console.log(list);
+	keyboard.addEventListener('click', (e) => {
+		const letterPressed = e.target.getAttribute('data');
+		e.target.classList.add('clicked');
+		if (currentWord.includes(letterPressed)) {
+			[...currentWord].forEach((letter, index) => {
+				if (letter === letterPressed) {
+					document.querySelectorAll('.secret-word__letter')[index].textContent = letter;
+					document
+						.querySelectorAll('.secret-word__letter')
+						[index].classList.add('letter__guessed');
+				}
+			})
+		}
+	});
+	createGameOverModal();
+	getRandomQuestion();
+});
 
 
