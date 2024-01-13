@@ -7,12 +7,12 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	let currentWord  = null;
 	let wrongGuess = 0;
-	const attemptPerGame = 6;
 
+	const attemptPerGame = 6;
+	const image = document.querySelector('.picture-wrap__img');
+	const keyboard = document.querySelector('.keyboard');
 	const guessesCount = document.querySelector('.game__count');
 	guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
-
-	const keyboard = document.querySelector('.keyboard');
 
 	function getRandomQuestion() {
 		const random = Math.floor(Math.random() * questionsList.length);
@@ -51,9 +51,13 @@ window.addEventListener('DOMContentLoaded', function () {
 			})
 		} else {
 			wrongGuess += 1;
-			guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
+			image.setAttribute(
+				'src',
+				`../hangman/assets/icons/hangman-${wrongGuess}.svg`
+			);
 		}
-	
+		guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
+
 	});
 	createGameOverModal();
 	getRandomQuestion();
