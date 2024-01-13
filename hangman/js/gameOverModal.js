@@ -18,8 +18,7 @@ function createGameOverModal () {
 
   const image = document.createElement('img');
 	image.classList.add('modal-content__img');
-  image.setAttribute('src', '../hangman/assets/images/lost.gif');
-  image.setAttribute('alt', 'sad icon');
+  image.setAttribute('alt', 'game result icon');
 	imgWrap.append(image);
 
   const textContent = document.createElement('div');
@@ -28,7 +27,6 @@ function createGameOverModal () {
 
   const textContentTitle = document.createElement('h2');
 	textContentTitle.classList.add('modal-content__title');
-  textContentTitle.textContent = 'You lose!';
 	textContent.append(textContentTitle);
 
   const textContentMessage = document.createElement('p');
@@ -47,8 +45,20 @@ function createGameOverModal () {
 	textContent.append(modalButton);
 }
 
-function showGameOverModal() {
-  console.log('show Game Over Modal imported');
+function showGameOverModal(isVictory) {
+  const textContentTitle = document.querySelector('.modal-content__title');
+	textContentTitle.textContent = isVictory ? 'You won!' : 'So Sorry! You lose!';
+  const image = document.querySelector('.modal-content__img');
+  image.src = `../hangman/assets/images/${isVictory ? 'victory' : 'lost'}.gif`
+
+  document.querySelectorAll('.keyboard__key').forEach((button) => {
+    button.disabled = true;
+  });
+  setTimeout(()=> {
+    
+    const modal = document.querySelector('.modal');
+    modal.classList.add('show');
+  }, 500)
 }
 
 export { createGameOverModal, showGameOverModal };

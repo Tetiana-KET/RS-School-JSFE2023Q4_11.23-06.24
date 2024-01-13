@@ -147,7 +147,12 @@
   font-size: 1.6rem;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.5s;
+  transition: all 0.8s;
+}
+
+.modal.show {
+  opacity: 1;
+  visibility: visible;
 }
 
 .modal__overlay {
@@ -177,12 +182,13 @@
 
 .modal-content__img-wrap {
   display: flex;
+  width: 80%;
   justify-content: center;
   align-items: center;
 }
 
 .modal-content__img {
-  max-width: 75%;
+  max-width: 100%;
 }
 
 .modal-content__text {

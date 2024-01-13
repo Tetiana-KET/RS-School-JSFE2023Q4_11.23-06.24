@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	let currentWord  = null;
 	let wrongGuess = 0;
-
+	const guessedLetters = [];
 	const attemptPerGame = 6;
 	const image = document.querySelector('.picture-wrap__img');
 	const keyboard = document.querySelector('.keyboard');
@@ -45,6 +45,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			if (currentWord.includes(letterPressed)) {
 				[...currentWord].forEach((letter, index) => {
 					if (letter === letterPressed) {
+						guessedLetters.push(letter);
 						document.querySelectorAll('.secret-word__letter')[index].textContent = letter;
 						document.querySelectorAll('.secret-word__letter')[index].classList.add('letter__guessed');
 					}
@@ -57,6 +58,9 @@ window.addEventListener('DOMContentLoaded', function () {
 				);
 			}
 			guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
+
+			if (wrongGuess === attemptPerGame) return showGameOverModal(false);
+			if (guessedLetters.length === currentWord.length) return showGameOverModal(true);
 		}
 	});
 	createGameOverModal();
