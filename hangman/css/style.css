@@ -28,6 +28,7 @@
   text-transform: uppercase;
   font-weight: 900;
   font-size: 2rem;
+  text-align: center;
 }
 
 .picture-wrap__img {
@@ -68,10 +69,18 @@
 .game__count-wrap,
 .hint__title-text {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   column-gap: 10px;
+  row-gap: 25px;
   font-size: 25px;
   font-weight: 600;
-  align-items: center;
+  text-align: center;
+}
+
+.game__hint-wrap {
+  margin-bottom: 25px;
 }
 
 .game__count-wrap {
@@ -82,8 +91,9 @@
   color: rgb(220, 17, 17);
 }
 
-.hint__title-text {
-  font-weight: 700;
+.hint__title {
+  color: #1b1e76;
+  font-weight: 900;
 }
 
 .keyboard {

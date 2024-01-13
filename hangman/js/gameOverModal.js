@@ -38,7 +38,6 @@ function createGameOverModal () {
 
   const textContentAnswer = document.createElement('span');
 	textContentAnswer.classList.add('modal-content__answer');
-	textContentAnswer.textContent = 'Apple';
 	textContentMessage.append(textContentAnswer);
 
   const modalButton = document.createElement('button');

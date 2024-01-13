@@ -34,27 +34,6 @@ function initGame() {
 	secretWord.classList.add('game__secret-word');
 	gameWrap.append(secretWord);
 
-	// one letter
-	const letter = document.createElement('li');
-	letter.classList.add('secret-word__letter');
-	secretWord.append(letter);
-	letter.textContent = '';
-	const letter1 = document.createElement('li');
-	letter1.classList.add('secret-word__letter');
-	secretWord.append(letter1);
-	const letter11 = document.createElement('li');
-	letter11.classList.add('secret-word__letter');
-	secretWord.append(letter11);
-	const letter111 = document.createElement('li');
-	letter111.classList.add('secret-word__letter');
-	secretWord.append(letter111);
-	const letter1111 = document.createElement('li');
-	letter1111.classList.add('secret-word__letter');
-	secretWord.append(letter1111);
-	const letter11111 = document.createElement('li');
-	letter11111.classList.add('secret-word__letter');
-	secretWord.append(letter11111);
-
 	// hint
 	const hintWrap = document.createElement('div');
 	hintWrap.classList.add('game__hint-wrap');
