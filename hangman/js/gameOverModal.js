@@ -55,7 +55,6 @@ function showGameOverModal(isVictory) {
     button.disabled = true;
   });
   setTimeout(()=> {
-    
     const modal = document.querySelector('.modal');
     modal.classList.add('show');
   }, 500)

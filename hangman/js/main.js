@@ -14,6 +14,26 @@ window.addEventListener('DOMContentLoaded', function () {
 	const guessesCount = document.querySelector('.game__count');
 	guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
 
+	function resetGame () {
+		wrongGuess = 0;
+		guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
+		image.setAttribute(
+			'src',
+			`../hangman/assets/icons/hangman-${wrongGuess}.svg`
+		);
+		guessedLetters.length = 0;
+		document.querySelectorAll('.keyboard__key').forEach(button => {
+			button.disabled = false;
+			button.classList.remove('clicked');
+		});
+		const secretWord = document.querySelector('.game__secret-word');
+		secretWord.innerHTML = '';
+
+		const modal = document.querySelector('.modal');
+		modal.classList.remove('show');
+		getRandomQuestion();
+	}
+
 	function getRandomQuestion() {
 		const random = Math.floor(Math.random() * questionsList.length);
 		const { word, hint } = questionsList[random];
@@ -64,6 +84,8 @@ window.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 	createGameOverModal();
+	const modalButton = document.querySelector('.try-again-btn');
+	modalButton.addEventListener('click', resetGame);
 	getRandomQuestion();
 });
 
