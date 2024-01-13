@@ -62,7 +62,6 @@ function initGame() {
 	const guessesCount = document.createElement('p');
 	guessesCount.classList.add('game__count');
 	countWrap.append(guessesCount);
-	guessesCount.textContent = '0 / 6';
 
 	//keyboard
 	const keyboard = document.createElement('div');

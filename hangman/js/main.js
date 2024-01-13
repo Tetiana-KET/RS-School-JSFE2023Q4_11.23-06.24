@@ -6,6 +6,12 @@ window.addEventListener('DOMContentLoaded', function () {
 	initGame();
 
 	let currentWord  = null;
+	let wrongGuess = 0;
+	const attemptPerGame = 6;
+
+	const guessesCount = document.querySelector('.game__count');
+	guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
+
 	const keyboard = document.querySelector('.keyboard');
 
 	function getRandomQuestion() {
@@ -43,7 +49,11 @@ window.addEventListener('DOMContentLoaded', function () {
 						[index].classList.add('letter__guessed');
 				}
 			})
+		} else {
+			wrongGuess += 1;
+			guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
 		}
+	
 	});
 	createGameOverModal();
 	getRandomQuestion();
