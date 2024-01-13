@@ -100,7 +100,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  height: 250px;
+  height: 220px;
   gap: 5px;
   padding: 5px;
 }
@@ -147,7 +147,7 @@
   font-size: 1.6rem;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.8s;
+  transition: all 0.3s;
 }
 
 .modal.show {
@@ -213,22 +213,67 @@
   padding: 15px;
 }
 
-@media (max-width: 991.98px) {
-
-}
-
-@media (max-width: 767.98px) {
-
-  
-}
-
 @media (max-width: 550px) {
+
+  .modal__content {
+    padding: 25px 15px;
+  }
+
+  .modal-content__text {
+    gap: 25px;
+  }
+
+  .page {
+    padding: 20px;
+  }
+
+  .container {
+    padding: 20px;
+    gap: 15px;
+  }
+
+  .picture-wrap {
+    width: 60%;
+    row-gap: 10px;
+    font-size: 20px;
+  }
+
+  .game-wrap {
+    row-gap: 8px;
+  }
+
+  .game__secret-word {
+    column-gap: 3px;
+    margin-bottom: 20px;
+    padding-top: 15px;
+  }
+
+  .secret-word__letter {
+    width: 25px;
+  }
+
+  .game__hint-wrap {
+    row-gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .game__count-wrap {
+    margin-bottom: 10px;
+  }
+
+  .game__count-text,
+  .hint__title-text {
+    row-gap: 15px;
+    font-size: 20px;
+  }
+
+  .game__keyboard, 
+  .game__secret-word {
+    order: 1;
+  }
+
   .keyboard__key {
     width: calc(100% / 7 - 6px);
     height: calc(100% / 4 - 10px);
   }
-}
-
-@media (max-width: 359px) {
-
 }
