@@ -47,7 +47,7 @@ function createGameOverModal () {
 
 function showGameOverModal(isVictory) {
   const textContentTitle = document.querySelector('.modal-content__title');
-	textContentTitle.textContent = isVictory ? 'You won!' : 'So Sorry! You lose!';
+	textContentTitle.textContent = isVictory ? 'You won!' : 'You lose!';
   const image = document.querySelector('.modal-content__img');
   image.src = `../hangman/assets/images/${isVictory ? 'victory' : 'lost'}.gif`
 
