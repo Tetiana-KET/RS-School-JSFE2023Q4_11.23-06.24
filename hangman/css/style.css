@@ -173,7 +173,6 @@
   align-items: center;
   justify-content: space-between;
   max-width: 650px;
-  height: 70%;
   row-gap: 20px;
   padding: 70px 16px;
   border-radius: 40px;
@@ -216,11 +215,15 @@
 @media (max-width: 550px) {
 
   .modal__content {
-    padding: 25px 15px;
+    padding:40px 10px;
   }
 
   .modal-content__text {
     gap: 25px;
+  }
+
+  .try-again-btn {
+    font-size: 20px;
   }
 
   .page {
