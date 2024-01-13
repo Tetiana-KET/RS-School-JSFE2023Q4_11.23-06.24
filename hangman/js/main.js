@@ -38,26 +38,26 @@ window.addEventListener('DOMContentLoaded', function () {
 	}
 
 	keyboard.addEventListener('click', (e) => {
-		const letterPressed = e.target.getAttribute('data');
-		e.target.classList.add('clicked');
-		if (currentWord.includes(letterPressed)) {
-			[...currentWord].forEach((letter, index) => {
-				if (letter === letterPressed) {
-					document.querySelectorAll('.secret-word__letter')[index].textContent = letter;
-					document
-						.querySelectorAll('.secret-word__letter')
-						[index].classList.add('letter__guessed');
-				}
-			})
-		} else {
-			wrongGuess += 1;
-			image.setAttribute(
-				'src',
-				`../hangman/assets/icons/hangman-${wrongGuess}.svg`
-			);
+		if (e.target.classList.contains('keyboard__key')) {
+			const letterPressed = e.target.getAttribute('data');
+			e.target.classList.add('clicked');
+			e.target.disabled = true;
+			if (currentWord.includes(letterPressed)) {
+				[...currentWord].forEach((letter, index) => {
+					if (letter === letterPressed) {
+						document.querySelectorAll('.secret-word__letter')[index].textContent = letter;
+						document.querySelectorAll('.secret-word__letter')[index].classList.add('letter__guessed');
+					}
+				});
+			} else {
+				wrongGuess += 1;
+				image.setAttribute(
+					'src',
+					`../hangman/assets/icons/hangman-${wrongGuess}.svg`
+				);
+			}
+			guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
 		}
-		guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
-
 	});
 	createGameOverModal();
 	getRandomQuestion();
