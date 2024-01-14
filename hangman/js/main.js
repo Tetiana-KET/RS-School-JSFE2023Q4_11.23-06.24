@@ -57,32 +57,50 @@ window.addEventListener('DOMContentLoaded', function () {
 		console.log(`The correct word was: "${word}"`);
 	}
 
+	function checkLetter(letterPressed) {
+		if (currentWord.includes(letterPressed)) {
+			[...currentWord].forEach((letter, index) => {
+				if (letter === letterPressed) {
+					guessedLetters.push(letter);
+					document.querySelectorAll('.secret-word__letter')[index].textContent =
+						letter;
+					document
+						.querySelectorAll('.secret-word__letter')
+						[index].classList.add('letter__guessed');
+				}
+			});
+		} else {
+			wrongGuess += 1;
+			image.setAttribute(
+				'src',
+				`../hangman/assets/icons/hangman-${wrongGuess}.svg`
+			);
+		}
+		guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
+
+		if (wrongGuess === attemptPerGame) return showGameOverModal(false);
+		if (guessedLetters.length === currentWord.length)
+			return showGameOverModal(true);
+	}
+
 	keyboard.addEventListener('click', (e) => {
 		if (e.target.classList.contains('keyboard__key')) {
 			const letterPressed = e.target.getAttribute('data');
 			e.target.classList.add('clicked');
 			e.target.disabled = true;
-			if (currentWord.includes(letterPressed)) {
-				[...currentWord].forEach((letter, index) => {
-					if (letter === letterPressed) {
-						guessedLetters.push(letter);
-						document.querySelectorAll('.secret-word__letter')[index].textContent = letter;
-						document.querySelectorAll('.secret-word__letter')[index].classList.add('letter__guessed');
-					}
-				});
-			} else {
-				wrongGuess += 1;
-				image.setAttribute(
-					'src',
-					`../hangman/assets/icons/hangman-${wrongGuess}.svg`
-				);
-			}
-			guessesCount.textContent = `${wrongGuess} / ${attemptPerGame}`;
-
-			if (wrongGuess === attemptPerGame) return showGameOverModal(false);
-			if (guessedLetters.length === currentWord.length) return showGameOverModal(true);
+			checkLetter(letterPressed);
 		}
 	});
+
+	document.addEventListener('keydown', (e)  => {
+		const letterPressed = e.key.toLowerCase();
+		const keyPressed = document.getElementById(`${letterPressed}`);
+		if (keyPressed.disabled) return;
+		keyPressed.classList.add('clicked');
+		keyPressed.disabled = true;
+		checkLetter(letterPressed);
+	});
+
 	createGameOverModal();
 	const modalButton = document.querySelector('.try-again-btn');
 	modalButton.addEventListener('click', resetGame);

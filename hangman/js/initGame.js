@@ -102,6 +102,7 @@ function initGame() {
 		const key = document.createElement('button');
 		key.setAttribute('type', 'button');
 		key.setAttribute('data', `${elem}`);
+		key.setAttribute('id', `${elem}`);
 		key.classList.add('button', 'keyboard__key');
 		key.textContent = arr[i];
 		keyboard.append(key);
