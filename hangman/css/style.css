@@ -45,6 +45,8 @@
 
 .game__secret-word {
   display: flex;
+  justify-content: center;
+  width: 100%;
   column-gap: 10px;
   margin-bottom: 30px;
   padding-top: 30px;
@@ -52,7 +54,7 @@
 
 .secret-word__letter {
   display: block;
-  width: 35px;
+  flex-basis: 35px;
   height: 35px;
   border-bottom: 3px solid rgb(20, 19, 19);
   text-align: center;
@@ -252,7 +254,7 @@
   }
 
   .secret-word__letter {
-    width: 25px;
+    font-size: 20px;
   }
 
   .game__hint-wrap {
@@ -278,5 +280,21 @@
   .keyboard__key {
     width: calc(100% / 7 - 6px);
     height: calc(100% / 4 - 10px);
+  }
+}
+
+@media (max-width: 360px) {
+
+  .page {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .secret-word__letter {
+    font-size: 18px;
   }
 }
