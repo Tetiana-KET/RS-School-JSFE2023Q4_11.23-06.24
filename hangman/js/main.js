@@ -1,5 +1,6 @@
 import questionsList from './questionsList.js';
 import {initGame} from './initGame.js';
+import { keyList } from './initGame.js';
 import { createGameOverModal, showGameOverModal } from './gameOverModal.js';
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -54,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		// CORRECT WORD IN MODAL
 		const textContentAnswer = document.querySelector('.modal-content__answer');
 		textContentAnswer.textContent = `${word}`;
-		console.log(`The correct word was: "${word}"`);
+		console.log(`The secret word is: "${word}"`);
 	}
 
 	function checkLetter(letterPressed) {
@@ -95,12 +96,14 @@ window.addEventListener('DOMContentLoaded', function () {
 	document.addEventListener('keydown', (e)  => {
 		const letterPressed = e.key.toLowerCase();
 		const keyPressed = document.getElementById(`${letterPressed}`);
-		if (!keyPressed.classList.contains('clicked')) {
-			keyPressed.classList.add('clicked');
-			keyPressed.disabled = true;
-			checkLetter(letterPressed);
-		}
 
+		if (keyList.includes(letterPressed)) {
+			if (!keyPressed.classList.contains('clicked')) {
+				keyPressed.classList.add('clicked');
+				keyPressed.disabled = true;
+				checkLetter(letterPressed);
+			}
+		}
 	});
 
 	createGameOverModal();

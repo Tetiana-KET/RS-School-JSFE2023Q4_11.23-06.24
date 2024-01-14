@@ -1,3 +1,33 @@
+//KEY
+const keyList = [
+	'q',
+	'w',
+	'e',
+	'r',
+	't',
+	'y',
+	'u',
+	'i',
+	'o',
+	'p',
+	'a',
+	's',
+	'd',
+	'f',
+	'g',
+	'h',
+	'j',
+	'k',
+	'l',
+	'z',
+	'x',
+	'c',
+	'v',
+	'b',
+	'n',
+	'm',
+];
+
 function initGame() {
 	const page = document.createElement('main');
 	page.classList.add('page');
@@ -68,36 +98,6 @@ function initGame() {
 	keyboard.classList.add('game__keyboard', 'keyboard');
 	gameWrap.append(keyboard);
 
-	//KEY
-	const keyList = [
-		'q',
-		'w',
-		'e',
-		'r',
-		't',
-		'y',
-		'u',
-		'i',
-		'o',
-		'p',
-		'a',
-		's',
-		'd',
-		'f',
-		'g',
-		'h',
-		'j',
-		'k',
-		'l',
-		'z',
-		'x',
-		'c',
-		'v',
-		'b',
-		'n',
-		'm',
-	];
-
 	keyList.forEach((elem, i, arr) => {
 		const key = document.createElement('button');
 		key.setAttribute('type', 'button');
@@ -109,3 +109,4 @@ function initGame() {
 	});
 }
 export { initGame };
+export { keyList };
