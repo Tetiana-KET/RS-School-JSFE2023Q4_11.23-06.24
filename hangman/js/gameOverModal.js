@@ -1,7 +1,7 @@
 function createGameOverModal () {
 
   const modal = document.createElement('div');
-  modal.classList.add('modal');
+  modal.classList.add('modal', 'modal__game-over');
   document.body.prepend(modal);
   //overlay
   const modalOverlay = document.createElement('div');
@@ -56,7 +56,7 @@ function showGameOverModal(isVictory) {
     button.classList.add('clicked');
   });
   setTimeout(()=> {
-    const modal = document.querySelector('.modal');
+    const modal = document.querySelector('.modal__game-over');
     modal.classList.add('show');
   }, 500)
 }
