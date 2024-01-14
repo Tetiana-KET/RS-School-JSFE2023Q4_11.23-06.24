@@ -2,6 +2,7 @@ import questionsList from './questionsList.js';
 import {initGame} from './initGame.js';
 import { keyList } from './initGame.js';
 import { createGameOverModal, showGameOverModal } from './gameOverModal.js';
+import { createAlertModal } from './wrongLangModal.js';
 
 window.addEventListener('DOMContentLoaded', function () {
 	initGame();
@@ -63,7 +64,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		const secretWord = document.querySelector('.game__secret-word');
 		secretWord.innerHTML = '';
 
-		const modal = document.querySelector('.modal');
+		const modal = document.querySelector('.modal__game-over');
 		modal.classList.remove('show');
 		getRandomQuestion();
 	}
@@ -105,6 +106,12 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	document.addEventListener('keydown', (e)  => {
 		const letterPressed = e.key.toLowerCase();
+
+		if (e.key.toUpperCase().match(/([А-Я])/g)) {
+			const modalAlert = document.querySelector('.modal__alert');
+			modalAlert.classList.add('show');
+		}
+
 		const keyPressed = document.getElementById(`${letterPressed}`);
 
 		if (keyList.includes(letterPressed)) {
@@ -117,9 +124,16 @@ window.addEventListener('DOMContentLoaded', function () {
 	});
 
 	createGameOverModal();
+	createAlertModal();
+	getRandomQuestion();
+
 	const modalButton = document.querySelector('.try-again-btn');
 	modalButton.addEventListener('click', resetGame);
-	getRandomQuestion();
+	const modalAlertButton = document.querySelector('.ok-btn');
+	modalAlertButton.addEventListener('click', () => {
+		const modalAlert = document.querySelector('.modal__alert');
+		modalAlert.classList.remove('show');
+	});
 });
 
 
