@@ -53,6 +53,7 @@ function showGameOverModal(isVictory) {
 
   document.querySelectorAll('.keyboard__key').forEach((button) => {
     button.disabled = true;
+    button.classList.add('clicked');
   });
   setTimeout(()=> {
     const modal = document.querySelector('.modal');
