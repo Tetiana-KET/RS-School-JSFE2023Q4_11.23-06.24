@@ -95,10 +95,12 @@ window.addEventListener('DOMContentLoaded', function () {
 	document.addEventListener('keydown', (e)  => {
 		const letterPressed = e.key.toLowerCase();
 		const keyPressed = document.getElementById(`${letterPressed}`);
-		if (keyPressed.disabled) return;
-		keyPressed.classList.add('clicked');
-		keyPressed.disabled = true;
-		checkLetter(letterPressed);
+		if (!keyPressed.classList.contains('clicked')) {
+			keyPressed.classList.add('clicked');
+			keyPressed.disabled = true;
+			checkLetter(letterPressed);
+		}
+
 	});
 
 	createGameOverModal();
