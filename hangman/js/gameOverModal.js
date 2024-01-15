@@ -46,19 +46,27 @@ function createGameOverModal () {
 }
 
 function showGameOverModal(isVictory) {
-  const textContentTitle = document.querySelector('.modal-content__title');
-	textContentTitle.textContent = isVictory ? 'You won!' : 'You lose!';
-  const image = document.querySelector('.modal-content__img');
-  image.src = `../hangman/assets/images/${isVictory ? 'victory' : 'lost'}.gif`
+	const image = document.querySelector('.modal-content__img');
+	const textContentTitle = document.querySelector('.modal-content__title');
+	const textContentMessage = document.querySelector('.modal-content__message');
+	const textContentAnswer = document.querySelector('.modal-content__answer');
 
-  document.querySelectorAll('.keyboard__key').forEach((button) => {
-    button.disabled = true;
-    button.classList.add('clicked');
-  });
-  setTimeout(()=> {
-    const modal = document.querySelector('.modal__game-over');
-    modal.classList.add('show');
-  }, 500)
+	image.src = `../hangman/assets/images/${isVictory ? 'victory' : 'lost'}.gif`;
+	textContentTitle.textContent = isVictory ? 'You won!' : 'You lose!';
+	
+	textContentAnswer.classList.add(
+		`${isVictory ? 'victory-answer' : 'lost-answer'}`
+	);
+
+	document.querySelectorAll('.keyboard__key').forEach(button => {
+		button.disabled = true;
+		button.classList.add('clicked');
+	});
+
+	setTimeout(() => {
+		const modal = document.querySelector('.modal__game-over');
+		modal.classList.add('show');
+	}, 500);
 }
 
 export { createGameOverModal, showGameOverModal };
