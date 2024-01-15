@@ -41,6 +41,8 @@ window.addEventListener('DOMContentLoaded', function () {
 		// CORRECT WORD IN MODAL
 		const textContentAnswer = document.querySelector('.modal-content__answer');
 		textContentAnswer.textContent = `${word}`;
+		textContentAnswer.classList.remove('victory-answer');
+		textContentAnswer.classList.remove('lost-answer');
 		console.log(`The secret word is: "${word}"`);
 		previousRandom = random;
 	}

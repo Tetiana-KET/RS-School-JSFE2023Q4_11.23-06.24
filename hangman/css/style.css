@@ -208,6 +208,13 @@
 .modal-content__answer {
   font-weight: 900;
 }
+.victory-answer {
+  color: rgb(12 127 12);
+} 
+
+.lost-answer {
+  color: rgb(179, 11, 11);
+}
 
 .try-again-btn {
   width: 60%;
