@@ -1,3 +1,7 @@
+body.no-scroll {
+  overflow: hidden;
+}
+
 .page {
   display: flex;
   min-height: 100vh;
@@ -8,7 +12,6 @@
 
 .container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   max-width: 1540px;
   padding: 50px;
@@ -144,7 +147,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
   font-family: 'Inter', sans-serif;
   font-size: 1.6rem;
   opacity: 0;
@@ -174,40 +177,41 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  max-width: 650px;
-  row-gap: 20px;
-  padding: 70px 16px;
+  gap: 10px;
+  max-width: 50%;
+  padding: 20px;
   border-radius: 40px;
   background: #ffffff;
 }
 
 .modal-content__img-wrap {
   display: flex;
-  width: 80%;
+  max-width: 15%;
   justify-content: center;
   align-items: center;
-}
-
-.modal-content__img {
-  max-width: 100%;
 }
 
 .modal-content__text {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
   text-align: center;
 }
 
 .modal-content__title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 900;
+  margin-bottom: 5%;
+}
+
+.modal-content__message {
+  margin-bottom: 5%;
 }
 
 .modal-content__answer {
   font-weight: 900;
 }
+
 .victory-answer {
   color: rgb(12 127 12);
 } 
@@ -216,37 +220,51 @@
   color: rgb(179, 11, 11);
 }
 
-.try-again-btn {
-  width: 60%;
-  padding: 15px;
-}
-
 /* Alert Modal */
 .modal__alert .modal-content {
-  padding: 70px 50px;
   border-radius: 15px;
   color: rgb(193, 17, 17);
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 900;
 }
 
-.ok-btn {
-  width: 200px;
+.modal__alert .modal-content__text {
+  min-height: 250px;
+  justify-content: space-between;
+}
+
+.ok-btn,
+.try-again-btn {
+  width: 150px;
   padding: 10px;
+  font-size: 18px;
+}
+
+@media (max-width: 900px) {
+  .container {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 670px) {
+  .modal__content {
+    max-width: 70%;
+    font-size: 1.5rem;
+    gap: 10px;
+  }
 }
 
 @media (max-width: 550px) {
 
+  .modal__alert .modal-content {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
   .modal__content {
-    padding:40px 10px;
-  }
-
-  .modal-content__text {
-    gap: 25px;
-  }
-
-  .try-again-btn {
-    font-size: 20px;
+    max-width: 90%;
+    font-size: 1rem;
+    gap: 10px;
   }
 
   .page {
@@ -259,9 +277,8 @@
   }
 
   .picture-wrap {
-    width: 60%;
-    row-gap: 10px;
-    font-size: 20px;
+    max-width: 50%;
+    font-size: 1rem;
   }
 
   .game-wrap {
@@ -305,7 +322,6 @@
 }
 
 @media (max-width: 360px) {
-
   .page {
     padding: 10px;
   }
