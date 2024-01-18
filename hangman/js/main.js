@@ -48,6 +48,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	}
 
 	function resetGame() {
+		document.body.classList.remove('no-scroll');
+
 		random = getRandom();
 		while (previousRandom === random) {
 			random = getRandom();
@@ -112,6 +114,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		if (e.key.toUpperCase().match(/([А-Я])/g)) {
 			const modalAlert = document.querySelector('.modal__alert');
 			modalAlert.classList.add('show');
+			document.body.classList.add('no-scroll');
 		}
 
 		const keyPressed = document.getElementById(`${letterPressed}`);
@@ -135,6 +138,7 @@ window.addEventListener('DOMContentLoaded', function () {
 	modalAlertButton.addEventListener('click', () => {
 		const modalAlert = document.querySelector('.modal__alert');
 		modalAlert.classList.remove('show');
+		document.body.classList.remove('no-scroll');
 	});
 });
 
