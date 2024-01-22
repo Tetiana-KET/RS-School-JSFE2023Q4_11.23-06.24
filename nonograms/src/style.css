@@ -37,8 +37,8 @@
   --beige-3: #e8cba8;
   --beige-4: #c17a48;
   --beige-5: #7b2f0e;
-  --chocolate-dark: #360408;
-  --chocolate-light: #441f0b;
+  --chocolate-dark: #220103;
+  --chocolate-light: #351605;
 }
 
 html {
@@ -48,9 +48,6 @@ html {
 body {
   height: 100vh;
   font-family: "Inter";
-  /* font-size: 16px; if 16px- not necessary to point it is default size */
-  /* font-style: normal; if normal- not necessary to point it is default size*/
-  /* font-weight: 400; if 400px- not necessary to point it is default size */
 }
 
 body.no-scroll {
@@ -58,7 +55,6 @@ body.no-scroll {
 }
 
 [class*="__container"] {
-  /* min-width: 1440px; + safety padding = 1310*/
   max-width: 1470px;
   margin: 0 auto;
   padding: 0 15px; 
@@ -74,11 +70,42 @@ body.no-scroll {
 }
 
 .header {
+  align-items: center;
+  display: flex;
   height: 10vh;
   background: var(--beige-3);
   opacity: 0.7;
   box-shadow: 0px 4px 4px rgba(46, 20, 7, 0.5);
 }
+
+.settings-btns-wrap {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+ border: none;
+} 
+
+.buttons-settings {
+  width: 100px;
+  height: 30px;
+  border-radius: 2px;
+  background-color: var(--chocolate-light);
+  color: var(--beige-3);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  transition: all 0.5s;
+}
+
+.buttons-settings:hover {
+  background-color: var(--chocolate-dark);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 14px 28px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
+  cursor: pointer;
+}
+
+
 
 .main {
   
@@ -86,6 +113,8 @@ body.no-scroll {
 
 /* FOOTER */
 .footer {
+  display: flex;
+  align-items: center;
   padding: 10px 0;
   height: 10vh;
   background: var(--beige-3);
@@ -99,12 +128,16 @@ body.no-scroll {
   align-items: center;
 }
 
+.footer__wrap {
+  width: 100%;
+}
+
 .social-items {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 110px;
-  gap: 5px;
+  width: 150px;
+  gap: 10px;
 }
 
 .social-item {
@@ -113,6 +146,12 @@ body.no-scroll {
   align-items: center;
   font-size: 20px;
   font-weight: 900;
+  transition: all 0.5s;
+}
+
+.social-item:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 }
 
 .social-item-link {
@@ -125,8 +164,8 @@ body.no-scroll {
 }
 
 .rs-icon-wrap {
-  width: 70px;
-  height: 50px;
+  width: 95px;
+  height: 40px;
 }
 
 .rs-icon-wrap .rsschool-link {
@@ -134,4 +173,23 @@ body.no-scroll {
   width: 100%;
   height: 100%;
   background: url('./assets/icons/rsschool.png') 0 0/100% 100% no-repeat;;
+}
+
+@media (max-width: 600px) {
+  .rs-icon-wrap {
+    width: 60px;
+    height: 30px;
+  }
+  .social-item-link svg {
+    width: 25px;
+    height: 25px;
+  }
+  .social-items {
+    width: 100px;
+    gap: 5px;
+  }
+  .social-item {
+    height: 25px;
+    font-size: 17px;
+  }
 }
