@@ -20,9 +20,15 @@ module.exports = {
 		port: 9000,
 		compress: true,
 		hot: true,
-		static: {
-			directory: path.join(__dirname, 'dist'),
-		},
+		static: [
+			{
+				directory: path.join(__dirname, 'dist'),
+			},
+			{
+				directory: path.join(__dirname, 'assets'),
+				publicPath: '/assets/', // Add this line
+			},
+		],
 	},
 	module: {
 		rules: [
