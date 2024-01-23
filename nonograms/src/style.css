@@ -1,36 +1,3 @@
-/*
-Позиционирование
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-Блочная модель
-
-  display: inline-block;
-  float: left;
-  width: 150px;
-  height: 150px;
-  margin: 25px;
-  padding: 25px;
-
-Типографика
-  font: normal 13px/1.5 "Helvetica", sans-serif;
-  font-style: normal;
-  font-size: 13px;
-  line-height: 1.5;
-  font-family: "Helvetica", sans-serif;
-  text-align: start;
-Оформление
-  color: #999999;
-  background-color: #e3e3e3;
-  border: 1px solid #333333;
-  border-radius: 5px;
-  opacity: 1;
-Анимация
-Разное
-*/
 :root {
   --beige-1: #efe7dd;
   --beige-2: #dab897;
@@ -39,6 +6,7 @@
   --beige-5: #7b2f0e;
   --chocolate-dark: #220103;
   --chocolate-light: #351605;
+  --settings-bgr: #5d4132ed;
 }
 
 html {
@@ -60,6 +28,12 @@ body.no-scroll {
   padding: 0 15px; 
 }
 
+.button {
+  border: none;
+  outline: none;
+  background: none;
+} 
+
 .site-wrapper {
   min-height: 100%;
   display: flex;
@@ -72,7 +46,7 @@ body.no-scroll {
 .header {
   align-items: center;
   display: flex;
-  height: 10vh;
+  padding: 25px 0;
   background: var(--beige-3);
   opacity: 0.7;
   box-shadow: 0px 4px 4px rgba(46, 20, 7, 0.5);
@@ -85,9 +59,6 @@ body.no-scroll {
   justify-content: center;
 }
 
-.button {
- border: none;
-} 
 
 .buttons-settings {
   width: 100px;
@@ -105,10 +76,157 @@ body.no-scroll {
   cursor: pointer;
 }
 
-
-
 .main {
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80vh;
+  padding: 20px;
+  text-align: center;
+}
+
+/* LEVEL SWITCHER */
+.settings__wrap {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: 500;
+  color: var(--beige-3);
+}
+
+.settings__level {
+  position: relative;
+}
+
+.level__header {
+  background: var(--settings-bgr);
+  padding: 10px;
+  text-align: center;
+  border-radius: 2px;
+  color: var(--beige-3);
+  background-color: var(--settings-bgr);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  transition: all 0.5s;
+}
+
+.level__header-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+}
+
+.level__current {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.level__body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  padding: 10px;
+  display: none;
+  background-color: var(--settings-bgr);
+}
+
+.level__value {
+  margin-bottom: 12px;
+  line-height: 34px;
+  border-bottom: 1px solid var(--beige-3);
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.level__value:hover {
+  border-bottom: 1px solid var(--beige-1);
+  color: var(--beige-1);
+}
+
+/* TIMER */
+.settings__timer {
+  padding: 8px;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 2px;
+  color: var(--beige-3);
+  background-color: var(--settings-bgr);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  transition: all 0.5s;
+}
+
+/* THEME SWITCHER */
+.settings__switcher {
+  display: flex;
+  align-items: center;
+  padding: 7px;
+  border-radius: 2px;
+  background-color: var(--settings-bgr);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  transition: all 0.5s;
+}
+
+.level__header:hover,
+.settings__switcher:hover {
+  background-color: var(--chocolate-dark);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 14px 28px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
+  cursor: pointer;
+}
+
+.switcher input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switcher__theme-name {
+  /* font-size: 16px; */
+  font-weight: 500;
+  line-height: 24px;
+  color: var(--beige-3);
+}
+
+.switcher__button {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 19px;
+}
+
+.switcher__slider-wrap {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid var(--beige-3);
+  border-radius: 34px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.switcher__slider-wrap:before {
+  position: absolute;
+  left: 18px;
+  bottom: 2px;
+  content: '';
+  height: 13px;
+  width: 13px;
+  background-color: var(--beige-3);
+  border-radius: 50%;
+  transition: all 0.5s;
+}
+
+.main__game {
+  /* width: 80%;
+  height: 60vh; */
+  /* background: url('./assets/images/paper.png') 0 0/100% 100% no-repeat; */
 }
 
 /* FOOTER */
@@ -172,7 +290,7 @@ body.no-scroll {
   display: inline-block;
   width: 100%;
   height: 100%;
-  background: url('./assets/icons/rsschool.png') 0 0/100% 100% no-repeat;;
+  background: url('./assets/icons/rsschool.png') 0 0/100% 100% no-repeat;
 }
 
 @media (max-width: 600px) {

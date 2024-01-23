@@ -5,7 +5,9 @@ export default function createFooterHtml () {
 
       <ul class="social-items developer">
         <li class="social-item">
-          Tetiana
+          <a class="social-item-link" href="https://github.com/Tetiana-KET" target="_blank">
+            Tetiana
+          </a>
         </li>
         <li class="social-item">
           <a class="social-item-link" href="https://github.com/Tetiana-KET" target="_blank">

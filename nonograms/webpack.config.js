@@ -20,28 +20,15 @@ module.exports = {
 		port: 9000,
 		compress: true,
 		hot: true,
-		static: [
-			{
-				directory: path.join(__dirname, 'dist'),
-			},
-			{
-				directory: path.join(__dirname, 'assets'),
-				publicPath: '/assets/', // Add this line
-			},
-		],
+		static: {
+			directory: path.join(__dirname, 'dist'),
+		},
 	},
 	module: {
 		rules: [
-			{ test: /\.svg$/, use: 'svg-inline-loader' },
 			{
 				test: /\.css$/,
-				use: [
-					{ loader: 'style-loader' },
-					{
-						loader: 'css-loader',
-						// options: { modules: true },
-					},
-				],
+				use: ['style-loader', 'css-loader'],
 			},
 			{
 				test: /\.(jpe?g|png|gif|svg|eot|ttf|woff?2)$/i,
