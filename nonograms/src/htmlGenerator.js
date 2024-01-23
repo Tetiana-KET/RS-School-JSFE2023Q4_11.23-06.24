@@ -1,6 +1,7 @@
 import createFooterHtml from './footerTemplate';
 import createHeaderHtml from './headerTemplate';
 import createSettingsHtml from './settingsTemplate';
+import createInfoHtml from './infoTemplate';
 
 export default function generateHtml() {
 
@@ -41,6 +42,6 @@ export default function generateHtml() {
 	const mainInfo = document.createElement('section');
 	mainInfo.classList.add('main__info');
 	main.append(mainInfo);
-	mainInfo.textContent = 'mainInfo';
+	mainInfo.innerHTML = createInfoHtml();
 
 }

@@ -229,6 +229,45 @@ body.no-scroll {
   /* background: url('./assets/images/paper.png') 0 0/100% 100% no-repeat; */
 }
 
+/* INFO SECTION */
+.info__container {
+}
+
+.info-wrap {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.info__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--settings-bgr);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  transition: all 0.5s;
+}
+
+.info__score {
+  width: 50px;
+  height: 50px;
+  background: url('./assets/icons/score_wight.png') center/ 70% 70% no-repeat;
+}
+
+.info__hint {
+  border-radius: 2px;
+  color: var(--beige-3);
+  padding: 10px;
+  width: 100px;
+}
+
+.info__volume {
+  width: 50px;
+  height: 50px;
+  background: url('./assets/icons/sound_wight.png') center/ 70% 70% no-repeat;
+}
+
 /* FOOTER */
 .footer {
   display: flex;
