@@ -224,15 +224,20 @@ body.no-scroll {
 }
 
 .main__game {
-  /* width: 80%;
-  height: 60vh; */
-  /* background: url('./assets/images/paper.png') 0 0/100% 100% no-repeat; */
+
+}
+
+.game__wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 60%;
+  height: 65vh;
+  background: url('./assets/images/paper.png') 0 0/100% 100% no-repeat;
 }
 
 /* INFO SECTION */
-.info__container {
-}
-
 .info-wrap {
   display: flex;
   justify-content: space-around;
@@ -281,7 +286,7 @@ body.no-scroll {
 
 .footer__container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -315,6 +320,11 @@ body.no-scroll {
   display: inline-block;
   width: 100%;
 }
+
+.developer .social-item-link {
+  color: var(--chocolate-dark);
+}
+
 .social-item-link svg {
   width: 30px;
   height: 30px;

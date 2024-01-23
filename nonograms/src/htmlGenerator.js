@@ -4,14 +4,9 @@ import createSettingsHtml from './settingsTemplate';
 import createInfoHtml from './infoTemplate';
 
 export default function generateHtml() {
-
 	const siteWrapper = document.createElement('div');
 	siteWrapper.classList.add('site-wrapper');
 	document.body.prepend(siteWrapper);
-
-	// container
-	const container = document.createElement('div');
-	container.classList.add('container');
 
 	const header = document.createElement('header');
 	header.classList.add('header');
@@ -21,7 +16,6 @@ export default function generateHtml() {
 	const main = document.createElement('main');
 	main.classList.add('main');
 	siteWrapper.append(main);
-	// main.textContent = 'main';
 
 	const footer = document.createElement('footer');
 	footer.classList.add('footer');
@@ -35,13 +29,22 @@ export default function generateHtml() {
 	mainSettings.innerHTML = createSettingsHtml();
 
 	const mainGame = document.createElement('section');
-	mainGame.classList.add('main__game');
+	mainGame.classList.add('main__game', 'game');
 	main.append(mainGame);
-	mainGame.textContent = 'mainGame';
+	const container = document.createElement('div');
+	container.classList.add('game__container');
+	mainGame.append(container);
+	const gameWrapper = document.createElement('div');
+	gameWrapper.classList.add('game__wrap');
+	container.append(gameWrapper);
+	const gameContent = document.createElement('div');
+	gameContent.classList.add('game__content');
+	gameWrapper.append(gameContent);
+	gameContent.textContent = 'тут будет пазл';
+	//gameContent.innerHTML = createNonogram();
 
 	const mainInfo = document.createElement('section');
 	mainInfo.classList.add('main__info');
 	main.append(mainInfo);
 	mainInfo.innerHTML = createInfoHtml();
-
 }
