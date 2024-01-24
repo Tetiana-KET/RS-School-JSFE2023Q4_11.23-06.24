@@ -25,7 +25,6 @@ export default function generateHtml() {
 	const mainSettings = document.createElement('section');
 	mainSettings.classList.add('main__settings');
 	main.append(mainSettings);
-	mainSettings.textContent = 'settings';
 	mainSettings.innerHTML = createSettingsHtml();
 
 	const mainGame = document.createElement('section');
@@ -40,8 +39,6 @@ export default function generateHtml() {
 	const gameContent = document.createElement('div');
 	gameContent.classList.add('game__content');
 	gameWrapper.append(gameContent);
-	gameContent.textContent = 'тут будет пазл';
-	//gameContent.innerHTML = createNonogram();
 
 	const mainInfo = document.createElement('section');
 	mainInfo.classList.add('main__info');
