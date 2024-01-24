@@ -1,6 +1,6 @@
 import './normalize.css';
 import './style.css';
-import generateHtml from './htmlGenerator.js';
+import generateHtml from './components/htmlGenerator.js';
 generateHtml();
 
 
