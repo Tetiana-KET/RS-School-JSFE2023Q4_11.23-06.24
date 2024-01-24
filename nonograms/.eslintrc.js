@@ -37,5 +37,6 @@ module.exports = {
     'no-multi-spaces': 'error',// Disallow multiple spaces
     'space-in-parens': 'error',// Enforce consistent spacing inside parentheses
     'no-multiple-empty-lines': 'error',// Disallow multiple empty lines
+    'comma-spacing': 'error',
   }
 };
