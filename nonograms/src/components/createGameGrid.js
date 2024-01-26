@@ -27,6 +27,66 @@ function getRandomPuzzle () {
 
 getRandomPuzzle();
 
+function calculateClues () {
+
+	currentPuzzle.forEach((line, i) => {
+		let currentLineClues = [];
+		let count = 0;
+
+		//clues for line
+		line.forEach((cell, j) => {
+			if (cell) {
+				count += 1;
+			} else {
+				if (count > 0) {
+					currentLineClues.push(count);
+					count = 0;
+				}
+			}
+		});
+
+		//last iteration
+		if (count > 0) {
+			currentLineClues.push(count);
+			count = 0;
+		}
+		// console.log(currentLineClues);
+	});
+
+	//clues for columns
+	let currentColClues = [];
+
+	for (let col = 0; col < gridSize; col += 1) {
+		let count = 0;
+
+		for (let row = 0; row < gridSize; row += 1) {
+
+			if (currentPuzzle[row][col]) {
+
+				count += 1;
+
+			} else {
+
+				if (count > 0) {
+          
+					currentColClues.push(count);
+					count = 0;
+				}
+			}
+		}
+
+    //last iteration
+		if (count > 0) {
+			currentColClues.push(count);
+		}
+
+		console.log(currentColClues);
+		// Clear the array for the next column
+		currentColClues = [];
+	}
+}
+calculateClues();
+
 export default function createGameGrid() {
 	const gameContent = document.querySelector('.game__content');
 	const gameGrid = new Array(gridSize).fill(new Array(gridSize).fill(0));
