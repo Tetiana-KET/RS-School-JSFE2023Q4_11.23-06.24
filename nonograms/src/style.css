@@ -145,7 +145,8 @@ body.no-scroll {
   transition: all 0.5s;
 }
 
-.level__value:hover {
+.level__value:hover,
+.options__value:hover {
   border-bottom: 1px solid var(--beige-1);
   color: var(--beige-1);
 }
@@ -175,7 +176,7 @@ body.no-scroll {
 
 .level__header:hover,
 .settings__switcher:hover,
-.info__hint:hover  {
+.select__hint:hover  {
   background-color: var(--chocolate-dark);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 14px 28px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
   cursor: pointer;
@@ -188,7 +189,6 @@ body.no-scroll {
 }
 
 .switcher__theme-name {
-  /* font-size: 16px; */
   font-weight: 500;
   line-height: 24px;
   color: var(--beige-3);
@@ -278,19 +278,19 @@ body.no-scroll {
   background: url('./assets/icons/score_wight.png') center/ 70% 70% no-repeat;
 }
 
-.info__hint {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.select__hint {
+  position: relative;
   border-radius: 2px;
-
   padding: 10px;
-  width: 140px;
   cursor: pointer;
   transition: all 0.5s;
 }
 
-.hint__btn {
+.hint__header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 140px;
   color: var(--beige-3);
   cursor: pointer;
   transition: all 0.5s;
@@ -298,6 +298,45 @@ body.no-scroll {
 
 .hint__icon {
   transform: rotate(180deg);
+}
+
+.hint__body  {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -200px;
+  width: 100%;
+  height: 200px;
+  overflow: auto;
+  padding: 10px;
+  display: none;
+  background-color: var(--settings-bgr);
+  border-radius: 2px 2px 0 0;
+  -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+  -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2) inset;
+  box-shadow: -1px -1px 5px 2px rgba(49, 25, 11, 0.3), 2px -1px 5px -1px rgba(49, 25, 11, 0.3);
+}
+
+.hint__body-active {
+  display: block;
+}
+
+.hint__body::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--settings-bgr);
+}
+
+.hint__body::-webkit-scrollbar-thumb {
+  background-color: var(--chocolate-dark);
+}
+
+.options__value {
+  margin-bottom: 10px;
+  line-height: 34px;
+  border-bottom: 1px solid var(--beige-3);
+  color: var(--beige-3);
+  cursor: pointer;
+  transition: all 0.5s;
 }
 
 .info__volume {
