@@ -241,7 +241,8 @@ body.no-scroll {
 }
 
 .game__content {
-  max-width: 80%;
+  min-width: 400px;
+  max-width: 50%;
   border: 2px solid var(--grid-border);
 }
 
@@ -250,8 +251,6 @@ body.no-scroll {
 }
 
 .game__cell {
-  width: 50px; 
-  height: 50px;
   border: 1px solid var(--grid-border);
 }
 
