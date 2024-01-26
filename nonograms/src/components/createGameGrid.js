@@ -33,17 +33,20 @@ export default function createGameGrid() {
   const gameContentWidth = document.querySelector('.game__content').clientWidth;
   const cellWidth = gameContentWidth / gridSize;
 
-	gameGrid.forEach(line => {
+	gameGrid.forEach((line, i) => {
 		const gridLine = document.createElement('div');
 		gridLine.classList.add('game__line');
 		gameContent.append(gridLine);
 
-		line.forEach(() => {
+		line.forEach((cell, j) => {
 			const gridCell = document.createElement('div');
 			gridCell.classList.add('game__cell');
       gridCell.style.width = cellWidth + 'px';
       gridCell.style.height = cellWidth + 'px';
 			gridLine.append(gridCell);
+      if (currentPuzzle[i][j]) {
+        gridCell.classList.add('filled');
+			}
 
 		});
 		gameContent.append(gridLine);

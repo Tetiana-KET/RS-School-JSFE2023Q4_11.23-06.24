@@ -176,7 +176,8 @@ body.no-scroll {
 
 .level__header:hover,
 .settings__switcher:hover,
-.select__hint:hover  {
+.select__hint:hover,
+.info__item:hover  {
   background-color: var(--chocolate-dark);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 14px 28px, rgba(0, 0, 0, 0.35) 0px 10px 10px;
   cursor: pointer;
@@ -252,6 +253,14 @@ body.no-scroll {
 
 .game__cell {
   border: 1px solid var(--grid-border);
+}
+
+.cell-filled {
+  background-color: var(--settings-bgr);
+}
+
+.filled {
+  background-color: var(--settings-bgr);
 }
 
 /* INFO SECTION */
