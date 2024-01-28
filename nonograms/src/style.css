@@ -226,9 +226,15 @@ body.no-scroll {
   border-radius: 50%;
   transition: all 0.5s;
 }
-/* GAME GAME */
-.main__game {
 
+/* GAME GAME */
+
+.game__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 65vh;
+  background: url('./assets/images/paper.png') center /60% 105% no-repeat;
 }
 
 .game__wrap-outer {
@@ -236,10 +242,8 @@ body.no-scroll {
   justify-content: center;
   align-items: end;
   margin: 0 auto;
-  width: 60%;
-  height: 65vh;
+  width: 650px;
   gap: 1px;
-  background: url('./assets/images/paper.png') 0 0/100% 100% no-repeat;
 }
 
 .game__wrap {
@@ -250,25 +254,19 @@ body.no-scroll {
 
 .game__clues {
   display: flex;
-
-  border: 2px solid var(--grid-border);
 }
 
-
-
 .game__content {
-  min-width: 400px;
-  max-width: 50%;
   border: 2px solid var(--grid-border);
 }
 
 .clues-rows-wrap {
   flex-direction: column;
-    padding: 0 2px;
+  padding: 0 1px;
 }
 
 .clues-columns-wrap {
-  padding: 2px 0;
+  padding: 1px 0;
 }
 
 .clues__items-wrap {
@@ -277,8 +275,8 @@ body.no-scroll {
   justify-content: flex-end;
   align-items: center;
   gap: 2px;
-  /* border: 1px solid var(--grid-border); */
 }
+
 .clues__items-wrap_rows {
   flex-direction: row;
 }
