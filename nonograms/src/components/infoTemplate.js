@@ -10,7 +10,7 @@ export default function createInfoHtml() {
             <div class="hint__wrap">
             <div class="hint__header">
               <div class="hint__header-content">
-                Select Image
+                <span class="hint__name">Select Image</span>
                 <span class="hint__icon">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8" cy="8" r="8" fill="#e8cba8"></circle>

@@ -339,7 +339,7 @@ body.no-scroll {
 
 .hint__header-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 140px;
   color: var(--beige-3);

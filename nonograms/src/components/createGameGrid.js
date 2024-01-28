@@ -1,33 +1,11 @@
 import {gameTemplates} from './gameTemplates';
-import getRandomNumber from './getRandomNumber';
 
-let currentPuzzle = null;
-let currentPuzzleName = null;
-let random = getRandomNumber();
-let previousRandom = null;
-let filledCells = null;
-let gridSize = null;
+let currentPuzzle = Object.values(gameTemplates[0])[0];
+let currentPuzzleName = Object.keys(gameTemplates[0])[0];
+
+let gridSize = 5;
 const lineClues = [];
 const columnClues = [];
-
-function getRandomPuzzle () {
-  
-  const puzzles = [];
-  const puzzleNames = [];
-
-  gameTemplates.forEach(level => {
-    Object.entries(level).forEach((entry) => {
-      puzzles.push(entry[1]);
-      puzzleNames.push(entry[0]);
-    })
-  })
-
-  currentPuzzle = puzzles[random];
-  currentPuzzleName = puzzleNames[random];
-  gridSize = puzzles[random].length;
-}
-
-getRandomPuzzle();
 
 function calculateClues () {
 
@@ -159,4 +137,8 @@ export default function createGameGrid() {
 			cluesRowsItem.textContent = lineClues[j][i];
 		});
 	});
+
+	const hintPuzzleName = document.querySelector('.hint__name');
+	hintPuzzleName.textContent =
+		currentPuzzleName.charAt(0).toUpperCase() + currentPuzzleName.slice(1);
 }
