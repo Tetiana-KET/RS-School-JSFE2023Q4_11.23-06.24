@@ -250,7 +250,7 @@ body.no-scroll {
 }
 .clues-columns-wrap {
   display: flex;
-  padding: 1px;
+  padding: 2px 0;
   border: 2px solid var(--grid-border);
 }
 
@@ -259,7 +259,7 @@ body.no-scroll {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  gap: 1px;
+  gap: 2px;
   /* border: 1px solid var(--grid-border); */
 }
 

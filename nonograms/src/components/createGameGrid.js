@@ -120,9 +120,9 @@ export default function createGameGrid() {
 	const gameClueTop = document.createElement('div');
 	gameClueTop.classList.add('game__clues', 'clues-columns-wrap');
 	document.querySelector('.game__wrap').prepend(gameClueTop);
-	gameClueTop.style.width =
-		// @ts-ignore
-		document.querySelector('.game__content').offsetWidth + 'px';
+	// gameClueTop.style.width =
+	// 	// @ts-ignore
+	// 	document.querySelector('.game__content').offsetWidth + 'px';
 	// gameClueTop.style.height = 100 + 'px';
 
 	columnClues.forEach((column, j) => {
