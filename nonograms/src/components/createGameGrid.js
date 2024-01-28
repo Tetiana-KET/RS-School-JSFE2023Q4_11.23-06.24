@@ -1,7 +1,8 @@
 import {gameTemplates} from './gameTemplates';
 
-let currentPuzzle = Object.values(gameTemplates[0])[0];
-let currentPuzzleName = Object.keys(gameTemplates[0])[0];
+let index = Math.floor(Math.random() * Object.values(gameTemplates[0]).length);
+let currentPuzzle = Object.values(gameTemplates[0])[index];
+let currentPuzzleName = Object.keys(gameTemplates[0])[index];
 
 let gridSize = 5;
 const lineClues = [];
