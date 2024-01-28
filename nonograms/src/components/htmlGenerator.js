@@ -33,9 +33,15 @@ export default function generateHtml() {
 	const container = document.createElement('div');
 	container.classList.add('game__container');
 	mainGame.append(container);
+
+	const gameOuterWrapper = document.createElement('div');
+	gameOuterWrapper.classList.add('game__wrap-outer');
+	container.append(gameOuterWrapper);
+
 	const gameWrapper = document.createElement('div');
 	gameWrapper.classList.add('game__wrap');
-	container.append(gameWrapper);
+	gameOuterWrapper.append(gameWrapper);
+
 	const gameContent = document.createElement('div');
 	gameContent.classList.add('game__content');
 	gameWrapper.append(gameContent);

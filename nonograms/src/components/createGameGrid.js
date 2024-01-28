@@ -86,17 +86,15 @@ function calculateClues () {
 		// Clear the array for the next column
 		currentColClues = [];
 	}
-
-	console.log(lineClues);
-	console.log(columnClues);
 }
 calculateClues();
 
 export default function createGameGrid() {
+	
 	const gameContent = document.querySelector('.game__content');
 	const gameGrid = new Array(gridSize).fill(new Array(gridSize).fill(0));
-  const gameContentWidth = document.querySelector('.game__content').clientWidth;
-  const cellWidth = gameContentWidth / gridSize;
+	const gameContentWidth = document.querySelector('.game__content').clientWidth;
+	const cellWidth = gameContentWidth / gridSize;
 
 	gameGrid.forEach((line, i) => {
 		const gridLine = document.createElement('div');
@@ -106,24 +104,20 @@ export default function createGameGrid() {
 		line.forEach((cell, j) => {
 			const gridCell = document.createElement('div');
 			gridCell.classList.add('game__cell');
-      gridCell.style.width = cellWidth + 'px';
-      gridCell.style.height = cellWidth + 'px';
+			gridCell.style.width = cellWidth + 'px';
+			gridCell.style.height = cellWidth + 'px';
 			gridLine.append(gridCell);
-      if (currentPuzzle[i][j]) {
-        gridCell.classList.add('filled');
+			if (currentPuzzle[i][j]) {
+				gridCell.classList.add('filled');
 			}
-
 		});
 		gameContent.append(gridLine);
 	});
 
+	// COLUMN CLUES
 	const gameClueTop = document.createElement('div');
 	gameClueTop.classList.add('game__clues', 'clues-columns-wrap');
 	document.querySelector('.game__wrap').prepend(gameClueTop);
-	// gameClueTop.style.width =
-	// 	// @ts-ignore
-	// 	document.querySelector('.game__content').offsetWidth + 'px';
-	// gameClueTop.style.height = 100 + 'px';
 
 	columnClues.forEach((column, j) => {
 		const cluesItemsWrap = document.createElement('div');
@@ -139,8 +133,30 @@ export default function createGameGrid() {
 			cluesItemsWrap.append(cluesItem);
 			cluesItem.textContent = columnClues[j][i];
 		});
+	});
 
-	})
 
+	// ROW CLUES
+	const gameClueAside = document.createElement('div');
+	gameClueAside.classList.add('game__clues', 'clues-rows-wrap');
+	document.querySelector('.game__wrap-outer').prepend(gameClueAside);
 
+	lineClues.forEach((line, j) => {
+		const cluesItemsWrapRow = document.createElement('div');
+		cluesItemsWrapRow.classList.add(
+			'clues__items-wrap',
+			'clues__items-wrap_rows'
+		);
+		cluesItemsWrapRow.style.height = cellWidth + 'px';
+		gameClueAside.append(cluesItemsWrapRow);
+
+		line.forEach((cell, i) => {
+			const cluesRowsItem = document.createElement('div');
+			cluesRowsItem.classList.add('clues__item');
+			cluesRowsItem.style.width = cellWidth - 5 + 'px';
+			cluesRowsItem.style.height = cellWidth - 5 + 'px';
+			cluesItemsWrapRow.append(cluesRowsItem);
+			cluesRowsItem.textContent = lineClues[j][i];
+		});
+	});
 }

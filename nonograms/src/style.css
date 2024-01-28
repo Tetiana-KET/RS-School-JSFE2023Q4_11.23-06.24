@@ -231,11 +231,10 @@ body.no-scroll {
 
 }
 
-.game__wrap {
+.game__wrap-outer {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: end;
   margin: 0 auto;
   width: 60%;
   height: 65vh;
@@ -243,15 +242,33 @@ body.no-scroll {
   background: url('./assets/images/paper.png') 0 0/100% 100% no-repeat;
 }
 
+.game__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.game__clues {
+  display: flex;
+
+  border: 2px solid var(--grid-border);
+}
+
+
+
 .game__content {
   min-width: 400px;
   max-width: 50%;
   border: 2px solid var(--grid-border);
 }
+
+.clues-rows-wrap {
+  flex-direction: column;
+    padding: 0 2px;
+}
+
 .clues-columns-wrap {
-  display: flex;
   padding: 2px 0;
-  border: 2px solid var(--grid-border);
 }
 
 .clues__items-wrap {
@@ -261,6 +278,9 @@ body.no-scroll {
   align-items: center;
   gap: 2px;
   /* border: 1px solid var(--grid-border); */
+}
+.clues__items-wrap_rows {
+  flex-direction: row;
 }
 
 .clues__item {
