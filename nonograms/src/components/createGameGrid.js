@@ -7,6 +7,8 @@ let random = getRandomNumber();
 let previousRandom = null;
 let filledCells = null;
 let gridSize = null;
+const lineClues = [];
+const columnClues = [];
 
 function getRandomPuzzle () {
   
@@ -50,7 +52,7 @@ function calculateClues () {
 			currentLineClues.push(count);
 			count = 0;
 		}
-		// console.log(currentLineClues);
+		lineClues.push(currentLineClues);
 	});
 
 	//clues for columns
@@ -80,10 +82,13 @@ function calculateClues () {
 			currentColClues.push(count);
 		}
 
-		console.log(currentColClues);
+		columnClues.push(currentColClues);
 		// Clear the array for the next column
 		currentColClues = [];
 	}
+
+	console.log(lineClues);
+	console.log(columnClues);
 }
 calculateClues();
 
@@ -111,5 +116,31 @@ export default function createGameGrid() {
 		});
 		gameContent.append(gridLine);
 	});
+
+	const gameClueTop = document.createElement('div');
+	gameClueTop.classList.add('game__clues', 'clues-columns-wrap');
+	document.querySelector('.game__wrap').prepend(gameClueTop);
+	gameClueTop.style.width =
+		// @ts-ignore
+		document.querySelector('.game__content').offsetWidth + 'px';
+	// gameClueTop.style.height = 100 + 'px';
+
+	columnClues.forEach((column, j) => {
+		const cluesItemsWrap = document.createElement('div');
+		cluesItemsWrap.classList.add('clues__items-wrap');
+		cluesItemsWrap.style.width = cellWidth + 'px';
+		gameClueTop.append(cluesItemsWrap);
+
+		column.forEach((cell, i) => {
+			const cluesItem = document.createElement('div');
+			cluesItem.classList.add('clues__item');
+			cluesItem.style.width = cellWidth - 5 + 'px';
+			cluesItem.style.height = cellWidth - 5 + 'px';
+			cluesItemsWrap.append(cluesItem);
+			cluesItem.textContent = columnClues[j][i];
+		});
+
+	})
+
 
 }
