@@ -47,15 +47,15 @@ export default function createGameGrid(
 
 	colClues.forEach((column, j) => {
 		const cluesItemsWrap = document.createElement('div');
-		cluesItemsWrap.classList.add('clues__items-wrap');
+		cluesItemsWrap.classList.add('clues__items-wrap', 'clues__items-wrap_cols');
 		cluesItemsWrap.style.width = cellWidth + 'px';
 		gameClueTop.append(cluesItemsWrap);
 
 		column.forEach((cell, i) => {
 			const cluesItem = document.createElement('div');
 			cluesItem.classList.add('clues__item');
-			cluesItem.style.width = cellWidth - 1 + 'px';
-			cluesItem.style.height = cellWidth - 1 + 'px';
+			cluesItem.style.width = cellWidth + 'px';
+			cluesItem.style.height = cellWidth + 'px';
 			cluesItemsWrap.append(cluesItem);
 			cluesItem.textContent = colClues[j][i];
 		});
@@ -76,8 +76,8 @@ export default function createGameGrid(
 		line.forEach((cell, i) => {
 			const cluesRowsItem = document.createElement('div');
 			cluesRowsItem.classList.add('clues__item');
-			cluesRowsItem.style.width = cellWidth - 1 + 'px';
-			cluesRowsItem.style.height = cellWidth - 1 + 'px';
+			cluesRowsItem.style.width = cellWidth + 'px';
+			cluesRowsItem.style.height = cellWidth + 'px';
 			cluesItemsWrapRow.append(cluesRowsItem);
 			cluesRowsItem.textContent = rowClues[j][i];
 		});

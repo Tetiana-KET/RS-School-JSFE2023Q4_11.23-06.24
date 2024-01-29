@@ -7,7 +7,9 @@
   --chocolate-dark: #220103;
   --chocolate-light: #351605;
   --settings-bgr: #5d4132ed;
-  --grid-border: #7b2f0e;
+  --grid-border: rgba(123, 47, 14, 1);
+  --grid-border-bold: #7b2f0e;
+  --grid-border-transparent: rgba(123, 47, 14, 0.3);
 }
 
 html {
@@ -227,7 +229,6 @@ body.no-scroll {
 }
 
 /* GAME GAME */
-
 .game__container {
   display: flex;
   justify-content: center;
@@ -243,6 +244,7 @@ body.no-scroll {
   margin: 0 auto;
   width: 650px;
   gap: 1px;
+  overflow: hidden;
 }
 
 .game__wrap {
@@ -252,11 +254,12 @@ body.no-scroll {
 }
 
 .game__clues {
+  border: 3px solid transparent;
   display: flex;
 }
 
 .game__content {
-  border: 2px solid var(--grid-border);
+  border: 3px solid var(--grid-border-bold);
 }
 
 .clues-rows-wrap {
@@ -269,6 +272,7 @@ body.no-scroll {
 }
 
 .clues__items-wrap {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -285,8 +289,32 @@ body.no-scroll {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--grid-border);
+  border: 0.5px solid var(--grid-border-transparent);
   color: var(--chocolate-dark);
+}
+
+.clues__items-wrap_rows:nth-child(5n) {
+  border-bottom: 2px dashed var(--settings-bgr);
+}
+
+.clues__items-wrap_rows .clues__item:nth-last-child(6) {
+  border-right: 2px dashed var(--settings-bgr);
+}
+
+.clues__items-wrap_cols .clues__item:nth-last-child(6) {
+  border-bottom: 2px dashed var(--settings-bgr);
+}
+
+.clues__items-wrap_rows:last-child  {
+  border-bottom: none;
+}
+
+.clues__items-wrap_cols:nth-child(5n) {
+  border-right: 2px dashed var(--grid-border-bold);
+}
+
+.clues__items-wrap_cols:last-child  {
+  border-right: none;
 }
 
 .game__line {
@@ -294,7 +322,8 @@ body.no-scroll {
 }
 
 .game__cell {
-  border: 1px solid var(--grid-border);
+  box-sizing: border-box;
+  border: 1px solid var(--grid-border-transparent);
 }
 
 .cell-filled {
@@ -303,6 +332,22 @@ body.no-scroll {
 
 .filled {
   background-color: var(--settings-bgr);
+}
+
+.game__cell:nth-child(5n) {
+  border-right: 3px solid var(--grid-border-bold);
+}
+
+.game__line:nth-child(5n) .game__cell {
+  border-bottom: 3px solid var(--grid-border-bold);
+}
+
+.game__line:last-child .game__cell {
+  border-bottom: none;
+}
+
+.game__cell:last-child {
+  border-right: none;
 }
 
 /* INFO SECTION */
