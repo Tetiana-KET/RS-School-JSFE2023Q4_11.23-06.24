@@ -38,9 +38,17 @@ export default function generateHtml() {
 	gameOuterWrapper.classList.add('game__wrap-outer');
 	container.append(gameOuterWrapper);
 
+	const gameClueAside = document.createElement('div');
+	gameClueAside.classList.add('game__clues', 'clues-rows-wrap');
+	gameOuterWrapper.prepend(gameClueAside);
+
 	const gameWrapper = document.createElement('div');
 	gameWrapper.classList.add('game__wrap');
 	gameOuterWrapper.append(gameWrapper);
+
+	const gameClueTop = document.createElement('div');
+	gameClueTop.classList.add('game__clues', 'clues-columns-wrap');
+	gameWrapper.prepend(gameClueTop);
 
 	const gameContent = document.createElement('div');
 	gameContent.classList.add('game__content');
