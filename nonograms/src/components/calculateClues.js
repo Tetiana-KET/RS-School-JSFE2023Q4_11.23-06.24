@@ -1,4 +1,4 @@
-export default function calculateClues(currentPuzzle, lineClues, columnClues, gridSize) {
+export default function calculateClues(currentPuzzle, gridSize, rowClues, colClues) {
 	currentPuzzle.forEach((line, i) => {
 		let currentLineClues = [];
 		let count = 0;
@@ -20,7 +20,7 @@ export default function calculateClues(currentPuzzle, lineClues, columnClues, gr
 			currentLineClues.push(count);
 			count = 0;
 		}
-		lineClues.push(currentLineClues);
+		rowClues.push(currentLineClues);
 	});
 
 	//clues for columns
@@ -45,8 +45,10 @@ export default function calculateClues(currentPuzzle, lineClues, columnClues, gr
 			currentColClues.push(count);
 		}
 
-		columnClues.push(currentColClues);
+		colClues.push(currentColClues);
 		// Clear the array for the next column
 		currentColClues = [];
 	}
+  // console.log(`rowClues from calculateClues.js`);
+  // console.log(rowClues);
 }

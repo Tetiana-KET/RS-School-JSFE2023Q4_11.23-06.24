@@ -26,7 +26,5 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		} else if (e.target.classList.contains('options__value')) {
 			choosePuzzleByName(e);
 		}
-
   });
-
 })
