@@ -10,15 +10,19 @@ createGameGrid();
 setPuzzleNames();
 
 window.addEventListener('DOMContentLoaded', (e) => {
-  document.querySelector('.select__hint ').addEventListener('click', (e) => {
+  document.querySelector('.select__hint').addEventListener('click', (e) => {
     e.preventDefault();
-    // @ts-ignore
-    if (e.target.closest('.hint__header')) {
-      document
-        .querySelector('.hint__body')
-        .classList.toggle('hint__body-active');
-      console.log(e.target);
-		// @ts-ignore
+    if (
+			// @ts-ignore
+			e.target.closest('.hint__header') ||
+			// @ts-ignore
+			e.target.classList.contains('select__hint')
+		) {
+			document
+				.querySelector('.hint__body')
+				.classList.toggle('hint__body-active');
+			console.log(e.target);
+			// @ts-ignore
 		} else if (e.target.classList.contains('options__value')) {
 			choosePuzzleByName(e);
 		}

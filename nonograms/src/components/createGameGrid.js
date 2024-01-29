@@ -8,8 +8,7 @@ let gridSize = 5;
 const lineClues = [];
 const columnClues = [];
 
-function calculateClues () {
-
+function calculateClues() {
 	currentPuzzle.forEach((line, i) => {
 		let currentLineClues = [];
 		let count = 0;
@@ -41,22 +40,17 @@ function calculateClues () {
 		let count = 0;
 
 		for (let row = 0; row < gridSize; row += 1) {
-
 			if (currentPuzzle[row][col]) {
-
 				count += 1;
-
 			} else {
-
 				if (count > 0) {
-          
 					currentColClues.push(count);
 					count = 0;
 				}
 			}
 		}
 
-    //last iteration
+		//last iteration
 		if (count > 0) {
 			currentColClues.push(count);
 		}
@@ -68,12 +62,17 @@ function calculateClues () {
 }
 calculateClues();
 
-export default function createGameGrid() {
+export default function createGameGrid(
+	current = currentPuzzle,
+	currentName = currentPuzzleName,
+	size = gridSize
+) {
 	const gameContent = document.querySelector('.game__content');
-	const gameGrid = new Array(gridSize).fill(new Array(gridSize).fill(0));
+	
+	const gameGrid = new Array(size).fill(new Array(size).fill(0));
 	const gameContentWidth =
 		document.querySelector('.game__wrap-outer').clientWidth;
-	const cellWidth = gameContentWidth / 2.3 / gridSize;
+	const cellWidth = gameContentWidth / 2.3 / size;
 
 	gameGrid.forEach((line, i) => {
 		const gridLine = document.createElement('div');
@@ -86,7 +85,7 @@ export default function createGameGrid() {
 			gridCell.style.width = cellWidth + 'px';
 			gridCell.style.height = cellWidth + 'px';
 			gridLine.append(gridCell);
-			if (currentPuzzle[i][j]) {
+			if (current[i][j]) {
 				gridCell.classList.add('filled');
 			}
 		});
@@ -94,9 +93,7 @@ export default function createGameGrid() {
 	});
 
 	// COLUMN CLUES
-	const gameClueTop = document.createElement('div');
-	gameClueTop.classList.add('game__clues', 'clues-columns-wrap');
-	document.querySelector('.game__wrap').prepend(gameClueTop);
+	const gameClueTop = document.querySelector('.clues-columns-wrap');
 
 	columnClues.forEach((column, j) => {
 		const cluesItemsWrap = document.createElement('div');
@@ -114,11 +111,8 @@ export default function createGameGrid() {
 		});
 	});
 
-
 	// ROW CLUES
-	const gameClueAside = document.createElement('div');
-	gameClueAside.classList.add('game__clues', 'clues-rows-wrap');
-	document.querySelector('.game__wrap-outer').prepend(gameClueAside);
+	const gameClueAside = document.querySelector('.clues-rows-wrap');
 
 	lineClues.forEach((line, j) => {
 		const cluesItemsWrapRow = document.createElement('div');
@@ -141,5 +135,5 @@ export default function createGameGrid() {
 
 	const hintPuzzleName = document.querySelector('.hint__name');
 	hintPuzzleName.textContent =
-		currentPuzzleName.charAt(0).toUpperCase() + currentPuzzleName.slice(1);
+		currentName.charAt(0).toUpperCase() + currentName.slice(1);
 }
