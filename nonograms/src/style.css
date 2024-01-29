@@ -387,7 +387,7 @@ body.no-scroll {
   border-bottom: 1px solid var(--beige-3);
   color: var(--beige-3);
   cursor: pointer;
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 
 .info__volume {
