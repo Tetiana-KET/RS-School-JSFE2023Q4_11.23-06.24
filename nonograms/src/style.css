@@ -336,9 +336,13 @@ body.no-scroll {
   background-color: var(--settings-bgr);
 }
 
-.filled {
-  background-color: var(--settings-bgr);
+.cell-crossed {
+  background: url('./assets/icons/x_icon-dark.png') center /100% 100% no-repeat;;
 }
+
+/* .filled {
+  background-color: var(--settings-bgr);
+} */
 
 .game__cell:nth-child(5n) {
   border-right: 3px solid var(--grid-border-bold);

@@ -18,10 +18,10 @@ let hardLevel = [];
 sortPuzzlesByLevel(easyLevel, mediumLevel, hardLevel);
 
 window.addEventListener('DOMContentLoaded', (e) => {
-  document.querySelector('.select__hint').addEventListener('click', (e) => {
-    e.preventDefault();
+	document.querySelector('.select__hint').addEventListener('click', (e) => {
+		e.preventDefault();
 		//CHOOSE PUZZLE BY NAME
-    if (
+		if (
 			// @ts-ignore
 			e.target.closest('.hint__header') ||
 			// @ts-ignore
@@ -34,7 +34,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		} else if (e.target.classList.contains('options__value')) {
 			choosePuzzleByName(e);
 		}
-  });
+	});
 
 	document.querySelector('.level').addEventListener('click', (e) => {
 		//CHOOSE LEVEL
@@ -51,5 +51,30 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		} else if (e.target.classList.contains('level__value')) {
 			choosePuzzleLevel(e, easyLevel, mediumLevel, hardLevel);
 		}
-	})
+	});
+
+	//LISTEN CLICK ON CELLS
+	document.querySelector('.game__wrap-outer').addEventListener('click', (e) => {
+		if (
+			// @ts-ignore
+			e.target.classList.contains('game__cell')
+		) {
+			// @ts-ignore
+			e.target.classList.toggle('cell-filled');
+		}
+	});
+
+	// LISTEN RIGHT CLICK ON CELLS
+	document.querySelector('.game__wrap-outer').addEventListener('contextmenu', (e) => {
+
+		e.preventDefault();
+
+		if (
+			// @ts-ignore
+			e.target.classList.contains('game__cell')
+		) {
+			// @ts-ignore
+			e.target.classList.toggle('cell-crossed');
+		}
+		});
 })
