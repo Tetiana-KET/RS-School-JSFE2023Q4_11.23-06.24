@@ -5,17 +5,8 @@ export default function createInfoHtml() {
         <li class="info__item">
           <button type="button" class="button info__score"></button>
         </li>
-        <li class="info__switcher switcher">
-          <button class="button switcher__theme-name">
-            Dark
-          </button>
-          <label class="switcher__button">
-            <input type="checkbox" id="theme-switcher">
-            <span class="switcher__slider-wrap"></span>
-          </label>
-          <button class="button switcher__theme-name">
-            Light
-          </button>
+        <li class="info__progress-bar">
+          <div class="progress-bar"></div>
         </li>
         <li class="info__item">
           <button type="button" class="button info__volume"></button>
