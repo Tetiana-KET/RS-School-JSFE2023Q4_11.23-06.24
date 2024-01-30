@@ -38,4 +38,5 @@ export default function choosePuzzleByName (e) {
 	);
 
 	document.querySelector('.hint__body').classList.remove('hint__body-active');
+	document.querySelector('.level__body').classList.remove('level__body-active');
 }
