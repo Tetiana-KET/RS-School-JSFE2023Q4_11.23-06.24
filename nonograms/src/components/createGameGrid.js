@@ -84,6 +84,8 @@ export default function createGameGrid(
 	});
 
 	const hintPuzzleName = document.querySelector('.hint__name');
-	hintPuzzleName.textContent =
-		currentName.charAt(0).toUpperCase() + currentName.slice(1);
+	hintPuzzleName.textContent = `${currentName
+		.charAt(0)
+		.toUpperCase()}${currentName.slice(1)}`
+	;
 }

@@ -5,7 +5,7 @@ export default function createSettingsHtml() {
         <div class="settings__level level">
           <div class="level__header">
             <div class="level__current">
-              Select Level
+              <span class="level__header-text">Select Level</span>
               <span class="level__header-icon">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="8" cy="8" r="8" fill="#e8cba8"/>
@@ -16,9 +16,9 @@ export default function createSettingsHtml() {
             </div>
           </div>
           <ul class="level__body"> 
-            <li class="level__value" value="Easy">Easy 5*5</li>
-            <li class="level__value" value="Medium">Medium 10*10</li>
-            <li class="level__value" value="Hard">Hard 15*15</li>
+            <li class="level__value" value="Easy" size="5">Easy 5*5</li>
+            <li class="level__value" value="Medium" size="10">Medium 10*10</li>
+            <li class="level__value" value="Hard" size="15">Hard 15*15</li>
           </ul>
         </div>
         <div class="settings__timer">00:00:00</div>
