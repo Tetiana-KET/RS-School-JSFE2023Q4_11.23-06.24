@@ -1,14 +1,28 @@
+// @ts-nocheck
 import {gameTemplates} from './gameTemplates';
 import calculateClues from './calculateClues';
+import checkForWin from './checkForWin';
 
 let index = Math.floor(Math.random() * Object.values(gameTemplates[0]).length);
 let currentPuzzle = Object.values(gameTemplates[0])[index];
 let currentPuzzleName = Object.keys(gameTemplates[0])[index];
 let gridSize = 5;
+let cellsOpened = 0; // by user
+let progressWidth = 0;
+let totalFilledCells; // by default = correct cells
+let step;
+
 const lineClues = [];
 const columnClues = [];
 
 calculateClues(currentPuzzle, gridSize, lineClues, columnClues);
+
+totalFilledCells = String(lineClues).split(',').reduce((prev, acc) => +prev + +acc, 0);
+step = +(100 / totalFilledCells).toFixed(2);
+
+console.log(totalFilledCells);
+console.log(step);
+console.log(progressWidth);
 
 export default function createGameGrid(
 	current = currentPuzzle,
@@ -86,6 +100,68 @@ export default function createGameGrid(
 	const hintPuzzleName = document.querySelector('.hint__name');
 	hintPuzzleName.textContent = `${currentName
 		.charAt(0)
-		.toUpperCase()}${currentName.slice(1)}`
+		.toUpperCase()}${currentName.slice(1)}`;
+
+	//LISTEN CLICK ON CELLS
+	document.querySelector('.game__wrap-outer').addEventListener('click', e => {
+		if (
+			e.target.classList.contains('game__cell') &&
+			!e.target.classList.contains('cell-crossed')
+		) {
+			//if cell is already filled
+			if (e.target.classList.contains('cell-filled')) {
+				e.target.classList.remove('cell-filled');
+				cellsOpened -= 1;
+
+				if (cellsOpened === 0) {
+					progressWidth = 0;
+					document.querySelector('.progress-bar').style.width = 0 + '%';
+				} else if (cellsOpened === totalFilledCells) {
+					progressWidth = 100;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+					checkForWin();
+				} else if (progressWidth <= 100 && cellsOpened < totalFilledCells) {
+					progressWidth -= step;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+				}
+			} else {
+				//if cell is not filled
+				e.target.classList.add('cell-filled');
+				cellsOpened += 1;
+
+				if (cellsOpened === totalFilledCells) {
+					progressWidth = 100;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+					checkForWin();
+				} else if (cellsOpened <= totalFilledCells) {
+					progressWidth += step;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+				} else if (cellsOpened > totalFilledCells) {
+					progressWidth = 100;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+				}
+			}
+		}
+		console.log(cellsOpened);
+		console.log(progressWidth);
+	});
+
+	// LISTEN RIGHT CLICK ON CELLS
+	document
+		.querySelector('.game__wrap-outer').addEventListener('contextmenu', e => {
+			e.preventDefault();
+
+			if (
+				e.target.classList.contains('game__cell') &&
+				!e.target.classList.contains('cell-filled')
+			) {
+				e.target.classList.toggle('cell-crossed');
+			}
+		})
 	;
 }
