@@ -2,6 +2,7 @@
 import {gameTemplates} from './gameTemplates';
 import calculateClues from './calculateClues';
 import checkForWin from './checkForWin';
+import { stopTimer, startTimer } from './timerHandlers';
 
 
 let index = Math.floor(Math.random() * Object.values(gameTemplates[0]).length);
@@ -14,69 +15,75 @@ let step;
 let progressWidth = 0;
 const lineClues = [];
 const columnClues = [];
+let gameStarted = false;
 
 calculateClues(currentPuzzle, gridSize, lineClues, columnClues);
 
 // Function to handle LEFT CLICK on cells
 function handleCellClick(e) {
-  if (
-    e.target.classList.contains('game__cell') &&
-    !e.target.classList.contains('cell-crossed')
-  ) {
-		if (
-			e.target.classList.contains('game__cell') &&
+
+	if (e.target.classList.contains('game__cell') && !gameStarted) {
+		gameStarted = true;
+		startTimer();
+	}
+
+	if (
+		e.target.classList.contains('game__cell') &&
+		!e.target.classList.contains('cell-crossed')
+	) {
+		//if cell is already filled
+		if (e.target.classList.contains('cell-filled')) {
+			e.target.classList.remove('cell-filled');
+			cellsOpened -= 1;
+
+			if (cellsOpened === 0) {
+				progressWidth = 0;
+				document.querySelector('.progress-bar').style.width = 0 + '%';
+			} else if (cellsOpened === totalFilledCells) {
+				progressWidth = 100;
+				document.querySelector('.progress-bar').style.width =
+					progressWidth + '%';
+				checkForWin();
+			} else if (progressWidth <= 100 && cellsOpened < totalFilledCells) {
+				progressWidth -= step;
+				document.querySelector('.progress-bar').style.width =
+					progressWidth + '%';
+			}
+		} else if (
+			!e.target.classList.contains('cell-filled') &&
 			!e.target.classList.contains('cell-crossed')
 		) {
-			//if cell is already filled
-			if (e.target.classList.contains('cell-filled')) {
-				e.target.classList.remove('cell-filled');
-				cellsOpened -= 1;
+			//if cell is not filled
+			e.target.classList.add('cell-filled');
+			cellsOpened += 1;
 
-				if (cellsOpened === 0) {
-					progressWidth = 0;
-					document.querySelector('.progress-bar').style.width = 0 + '%';
-				} else if (cellsOpened === totalFilledCells) {
-					progressWidth = 100;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-					checkForWin();
-				} else if (progressWidth <= 100 && cellsOpened < totalFilledCells) {
-					progressWidth -= step;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-				}
-			} else if (
-				!e.target.classList.contains('cell-filled') &&
-				!e.target.classList.contains('cell-crossed')
-			) {
-				//if cell is not filled
-				e.target.classList.add('cell-filled');
-				cellsOpened += 1;
-
-				if (cellsOpened === totalFilledCells) {
-					progressWidth = 100;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-					checkForWin();
-				} else if (cellsOpened <= totalFilledCells) {
-					progressWidth += step;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-				} else if (cellsOpened > totalFilledCells) {
-					progressWidth = 100;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-				}
+			if (cellsOpened === totalFilledCells) {
+				progressWidth = 100;
+				document.querySelector('.progress-bar').style.width =
+					progressWidth + '%';
+				checkForWin();
+			} else if (cellsOpened <= totalFilledCells) {
+				progressWidth += step;
+				document.querySelector('.progress-bar').style.width =
+					progressWidth + '%';
+			} else if (cellsOpened > totalFilledCells) {
+				progressWidth = 100;
+				document.querySelector('.progress-bar').style.width =
+					progressWidth + '%';
 			}
 		}
 	}
-	console.log(`cellsOpened ${cellsOpened}`);
-	console.log(`progressWidth ${progressWidth}`);
 }
 
-// Function to handle rRIGHT CLICK on cells
+// Function to handle RIGHT CLICK on cells
 function handleCellRightClick(e) {
   e.preventDefault();
+
+
+	if (e.target.classList.contains('game__cell') && !gameStarted) {
+		gameStarted = true;
+		startTimer();
+	}
 
   if (
     e.target.classList.contains('game__cell') &&
@@ -100,8 +107,13 @@ export default function createGameGrid(
 	rowClues = lineClues,
 	colClues = columnClues
 ) {
-	removeEventListeners();
 
+	stopTimer();
+	removeEventListeners();
+	const gameTimer = document.querySelector('.settings__timer');
+	gameTimer.textContent = '00:00:00';
+
+	gameStarted = false;
 	progressWidth = 0;
 	cellsOpened = 0;
 	const outerWrap = document.querySelector('.game__wrap-outer');
@@ -109,10 +121,6 @@ export default function createGameGrid(
 	progress.style.width = progressWidth + '%';
 	totalFilledCells = String(rowClues).split(',').reduce((prev, acc) => +prev + +acc, 0);
 	step = +(100 / totalFilledCells).toFixed(2);
-	
-	// console.log(`progressWidth init ${progressWidth}`);
-	// console.log(`totalFilledCells init ${totalFilledCells}`);
-	// console.log(`step init ${step}`);
 
 	const gameContent = document.querySelector('.game__content');
 	const gameGrid = new Array(size).fill(new Array(size).fill(0));

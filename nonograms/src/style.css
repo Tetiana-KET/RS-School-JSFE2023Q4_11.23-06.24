@@ -248,6 +248,10 @@ body.no-scroll {
   transition: all 0.5s;
 }
 
+.message-time {
+  font-weight: 700;
+}
+
 /* SELECT PUZZLE NAME */
 .select__hint {
   position: relative;

@@ -56,6 +56,6 @@ const overlay = document.querySelector('.modal__overlay');
 modalButton.addEventListener('click', () => {
 	modal.classList.remove('show');
 });
-modalButton.addEventListener('click', () => {
-	overlay.classList.remove('show');
+overlay.addEventListener('click', () => {
+	modal.classList.remove('show');
 });
