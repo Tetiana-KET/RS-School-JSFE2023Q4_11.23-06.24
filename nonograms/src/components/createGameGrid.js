@@ -7,22 +7,90 @@ let index = Math.floor(Math.random() * Object.values(gameTemplates[0]).length);
 let currentPuzzle = Object.values(gameTemplates[0])[index];
 let currentPuzzleName = Object.keys(gameTemplates[0])[index];
 let gridSize = 5;
-let cellsOpened = 0; // by user
-let progressWidth = 0;
+let cellsOpened; // by user
 let totalFilledCells; // by default = correct cells
 let step;
-
+let progressWidth = 0;
 const lineClues = [];
 const columnClues = [];
 
 calculateClues(currentPuzzle, gridSize, lineClues, columnClues);
 
-totalFilledCells = String(lineClues).split(',').reduce((prev, acc) => +prev + +acc, 0);
-step = +(100 / totalFilledCells).toFixed(2);
+// Function to handle LEFT CLICK on cells
+function handleCellClick(e) {
+  if (
+    e.target.classList.contains('game__cell') &&
+    !e.target.classList.contains('cell-crossed')
+  ) {
+		if (
+			e.target.classList.contains('game__cell') &&
+			!e.target.classList.contains('cell-crossed')
+		) {
+			//if cell is already filled
+			if (e.target.classList.contains('cell-filled')) {
+				e.target.classList.remove('cell-filled');
+				cellsOpened -= 1;
 
-console.log(totalFilledCells);
-console.log(step);
-console.log(progressWidth);
+				if (cellsOpened === 0) {
+					progressWidth = 0;
+					document.querySelector('.progress-bar').style.width = 0 + '%';
+				} else if (cellsOpened === totalFilledCells) {
+					progressWidth = 100;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+					checkForWin();
+				} else if (progressWidth <= 100 && cellsOpened < totalFilledCells) {
+					progressWidth -= step;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+				}
+			} else if (
+				!e.target.classList.contains('cell-filled') &&
+				!e.target.classList.contains('cell-crossed')
+			) {
+				//if cell is not filled
+				e.target.classList.add('cell-filled');
+				cellsOpened += 1;
+
+				if (cellsOpened === totalFilledCells) {
+					progressWidth = 100;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+					checkForWin();
+				} else if (cellsOpened <= totalFilledCells) {
+					progressWidth += step;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+				} else if (cellsOpened > totalFilledCells) {
+					progressWidth = 100;
+					document.querySelector('.progress-bar').style.width =
+						progressWidth + '%';
+				}
+			}
+		}
+	}
+	console.log(`cellsOpened ${cellsOpened}`);
+	console.log(`progressWidth ${progressWidth}`);
+}
+
+// Function to handle rRIGHT CLICK on cells
+function handleCellRightClick(e) {
+  e.preventDefault();
+
+  if (
+    e.target.classList.contains('game__cell') &&
+    !e.target.classList.contains('cell-filled')
+  ) {
+    e.target.classList.toggle('cell-crossed');
+  }
+}
+
+// Function to remove event listeners
+function removeEventListeners() {
+	const outerWrap = document.querySelector('.game__wrap-outer');
+	outerWrap.removeEventListener('click', handleCellClick);
+	outerWrap.removeEventListener('contextmenu', handleCellRightClick);
+}
 
 export default function createGameGrid(
 	current = currentPuzzle,
@@ -31,8 +99,21 @@ export default function createGameGrid(
 	rowClues = lineClues,
 	colClues = columnClues
 ) {
-	const gameContent = document.querySelector('.game__content');
+	removeEventListeners();
 
+	progressWidth = 0;
+	cellsOpened = 0;
+	const outerWrap = document.querySelector('.game__wrap-outer');
+	const progress = document.querySelector('.progress-bar')
+	progress.style.width = progressWidth + '%';
+	totalFilledCells = String(rowClues).split(',').reduce((prev, acc) => +prev + +acc, 0);
+	step = +(100 / totalFilledCells).toFixed(2);
+	
+	// console.log(`progressWidth init ${progressWidth}`);
+	// console.log(`totalFilledCells init ${totalFilledCells}`);
+	// console.log(`step init ${step}`);
+
+	const gameContent = document.querySelector('.game__content');
 	const gameGrid = new Array(size).fill(new Array(size).fill(0));
 	const gameContentWidth =
 		document.querySelector('.game__wrap-outer').clientWidth;
@@ -103,65 +184,8 @@ export default function createGameGrid(
 		.toUpperCase()}${currentName.slice(1)}`;
 
 	//LISTEN CLICK ON CELLS
-	document.querySelector('.game__wrap-outer').addEventListener('click', e => {
-		if (
-			e.target.classList.contains('game__cell') &&
-			!e.target.classList.contains('cell-crossed')
-		) {
-			//if cell is already filled
-			if (e.target.classList.contains('cell-filled')) {
-				e.target.classList.remove('cell-filled');
-				cellsOpened -= 1;
-
-				if (cellsOpened === 0) {
-					progressWidth = 0;
-					document.querySelector('.progress-bar').style.width = 0 + '%';
-				} else if (cellsOpened === totalFilledCells) {
-					progressWidth = 100;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-					checkForWin();
-				} else if (progressWidth <= 100 && cellsOpened < totalFilledCells) {
-					progressWidth -= step;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-				}
-			} else {
-				//if cell is not filled
-				e.target.classList.add('cell-filled');
-				cellsOpened += 1;
-
-				if (cellsOpened === totalFilledCells) {
-					progressWidth = 100;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-					checkForWin();
-				} else if (cellsOpened <= totalFilledCells) {
-					progressWidth += step;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-				} else if (cellsOpened > totalFilledCells) {
-					progressWidth = 100;
-					document.querySelector('.progress-bar').style.width =
-						progressWidth + '%';
-				}
-			}
-		}
-		console.log(cellsOpened);
-		console.log(progressWidth);
-	});
+	outerWrap.addEventListener('click', handleCellClick);
 
 	// LISTEN RIGHT CLICK ON CELLS
-	document
-		.querySelector('.game__wrap-outer').addEventListener('contextmenu', e => {
-			e.preventDefault();
-
-			if (
-				e.target.classList.contains('game__cell') &&
-				!e.target.classList.contains('cell-filled')
-			) {
-				e.target.classList.toggle('cell-crossed');
-			}
-		})
-	;
+	outerWrap.addEventListener('contextmenu', handleCellRightClick);
 }
