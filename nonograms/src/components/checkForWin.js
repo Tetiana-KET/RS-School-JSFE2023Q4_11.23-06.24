@@ -6,12 +6,13 @@ export default function checkForWin() {
 	);
 	console.log(isWin);
 	if (isWin) {
-        const modal = document.querySelector('.modal');
-        setTimeout(()=> {
-            modal.classList.add('show');
-						Array.from(cells).forEach((cell) => {
-							cell.classList.add('disabled')
-						});
-        }, 800)
+		const modal = document.querySelector('.modal');
+		Array.from(cells).forEach(cell => {
+			cell.classList.add('disabled');
+		});
+		setTimeout(()=> {
+			modal.classList.add('show');
+				
+		}, 500)
 	}
 }
