@@ -2,11 +2,17 @@ import createFooterHtml from './footerTemplate';
 import createHeaderHtml from './headerTemplate';
 import createSettingsHtml from './settingsTemplate';
 import createInfoHtml from './infoTemplate';
+import createModalHtml from './modalTemplate';
 
 export default function generateHtml() {
+	const modal = document.createElement('div');
+	modal.classList.add('modal');
+	document.body.prepend(modal);
+
 	const siteWrapper = document.createElement('div');
 	siteWrapper.classList.add('site-wrapper');
-	document.body.prepend(siteWrapper);
+	document.body.append(siteWrapper);
+	modal.innerHTML = createModalHtml();
 
 	const header = document.createElement('header');
 	header.classList.add('header');
