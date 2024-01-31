@@ -2,6 +2,8 @@
 import {gameTemplates} from './gameTemplates';
 import calculateClues from './calculateClues';
 import checkForWin from './checkForWin';
+import createModalHtml from './modalTemplate';
+
 
 let index = Math.floor(Math.random() * Object.values(gameTemplates[0]).length);
 let currentPuzzle = Object.values(gameTemplates[0])[index];
