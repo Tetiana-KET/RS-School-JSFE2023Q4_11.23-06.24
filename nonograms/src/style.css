@@ -415,7 +415,7 @@ body.no-scroll {
 }
 
 .cell-crossed {
-  background: url('./assets/icons/x_icon-dark.png') center /100% 100% no-repeat;;
+  background: url('./assets/icons/x_icon-dark.png') center /100% 100% no-repeat;
 }
 
 .game__cell:nth-child(5n) {
@@ -432,6 +432,10 @@ body.no-scroll {
 
 .game__cell:last-child {
   border-right: none;
+}
+
+.game__cell.disabled {
+pointer-events: none;
 }
 
 /* INFO SECTION */

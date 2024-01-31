@@ -48,3 +48,14 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		}
 	});
 })
+
+//MODAL
+const modal = document.querySelector('.modal');
+const modalButton = document.querySelector('.modal__btn');
+const overlay = document.querySelector('.modal__overlay');
+modalButton.addEventListener('click', () => {
+	modal.classList.remove('show');
+});
+modalButton.addEventListener('click', () => {
+	overlay.classList.remove('show');
+});
