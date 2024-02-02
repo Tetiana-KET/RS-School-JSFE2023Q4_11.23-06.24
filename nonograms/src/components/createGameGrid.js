@@ -110,6 +110,8 @@ export default function createGameGrid(
 
 	stopTimer();
 	removeEventListeners();
+	
+	// TIMER
 	const gameTimer = document.querySelector('.settings__timer');
 	gameTimer.textContent = '00:00:00';
 
@@ -123,10 +125,21 @@ export default function createGameGrid(
 	step = +(100 / totalFilledCells).toFixed(2);
 
 	const gameContent = document.querySelector('.game__content');
+	const gameContainerWidth = document.querySelector('.game__container').clientWidth;
+	const gameContentWidth = document.querySelector('.game__wrap-outer').clientWidth;
+	const gameContainer = document.querySelector('.game__container');
+	
+	gameContainer.style.height = gameContainerWidth + 'px';
+		gameContainer.style.maxHeight = 65 + 'vh';
 	const gameGrid = new Array(size).fill(new Array(size).fill(0));
-	const gameContentWidth =
-		document.querySelector('.game__wrap-outer').clientWidth;
-	const cellWidth = gameContentWidth / 2.3 / size;
+	
+	const cellWidth =
+		size === 5 ? 
+		gameContentWidth / 3.1 / size :
+		size === 10 ?
+		gameContentWidth / 2.6 / size :
+		gameContentWidth / 2.5 / size
+	;
 
 	gameGrid.forEach((line, i) => {
 		const gridLine = document.createElement('div');

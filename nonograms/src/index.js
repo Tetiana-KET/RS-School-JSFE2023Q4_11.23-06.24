@@ -7,10 +7,12 @@ import setPuzzleNames from './components/setPuzzleNames';
 import choosePuzzleByName from './components/choosePuzzleByName';
 import sortPuzzlesByLevel from './components/sortPuzzlesByLevel';
 import choosePuzzleLevel from './components/choosePuzzleLevel';
+import burgerHandler from './components/burgerHandler'
 
 generateHtml();
 createGameGrid();
 setPuzzleNames();
+burgerHandler();
 
 let easyLevel = [];
 let mediumLevel = [];
@@ -19,6 +21,63 @@ let hardLevel = [];
 sortPuzzlesByLevel(easyLevel, mediumLevel, hardLevel);
 
 window.addEventListener('DOMContentLoaded', (e) => {
+	window.addEventListener('resize', () => {
+		const gameContainerWidth =
+			document.querySelector('.game__container').clientWidth;
+		const gameContentWidth =
+			document.querySelector('.game__wrap-outer').clientWidth;
+		const gameContainer = document.querySelector('.game__container');
+		const gameCells = Array.from(document.querySelectorAll('.game__cell'));
+		const cluesCells = Array.from(document.querySelectorAll('.clues__item'));
+		const size = Math.sqrt(gameCells.length);
+
+		const cluesRowWrap = Array.from(
+			document.querySelectorAll('.clues__items-wrap_rows')
+		);
+
+		const cluesColsWrap = Array.from(
+			document.querySelectorAll('.clues__items-wrap_cols')
+		);
+
+		const cellWidth =
+			size === 5
+				? gameContentWidth / 3.1 / size
+				: size === 10
+				? gameContentWidth / 2.6 / size
+				: gameContentWidth / 2.5 / size;
+
+		gameContainer.style.height = gameContainerWidth + 'px';
+		gameContainer.style.maxHeight = 65 + 'vh';
+
+		cluesRowWrap.forEach(wrap => {
+			wrap.style.height = cellWidth + 'px';
+		});
+
+		cluesColsWrap.forEach(wrap => {
+			wrap.style.width = cellWidth + 'px';
+		});
+
+		gameCells.forEach(cell => {
+			cell.style.width = cellWidth + 'px';
+			cell.style.height = cellWidth + 'px';
+		});
+
+		cluesCells.forEach(item => {
+			item.style.width = cellWidth + 'px';
+			item.style.height = cellWidth + 'px';
+		});
+	const levelButton = document.querySelector('.settings__level');
+	const levelButtonText = document.querySelector('.level__header-text');
+	const puzzleButton = document.querySelector('.settings__hint');
+
+	if (window.screen.width <= 500) {
+		levelButtonText.textContent = 'Level';
+	} else if (window.screen.width > 500) {
+		levelButtonText.textContent = 'Select Level';
+	}
+	});
+
+
 	document.querySelector('.select__hint').addEventListener('click', (e) => {
 		e.preventDefault();
 		//CHOOSE PUZZLE BY NAME

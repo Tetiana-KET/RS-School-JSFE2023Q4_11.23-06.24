@@ -32,6 +32,17 @@ export default function generateHtml() {
 	mainSettings.classList.add('main__settings');
 	main.append(mainSettings);
 	mainSettings.innerHTML = createSettingsHtml();
+	
+	const levelButton = document.querySelector('.settings__level');
+	const levelButtonText = document.querySelector('.level__header-text');
+	const puzzleButton = document.querySelector('.settings__hint');
+
+	if (window.screen.width <= 500) {
+		levelButtonText.textContent = 'Level';
+	} else if (window.screen.width > 500) {
+		levelButtonText.textContent = 'Select Level';
+	}
+
 
 	const mainGame = document.createElement('section');
 	mainGame.classList.add('main__game', 'game');
