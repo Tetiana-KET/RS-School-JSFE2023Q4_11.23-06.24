@@ -110,14 +110,18 @@ export default function createGameGrid(
 ) {
 	stopTimer();
 	removeEventListeners();
-
+	
 	// TIMER
 	const gameTimer = document.querySelector('.settings__timer');
 	gameTimer.textContent = '00:00:00';
 
 	gameStarted = false;
-	progressWidth = 0;
-	cellsOpened = 0;
+	
+	const savedGameState = JSON.parse(localStorage.getItem('savedGame'));
+
+	cellsOpened = localStorage.getItem('isResume') ? Number(savedGameState.cellsOpened) : 0;
+	progressWidth = localStorage.getItem('isResume') ? parseFloat(savedGameState.progressWidth) : 0;
+
 	localStorage.setItem('cellsOpened', `${cellsOpened}`);
 	const outerWrap = document.querySelector('.game__wrap-outer');
 	const progress = document.querySelector('.progress-bar');
