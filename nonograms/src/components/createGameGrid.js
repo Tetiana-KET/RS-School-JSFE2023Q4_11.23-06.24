@@ -130,12 +130,12 @@ export default function createGameGrid(
 	const gameContainer = document.querySelector('.game__container');
 	
 	gameContainer.style.height = gameContainerWidth + 'px';
-		gameContainer.style.maxHeight = 65 + 'vh';
+	gameContainer.style.maxHeight = 500 + 'px';
 	const gameGrid = new Array(size).fill(new Array(size).fill(0));
 	
 	const cellWidth =
 		size === 5 ? 
-		gameContentWidth / 3.1 / size :
+		gameContentWidth / 3 / size :
 		size === 10 ?
 		gameContentWidth / 2.6 / size :
 		gameContentWidth / 2.5 / size
