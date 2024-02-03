@@ -8,6 +8,8 @@ import choosePuzzleByName from './components/choosePuzzleByName';
 import sortPuzzlesByLevel from './components/sortPuzzlesByLevel';
 import choosePuzzleLevel from './components/choosePuzzleLevel';
 import burgerHandler from './components/burgerHandler'
+import saveGame from './components/saveGame';
+import resumeSavedGame from './components/resumeSavedGame';
 
 generateHtml();
 createGameGrid();
@@ -19,7 +21,7 @@ let mediumLevel = [];
 let hardLevel = [];
 
 sortPuzzlesByLevel(easyLevel, mediumLevel, hardLevel);
-
+//RESIZE 
 window.addEventListener('DOMContentLoaded', (e) => {
 	window.addEventListener('resize', () => {
 		const gameContainerWidth =
@@ -105,6 +107,14 @@ window.addEventListener('DOMContentLoaded', (e) => {
 		} else if (e.target.classList.contains('level__value')) {
 			choosePuzzleLevel(e, easyLevel, mediumLevel, hardLevel);
 		}
+	});
+
+	//SAVE - RESUME GAME
+	document.querySelector('.save-btn').addEventListener('click', (e) => {
+		saveGame();
+	});
+	document.querySelector('.resume-btn').addEventListener('click', e => {
+		resumeSavedGame();
 	});
 })
 

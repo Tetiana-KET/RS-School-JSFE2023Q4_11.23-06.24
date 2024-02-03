@@ -35,6 +35,7 @@ function handleCellClick(e) {
 		if (e.target.classList.contains('cell-filled')) {
 			e.target.classList.remove('cell-filled');
 			cellsOpened -= 1;
+			localStorage.setItem('cellsOpened', `${cellsOpened}`);
 
 			if (cellsOpened === 0) {
 				progressWidth = 0;
@@ -56,6 +57,7 @@ function handleCellClick(e) {
 			//if cell is not filled
 			e.target.classList.add('cell-filled');
 			cellsOpened += 1;
+			localStorage.setItem('cellsOpened', `${cellsOpened}`);
 
 			if (cellsOpened === totalFilledCells) {
 				progressWidth = 100;
@@ -78,7 +80,6 @@ function handleCellClick(e) {
 // Function to handle RIGHT CLICK on cells
 function handleCellRightClick(e) {
   e.preventDefault();
-
 
 	if (e.target.classList.contains('game__cell') && !gameStarted) {
 		gameStarted = true;
@@ -107,10 +108,9 @@ export default function createGameGrid(
 	rowClues = lineClues,
 	colClues = columnClues
 ) {
-
 	stopTimer();
 	removeEventListeners();
-	
+
 	// TIMER
 	const gameTimer = document.querySelector('.settings__timer');
 	gameTimer.textContent = '00:00:00';
@@ -118,29 +118,32 @@ export default function createGameGrid(
 	gameStarted = false;
 	progressWidth = 0;
 	cellsOpened = 0;
+	localStorage.setItem('cellsOpened', `${cellsOpened}`);
 	const outerWrap = document.querySelector('.game__wrap-outer');
-	const progress = document.querySelector('.progress-bar')
+	const progress = document.querySelector('.progress-bar');
 	progress.style.width = progressWidth + '%';
-	totalFilledCells = String(rowClues).split(',').reduce((prev, acc) => +prev + +acc, 0);
+	totalFilledCells = String(rowClues)
+		.split(',')
+		.reduce((prev, acc) => +prev + +acc, 0);
 	step = +(100 / totalFilledCells).toFixed(2);
 
 	const gameContent = document.querySelector('.game__content');
-	const gameContainerWidth = document.querySelector('.game__container').clientWidth;
-	const gameContentWidth = document.querySelector('.game__wrap-outer').clientWidth;
+	const gameContainerWidth =
+		document.querySelector('.game__container').clientWidth;
+	const gameContentWidth =
+		document.querySelector('.game__wrap-outer').clientWidth;
 	const gameContainer = document.querySelector('.game__container');
-	
+
 	gameContainer.style.height = gameContainerWidth + 'px';
 	gameContainer.style.maxHeight = 500 + 'px';
 	const gameGrid = new Array(size).fill(new Array(size).fill(0));
-	
-	const cellWidth =
-		size === 5 ? 
-		gameContentWidth / 3 / size :
-		size === 10 ?
-		gameContentWidth / 2.6 / size :
-		gameContentWidth / 2.5 / size
-	;
 
+	const cellWidth =
+		size === 5
+			? gameContentWidth / 3 / size
+			: size === 10
+			? gameContentWidth / 2.6 / size
+			: gameContentWidth / 2.5 / size;
 	gameGrid.forEach((line, i) => {
 		const gridLine = document.createElement('div');
 		gridLine.classList.add('game__line');
@@ -149,6 +152,7 @@ export default function createGameGrid(
 		line.forEach((cell, j) => {
 			const gridCell = document.createElement('div');
 			gridCell.classList.add('game__cell');
+			gridCell.dataset.index = `[${i}][${j}]`;
 			gridCell.style.width = cellWidth + 'px';
 			gridCell.style.height = cellWidth + 'px';
 			gridLine.append(gridCell);
@@ -210,4 +214,11 @@ export default function createGameGrid(
 
 	// LISTEN RIGHT CLICK ON CELLS
 	outerWrap.addEventListener('contextmenu', handleCellRightClick);
+
+	//SET LOCAL STORAGE
+	localStorage.setItem('rowClues', JSON.stringify(rowClues));
+	localStorage.setItem('colClues', JSON.stringify(colClues));
+	localStorage.setItem('index', `${index}`);
+	localStorage.setItem('currentPuzzle', JSON.stringify(current));
+	localStorage.setItem('currentName', `${currentName}`);
 }
