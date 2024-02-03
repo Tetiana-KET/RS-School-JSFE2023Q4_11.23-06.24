@@ -33,7 +33,6 @@ export default function generateHtml() {
 	main.append(mainSettings);
 	mainSettings.innerHTML = createSettingsHtml();
 	
-	const levelButton = document.querySelector('.settings__level');
 	const levelButtonText = document.querySelector('.level__header-text');
 	const puzzleButton = document.querySelector('.settings__hint');
 
@@ -50,6 +49,10 @@ export default function generateHtml() {
 	const container = document.createElement('div');
 	container.classList.add('game__container');
 	mainGame.append(container);
+
+	const saveBtn = document.createElement('div');
+	saveBtn.classList.add('save-btn');
+	container.prepend(saveBtn);
 
 	const gameOuterWrapper = document.createElement('div');
 	gameOuterWrapper.classList.add('game__wrap-outer');

@@ -6,7 +6,7 @@ export default function createHeaderHtml() {
         <span class="burger__line"></span>
       </button>
       <div class="settings-btns-wrap">
-        <button class="button buttons-settings">Last game</button>
+        <button class="button buttons-settings resume-btn">Continue</button>
         <button class="button buttons-settings restart-btn">Restart game</button>
         <button class="button buttons-settings show-solution-btn">Solution</button>
         <button class="button buttons-settings">Random</button>
