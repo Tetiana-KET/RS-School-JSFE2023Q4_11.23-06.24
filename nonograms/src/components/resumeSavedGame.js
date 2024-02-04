@@ -4,7 +4,7 @@ import createGameGrid from './createGameGrid';
 export default function resumeSavedGame() {
 	localStorage.removeItem('isSaved');
 	localStorage.setItem('isResume', 'true');
-
+	localStorage.setItem('isResumeTime', 'true');
 
 	const savedGame = localStorage.getItem('savedGame');
 

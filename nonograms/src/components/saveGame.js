@@ -19,7 +19,7 @@ export default function saveGame() {
 		gameStarted: true,
 		progressWidth: `${progressWidth}`,
 		time: `${time}`,
-		duration: `${localStorage.getItem('savedTime')}`,
+		duration: `${localStorage.getItem('duration')}`,
 		cellsOpened: `${localStorage.getItem('cellsOpened')}`,
 		index: `${localStorage.getItem('index')}`,
 		colClues: `${localStorage.getItem('colClues')}`,
