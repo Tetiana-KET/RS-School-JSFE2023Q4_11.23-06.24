@@ -1,15 +1,86 @@
 :root {
   --beige-1: #efe7dd;
-  --beige-2: #dab897;
   --beige-3: #e8cba8;
-  --beige-4: #c17a48;
-  --beige-5: #7b2f0e;
   --chocolate-dark: #220103;
   --chocolate-light: #351605;
   --settings-bgr: #5d4132ed;
-  --grid-border: rgba(123, 47, 14, 1);
   --grid-border-bold: #7b2f0e;
   --grid-border-transparent: rgba(123, 47, 14, 0.3);
+  color-scheme: light;
+}
+
+/* THEME DARK */
+html.theme-dark {
+  --beige-1: #f5f0ea;
+  --beige-3: #220103;
+  --chocolate-dark: #f1e1cf;
+  --chocolate-light: #edd4b6;
+  --settings-bgr: #e8cba8;
+  --grid-border-bold: #efe7dd;
+  --grid-border-transparent: rgba(242, 238, 234, 0.3);
+  color-scheme: dark;
+}
+
+html.theme-dark .header,
+html.theme-dark .footer {
+  opacity: 1;
+}
+
+html.theme-dark .switcher__slider-wrap:before {
+  left: 2px;
+}
+
+html.theme-dark .theme-light {
+  background: url('./assets/icons/sun-dark.png') center/ 85% 85% no-repeat;
+}
+
+html.theme-dark .theme-dark {
+  background: url('./assets/icons/moon-dark.png') center/ 70% 70% no-repeat;
+}
+
+html.theme-dark .settings__wrap svg path {
+  stroke: #edd4b6;
+}
+
+html.theme-dark .settings__wrap svg circle {
+  fill: #220103;
+}
+
+html.theme-dark .site-wrapper {
+  background: url('./assets/images/paper-burned.png') center /100% 120% no-repeat;
+}
+
+html.theme-dark .game__container {
+  background: none;
+}
+
+html.theme-dark .save-btn {
+  background: url('./assets/icons/save-light.png') center/ 60% 60% no-repeat;
+  background-color: var(--settings-bgr);
+}
+
+html.theme-dark .info__score {
+  background: url('./assets/icons/score.png') center/ 70% 70% no-repeat;
+}
+
+html.theme-dark .info__volume {
+  background: url('./assets/icons/sound.png') center/ 70% 70% no-repeat;
+}
+
+html.theme-dark .footer svg {
+  fill: #edd4b6;
+}
+
+html.theme-dark .footer .developer .social-item-link {
+  color: #edd4b6;
+}
+
+html.theme-dark .footer .rs-icon-wrap .rsschool-link {
+  background: url('./assets/icons/rsschool_light.png') 0 0/100% 100% no-repeat;
+}
+
+html.theme-dark .cell-crossed {
+  background: url('./assets/icons/x_icon.png') center /100% 100% no-repeat;
 }
 
 html {
@@ -64,6 +135,7 @@ body.no-scroll {
   background: var(--beige-3);
   opacity: 0.7;
   box-shadow: 0px 4px 4px rgba(46, 20, 7, 0.5);
+  transition: all 0.5s;
 }
 
 .header___container {
@@ -141,6 +213,7 @@ body.no-scroll {
 
 /* THEME SWITCHER */
 .theme-switcher {
+  position: relative;
   width: 100px;
   height: 30px;
   display: flex;
@@ -151,6 +224,15 @@ body.no-scroll {
   background-color: var(--chocolate-light);
   box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
   transition: all 0.5s;
+}
+
+.theme-switcher::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 82px;
+  height: 28px;
 }
 
 .level__header:hover,
@@ -585,6 +667,7 @@ pointer-events: none;
   background: var(--beige-3);
   opacity: 0.7;
   box-shadow: 0px -3px 3px rgba(46, 20, 7, 0.5);
+  transition: all 0.5s;
 }
 
 .footer__container {

@@ -10,6 +10,7 @@ import choosePuzzleLevel from './components/choosePuzzleLevel';
 import burgerHandler from './components/burgerHandler'
 import saveGame from './components/saveGame';
 import resumeSavedGame from './components/resumeSavedGame';
+import switchTheme from './components/switchTheme';
 
 generateHtml();
 createGameGrid();
@@ -128,3 +129,7 @@ modalButton.addEventListener('click', () => {
 overlay.addEventListener('click', () => {
 	modal.classList.remove('show');
 });
+
+//THEME SWITCHER 
+const themeSwitcher = document.querySelector('.theme-switcher');
+themeSwitcher.addEventListener('click', switchTheme);

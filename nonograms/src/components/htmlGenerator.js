@@ -5,6 +5,12 @@ import createInfoHtml from './infoTemplate';
 import createModalHtml from './modalTemplate';
 
 export default function generateHtml() {
+
+	const currentTheme = localStorage.getItem('currentTheme');
+	if (currentTheme === 'theme-dark') {
+		document.documentElement.classList.add('theme-dark');
+	} 
+
 	const modal = document.createElement('div');
 	modal.classList.add('modal');
 	document.body.prepend(modal);
@@ -41,7 +47,6 @@ export default function generateHtml() {
 	} else if (window.screen.width > 500) {
 		levelButtonText.textContent = 'Select Level';
 	}
-
 
 	const mainGame = document.createElement('section');
 	mainGame.classList.add('main__game', 'game');
