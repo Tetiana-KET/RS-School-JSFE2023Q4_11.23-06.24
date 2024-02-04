@@ -225,4 +225,5 @@ export default function createGameGrid(
 	localStorage.setItem('index', `${index}`);
 	localStorage.setItem('currentPuzzle', JSON.stringify(current));
 	localStorage.setItem('currentName', `${currentName}`);
+	localStorage.setItem('isSolutionPressed', 'false');
 }

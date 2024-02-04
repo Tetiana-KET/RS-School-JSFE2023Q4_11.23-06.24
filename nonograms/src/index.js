@@ -11,6 +11,7 @@ import burgerHandler from './components/burgerHandler'
 import saveGame from './components/saveGame';
 import resumeSavedGame from './components/resumeSavedGame';
 import switchTheme from './components/switchTheme';
+import showSolution from './components/showSolution';
 
 generateHtml();
 createGameGrid();
@@ -133,3 +134,7 @@ overlay.addEventListener('click', () => {
 //THEME SWITCHER 
 const themeSwitcher = document.querySelector('.theme-switcher');
 themeSwitcher.addEventListener('click', switchTheme);
+
+// SHOW SOLUTION
+const solutionBtn = document.querySelector('.show-solution-btn');
+solutionBtn.addEventListener('click', showSolution);
