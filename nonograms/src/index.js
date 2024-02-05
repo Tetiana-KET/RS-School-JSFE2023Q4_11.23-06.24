@@ -129,9 +129,11 @@ const modalButton = document.querySelector('.modal__btn');
 const overlay = document.querySelector('.modal__overlay');
 modalButton.addEventListener('click', () => {
 	modal.classList.remove('show');
+	document.body.classList.remove('no-scroll');
 });
 overlay.addEventListener('click', () => {
 	modal.classList.remove('show');
+	document.body.classList.remove('no-scroll');
 });
 
 //THEME SWITCHER 
@@ -158,4 +160,5 @@ scoreBtn.addEventListener('click', toggleScoreModal);
 scoreCloseBtn.addEventListener('click', toggleScoreModal);
 scoreOverlay.addEventListener('click', () => {
 	document.querySelector('.score').classList.remove('show');
+	document.body.classList.remove('no-scroll');
 });

@@ -70,6 +70,7 @@ export default function checkForWin() {
 		});
 		setTimeout(() => {
 			modal.classList.add('show');
+			document.body.classList.add('no-scroll');
 		}, 500);
 	}
 }
