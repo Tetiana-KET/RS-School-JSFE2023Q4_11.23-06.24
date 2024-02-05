@@ -220,7 +220,8 @@ export default function createGameGrid(
 
 	//RENDER CURRENT PUZZLE LEVEL
 	const levelHeader = document.querySelector('.level__header-text');
-	let currentPuzzleLevel = size === 5 ? 'easy' : size === 10 ? 'medium' : 'hard';
+	let currentPuzzleLevel =
+		size === 5 ? 'easy' : size === 10 ? 'medium' : 'hard';
 	levelHeader.innerHTML = `${currentPuzzleLevel
 		.slice(0, 1)
 		.toLocaleUpperCase()}${currentPuzzleLevel.slice(1)}`;
@@ -232,6 +233,11 @@ export default function createGameGrid(
 	outerWrap.addEventListener('contextmenu', handleCellRightClick);
 
 	//SET LOCAL STORAGE
+	localStorage.setItem('rowClues', JSON.stringify(rowClues));
+	localStorage.setItem('colClues', JSON.stringify(colClues));
+	localStorage.setItem('index', `${index}`);
+	localStorage.setItem('currentPuzzle', JSON.stringify(current));
+	localStorage.setItem('currentName', `${currentName}`);
 
 	const currentGame = {
 		currentPuzzle: `${JSON.stringify(current)}`,
