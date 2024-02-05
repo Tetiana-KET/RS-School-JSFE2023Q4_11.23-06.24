@@ -14,6 +14,7 @@ import switchTheme from './components/switchTheme';
 import showSolution from './components/showSolution';
 import getRandomPuzzle from './components/getRandomPuzzle';
 import restartGame from './components/restartGame';
+import toggleScoreModal from './components/toggleScoreModal';
 
 generateHtml();
 createGameGrid();
@@ -148,3 +149,13 @@ randomBtn.addEventListener('click', getRandomPuzzle);
 // RESTART GAME
 const restartBtn = document.querySelector('.restart-btn');
 restartBtn.addEventListener('click', restartGame);
+
+// SHOW/HIDE SCORE
+const scoreBtn = document.querySelector('.info__score');
+const scoreCloseBtn = document.querySelector('.score__btn');
+const scoreOverlay = document.querySelector('.score__overlay');
+scoreBtn.addEventListener('click', toggleScoreModal);
+scoreCloseBtn.addEventListener('click', toggleScoreModal);
+scoreOverlay.addEventListener('click', () => {
+	document.querySelector('.score').classList.remove('show');
+});

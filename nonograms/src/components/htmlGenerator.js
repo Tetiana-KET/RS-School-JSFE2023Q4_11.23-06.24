@@ -3,6 +3,7 @@ import createHeaderHtml from './headerTemplate';
 import createSettingsHtml from './settingsTemplate';
 import createInfoHtml from './infoTemplate';
 import createModalHtml from './modalTemplate';
+import createScoreTableTemplate from './scoreTableTemplate';
 
 export default function generateHtml() {
 
@@ -14,6 +15,11 @@ export default function generateHtml() {
 	const modal = document.createElement('div');
 	modal.classList.add('modal');
 	document.body.prepend(modal);
+
+	const scoreModal = document.createElement('div');
+	scoreModal.classList.add('score');
+	document.body.prepend(scoreModal);
+	scoreModal.innerHTML = createScoreTableTemplate();
 
 	const siteWrapper = document.createElement('div');
 	siteWrapper.classList.add('site-wrapper');
