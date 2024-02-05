@@ -27,7 +27,7 @@ export default function checkForWin() {
 		const winResult = {
 			duration: duration,
 			time: `${pageTimer.textContent}`,
-			date: new Date().toLocaleDateString(),
+			date: new Date().toLocaleString(),
 			solvedPuzzle: solvedPuzzle,
 			complexity: complexity,
 		};
@@ -45,12 +45,21 @@ export default function checkForWin() {
 			messageTime.textContent = '';
 		}
 
-		if (winResultsArr.length >= 2    ) {
-			winResultsArr.sort((a, b) => a.duration - b.duration);
+		if (winResultsArr.length >= 2) {
+			winResultsArr.sort((a, b) => {
+				const dateA = new Date(a.date);
+				const dateB = new Date(b.date);
+
+				return +dateA - +dateB;
+			});
 		}
 
 		if (winResultsArr.length >= 5) {
-			winResultsArr.length = 5;
+			winResultsArr = winResultsArr.slice(-5);
+		}
+
+		if (winResultsArr.length >= 2) {
+			winResultsArr.sort((a, b) => a.duration - b.duration);
 		}
 
 		localStorage.setItem('winResults', JSON.stringify(winResultsArr));
