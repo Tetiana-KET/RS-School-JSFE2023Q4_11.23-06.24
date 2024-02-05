@@ -9,7 +9,7 @@ export default function createHeaderHtml() {
         <button class="button buttons-settings resume-btn">Continue</button>
         <button class="button buttons-settings restart-btn">Restart game</button>
         <button class="button buttons-settings show-solution-btn">Solution</button>
-        <button class="button buttons-settings">Random</button>
+        <button class="button buttons-settings random-btn">Random</button>
       </div>
       <div class="theme-switcher switcher">
         <button class="button switcher__theme-name theme-dark"></button>
