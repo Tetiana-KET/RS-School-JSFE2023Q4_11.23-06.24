@@ -236,6 +236,7 @@ export default function createGameGrid(
 	const currentGame = {
 		currentPuzzle: `${JSON.stringify(current)}`,
 		currentName: `${currentName}`,
+		currentPuzzleLevel: `${currentPuzzleLevel}`,
 		gameStarted: true,
 		progressWidth: `${progressWidth}`,
 		index: `${index}`,

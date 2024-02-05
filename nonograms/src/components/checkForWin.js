@@ -1,5 +1,12 @@
 import { stopTimer } from './timerHandlers';
+
 export default function checkForWin() {
+	const currentGame = JSON.parse(localStorage.getItem('currentGame'));
+	let winResultsArr = JSON.parse(localStorage.getItem('winResults')) || [];
+
+	const isSolutionPressed = localStorage.getItem('isSolutionPressed');
+	const solvedPuzzle = currentGame.currentName;
+	const complexity = currentGame.currentPuzzleLevel;
 	const cells = document.querySelectorAll('.game__cell');
 	const openedCells = document.querySelectorAll('.game__cell.cell-filled');
 	let isWin = Array.from(openedCells).every(item =>
@@ -8,10 +15,45 @@ export default function checkForWin() {
 
 	if (isWin) {
 		stopTimer();
+
+		const duration = localStorage.getItem('duration');
 		const modal = document.querySelector('.modal');
-		const pageTimer = document.querySelector('.settings__timer');
+		const modalTitle = document.querySelector('.modal-title');
+		const modalText = document.querySelector('.modal-text');
+		const modalTextMessage = document.querySelector('.message');
 		const messageTime = document.querySelector('.message-time');
-		messageTime.textContent = pageTimer.textContent;
+		const pageTimer = document.querySelector('.settings__timer');
+
+		const winResult = {
+			duration: duration,
+			time: `${pageTimer.textContent}`,
+			date: new Date().toLocaleDateString(),
+			solvedPuzzle: solvedPuzzle,
+			complexity: complexity,
+		};
+
+		if (isSolutionPressed === 'false') {
+			modalTitle.textContent = 'You Win!';
+			modalText.textContent = 'Congratulations';
+			modalTextMessage.textContent = 'You have solved this puzzle in ';
+			messageTime.textContent = pageTimer.textContent;
+			winResultsArr.push(winResult);
+		} else if (isSolutionPressed === 'true') {
+			modalTitle.textContent = 'You cheat!';
+			modalText.textContent = 'You saw solution';
+			modalTextMessage.textContent = 'This win is not included to the score';
+			messageTime.textContent = '';
+		}
+
+		if (winResultsArr.length >= 2    ) {
+			winResultsArr.sort((a, b) => a.duration - b.duration);
+		}
+
+		if (winResultsArr.length >= 5) {
+			winResultsArr.length = 5;
+		}
+
+		localStorage.setItem('winResults', JSON.stringify(winResultsArr));
 
 		Array.from(cells).forEach(cell => {
 			cell.classList.remove('cell-crossed');

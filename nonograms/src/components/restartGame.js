@@ -9,6 +9,9 @@ export default function restartGame() {
   const gameTimer = document.querySelector('.settings__timer');
   currentGame.time = `${gameTimer.textContent}`;
 
+  let isSolutionPressed = localStorage.getItem('isSolutionPressed');
+
+
   console.log(`game process (only filled cells) were reset`);
   console.log(`restart game from saved time ${currentGame.time}`);
   console.log(`--------------------------------`);
@@ -34,5 +37,8 @@ export default function restartGame() {
     newLineClues,
     newColumnClues
   );
+
+  localStorage.setItem('isSolutionPressed', `${isSolutionPressed}`);
+
   document.querySelector('.settings__timer').textContent = currentGame.time;
 }

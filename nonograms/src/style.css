@@ -178,9 +178,9 @@ html.theme-dark .score__content-wrap {
   gap: 20px;
 }
 
-.modal .message,
-.modal-title {
-  margin-bottom: 30px;
+.modal-title,
+.message-time {
+  margin-bottom: 20px;
 }
 
 .modal-title {
@@ -436,6 +436,7 @@ html.theme-dark .score__content-wrap {
 .settings__level {
   width: 140px;
   position: relative;
+  z-index: 2;
 }
 
 .level__header {
@@ -514,6 +515,7 @@ html.theme-dark .score__content-wrap {
 /* SELECT PUZZLE NAME */
 .select__hint {
   position: relative;
+  z-index: 2;
   width: 140px;
   border-radius: 2px;
   padding: 10px;

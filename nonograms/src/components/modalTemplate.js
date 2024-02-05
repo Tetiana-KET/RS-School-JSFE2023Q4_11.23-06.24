@@ -6,8 +6,9 @@ export default function createModalHtml() {
         <h2 class="modal-title">You Win!</h2>
         <p class="modal-text">Congratulations</p>
         <p class="modal-text message">
-          You have solved this puzzle in <span class="message-time">00:01:31</span>
+          You have solved this puzzle in 
         </p>
+        <span class="message-time">00:01:31</span>
         <button class="button modal__btn" type="button">OK</button>
       </div>
     </div>
