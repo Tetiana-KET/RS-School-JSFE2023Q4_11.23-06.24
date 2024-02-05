@@ -1,6 +1,6 @@
 let timerID;
 let startTime;
-let duration;
+let duration = 0;
 
 function updateTimer() {
 	duration = Math.floor((Date.now() - startTime) / 1000);
@@ -12,16 +12,23 @@ function updateTimer() {
 }
 
 function startTimer() {
+	let savedTime = 0;
 	const savedGameState = JSON.parse(localStorage.getItem('savedGame'));
 	const isResumeTime = localStorage.getItem('isResumeTime');
-	let savedTime = isResumeTime ? Number(savedGameState.duration) : 0;
+	const isResetGame = localStorage.getItem('isResetGame');
+
+	if (isResumeTime) {
+		savedTime = Number(savedGameState.duration);
+		localStorage.removeItem('isResumeTime');
+	}
+
+	if (isResetGame) {
+		savedTime = Number(localStorage.getItem('duration'));
+		localStorage.removeItem('isResetGame');
+	}
 
 	startTime = Date.now() - savedTime * 1000;
 	timerID = setInterval(updateTimer, 1000);
-
-	if (isResumeTime) {
-		localStorage.removeItem('isResumeTime');
-	}
 }
 
 function stopTimer() {

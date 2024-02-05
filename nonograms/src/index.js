@@ -13,6 +13,7 @@ import resumeSavedGame from './components/resumeSavedGame';
 import switchTheme from './components/switchTheme';
 import showSolution from './components/showSolution';
 import getRandomPuzzle from './components/getRandomPuzzle';
+import restartGame from './components/restartGame';
 
 generateHtml();
 createGameGrid();
@@ -143,3 +144,7 @@ solutionBtn.addEventListener('click', showSolution);
 // GET RANDOM PUZZLE
 const randomBtn = document.querySelector('.random-btn');
 randomBtn.addEventListener('click', getRandomPuzzle);
+
+// RESTART GAME
+const restartBtn = document.querySelector('.restart-btn');
+restartBtn.addEventListener('click', restartGame);

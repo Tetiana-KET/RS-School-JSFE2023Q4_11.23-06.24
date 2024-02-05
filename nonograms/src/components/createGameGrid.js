@@ -110,17 +110,21 @@ export default function createGameGrid(
 ) {
 	stopTimer();
 	removeEventListeners();
-	
+
 	// TIMER
 	const gameTimer = document.querySelector('.settings__timer');
 	gameTimer.textContent = '00:00:00';
 
 	gameStarted = false;
-	
+
 	const savedGameState = JSON.parse(localStorage.getItem('savedGame'));
 
-	cellsOpened = localStorage.getItem('isResume') ? Number(savedGameState.cellsOpened) : 0;
-	progressWidth = localStorage.getItem('isResume') ? parseFloat(savedGameState.progressWidth) : 0;
+	cellsOpened = localStorage.getItem('isResume')
+		? Number(savedGameState.cellsOpened)
+		: 0;
+	progressWidth = localStorage.getItem('isResume')
+		? parseFloat(savedGameState.progressWidth)
+		: 0;
 
 	localStorage.setItem('cellsOpened', `${cellsOpened}`);
 	const outerWrap = document.querySelector('.game__wrap-outer');
@@ -208,10 +212,18 @@ export default function createGameGrid(
 		});
 	});
 
+	//RENDER CURRENT PUZZLE NAME
 	const hintPuzzleName = document.querySelector('.hint__name');
 	hintPuzzleName.textContent = `${currentName
 		.charAt(0)
 		.toUpperCase()}${currentName.slice(1)}`;
+
+	//RENDER CURRENT PUZZLE LEVEL
+	const levelHeader = document.querySelector('.level__header-text');
+	let currentPuzzleLevel = size === 5 ? 'easy' : size === 10 ? 'medium' : 'hard';
+	levelHeader.innerHTML = `${currentPuzzleLevel
+		.slice(0, 1)
+		.toLocaleUpperCase()}${currentPuzzleLevel.slice(1)}`;
 
 	//LISTEN CLICK ON CELLS
 	outerWrap.addEventListener('click', handleCellClick);
@@ -220,10 +232,17 @@ export default function createGameGrid(
 	outerWrap.addEventListener('contextmenu', handleCellRightClick);
 
 	//SET LOCAL STORAGE
-	localStorage.setItem('rowClues', JSON.stringify(rowClues));
-	localStorage.setItem('colClues', JSON.stringify(colClues));
-	localStorage.setItem('index', `${index}`);
-	localStorage.setItem('currentPuzzle', JSON.stringify(current));
-	localStorage.setItem('currentName', `${currentName}`);
+
+	const currentGame = {
+		currentPuzzle: `${JSON.stringify(current)}`,
+		currentName: `${currentName}`,
+		gameStarted: true,
+		progressWidth: `${progressWidth}`,
+		index: `${index}`,
+		colClues: `${JSON.stringify(colClues)}`,
+		rowClues: `${JSON.stringify(rowClues)}`,
+	};
+
+	localStorage.setItem('currentGame', JSON.stringify(currentGame));
 	localStorage.setItem('isSolutionPressed', 'false');
 }
