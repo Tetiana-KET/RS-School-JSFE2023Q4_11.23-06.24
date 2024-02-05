@@ -3,13 +3,13 @@ import createGameGrid from './createGameGrid';
 
 export default function resumeSavedGame() {
 	localStorage.removeItem('isSaved');
-	localStorage.setItem('isResume', 'true');
-	localStorage.setItem('isResumeTime', 'true');
+
 
 	const savedGame = localStorage.getItem('savedGame');
 
 	if (savedGame) {
-		
+		localStorage.setItem('isResume', 'true');
+		localStorage.setItem('isResumeTime', 'true');
 		const gameState = JSON.parse(savedGame);
 		const timer = gameState.time;
 		const currentPuzzleIndex = gameState.index;

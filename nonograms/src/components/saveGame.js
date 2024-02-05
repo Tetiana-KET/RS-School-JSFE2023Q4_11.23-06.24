@@ -5,32 +5,35 @@ import { updateTimer, startTimer, stopTimer } from './timerHandlers';
 export default function saveGame() {
 
   localStorage.setItem('isSaved', 'true');
-  stopTimer();
+	let isGameStarted = localStorage.getItem('cellsOpened') > 0;
 
-  const progress = document.querySelector('.progress-bar');
-  const progressWidth = progress.style.width;
-  const gameTimer = document.querySelector('.settings__timer');
-	const time = gameTimer.textContent;
+	if (isGameStarted) {
+		stopTimer();
 
-  
-  const savedGame = {
-		currentPuzzle: `${localStorage.getItem('currentPuzzle')}`,
-		currentName: `${localStorage.getItem('currentName')}`,
-		gameStarted: true,
-		progressWidth: `${progressWidth}`,
-		time: `${time}`,
-		duration: `${localStorage.getItem('duration')}`,
-		cellsOpened: `${localStorage.getItem('cellsOpened')}`,
-		index: `${localStorage.getItem('index')}`,
-		colClues: `${localStorage.getItem('colClues')}`,
-		rowClues: `${localStorage.getItem('rowClues')}`,
-		filledCells: Array.from(document.querySelectorAll('.cell-filled')).map(
-			cell => cell.dataset.index
-		),
-		crossedCells: Array.from(document.querySelectorAll('.cell-crossed')).map(
-			cell => cell.dataset.index
-		),
-	};
+		const progress = document.querySelector('.progress-bar');
+		const progressWidth = progress.style.width;
+		const gameTimer = document.querySelector('.settings__timer');
+		const time = gameTimer.textContent;
 
-  localStorage.setItem('savedGame', JSON.stringify(savedGame));
+		const savedGame = {
+			currentPuzzle: `${localStorage.getItem('currentPuzzle')}`,
+			currentName: `${localStorage.getItem('currentName')}`,
+			gameStarted: true,
+			progressWidth: `${progressWidth}`,
+			time: `${time}`,
+			duration: `${localStorage.getItem('duration')}`,
+			cellsOpened: `${localStorage.getItem('cellsOpened')}`,
+			index: `${localStorage.getItem('index')}`,
+			colClues: `${localStorage.getItem('colClues')}`,
+			rowClues: `${localStorage.getItem('rowClues')}`,
+			filledCells: Array.from(document.querySelectorAll('.cell-filled')).map(
+				cell => cell.dataset.index
+			),
+			crossedCells: Array.from(document.querySelectorAll('.cell-crossed')).map(
+				cell => cell.dataset.index
+			),
+		};
+
+		localStorage.setItem('savedGame', JSON.stringify(savedGame));
+	}
 }
