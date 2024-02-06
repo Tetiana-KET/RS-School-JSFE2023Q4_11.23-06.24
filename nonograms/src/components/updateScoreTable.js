@@ -4,11 +4,13 @@ export default function updateScoreTable () {
 	let results = JSON.parse(localStorage.getItem('winResults')) || [];
 
   if (results.length) {
-		const tableBody = document.querySelector('.score__table-body');
+		const tableFooter = document.querySelector('.score__footer tr');
 		const tableRows = document.querySelectorAll('.score__row');
+		const durations = [];
 
 		results.forEach((result, index) => {
 			const row = tableRows[index];
+			durations.push(Number(result.duration));
 			let timeDuration = result.duration;
       
 			const hours = String(Math.floor(timeDuration / 3600)).padStart(2, '0');
@@ -26,5 +28,11 @@ export default function updateScoreTable () {
 				row.cells[4].textContent = `${hours}:${minutes}:${seconds}`;
 			}
 		});
+		
+		const average = (Math.round(durations.reduce((acc, cur) => acc + cur, 0) / durations.length));
+		const hoursAverage = String(Math.floor(average / 3600)).padStart(2, '0');
+		const minutesAverage = String(Math.floor((average % 3600) / 60)).padStart(2,'0');
+		const secondsAverage = String(average % 60).padStart(2, '0');
+		tableFooter.cells[1].textContent = `${hoursAverage}:${minutesAverage}:${secondsAverage}`;
 	}
 }

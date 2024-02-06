@@ -10,6 +10,11 @@ let newCurrentPuzzle = null;
 let newCurrentPuzzleName = null;
 
 export default function choosePuzzleByName (e) {
+	
+	if(localStorage.getItem('isResumeTime')) {
+		localStorage.removeItem('isResumeTime');
+	}
+	
 	const newLineClues = [];
 	const newColumnClues = [];
 

@@ -7,6 +7,10 @@ let previousRandom = null;
 
 export default function getRandomPuzzle() {
 
+	if (localStorage.getItem('isResumeTime')) {
+		localStorage.removeItem('isResumeTime');
+	}
+
 	let randomGridSize = null;
 	let randomCurrentPuzzleName = null;
 	let currentPuzzleLevel = null;

@@ -12,9 +12,13 @@ import saveGame from './components/saveGame';
 import resumeSavedGame from './components/resumeSavedGame';
 import switchTheme from './components/switchTheme';
 import showSolution from './components/showSolution';
-import getRandomPuzzle from './components/getRandomPuzzle';
+import getRandomPuzzle from './components/getrandomPuzzle';
 import restartGame from './components/restartGame';
 import toggleScoreModal from './components/toggleScoreModal';
+
+if (localStorage.getItem('isResumeTime')) {
+	localStorage.removeItem('isResumeTime');
+}
 
 generateHtml();
 createGameGrid();
