@@ -16,6 +16,9 @@ import getRandomPuzzle from './components/getrandomPuzzle';
 import restartGame from './components/restartGame';
 import toggleScoreModal from './components/toggleScoreModal';
 
+let isMuted = false;
+
+const currentTheme = localStorage.getItem('currentTheme');
 const winResults = JSON.parse(localStorage.getItem('winResults'));
 const savedGame = JSON.parse(localStorage.getItem('savedGame'));
 localStorage.clear();
@@ -26,6 +29,10 @@ if (winResults) {
 
 if (savedGame) {
 	localStorage.setItem('savedGame', JSON.stringify(savedGame));
+}
+
+if (currentTheme) {
+	localStorage.setItem('currentTheme', `${currentTheme}`);
 }
 
 generateHtml();
@@ -173,4 +180,16 @@ scoreCloseBtn.addEventListener('click', toggleScoreModal);
 scoreOverlay.addEventListener('click', () => {
 	document.querySelector('.score').classList.remove('show');
 	document.body.classList.remove('no-scroll');
+});
+
+// VOLUME
+const volumeBtn = document.querySelector('.button.info__volume');
+volumeBtn.addEventListener('click', () => {
+	if (isMuted) {
+		isMuted = false;
+		volumeBtn.classList.remove('mute');
+	} else {
+		isMuted = true;
+		volumeBtn.classList.add('mute');
+	}
 });

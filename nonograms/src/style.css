@@ -103,6 +103,10 @@ html.theme-dark .info__volume {
   background: url('./assets/icons/sound.png') center/ 70% 70% no-repeat;
 }
 
+html.theme-dark .info__volume.mute {
+  background: url('./assets/icons/mute.png') center/ 70% 70% no-repeat;
+}
+
 html.theme-dark .footer svg {
   fill: #edd4b6;
 }
@@ -764,6 +768,10 @@ pointer-events: none;
   width: 50px;
   height: 50px;
   background: url('./assets/icons/sound_wight.png') center/ 70% 70% no-repeat;
+}
+
+.info__volume.mute {
+  background: url('./assets/icons/mute_wight.png') center/ 70% 70% no-repeat;
 }
 
 /* PROGRESS BAR */

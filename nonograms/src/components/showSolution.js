@@ -2,7 +2,11 @@ import { stopTimer } from './timerHandlers';
 import { soundCheat } from './createGameGrid';
 
 export default function showSolution() {
-	soundCheat.play();
+	const volumeBtn = document.querySelector('.button.info__volume');
+	if (!volumeBtn.classList.contains('mute')) {
+		soundCheat.play();
+	}
+
 	localStorage.setItem('isSolutionPressed', 'true');
 	const solutionCells = document.querySelectorAll('.filled');
 

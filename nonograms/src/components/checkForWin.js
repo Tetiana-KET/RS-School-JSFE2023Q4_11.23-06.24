@@ -17,6 +17,7 @@ export default function checkForWin() {
 
 	if (isWin) {
 		stopTimer();
+		const volumeBtn = document.querySelector('.button.info__volume');
 
 		const duration = localStorage.getItem('duration');
 		const modal = document.querySelector('.modal');
@@ -35,14 +36,18 @@ export default function checkForWin() {
 		};
 
 		if (isSolutionPressed === 'false') {
-			soundWin.play();
+			if (!volumeBtn.classList.contains('mute')) {
+				soundWin.play();
+			}
 			modalTitle.textContent = 'You Win!';
 			modalText.textContent = 'Congratulations';
 			modalTextMessage.textContent = 'You have solved this puzzle in ';
 			messageTime.textContent = pageTimer.textContent;
 			winResultsArr.push(winResult);
 		} else if (isSolutionPressed === 'true') {
-			soundWrong.play();
+			if (!volumeBtn.classList.contains('mute')) {
+				soundWrong.play();
+			}
 			modalTitle.textContent = 'You cheat!';
 			modalText.textContent = 'You saw solution';
 			modalTextMessage.textContent = 'This win is not included to the score';

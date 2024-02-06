@@ -10,8 +10,8 @@ import winSound from '../sounds/win.wav';
 import wrongSound from '../sounds/wrong.wav';
 import cheatSound from '../sounds/cheat.wav';
 
-const soundFill = new Audio(fillSound);
-const soundUnfill = new Audio(unfillSound);
+export const soundFill = new Audio(fillSound);
+export const soundUnfill = new Audio(unfillSound);
 export const soundWin = new Audio(winSound);
 export const soundWrong = new Audio(wrongSound);
 export const soundCheat = new Audio(cheatSound);
@@ -30,8 +30,11 @@ let gameStarted = false;
 
 calculateClues(currentPuzzle, gridSize, lineClues, columnClues);
 
+
 // Function to handle LEFT CLICK on cells
 function handleCellClick(e) {
+	const volumeBtn = document.querySelector('.button.info__volume');
+
 	if (e.target.classList.contains('game__cell') && !gameStarted) {
 		gameStarted = true;
 		startTimer();
@@ -43,7 +46,11 @@ function handleCellClick(e) {
 	) {
 		//if cell is already filled
 		if (e.target.classList.contains('cell-filled')) {
-			soundUnfill.play();
+
+			if (!volumeBtn.classList.contains('mute')) {
+				soundUnfill.play();
+			}
+
 			e.target.classList.remove('cell-filled');
 			cellsOpened -= 1;
 			localStorage.setItem('cellsOpened', `${cellsOpened}`);
@@ -66,7 +73,11 @@ function handleCellClick(e) {
 			!e.target.classList.contains('cell-crossed')
 		) {
 			//if cell is not filled
-			soundFill.play();
+
+			if (!volumeBtn.classList.contains('mute')) {
+				soundFill.play();
+			}
+
 			e.target.classList.add('cell-filled');
 			cellsOpened += 1;
 			localStorage.setItem('cellsOpened', `${cellsOpened}`);
@@ -91,6 +102,7 @@ function handleCellClick(e) {
 
 // Function to handle RIGHT CLICK on cells
 function handleCellRightClick(e) {
+	const volumeBtn = document.querySelector('.button.info__volume');
 	const soundCross = new Audio(crossSound);
 
 	e.preventDefault();
@@ -107,10 +119,17 @@ function handleCellRightClick(e) {
 
 		if (!e.target.classList.contains('cell-crossed')) {
 			e.target.classList.add('cell-crossed');
-			soundCross.play();
+
+			if (!volumeBtn.classList.contains('mute')) {
+				soundCross.play();
+			}
+			
 		} else if (e.target.classList.contains('cell-crossed')) {
 			e.target.classList.remove('cell-crossed');
-			soundUnfill.play();
+
+			if (!volumeBtn.classList.contains('mute')) {
+				soundUnfill.play();
+			}
 		}
 	}
 }
