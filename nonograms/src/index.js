@@ -65,15 +65,39 @@ window.addEventListener('DOMContentLoaded', (e) => {
 			document.querySelectorAll('.clues__items-wrap_cols')
 		);
 
-		const cellWidth =
-			size === 5
-				? gameContentWidth / 3 / size
-				: size === 10
-				? gameContentWidth / 2.6 / size
-				: gameContentWidth / 2.5 / size;
+		let  cellWidth;
+		if (window.screen.width <= 600) {
+			cellWidth =
+				size === 5
+					? gameContentWidth / 2 / size
+					: size === 10
+					? gameContentWidth / 1.8 / size
+					: gameContentWidth / 1.6 / size;
 
-		gameContainer.style.height = gameContainerWidth + 'px';
-		gameContainer.style.maxHeight = 500 + 'px';
+		} else if (window.screen.width <= 700) {
+			cellWidth =
+				size === 5
+					? gameContentWidth / 2.5 / size
+					: size === 10
+					? gameContentWidth / 2 / size
+					: gameContentWidth / 2 / size;
+
+		} else if (window.screen.width <= 900) {
+			cellWidth =
+				size === 5
+					? gameContentWidth / 2.5 / size
+					: size === 10
+					? gameContentWidth / 2.4 / size
+					: gameContentWidth / 2.3 / size;
+
+		} else {
+			cellWidth =
+				size === 5
+					? gameContentWidth / 2.8 / size
+					: size === 10
+					? gameContentWidth / 2.6 / size
+					: gameContentWidth / 2.5 / size;
+		}
 
 		cluesRowWrap.forEach(wrap => {
 			wrap.style.height = cellWidth + 'px';

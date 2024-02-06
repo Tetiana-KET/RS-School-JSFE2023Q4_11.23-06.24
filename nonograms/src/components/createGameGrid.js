@@ -181,17 +181,42 @@ export default function createGameGrid(
 	const gameContentWidth =
 		document.querySelector('.game__wrap-outer').clientWidth;
 	const gameContainer = document.querySelector('.game__container');
-
-	gameContainer.style.height = gameContainerWidth + 'px';
-	gameContainer.style.maxHeight = 500 + 'px';
 	const gameGrid = new Array(size).fill(new Array(size).fill(0));
 
-	const cellWidth =
+let cellWidth;
+if (window.screen.width <= 600) {
+	cellWidth =
 		size === 5
-			? gameContentWidth / 3 / size
+			? gameContentWidth / 2 / size
+			: size === 10
+			? gameContentWidth / 1.8 / size
+			: gameContentWidth / 1.6 / size;
+
+} else if (window.screen.width <= 700) {
+	cellWidth =
+		size === 5
+			? gameContentWidth / 2.5 / size
+			: size === 10
+			? gameContentWidth / 2 / size
+			: gameContentWidth / 2 / size;
+
+} else if (window.screen.width <= 900) {
+	cellWidth =
+		size === 5
+			? gameContentWidth / 2.5 / size
+			: size === 10
+			? gameContentWidth / 2.4 / size
+			: gameContentWidth / 2.25 / size;
+
+} else {
+	cellWidth =
+		size === 5
+			? gameContentWidth / 2.8 / size
 			: size === 10
 			? gameContentWidth / 2.6 / size
 			: gameContentWidth / 2.5 / size;
+}
+
 	gameGrid.forEach((line, i) => {
 		const gridLine = document.createElement('div');
 		gridLine.classList.add('game__line');

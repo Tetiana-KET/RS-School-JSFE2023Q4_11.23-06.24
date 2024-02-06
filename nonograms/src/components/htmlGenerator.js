@@ -35,6 +35,10 @@ export default function generateHtml() {
 	main.classList.add('main');
 	siteWrapper.append(main);
 
+	const saveBtn = document.createElement('div');
+	saveBtn.classList.add('save-btn');
+	main.append(saveBtn);
+
 	const footer = document.createElement('footer');
 	footer.classList.add('footer');
 	siteWrapper.append(footer);
@@ -60,10 +64,6 @@ export default function generateHtml() {
 	const container = document.createElement('div');
 	container.classList.add('game__container');
 	mainGame.append(container);
-
-	const saveBtn = document.createElement('div');
-	saveBtn.classList.add('save-btn');
-	container.prepend(saveBtn);
 
 	const gameOuterWrapper = document.createElement('div');
 	gameOuterWrapper.classList.add('game__wrap-outer');

@@ -25,7 +25,6 @@ html {
 }
 
 body {
-  min-height: 100vh;
   font-family: "Inter";
   overflow-y: auto;
 }
@@ -45,7 +44,7 @@ body.no-scroll {
 }
 
 [class*="__container"] {
-  max-width: 1470px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -82,7 +81,7 @@ html.theme-dark .settings__wrap svg circle {
   fill: #220103;
 }
 
-html.theme-dark .site-wrapper {
+html.theme-dark .main {
   background: url('./assets/images/paper-burned.png') center /100% 120% no-repeat;
 }
 
@@ -178,14 +177,16 @@ html.theme-dark .score__content-wrap {
 }
 
 .score__content-wrap::-webkit-scrollbar,
-.modal__content::-webkit-scrollbar  {
+.modal__content::-webkit-scrollbar,
+.main__game::-webkit-scrollbar  {
   width: 5px;
   background-color: var(--beige-3);
   border-radius: 0 0 3px 0;
 }
 
 .score__content-wrap::-webkit-scrollbar-thumb,
-.modal__content::-webkit-scrollbar-thumb {
+.modal__content::-webkit-scrollbar-thumb,
+.main__game::-webkit-scrollbar-thumb {
   background-color: var(--settings-bgr);
 }
 
@@ -252,15 +253,14 @@ html.theme-dark .score__content-wrap {
 /* PAGE */
 
 .site-wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;  
   overflow: clip;
   background-color: var(--beige-1);
 }
 
 .header {
+  position: relative;
+  z-index: 2;
+  height: 10vh;
   align-items: center;
   display: flex;
   padding: 15px 0;
@@ -437,9 +437,14 @@ html.theme-dark .score__content-wrap {
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
-  height: 100%;
+  height: 80vh;
   padding: 20px;
   text-align: center;
+  background: url('./assets/images/paper.png') center /125% 125% no-repeat;
+}
+
+.main__game {
+  overflow-y: auto;
 }
 
 /* LEVEL SWITCHER */
@@ -599,19 +604,20 @@ html.theme-dark .score__content-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 700px;
-  background: url('./assets/images/paper.png') center /100% 100% no-repeat;
+  width: 100%;
 }
 
 .save-btn {
   position: absolute;
-  top: 10%;
-  left: 14%;
+  z-index: 2;
+  top: 5%;
+  left: 10%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   background: url('./assets/icons/save-dark.png') center/ 60% 60% no-repeat;
   border-radius: 50%;
   background-color: var(--settings-bgr);
@@ -626,7 +632,7 @@ html.theme-dark .score__content-wrap {
   align-items: end;
   margin: 0 auto;
   padding: 15px 0;
-  width: 700px;
+  width: 900px;
   max-width: 100%;
   gap: 1px;
   overflow: hidden;
@@ -636,6 +642,7 @@ html.theme-dark .score__content-wrap {
   display: flex;
   flex-direction: column;
   gap: 1px;
+  padding-right: 7%;
 }
 
 .game__clues {
@@ -800,6 +807,7 @@ pointer-events: none;
 
 /* FOOTER */
 .footer {
+  height: 10vh;
   display: flex;
   align-items: center;
   padding: 15px 0;
@@ -867,6 +875,13 @@ pointer-events: none;
   background: url('./assets/icons/rsschool.png') 0 0/100% 100% no-repeat;
 }
 
+@media (max-width: 850px) {
+ .save-btn {
+    top: 29%;
+    left: 7%;
+  }
+}
+
 @media (max-width: 600px) {
   .header {
     z-index: 10;
@@ -890,8 +905,8 @@ pointer-events: none;
     row-gap: 20px;
     align-items: center;
     position: absolute;
-    top: 62px;
-    left: 2px;
+    top: 80px;
+    left: 0px;
     width: 170px;
     background-color: var(--beige-3);
     padding: 26px 15px;
@@ -910,11 +925,6 @@ pointer-events: none;
 
   .settings__wrap {
     position: relative;
-  }
-
-  .main {
-    gap: 10px;
-    height: 80vh;
   }
 
   /* TIMER */
@@ -955,18 +965,9 @@ pointer-events: none;
     height: 12px;
   }
 
-  .game__container {
-    height: 45vh;
-  }
-
   .rs-icon-wrap {
     width: 60px;
     height: 30px;
-  }
-
-  .clues__item {
-    font-size: 14px;
-    font-weight: 500;
   }
 
   .social-item-link svg {
@@ -1007,10 +1008,5 @@ pointer-events: none;
   .select__hint,
   .settings__level {
     width: 130px;
-  }
-
-  .clues__item {
-    font-size: 14px;
-    font-weight: 500;
   }
 }
