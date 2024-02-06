@@ -3,7 +3,18 @@ import {gameTemplates} from './gameTemplates';
 import calculateClues from './calculateClues';
 import checkForWin from './checkForWin';
 import { stopTimer, startTimer } from './timerHandlers';
+import fillSound from '../sounds/fill.wav';
+import crossSound from '../sounds/cross.wav';
+import unfillSound from '../sounds/unfill.wav';
+import winSound from '../sounds/win.wav';
+import wrongSound from '../sounds/wrong.wav';
+import cheatSound from '../sounds/cheat.wav';
 
+const soundFill = new Audio(fillSound);
+const soundUnfill = new Audio(unfillSound);
+export const soundWin = new Audio(winSound);
+export const soundWrong = new Audio(wrongSound);
+export const soundCheat = new Audio(cheatSound);
 
 let index = Math.floor(Math.random() * Object.values(gameTemplates[0]).length);
 let currentPuzzle = Object.values(gameTemplates[0])[index];
@@ -21,7 +32,6 @@ calculateClues(currentPuzzle, gridSize, lineClues, columnClues);
 
 // Function to handle LEFT CLICK on cells
 function handleCellClick(e) {
-
 	if (e.target.classList.contains('game__cell') && !gameStarted) {
 		gameStarted = true;
 		startTimer();
@@ -33,6 +43,7 @@ function handleCellClick(e) {
 	) {
 		//if cell is already filled
 		if (e.target.classList.contains('cell-filled')) {
+			soundUnfill.play();
 			e.target.classList.remove('cell-filled');
 			cellsOpened -= 1;
 			localStorage.setItem('cellsOpened', `${cellsOpened}`);
@@ -55,6 +66,7 @@ function handleCellClick(e) {
 			!e.target.classList.contains('cell-crossed')
 		) {
 			//if cell is not filled
+			soundFill.play();
 			e.target.classList.add('cell-filled');
 			cellsOpened += 1;
 			localStorage.setItem('cellsOpened', `${cellsOpened}`);
@@ -79,19 +91,28 @@ function handleCellClick(e) {
 
 // Function to handle RIGHT CLICK on cells
 function handleCellRightClick(e) {
-  e.preventDefault();
+	const soundCross = new Audio(crossSound);
+
+	e.preventDefault();
 
 	if (e.target.classList.contains('game__cell') && !gameStarted) {
 		gameStarted = true;
 		startTimer();
 	}
 
-  if (
-    e.target.classList.contains('game__cell') &&
-    !e.target.classList.contains('cell-filled')
-  ) {
-    e.target.classList.toggle('cell-crossed');
-  }
+	if (
+		e.target.classList.contains('game__cell') &&
+		!e.target.classList.contains('cell-filled')
+	) {
+
+		if (!e.target.classList.contains('cell-crossed')) {
+			e.target.classList.add('cell-crossed');
+			soundCross.play();
+		} else if (e.target.classList.contains('cell-crossed')) {
+			e.target.classList.remove('cell-crossed');
+			soundUnfill.play();
+		}
+	}
 }
 
 // Function to remove event listeners

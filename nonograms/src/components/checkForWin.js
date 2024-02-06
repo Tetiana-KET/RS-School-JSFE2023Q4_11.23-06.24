@@ -1,4 +1,6 @@
 import { stopTimer } from './timerHandlers';
+import { soundWin } from './createGameGrid';
+import { soundWrong } from './createGameGrid';
 
 export default function checkForWin() {
 	const currentGame = JSON.parse(localStorage.getItem('currentGame'));
@@ -33,12 +35,14 @@ export default function checkForWin() {
 		};
 
 		if (isSolutionPressed === 'false') {
+			soundWin.play();
 			modalTitle.textContent = 'You Win!';
 			modalText.textContent = 'Congratulations';
 			modalTextMessage.textContent = 'You have solved this puzzle in ';
 			messageTime.textContent = pageTimer.textContent;
 			winResultsArr.push(winResult);
 		} else if (isSolutionPressed === 'true') {
+			soundWrong.play();
 			modalTitle.textContent = 'You cheat!';
 			modalText.textContent = 'You saw solution';
 			modalTextMessage.textContent = 'This win is not included to the score';

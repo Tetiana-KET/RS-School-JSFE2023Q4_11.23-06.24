@@ -34,6 +34,18 @@ module.exports = {
 				test: /\.(jpe?g|png|gif|svg|eot|ttf|woff?2)$/i,
 				type: 'asset',
 			},
+			{
+				test: /\.(wav|mp3)$/i,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[name].[ext]',
+							outputPath: 'assets/sounds',
+						},
+					},
+				],
+			},
 		],
 	},
 	plugins: [

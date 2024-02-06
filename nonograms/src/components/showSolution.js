@@ -1,5 +1,8 @@
 import { stopTimer } from './timerHandlers';
+import { soundCheat } from './createGameGrid';
+
 export default function showSolution() {
+	soundCheat.play();
 	localStorage.setItem('isSolutionPressed', 'true');
 	const solutionCells = document.querySelectorAll('.filled');
 

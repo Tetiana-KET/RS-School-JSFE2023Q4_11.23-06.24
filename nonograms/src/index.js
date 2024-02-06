@@ -1,5 +1,4 @@
 // @ts-nocheck
-console.log(`Привет, еще в процессе,\n если можешь, не торопись с проверкой\n Спасибо`)
 import './normalize.css';
 import './style.css';
 import generateHtml from './components/htmlGenerator.js';
@@ -17,8 +16,16 @@ import getRandomPuzzle from './components/getrandomPuzzle';
 import restartGame from './components/restartGame';
 import toggleScoreModal from './components/toggleScoreModal';
 
-if (localStorage.getItem('isResumeTime')) {
-	localStorage.removeItem('isResumeTime');
+const winResults = JSON.parse(localStorage.getItem('winResults'));
+const savedGame = JSON.parse(localStorage.getItem('savedGame'));
+localStorage.clear();
+
+if (winResults) {
+	localStorage.setItem('winResults', JSON.stringify(winResults));
+}
+
+if (savedGame) {
+	localStorage.setItem('savedGame', JSON.stringify(savedGame));
 }
 
 generateHtml();
