@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin'); // to handle favicon
 
 module.exports = {
 	mode: 'development',
@@ -53,6 +54,9 @@ module.exports = {
 			title: 'Nonogram',
 			filename: 'index.html',
 			template: path.join(__dirname, 'src', 'template.html'),
+		}),
+		new CopyPlugin({
+			patterns: [{ from: 'src/assets/favicon.ico', to: 'favicon.ico' }],
 		}),
 	],
 };
