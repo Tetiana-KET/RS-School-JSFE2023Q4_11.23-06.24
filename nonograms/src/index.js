@@ -1,4 +1,5 @@
 // @ts-nocheck
+console.log(`Привет, еще в процессе,\n если можешь, не торопись с проверкой\n Спасибо`)
 import './normalize.css';
 import './style.css';
 import generateHtml from './components/htmlGenerator.js';
