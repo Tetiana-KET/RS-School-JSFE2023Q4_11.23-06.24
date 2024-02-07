@@ -7,7 +7,7 @@ export default function createHeaderHtml() {
       </button>
       <div class="settings-btns-wrap">
         <button class="button buttons-settings resume-btn">Continue</button>
-        <button class="button buttons-settings restart-btn">Restart game</button>
+        <button class="button buttons-settings restart-btn">Restart</button>
         <button class="button buttons-settings show-solution-btn">Solution</button>
         <button class="button buttons-settings random-btn">Random</button>
       </div>
