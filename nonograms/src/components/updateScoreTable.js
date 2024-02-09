@@ -1,6 +1,17 @@
 // @ts-nocheck
 export default function updateScoreTable () {
 
+	const headerRow = document.querySelector('.score__headers-items');
+	console.log(headerRow);
+
+	if (window.screen.width <= 500) {
+		headerRow.cells[0].textContent = '';
+		headerRow.cells[3].textContent = 'Level';
+	} else if (window.screen.width > 500)  {
+		headerRow.cells[0].textContent = 'Position';
+		headerRow.cells[3].textContent = 'Complexity';
+	}
+
 	let results = JSON.parse(localStorage.getItem('winResults')) || [];
 
   if (results.length) {

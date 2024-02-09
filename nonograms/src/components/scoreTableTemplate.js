@@ -8,7 +8,7 @@ export default function createScoreTableTemplate() {
         </caption>
         <thead class="score__headers">
           <tr class="score__headers-items">
-            <th scope="col">Position</th>
+            <th class="score__headers-position scope="col">Position</th>
             <th scope="col">Date</th>
             <th scope="col">Solved puzzle</th>
             <th scope="col">Complexity</th>

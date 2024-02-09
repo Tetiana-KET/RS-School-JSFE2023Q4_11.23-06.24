@@ -116,15 +116,25 @@ window.addEventListener('DOMContentLoaded', (e) => {
 			item.style.width = cellWidth + 'px';
 			item.style.height = cellWidth + 'px';
 		});
-	const levelButton = document.querySelector('.settings__level');
-	const levelButtonText = document.querySelector('.level__header-text');
-	const puzzleButton = document.querySelector('.settings__hint');
+		const levelButton = document.querySelector('.settings__level');
+		const levelButtonText = document.querySelector('.level__header-text');
+		const puzzleButton = document.querySelector('.settings__hint');
 
-	if (window.screen.width <= 500) {
-		levelButtonText.textContent = 'Level';
-	} else if (window.screen.width > 500) {
-		levelButtonText.textContent = 'Select Level';
-	}
+		if (window.screen.width <= 500) {
+			levelButtonText.textContent = 'Level';
+		} else if (window.screen.width > 500) {
+			levelButtonText.textContent = 'Select Level';
+		}
+
+		//SCORE TABLE
+		const headerRow = document.querySelector('.score__headers-items');
+		if (window.screen.width <= 500) {
+			headerRow.cells[0].textContent = '';
+			headerRow.cells[3].textContent = 'Level';
+		} else if (window.screen.width > 500) {
+			headerRow.cells[0].textContent = 'Position';
+			headerRow.cells[3].textContent = 'Complexity';
+		}
 	});
 
 
