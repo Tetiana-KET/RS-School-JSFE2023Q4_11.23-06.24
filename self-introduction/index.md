@@ -1,4 +1,6 @@
-[link to my YouTube video](https://youtu.be/uJQMlCJasOU)
+**[link to my YouTube video](https://youtu.be/uJQMlCJasOU)**
+
+
 Hey there, My name is Tatiana, I am a passionate newcomer to the world of frontend development!
 Believe it or not, my journey into coding wasn't a childhood dream or a calculated career move. In fact, I never imagined myself delving into the tech world. My background? 
 Well, let's just say it's far from the typical tech-savvy stereotype. I mean, I remember a time when I used to look at a computer and think, 'Okay, this is the mouse, and it clicks. That's about it.' 
