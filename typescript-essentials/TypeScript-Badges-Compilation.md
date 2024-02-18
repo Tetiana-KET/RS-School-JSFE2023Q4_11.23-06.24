@@ -1,6 +1,6 @@
-# My TypeScript Journey: Earned Badges 🏆
+# ✈️ My TypeScript Journey: 
 
-## Badges Overview
+## 🏆 Earned Badges Overview
 
 Here is a collection of badges I earned from completing Microsoft Learn's TypeScript modules:
 
@@ -13,6 +13,3 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 7. **Work with External Libraries in TypeScript**: [Badge](badge-link)
 8. **Organize Code with Namespaces in TypeScript**: [Badge](badge-link)
 
-## Reflections
-
-[Add your personal reflections on what you learned in each module and how it contributes to your development skills]
