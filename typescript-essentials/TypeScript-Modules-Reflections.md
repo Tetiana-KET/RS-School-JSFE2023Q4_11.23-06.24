@@ -97,3 +97,32 @@
   - Ensure that proper values are being passed into properties, constructors, or functions, especially when working with a team.
   - Describe existing JavaScript APIs and clarify function parameters and return types. The interface provides you with a clear understanding of what an API is expecting and what it will return.
 
+## 4. **Develop Typed Functions in TypeScript**
+
+💡 **Central Concepts**
+
+* TS supports - Named function declarations, function expression (or anonymous function), Arrow functions
+* TypeScript parameters are required by default, but can be made optional.
+* When a function is called, the TypeScript compiler verifies:
+  - A value has been provided for each parameter.
+  - Only parameters that the function requires are passed to it.
+  - The parameters are passed in the order in which they're defined in the function.
+* TS allows to define functions with optional, default, and rest parameters, as well as deconstructed object parameters.
+* Optional parameters must come after any required parameters in the parameter list. 
+* Default parameters must come after required parameters in the parameter list.
+
+
+🎓 **Skills gained:**
+
+* Understanding ot the benefits of using types in functions.
+* Work with functions that have required, optional, default, and rest parameters.
+* Function types definition using type aliases or interfaces.
+
+
+💻 **Practical Implementation**
+
+* Adding types to functions helps prevent you from passing values that you shouldn't pass to your functions
+* To apply the same function type signature to more than one function, function type can be defined and then used when creating a function.
+* When defining a function type, an interface is better if you want to have the option of extending the function type; a type alias is better if you want to use unions or tuples.
+* Using typed functions helps catch errors early in the development process and provides better documentation and code readability.
+* Common use for an anonymous function is to assign a function expression to a variable
