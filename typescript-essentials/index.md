@@ -13,7 +13,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 3. **Implement Interfaces in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/YVH5P4VR?sharingId=7B597E88B249D320)
 4. **Develop Typed Functions in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/7EN3B8NZ?sharingId=7B597E88B249D320)
 5. **Declare and Instantiate Classes in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/3XLTCT4H?sharingId=7B597E88B249D320)
-6. **Generics in TypeScript**: [Badge](badge-link)
+6. **Generics in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/BLM2N6ZD?sharingId=7B597E88B249D320)
 7. **Work with External Libraries in TypeScript**: [Badge](badge-link)
 8. **Organize Code with Namespaces in TypeScript**: [Badge](badge-link)
 
@@ -53,20 +53,20 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 
 * TypeScript enables you to add static types to your JavaScript code
 * Explicit type annotations are optional in TypeScript
-* If a variable wasn't assign to a type or initialized when it was declared, it would be inferred of type "any"
+* If a variable wasn't assign to a type or initialized when it was declared, it would be inferred of type ```any```
 * Explicit type declarations is preferable,  it provide a documentation of your code intention
 * All types in TypeScript are subtypes of a single top type called the any type.
 * The void type exists purely to indicate the absence of a value
 * The null and undefined types are subtypes of all other types
 * Enumeration type, or enum, allows to create sets of constants for use with variables and properties.
-* While flexible, the "any" type can cause unexpected errors. One should avoid using "any" when it's not necessary.
-* The core feature of "unknown" - it is impossible to interact with a variable of type unknown
+* While flexible, the ```any``` type can cause unexpected errors. One should avoid using "any" when it's not necessary.
+* The core feature of ```unknown``` - it is impossible to interact with a variable of type unknown
 * To treat a variable as a different data type, one can use a type assertion, It tells the compiler, the developer knows what he is doing.
 * The union type restricts the assignment of values to one of several specified types
 * An intersection type combines two or more types to create a new type that has all properties of the existing types
 * There are three sets of literal types available in TypeScript: string, number, and boolean
 * Narrowing - The process of going from an infinite number of potential cases to a smaller, finite number of potential cases
-* Tuples - an array that contains values of mixed types. To declare a Tuple, use the syntax variableName: [type, type, ...].
+* Tuples - an array that contains values of mixed types. To declare a Tuple, use the syntax variableName: ```[type, type, ...].```
 
 🎓 **Skills gained:**
 
@@ -96,7 +96,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 * An interface describes the properties and return types, while a function or class defines the implementation details.
 * A type alias cannot be reopened to add new properties whereas an interface is always extendable.
 * The TypeScript coding guidelines suggest interfaces should not start with the letter I
-* Properties of an interface can be required, optional(firstName?), or read only (readonly firstName: string;).
+* Properties of an interface can be required, optional ```firstName?```, or read only ```readonly firstName: string;```.
 
 
 🎓 **Skills gained:**
@@ -194,28 +194,32 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 
 💡 **Central Concepts**
 
-* 
-* 
-* 
-* 
-* 
+* Generics define one or more type variables to identify the type or types that you will pass to the component, enclosed in angle brackets (< >). 
+  ```function getArray<T>(items : T[]) : T[] {
+    return new Array<T>().concat(items);
+}```
+* To call the function and pass a type to it, append ```<type>``` to the function name. For example, ```getArray<number>``` 
+* If type is omitted when calling the function, it will be inferred. It only works with simple data. Passing in arrays or objects infers the type of any and eliminates type checks.
+* Using multiple type variables is possible in generic components
+* ```keyof`` operator takes an object type and produces a string or numeric literal union of its keys
+* the usage of ```typeof``` type guard is only possible to check the primitive types (string, number, bigint, function, boolean, symbol, object, and undefined) To check the type of a class, use an ```instanceof``` type guard.
+* Generics are just a way to pass types to a component, so it is possible not only apply native types to generic type variables, but also interfaces, functions, and classes
+* A generic constraint limits the types that a type variable can accept, rather than accepting any possible type.
 
 
 🎓 **Skills gained:**
 
-* 
-* 
-* 
-* 
-* 
+* Definition of a generic function.
+* Declaration of a generic interface.
+* Declaration of a generic class.
+* Using generic constraints to limit types.
 
 
 💻 **Practical Implementation**
-
-* 
-* 
-* 
-* 
+ 
+* Generic functions may be used with a function or class that Works with a variety of data types or Uses that data type in several places.
+* Generics provide more flexibility when working with types, enable code reuse, reduce the need to use the ```any``` type.
+* Because any type is possible, TypeScript raises errors to prevent certain operations that are not supported by all types. For this reason, it's best to use generics with operations that can work on a variety of data.
 
 ## 7. **Work with External Libraries in TypeScript**
 
