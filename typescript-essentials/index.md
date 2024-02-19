@@ -10,7 +10,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 
 1. **Getting Started with TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/YVH5P4VR?sharingId=7B597E88B249D320)
 2. **Declare Variable Types in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/ZPFCH7E2?sharingId=7B597E88B249D320)
-3. **Implement Interfaces in TypeScript**: [Badge](badge-link)
+3. **Implement Interfaces in TypeScript**: [Badge](An interface describes the properties and return types, while a function or class defines the implementation details.)
 4. **Develop Typed Functions in TypeScript**: [Badge](badge-link)
 5. **Declare and Instantiate Classes in TypeScript**: [Badge](badge-link)
 6. **Generics in TypeScript**: [Badge](badge-link)
@@ -90,20 +90,61 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 * Using literal types let to specify several values that a string, number or boolean can have (type testResult = "pass" | "fail" | "incomplete")
 
 ## 3. **Implement Interfaces in TypeScript**
-Provide insights into how each module has enhanced your understanding of TypeScript.
+
+💡 **Central Concepts**
+
+* An interface describes the properties and return types, while a function or class defines the implementation details.
+* A type alias cannot be reopened to add new properties whereas an interface is always extendable.
+* The TypeScript coding guidelines suggest interfaces should not start with the letter I
+* Properties of an interface can be required, optional(firstName?), or read only (readonly firstName: string;).
+
 
 🎓 **Skills gained:**
 
-Discuss specific concepts or techniques from the module and their relevance in your development work.
+* Understanding of the difference between an interface and a type alias 
+* Declaring and implementing an interface
+* Extending an interface with one or more interfaces
+* Create indexable types
+* Interface usage
+
 
 💻 **Practical Implementation**
 
-Highlight how the knowledge gained can be applied to real-world programming challenges.
+* Use interfaces to describe an object, naming and parameterizing the object's types, and to compose existing named object types into new ones. After defining an interface, you can use it as a type.
+* You can use an interface to:
+  1. Create shorthand names for commonly used types.
+  2. Ensure that proper values are being passed into properties, constructors, or functions, especially when working with a team.
+  3. Describe existing JavaScript APIs and clarify function parameters and return types. The interface provides you with a clear understanding of what an API is expecting and what it will return.
 
-📋 **Examples' Practical Application**
-
-include examples or hypothetical scenarios where these skills could be beneficial.
 ## 4. **Develop Typed Functions in TypeScript**
+
+💡 **Central Concepts**
+
+* 
+* 
+* 
+* 
+* 
+
+
+🎓 **Skills gained:**
+
+* 
+* 
+* 
+* 
+* 
+
+
+💻 **Practical Implementation**
+
+* 
+* 
+* 
+* 
+* 
+
+
 ## 5. **Declare and Instantiate Classes in TypeScript**
 ## 6. **Generics in TypeScript**
 ## 7. **Work with External Libraries in TypeScript**
