@@ -74,7 +74,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 * Get an understanding of the advantages of declaring typed variables in TypeScript.
 * Variables declaration using primitive types, object types, union and intersection types.
 * Get acquainted with core features of enum.
-* Get acquainted with two forms of type assertion: (randomValue as string).toUpperCase(); (<string>randomValue).toUpperCase(); (as is preferred)
+* Get acquainted with two forms of type assertion: ```(randomValue as string).toUpperCase(); (<string>randomValue).toUpperCase();``` (as is preferred)
 * Usage of Type guards, conditional test to learn the type of a variable
 * Learned to use "unknown" type and "any" when needed, and got the difference
 * Learned to work with union and intersection types
