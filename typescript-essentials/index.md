@@ -12,7 +12,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 2. **Declare Variable Types in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/ZPFCH7E2?sharingId=7B597E88B249D320)
 3. **Implement Interfaces in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/YVH5P4VR?sharingId=7B597E88B249D320)
 4. **Develop Typed Functions in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/7EN3B8NZ?sharingId=7B597E88B249D320)
-5. **Declare and Instantiate Classes in TypeScript**: [Badge](badge-link)
+5. **Declare and Instantiate Classes in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/3XLTCT4H?sharingId=7B597E88B249D320)
 6. **Generics in TypeScript**: [Badge](badge-link)
 7. **Work with External Libraries in TypeScript**: [Badge](badge-link)
 8. **Organize Code with Namespaces in TypeScript**: [Badge](badge-link)
@@ -74,7 +74,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 * Get an understanding of the advantages of declaring typed variables in TypeScript.
 * Variables declaration using primitive types, object types, union and intersection types.
 * Get acquainted with core features of enum.
-* Get acquainted with two forms of type assertion: (randomValue as string).toUpperCase(); (<string>randomValue).toUpperCase(); (as is preferred)
+* Get acquainted with two forms of type assertion: ```(randomValue as string).toUpperCase(); (<string>randomValue).toUpperCase();``` (as is preferred)
 * Usage of Type guards, conditional test to learn the type of a variable
 * Learned to use "unknown" type and "any" when needed, and got the difference
 * Learned to work with union and intersection types
@@ -151,6 +151,49 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 
 💡 **Central Concepts**
 
+* Classes are another way to define the shape of an object, in addition to describing object types with interfaces and functions
+* Class is a blueprint for building objects. It describes the attributes of an object and behaviors it can perform, but to assign property values an instance of an object must be build first. 
+* When one class extends another, it includes all of the properties and methods of the class it extends, plus its own unique attributes and behaviors.
+* Properties of a class are just raw data that is passed to the object when it's initialized.
+* A class may contain at most one constructor declaration. If a class contains no constructor declaration, an automatic constructor is provided.
+* TypeScript allows to control the visibility of class members by adding the public, private, or protected keyword before the member name.
+  - private members cannot be accessed from outside of its containing class.
+  - protected members can also be accessed within deriving classes.
+  - readonly modifier makes properties readonly, it may only be set when initialized at their declaration or in the constructor.
+* For two types to be considered compatible, if one of them has a private member, then the other must have a private member that originated in the same declaration. The same applies to protected members.
+* Static properties and methods are shared by all instances of a class.
+* The syntax ```className.propertyName``` is used instead of ```this```, when accessing the static property.
+* When a derived class has a different definition for one of the member functions of the base class, the base function is said to be overridden.
+* The ```super()``` keyword in the body of the constructor executes the constructor of the base class, to include the parameters from the base class. It must appear before any references to ```this```.
+* Classes allow to define implementation details - methods, fields, and properties. Interfaces solely define how data is structured.
+
+
+🎓 **Skills gained:**
+
+* Usage of TypeScript classes to describe the shape of objects.
+* Declaration of a class using TypeScript.
+* Instantiation of a class using TypeScript.
+* Learned to apply access modifiers to a class.
+* Static properties definition in a class.
+* Class extension with another class.
+* Declaration of an interface to ensure class shape.
+* Understanding when to use an interface or a class to define the structure of an object.
+
+
+💻 **Practical Implementation**
+
+* Accessors are used to control access to values, such as implementing validation, or to calculate values dynamically.
+* Get and Set accessors can be used to validate data, impose constraints, or other manipulation of the data.
+* Inheritance is used to extend a class and create a new class that will inherit properties and methods of the parent class but can also have its own unique attributes and behaviors. It
+* Inheritance makes code reusable, helps you avoid redundancy.
+* Centralized Code Modification - Instead of having to make code changes in many different classes that have similar functionality, you just need to make the changes once in the base class.
+* Use an interface to define how data will be structured. You can use interfaces to define parameter objects for functions, define the structure for various framework properties, and define how objects look from remote services or APIs.
+* Interfaces do not require a class. what allows to use them whenever is a need to define a data structure without having to create a full class implementation.
+
+## 6. **Generics in TypeScript**
+
+💡 **Central Concepts**
+
 * 
 * 
 * 
@@ -173,7 +216,57 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 * 
 * 
 * 
-* 
-## 6. **Generics in TypeScript**
+
 ## 7. **Work with External Libraries in TypeScript**
+
+💡 **Central Concepts**
+
+* 
+* 
+* 
+* 
+* 
+
+
+🎓 **Skills gained:**
+
+* 
+* 
+* 
+* 
+* 
+
+
+💻 **Practical Implementation**
+
+* 
+* 
+* 
+* 
+
 ## 8. **Organize Code with Namespaces in TypeScript**
+
+💡 **Central Concepts**
+
+* 
+* 
+* 
+* 
+* 
+
+
+🎓 **Skills gained:**
+
+* 
+* 
+* 
+* 
+* 
+
+
+💻 **Practical Implementation**
+
+* 
+* 
+* 
+* 
