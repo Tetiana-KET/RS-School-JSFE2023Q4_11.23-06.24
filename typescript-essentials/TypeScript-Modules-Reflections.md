@@ -169,3 +169,34 @@
 * Centralized Code Modification - Instead of having to make code changes in many different classes that have similar functionality, you just need to make the changes once in the base class.
 * Use an interface to define how data will be structured. You can use interfaces to define parameter objects for functions, define the structure for various framework properties, and define how objects look from remote services or APIs.
 * Interfaces do not require a class. what allows to use them whenever is a need to define a data structure without having to create a full class implementation.
+
+## 6. **Generics in TypeScript**
+
+💡 **Central Concepts**
+
+* Generics define one or more type variables to identify the type or types that you will pass to the component, enclosed in angle brackets (< >). 
+  ```function getArray<T>(items : T[]) : T[] {
+    return new Array<T>().concat(items);
+}```
+* To call the function and pass a type to it, append ```<type>``` to the function name. For example, ```getArray<number>``` 
+* If type is omitted when calling the function, it will be inferred. It only works with simple data. Passing in arrays or objects infers the type of any and eliminates type checks.
+* Using multiple type variables is possible in generic components
+* ```keyof`` operator takes an object type and produces a string or numeric literal union of its keys
+* the usage of ```typeof``` type guard is only possible to check the primitive types (string, number, bigint, function, boolean, symbol, object, and undefined) To check the type of a class, use an ```instanceof``` type guard.
+* Generics are just a way to pass types to a component, so it is possible not only apply native types to generic type variables, but also interfaces, functions, and classes
+* A generic constraint limits the types that a type variable can accept, rather than accepting any possible type.
+
+
+🎓 **Skills gained:**
+
+* Definition of a generic function.
+* Declaration of a generic interface.
+* Declaration of a generic class.
+* Using generic constraints to limit types.
+
+
+💻 **Practical Implementation**
+ 
+* Generic functions may be used with a function or class that Works with a variety of data types or Uses that data type in several places.
+* Generics provide more flexibility when working with types, enable code reuse, reduce the need to use the ```any``` type.
+* Because any type is possible, TypeScript raises errors to prevent certain operations that are not supported by all types. For this reason, it's best to use generics with operations that can work on a variety of data.
