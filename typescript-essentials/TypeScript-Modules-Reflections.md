@@ -68,7 +68,7 @@
 * Using the any type allows to call: A property that doesn't exist for the type; randomValue as a function;   A method that only applies to a string type.
 * Using union can be helpful when a value is received  from a library, an API, or user input
 * Intersection types are most often used with interfaces to create a new intersection type with properties from both interfaces.
-* Using literal types let to specify several values that a string, number or boolean can have
+* Using literal types let to specify several values that a string, number or boolean can have ```(type testResult = "pass" | "fail" | "incomplete")```
 
 ## 3. **Implement Interfaces in TypeScript**
 
@@ -93,6 +93,6 @@
 
 * Use interfaces to describe an object, naming and parameterizing the object's types, and to compose existing named object types into new ones. After defining an interface, you can use it as a type.
 * You can use an interface to:
-  1. Create shorthand names for commonly used types.
-  2. Ensure that proper values are being passed into properties, constructors, or functions, especially when working with a team.
-  3. Describe existing JavaScript APIs and clarify function parameters and return types. The interface provides you with a clear understanding of what an API is expecting and what it will return.
+  * Create shorthand names for commonly used types.
+  * Ensure that proper values are being passed into properties, constructors, or functions, especially when working with a team.
+  * Describe existing JavaScript APIs and clarify function parameters and return types. The interface provides you with a clear understanding of what an API is expecting and what it will return.
