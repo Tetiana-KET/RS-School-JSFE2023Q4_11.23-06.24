@@ -225,3 +225,45 @@
 * Export and import allow to organize variables, classes, interfaces, and function declarations into multiple modules and then use these components in code. Practical Benefit of using modules is - Enhanced Code Organization and Maintainability
 * After importing an external library  by using the ```import``` and its type definition, it can be used with all the benefits of Intellisense and type checking ot TS.
 * The open-source project DefinitelyTyped is a repository of TypeScript type definitions for many popular JavaScript libraries. Type definitions can be installed by using the ```@types``` prefix.
+
+## 8. **Organize Code with Namespaces in TypeScript**
+
+💡 **Central Concepts**
+
+* TypeScript provides two ways to organize code - namespaces and modules. 
+* Namespaces are a TypeScript-specific way to organize and categorize code, enabling to group related code together.
+* Code inside a namespace is pulled from the global scope and into the scope of the namespace.
+* To make a component available outside the scope of a namespace ```export``` keyword should be added to the declaration.
+* Namespaces can be implemented within a single TypeScript file or across multiple TypeScript files.
+* As many namespaces can defined as needed within a single TypeScript file, by using the  ```namespace``` keyword.
+* Namespaces can be nested within namespaces, providing even more options for organizing your code.
+* When have namespaces in multiple files that relate to each other, reference tags must be added using the triple slash ```(///)``` syntax. For example ```/// <reference path="module08_loans.ts" />```
+* It is not recommended to combine namespaces and modules in the same project.
+
+
+🎓 **Skills gained:**
+
+* Understanding of the purpose of namespaces.
+* Implementation of a single-file namespaces.
+* Compiling multi-file namespaces
+* Understanding of the design considerations for using namespaces and modules.
+
+
+💻 **Practical Implementation**
+
+* This module explained how to organize TypeScript code using namespaces.
+* Both namespaces and modules provide a way to categorize related code in meaningful ways and help to control which code is exposed to the global namespace of an application.
+* Namespaces allow you to group variables, functions, interfaces, or classes related to business rules in one namespace and security in another.
+* Namespaces help to avoid naming conflicts between components in the global namespace and can be beneficial when working with distributed development teams that may use similar component names.
+* Namespaces should be used to:
+  - Reduce the amount of code in the global scope, limiting "global scope pollution."
+  - Provide a context for names, which helps reduce naming collisions.
+  - Enhance reusability.
+* Modules offer some additional benefits that namespaces do not.
+  - Declare their dependencies.
+  - Provide better code reuse.
+  - Offer strong isolation.
+  - Hide the internal statements of the module definitions.
+  - Provide better tooling support for bundling.
+  - Are recommended over namespaces for Node.js applications because modules are the default.
+  - Can resolve top-down JavaScript flow issues.
