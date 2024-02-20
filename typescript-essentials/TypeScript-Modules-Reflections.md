@@ -181,7 +181,7 @@
 * To call the function and pass a type to it, append ```<type>``` to the function name. For example, ```getArray<number>``` 
 * If type is omitted when calling the function, it will be inferred. It only works with simple data. Passing in arrays or objects infers the type of any and eliminates type checks.
 * Using multiple type variables is possible in generic components
-* ```keyof`` operator takes an object type and produces a string or numeric literal union of its keys
+* ```keyof``` operator takes an object type and produces a string or numeric literal union of its keys
 * the usage of ```typeof``` type guard is only possible to check the primitive types (string, number, bigint, function, boolean, symbol, object, and undefined) To check the type of a class, use an ```instanceof``` type guard.
 * Generics are just a way to pass types to a component, so it is possible not only apply native types to generic type variables, but also interfaces, functions, and classes
 * A generic constraint limits the types that a type variable can accept, rather than accepting any possible type.
@@ -200,3 +200,28 @@
 * Generic functions may be used with a function or class that Works with a variety of data types or Uses that data type in several places.
 * Generics provide more flexibility when working with types, enable code reuse, reduce the need to use the ```any``` type.
 * Because any type is possible, TypeScript raises errors to prevent certain operations that are not supported by all types. For this reason, it's best to use generics with operations that can work on a variety of data.
+
+## 7. **Work with External Libraries in TypeScript**
+
+💡 **Central Concepts**
+
+* To use a component from one module in another module, use the ```import``` keyword.
+* To import a single export from a module: ```import { <component name> } from '<module name>'```
+* To rename an import the ```as``` keyword should be used: ```import { <component name> as <new name> } from '<module name>'```
+* To import the entire module into a single variable: ```import * as <variable name> from '<module name>'```
+* Both namespaces and modules use the ```export``` keyword to designate a component as available outside of the scope of the namespace or module.
+*  when using namespaces - The ```--outFile compiler``` option combines multiple namespace files to a single JavaScript file.
+* Modules are the recommended code-organizing mechanism for ES6-compliant projects because they offer benefits that namespaces do not have.
+
+🎓 **Skills gained:**
+
+* Code organization  using modules.
+* Import of an external type library.
+* The usage of different types of import
+
+
+💻 **Practical Implementation**
+
+* Export and import allow to organize variables, classes, interfaces, and function declarations into multiple modules and then use these components in code. Practical Benefit of using modules is - Enhanced Code Organization and Maintainability
+* After importing an external library  by using the ```import``` and its type definition, it can be used with all the benefits of Intellisense and type checking ot TS.
+* The open-source project DefinitelyTyped is a repository of TypeScript type definitions for many popular JavaScript libraries. Type definitions can be installed by using the ```@types``` prefix.

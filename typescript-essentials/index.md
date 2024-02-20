@@ -14,7 +14,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 4. **Develop Typed Functions in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/7EN3B8NZ?sharingId=7B597E88B249D320)
 5. **Declare and Instantiate Classes in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/3XLTCT4H?sharingId=7B597E88B249D320)
 6. **Generics in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/BLM2N6ZD?sharingId=7B597E88B249D320)
-7. **Work with External Libraries in TypeScript**: [Badge](badge-link)
+7. **Work with External Libraries in TypeScript**: [Badge](https://learn.microsoft.com/api/achievements/share/en-us/TetianaKETTetianaShpakova-3189/HYG6Z5H8?sharingId=7B597E88B249D320)
 8. **Organize Code with Namespaces in TypeScript**: [Badge](badge-link)
 
 
@@ -201,7 +201,7 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 * To call the function and pass a type to it, append ```<type>``` to the function name. For example, ```getArray<number>``` 
 * If type is omitted when calling the function, it will be inferred. It only works with simple data. Passing in arrays or objects infers the type of any and eliminates type checks.
 * Using multiple type variables is possible in generic components
-* ```keyof`` operator takes an object type and produces a string or numeric literal union of its keys
+* ```keyof``` operator takes an object type and produces a string or numeric literal union of its keys
 * the usage of ```typeof``` type guard is only possible to check the primitive types (string, number, bigint, function, boolean, symbol, object, and undefined) To check the type of a class, use an ```instanceof``` type guard.
 * Generics are just a way to pass types to a component, so it is possible not only apply native types to generic type variables, but also interfaces, functions, and classes
 * A generic constraint limits the types that a type variable can accept, rather than accepting any possible type.
@@ -225,28 +225,26 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 
 💡 **Central Concepts**
 
-* 
-* 
-* 
-* 
-* 
-
+* To use a component from one module in another module, use the ```import``` keyword.
+* To import a single export from a module: ```import { <component name> } from '<module name>'```
+* To rename an import the ```as``` keyword should be used: ```import { <component name> as <new name> } from '<module name>'```
+* To import the entire module into a single variable: ```import * as <variable name> from '<module name>'```
+* Both namespaces and modules use the ```export``` keyword to designate a component as available outside of the scope of the namespace or module.
+*  when using namespaces - The ```--outFile compiler``` option combines multiple namespace files to a single JavaScript file.
+* Modules are the recommended code-organizing mechanism for ES6-compliant projects because they offer benefits that namespaces do not have.
 
 🎓 **Skills gained:**
 
-* 
-* 
-* 
-* 
-* 
+* Code organization  using modules.
+* Import of an external type library.
+* The usage of different types of import
 
 
 💻 **Practical Implementation**
 
-* 
-* 
-* 
-* 
+* Export and import allow to organize variables, classes, interfaces, and function declarations into multiple modules and then use these components in code. Practical Benefit of using modules is - Enhanced Code Organization and Maintainability
+* After importing an external library  by using the ```import``` and its type definition, it can be used with all the benefits of Intellisense and type checking ot TS.
+* The open-source project DefinitelyTyped is a repository of TypeScript type definitions for many popular JavaScript libraries. Type definitions can be installed by using the ```@types``` prefix.
 
 ## 8. **Organize Code with Namespaces in TypeScript**
 
