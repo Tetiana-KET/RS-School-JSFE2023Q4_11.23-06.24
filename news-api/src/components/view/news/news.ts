@@ -1,7 +1,7 @@
 import './news.css';
 import { Source } from '../sources/sources';
 
-interface NewsItem {
+export interface NewsItem {
     author: string | null;
     source: Source;
     publishedAt: string;
