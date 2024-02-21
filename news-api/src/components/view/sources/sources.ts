@@ -2,7 +2,7 @@ import './sources.css';
 
 export interface Source {
     name: string;
-    id?: string;
+    id: string;
 }
 
 class Sources {
