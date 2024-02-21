@@ -1,7 +1,5 @@
 import './news.css';
-interface Source {
-    name: string;
-}
+import { Source } from '../sources/sources';
 
 interface NewsItem {
     author: string | null;
