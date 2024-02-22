@@ -21,6 +21,7 @@
         "no-console": 0,
         "class-methods-use-this": "off",
         "@typescript-eslint/no-explicit-any": 2,
-        "prettier/prettier": ["error", { "endOfLine": "auto" }]
+        "prettier/prettier": ["error", { "endOfLine": "auto" }],
+        "@typescript-eslint/no-namespace": [2, { "allowDeclarations": true }]
     }
 }
