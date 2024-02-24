@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const DotenvWebpackPlugin = require('dotenv-webpack');
 const EslintPlugin = require('eslint-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin'); // to handle favicon
 
 const baseConfig = {
     entry: path.resolve(__dirname, './src/index.ts'),
@@ -15,6 +16,10 @@ const baseConfig = {
                 use: ['style-loader', 'css-loader'],
             },
             { test: /\.ts$/i, use: 'ts-loader' },
+            {
+                test: /\.(jpe?g|png|gif|svg|eot|ttf|woff?2)$/i,
+                type: 'asset',
+            },
         ],
     },
     resolve: {
@@ -32,6 +37,9 @@ const baseConfig = {
         }),
         new CleanWebpackPlugin(),
         new EslintPlugin({ extensions: 'ts' }),
+        new CopyPlugin({
+            patterns: [{ from: 'src/favicon.ico', to: 'favicon.ico' }],
+        }),
     ],
 };
 
