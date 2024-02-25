@@ -15,12 +15,21 @@ export interface SourcesResponse {
     sources?: SourceItem[];
 }
 
+export enum NewsCategory {
+    Business = 'business',
+    Entertainment = 'entertainment',
+    General = 'general',
+    Science = 'science',
+    Sports = 'sports',
+    Technology = 'technology',
+}
+
 export interface SourceItem {
     id: string;
     name: string;
     description: string;
     url: string;
-    category: string;
+    category: NewsCategory;
     language: string;
     country: string;
 }
@@ -45,3 +54,10 @@ export interface NewsResponse {
     articles: NewsItem[];
     totalResults: number;
 }
+
+export interface Source {
+    name: string;
+    id: string;
+}
+
+export type Options = Record<string, string>;

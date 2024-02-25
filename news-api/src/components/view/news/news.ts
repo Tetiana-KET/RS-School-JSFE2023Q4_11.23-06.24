@@ -1,15 +1,5 @@
 import './news.css';
-import { Source } from '../sources/sources';
-
-export interface NewsItem {
-    author: string | null;
-    source: Source;
-    publishedAt: string;
-    title: string;
-    description: string;
-    url: string;
-    urlToImage: string | null;
-}
+import { NewsItem } from '../../../types';
 
 class News {
     draw(data: NewsItem[]) {

@@ -1,6 +1,4 @@
-import { ResponseCallback } from '../../types';
-
-type Options = Record<string, string>;
+import { Options, ResponseCallback } from '../../types';
 
 class Loader {
     private _baseLink: string;
