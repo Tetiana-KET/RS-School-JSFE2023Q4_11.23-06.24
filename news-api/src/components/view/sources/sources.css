@@ -55,3 +55,46 @@
         transform: translateY(-0.25em);
     }
 }
+
+@media (max-width: 821px) {
+    .sources-wrap {
+        display: none;
+        overflow-y: auto;
+    }
+
+    .sources-wrap.sources_open {
+        display: block;
+    }
+
+    .sources {
+        max-width: 100%;
+        height: auto;
+        display: grid;
+        gap: 7px;
+        row-gap: 10px;
+        grid-template-columns: repeat(3, minmax(100px, 1fr));
+        grid-auto-flow: dense;
+        overflow-y: auto;
+    }
+
+    .source__item {
+        margin: 0;
+        padding: 15px 5px;
+        text-align: center;
+    }
+
+    .source__item-name {
+        white-space: normal;
+    }
+}
+
+@media (max-width: 650px) {
+    .sources {
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
+    }
+}
+@media (max-width: 450px) {
+    .sources {
+        grid-template-columns: repeat(1, minmax(100px, 1fr));
+    }
+}

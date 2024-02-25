@@ -35,3 +35,9 @@
         box-shadow: 0 0.5em 0.5em -0.4em #3fcc59;
     }
 }
+
+@media (max-width: 821px) {
+    .arrows-wrap {
+        display: none;
+    }
+}
