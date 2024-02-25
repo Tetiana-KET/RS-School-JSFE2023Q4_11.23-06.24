@@ -97,7 +97,7 @@ footer .copyright a {
 }
 
 footer .copyright:before {
-    content: '©';
+    content: '2024 ©';
 }
 
 @media (hover: hover) and (pointer: fine) {

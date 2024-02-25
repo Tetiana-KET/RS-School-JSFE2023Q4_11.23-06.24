@@ -1,13 +1,16 @@
+import './slider.css';
 export default function moveSlider(): void {
     let position: number = 0;
     let translateX: number = 0;
     const totalContentWidth: number = 7900;
+
     const sourcesButtonsWrap = <HTMLElement>document.querySelector('.sources');
     const sourcesWrap = <HTMLElement>document.querySelector('.sources-wrap');
     const arrowLeft = <HTMLElement>document.querySelector('.arrow-left');
     const arrowRight = <HTMLElement>document.querySelector('.arrow-right');
     const width = sourcesWrap.offsetWidth;
     const count = Math.round(totalContentWidth / width);
+    let widthLeft: number = totalContentWidth - width;
 
     checkButtons();
 
@@ -15,7 +18,7 @@ export default function moveSlider(): void {
         arrowLeft.classList.remove('disabled');
         arrowRight.classList.remove('disabled');
 
-        if (position >= count - 1) {
+        if (position >= count || widthLeft <= 0) {
             arrowRight.classList.add('disabled');
         }
         if (position < 1) {
@@ -24,8 +27,8 @@ export default function moveSlider(): void {
     }
 
     function moveCarousel(): void {
-        if (position === count - 1) {
-            translateX = -position * width - width / 2;
+        if (widthLeft <= width) {
+            translateX = -(position - 1) * width - widthLeft;
             sourcesButtonsWrap.style.transform = `translateX(${translateX}px)`;
         } else {
             translateX = -position * width;
@@ -33,31 +36,31 @@ export default function moveSlider(): void {
         }
     }
 
-    function moveCarouselToRight() {
-        arrowRight.classList.add('disabled');
-        arrowLeft.classList.add('disabled');
-        position += 1;
-
-        moveCarousel();
-        setTimeout(() => {
-            arrowRight.classList.remove('disabled');
-            arrowLeft.classList.remove('disabled');
-            checkButtons();
-        }, 2000);
-    }
-
     function moveCarouselToLeft() {
         arrowLeft.classList.add('disabled');
         arrowRight.classList.add('disabled');
         position -= 1;
-
         if (position < 0) {
             position = -position;
         }
         moveCarousel();
+        widthLeft += width;
         setTimeout(() => {
             arrowLeft.classList.remove('disabled');
             arrowRight.classList.remove('disabled');
+            checkButtons();
+        }, 2000);
+    }
+
+    function moveCarouselToRight() {
+        arrowRight.classList.add('disabled');
+        arrowLeft.classList.add('disabled');
+        position += 1;
+        moveCarousel();
+        widthLeft -= width;
+        setTimeout(() => {
+            arrowRight.classList.remove('disabled');
+            arrowLeft.classList.remove('disabled');
             checkButtons();
         }, 2000);
     }
