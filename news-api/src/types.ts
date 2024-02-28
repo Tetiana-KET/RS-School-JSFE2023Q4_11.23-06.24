@@ -61,3 +61,8 @@ export interface Source {
 }
 
 export type Options = Record<string, string>;
+
+export type LoadRequestInput = {
+    method: string;
+    endpoint: string;
+};
