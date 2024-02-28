@@ -65,9 +65,11 @@ export interface Source {
     id: string;
 }
 
-export type Options = Record<string, string>;
+export type Options<T = string> = Record<string, T>;
 
-export type LoadRequestInput = {
+export type LoadRequestInput<T> = {
     method: string;
     endpoint: string;
+    callback: ResponseCallback<T>;
+    options: Options;
 };

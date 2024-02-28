@@ -10,12 +10,15 @@ class Loader {
     }
 
     protected getResp<D>(
-        { endpoint, options = {} }: { endpoint: string; options?: Options },
+        {
+            endpoint,
+            options = {},
+        }: Omit<Pick<LoadRequestInput<D>, 'endpoint' | 'options'>, 'options'> & { options?: Options },
         callback: ResponseCallback<D> = () => {
             console.error('No callback for GET response');
         }
     ) {
-        this.load({ method: 'GET', endpoint }, callback, options);
+        this.load({ method: 'GET', endpoint, callback, options });
     }
 
     private errorHandler(res: Response) {
@@ -28,7 +31,7 @@ class Loader {
         return res;
     }
 
-    private makeUrl(options: Options, endpoint: string) {
+    private makeUrl<D>({ options, endpoint }: Pick<LoadRequestInput<D>, 'endpoint' | 'options'>) {
         const urlOptions = { ...this._options, ...options };
         let url = `${this._baseLink}${endpoint}?`;
 
@@ -39,8 +42,8 @@ class Loader {
         return url.slice(0, -1);
     }
 
-    protected load<D>({ method, endpoint }: LoadRequestInput, callback: ResponseCallback<D>, options: Options = {}) {
-        fetch(this.makeUrl(options, endpoint), { method })
+    protected load<D>({ method, endpoint, callback, options }: LoadRequestInput<D>) {
+        fetch(this.makeUrl({ options, endpoint }), { method })
             .then(this.errorHandler)
             .then((res) => res.json())
             .then((data: D) => callback(data))
