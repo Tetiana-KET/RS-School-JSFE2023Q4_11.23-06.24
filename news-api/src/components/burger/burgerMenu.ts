@@ -1,3 +1,4 @@
+import './burger.css';
 export default function burgerHandler() {
     const burger = <HTMLElement>document.querySelector('.burger');
     const sourcesWrap = <HTMLElement>document.querySelector('.sources-wrap');
