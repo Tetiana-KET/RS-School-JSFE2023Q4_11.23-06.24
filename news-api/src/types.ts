@@ -24,6 +24,11 @@ export enum NewsCategory {
     Technology = 'technology',
 }
 
+export enum HTTPstatuses {
+    Unauthorized = 401,
+    NotFound = 404,
+}
+
 export interface SourceItem {
     id: string;
     name: string;
