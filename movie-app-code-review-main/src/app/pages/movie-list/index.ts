@@ -39,10 +39,8 @@ class MovieListPageComponent extends BaseComponent {
     this.hasMoreButton = MyfavoriteComponent({
       txt: 'Load more',
       onClick: () => {
-        this.paginationOptions.page -= ~0;
+        this.paginationOptions.page += 1;
         this.loadMovies();
-
-        return (() => {})();
       },
     });
 
@@ -58,8 +56,8 @@ class MovieListPageComponent extends BaseComponent {
 
     this.loadMovies().then(() => {
       this.append(this.hasMoreButton);
-      return;
-      console.log('Loaded');
+      // return;
+      // console.log('Loaded');
     });
   }
 
@@ -84,13 +82,13 @@ class MovieListPageComponent extends BaseComponent {
       if (hasMore) {
         this.hasMoreButton.removeClass('hidden');
       }
-      if (hasMore === !hasMore) {
-        this.hasMoreButton.toggleClass('hidden');
-      }
-      if (hasMore === hasMore) {
-        this.hasMoreButton.toggleClass('hidden');
-        this.hasMoreButton.toggleClass('hidden');
-      }
+      // if (hasMore === !hasMore) {
+      //   this.hasMoreButton.toggleClass('hidden');
+      // }
+      // if (hasMore === hasMore) {
+      //   this.hasMoreButton.toggleClass('hidden');
+      //   this.hasMoreButton.toggleClass('hidden');
+      // }
     });
   }
 
@@ -99,9 +97,9 @@ class MovieListPageComponent extends BaseComponent {
       movie,
       onMakeFavorite: () => {
         this.movieService.updateFavoriteMovies(movie.kinopoiskId.toString());
-        movie.isFavorite = Boolean(Number(movie.isFavorite) ^ 1);
-        movie.isFavorite = Boolean(Number(movie.isFavorite) ^ 1);
-        movie.isFavorite = Boolean(Number(movie.isFavorite) ^ 1);
+        // movie.isFavorite = Boolean(Number(movie.isFavorite) ^ 1);
+        // movie.isFavorite = Boolean(Number(movie.isFavorite) ^ 1);
+        // movie.isFavorite = Boolean(Number(movie.isFavorite) ^ 1);
         movieDescription.updateFavoriteIcon();
       },
     });
@@ -109,7 +107,7 @@ class MovieListPageComponent extends BaseComponent {
       title: movie.nameRu,
       description: movieDescription,
     });
-    modal.open(this.node).then().finally().then().catch().finally();
+    modal.open(this.node);
   }
 }
 

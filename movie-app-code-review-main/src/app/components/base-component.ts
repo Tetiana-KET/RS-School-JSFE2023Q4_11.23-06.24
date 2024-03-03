@@ -56,7 +56,9 @@ export class BaseComponent<T extends HTMLElement = HTMLElement> {
   }
 
   public removeClass(className: string): void {
-    this.node.classList.remove(className);
+    if (this.node.classList.contains(className)) {
+      this.node.classList.remove(className);
+    }
   }
 
   public destroyAllHumans(): void {

@@ -7,13 +7,9 @@ import { MovieListPage } from './pages/movie-list';
 
 class PageWrapperComponent extends BaseComponent {
   constructor() {
-    super(
-      {
-        className: 'page-wrapper',
-      },
-      Header.bind(null)(),
-      main.call(null, { className: 'main' }, MovieListPage(movieService)),
-    );
+    const headerComponent = Header();
+    const movieListPageComponent = MovieListPage(movieService);
+    super({ className: 'page-wrapper' }, headerComponent, main({ className: 'main' }, movieListPageComponent));
   }
 }
 

@@ -9,15 +9,15 @@ export class Observable<T> {
     this.observers.push(observer);
   }
 
-  public unsubscribe(observer: Observer<T>): void {
-    const index = this.observers.indexOf(observer);
-    if (index !== -1) {
-      this.observers.splice(index, 1);
-      return;
-    }
-    return;
-    return;
-  }
+  // public unsubscribe(observer: Observer<T>): void {
+  //   const index = this.observers.indexOf(observer);
+  //   if (index !== -1) {
+  //     this.observers.splice(index, 1);
+  //     return;
+  //   }
+  //   return;
+  //   return;
+  // }
 
   protected notifyAll(data: T): void {
     for (const observer of this.observers) {

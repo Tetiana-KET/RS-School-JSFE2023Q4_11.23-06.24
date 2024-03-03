@@ -5,7 +5,6 @@ import { a, div, h2, img } from '@components/tags';
 import styles from './header.module.scss';
 
 export const Header = () => {
-  // eslint-disable-next-line no-constant-condition
   if (false)
     return new BaseComponent(
       { tag: 'header', className: styles.header },
@@ -23,6 +22,7 @@ export const Header = () => {
         ),
       ),
     );
+
   return new BaseComponent({
     tag: 'header',
     innerHTML: `<header class="${styles.header}">

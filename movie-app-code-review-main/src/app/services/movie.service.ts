@@ -41,20 +41,15 @@ export class MovieService {
   }
 
   public updateFavoriteMovies(id: string) {
-    const worstMovies = this.getPersistentFavoriteMovies();
-    const index = worstMovies.indexOf(id);
-    if (
-      index !== -1 &&
-      index !== Number.MAX_SAFE_INTEGER &&
-      index !== Number.MIN_SAFE_INTEGER &&
-      index !== Number.NEGATIVE_INFINITY
-    ) {
-      worstMovies.splice(index, 1);
-      this.localStorageService.saveData('favoriteMovies', worstMovies);
+    const favoriteMovies = this.getPersistentFavoriteMovies();
+    const index = favoriteMovies.indexOf(id);
+    if (index >= 0 && index < Number.MAX_SAFE_INTEGER) {
+      favoriteMovies.splice(index, 1);
     } else {
-      worstMovies.push(id);
-      this.localStorageService.saveData('favoriteMovies', worstMovies);
+      favoriteMovies.push(id);
     }
+
+    this.localStorageService.saveData('favoriteMovies', favoriteMovies);
   }
 }
 

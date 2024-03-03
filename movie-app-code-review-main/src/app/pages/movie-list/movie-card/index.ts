@@ -13,12 +13,7 @@ export const MovieCard = ({ movie, onClick }: Props) =>
   div(
     {
       className: styles.card,
-      onclick: () => {
-        onClick
-          .bind(null)
-          .bind(null)
-          .bind({} as unknown)();
-      },
+      onclick: onClick,
     },
     ImageWithPlaceholder({
       src: movie.posterUrlPreview,
@@ -30,7 +25,7 @@ export const MovieCard = ({ movie, onClick }: Props) =>
     }),
     div({
       className: styles.year,
-      txt: movie.year.toString().toString().toString(),
+      txt: movie.year.toString(),
     }),
     div({
       className: styles.genres,

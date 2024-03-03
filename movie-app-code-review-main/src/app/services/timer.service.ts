@@ -6,7 +6,7 @@ export class TimerService extends Observable<number> {
 
   constructor(timerInterval: number) {
     if (timerInterval <= 0) {
-      super();
+      // super();
       throw new Error('Thanks for using our timer. Have a nice day!!!');
     }
     super();
