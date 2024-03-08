@@ -1,7 +1,7 @@
 import { Component, Button } from './components';
 import { LoginPage } from './pages';
 //// import viteLogo from '/vite.svg'
-
+import './normalize.css';
 import './style.css';
 
 const btn = new Button();
