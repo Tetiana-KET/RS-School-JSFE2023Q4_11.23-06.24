@@ -25,13 +25,29 @@ export class LoginPage extends Component {
     this.firstNameInput = new Component<HTMLInputElement>({
       tagName: 'input',
       classNames: [classes.loginFormInput, classes.firstNameInput],
-      attributes: { type: 'text', placeholder: 'First Name', required: true, name: 'fname', id: 'fname' },
+      attributes: {
+        type: 'text',
+        placeholder: 'First Name',
+        required: true,
+        name: 'fname',
+        id: 'fname',
+        minlength: '3',
+        pattern: '^[A-Z][a-z]{2,}(-[A-Z][a-z]{2,})?$',
+      },
     });
 
     this.surnameInput = new Component<HTMLInputElement>({
       tagName: 'input',
       classNames: [classes.loginFormInput, classes.surnameInput],
-      attributes: { type: 'text', placeholder: 'Surname', required: true, name: 'sname', id: 'sname' },
+      attributes: {
+        type: 'text',
+        placeholder: 'Surname',
+        required: true,
+        name: 'sname',
+        id: 'sname',
+        minlength: '4',
+        pattern: '^[A-Z][a-z]{3,}(-[A-Z][a-z]{3,})?$',
+      },
     });
 
     // Create label for fields
@@ -54,7 +70,7 @@ export class LoginPage extends Component {
       tagName: 'button',
       classNames: [classes.button, classes.loginBtn],
       text: 'Login',
-      attributes: { type: 'button', disabled: true },
+      attributes: { type: 'submit', disabled: true },
     });
 
     form.prepend(this.formTitle);
@@ -70,8 +86,10 @@ export class LoginPage extends Component {
   }
 
   private checkFormValidity(): void {
-    const firstNameValid = this.firstNameInput.getNode().value.trim() !== '';
-    const surnameValid = this.surnameInput.getNode().value.trim() !== '';
+    const firstNameValid =
+      this.firstNameInput.getNode().value.trim() !== '' && this.firstNameInput.getNode().value.trim().length >= 3;
+    const surnameValid =
+      this.surnameInput.getNode().value.trim() !== '' && this.surnameInput.getNode().value.trim().length >= 4;
     // Enable login button if both input fields are valid
     this.loginButton.getNode().disabled = !(firstNameValid && surnameValid);
   }
