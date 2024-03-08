@@ -2,23 +2,37 @@ import { Component } from '../../components';
 import classes from './LoginPage.module.css';
 
 export class LoginPage extends Component {
+  private form: Component<HTMLFormElement>;
   private firstNameInput: Component<HTMLInputElement>;
   private surnameInput: Component<HTMLInputElement>;
   private loginButton: Component<HTMLButtonElement>;
   private firstNameLabel: Component<HTMLLabelElement>;
   private surnameLabel: Component<HTMLLabelElement>;
+  private firstNameTooltip: Component<HTMLSpanElement>;
+  private surnameTooltip: Component<HTMLSpanElement>;
   private formTitle: Component<HTMLElement>;
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.loginFormWrapper] });
-    const form = new Component({ tagName: 'form', classNames: [classes.loginForm] });
-    this.append(form);
+    this.form = new Component({ tagName: 'form', classNames: [classes.loginForm] });
+    this.append(this.form);
 
     // Create title fields
     this.formTitle = new Component<HTMLElement>({
       tagName: 'h2',
       classNames: [classes.loginFormTitle],
       text: 'login',
+    });
+
+    // create tooltips
+    this.surnameTooltip = new Component<HTMLSpanElement>({
+      tagName: 'span',
+      classNames: [classes.inputTooltip, classes.inputTooltipSurname],
+    });
+
+    this.firstNameTooltip = new Component<HTMLSpanElement>({
+      tagName: 'span',
+      classNames: [classes.inputTooltip, classes.inputTooltipName],
     });
 
     // Create input fields
@@ -73,12 +87,14 @@ export class LoginPage extends Component {
       attributes: { type: 'submit', disabled: true },
     });
 
-    form.prepend(this.formTitle);
-    form.append(this.firstNameLabel);
-    form.append(this.firstNameInput);
-    form.append(this.surnameLabel);
-    form.append(this.surnameInput);
-    form.append(this.loginButton);
+    this.form.prepend(this.formTitle);
+    this.form.append(this.firstNameLabel);
+    this.firstNameLabel.append(this.firstNameTooltip);
+    this.form.append(this.firstNameInput);
+    this.form.append(this.surnameLabel);
+    this.surnameLabel.append(this.surnameTooltip);
+    this.form.append(this.surnameInput);
+    this.form.append(this.loginButton);
 
     // Add event listeners to input fields
     this.firstNameInput.getNode().addEventListener('input', this.checkFormValidity.bind(this));
@@ -86,11 +102,57 @@ export class LoginPage extends Component {
   }
 
   private checkFormValidity(): void {
+    const firstNameInput = this.firstNameInput.getNode();
+    const surnameInput = this.surnameInput.getNode();
+    const firstNameValue = firstNameInput.value.trim();
+    const surnameValue = surnameInput.value.trim();
+    const surnameTooltip = this.surnameTooltip.getNode();
+    const firstNameTooltip = this.firstNameTooltip.getNode();
+
+    if (firstNameValue) {
+      if (firstNameValue[0] !== firstNameValue[0].toUpperCase()) {
+        firstNameTooltip.textContent = 'First letter should be uppercase';
+        firstNameTooltip.classList.add(classes.inputTooltipActive);
+      }
+
+      if (firstNameValue.slice(1) !== firstNameValue.slice(1).toLowerCase()) {
+        firstNameTooltip.textContent = 'ONLY FIRST letter may be uppercase';
+        firstNameTooltip.classList.add(classes.inputTooltipActive);
+      }
+
+      if (!/^[A-Za-z\-]+$/.test(firstNameValue)) {
+        firstNameTooltip.textContent = 'Only English letters and "-" allowed';
+        firstNameTooltip.classList.add(classes.inputTooltipActive);
+      }
+
+      setTimeout(() => {
+        firstNameTooltip.classList.remove(classes.inputTooltipActive);
+      }, 2000);
+    }
+
+    if (surnameValue) {
+      if (surnameValue[0] !== surnameValue[0].toUpperCase()) {
+        surnameTooltip.textContent = 'First letter should be uppercase';
+        surnameTooltip.classList.add(classes.inputTooltipActive);
+      }
+
+      if (surnameValue.slice(1) !== surnameValue.slice(1).toLowerCase()) {
+        surnameTooltip.textContent = 'ONLY FIRST letter may be uppercase';
+        surnameTooltip.classList.add(classes.inputTooltipActive);
+      }
+
+      if (!/^[A-Za-z\-]+$/.test(surnameValue)) {
+        surnameTooltip.textContent = 'Only English letters and "-" allowed';
+        surnameTooltip.classList.add(classes.inputTooltipActive);
+      }
+      setTimeout(() => {
+        surnameTooltip.classList.remove(classes.inputTooltipActive);
+      }, 2000);
+    }
     const firstNameValid =
       this.firstNameInput.getNode().value.trim() !== '' && this.firstNameInput.getNode().value.trim().length >= 3;
     const surnameValid =
       this.surnameInput.getNode().value.trim() !== '' && this.surnameInput.getNode().value.trim().length >= 4;
-    // Enable login button if both input fields are valid
     this.loginButton.getNode().disabled = !(firstNameValid && surnameValid);
   }
 
