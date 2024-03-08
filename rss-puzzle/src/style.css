@@ -4,6 +4,7 @@
   --accent-color: #bb945f;
   --black-color: #000000;
   --dark-color: #0c0c0e;
+  --warning-color: #eb1212;
 }
 html {
   scroll-behavior: smooth;
