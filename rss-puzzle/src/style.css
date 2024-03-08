@@ -1,0 +1,20 @@
+:root {
+  --grey-color: #8e8e8e;
+  --white-color: #ffffff;
+  --accent-color: #bb945f;
+  --black-color: #000000;
+  --dark-color: #0c0c0e;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  height: 100vh;
+  color: var(--black-color);
+  font-family: 'Inter';
+  font-size: 20px;
+  font-weight: 400;
+}
+body.no-scroll {
+  overflow: hidden;
+}

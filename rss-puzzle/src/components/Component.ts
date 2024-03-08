@@ -3,17 +3,40 @@ export interface BaseComponentParameters {
   text?: string;
   classNames?: string[];
   children?: Component[];
+  attributes?: { [key: string]: string | boolean };
 }
 
 export class Component<T extends HTMLElement = HTMLElement> {
   protected node: T;
   protected children: Component[] = [];
 
-  constructor({ tagName = 'div', text = '', classNames = [], children = [] }: BaseComponentParameters) {
+  constructor({
+    tagName = 'div',
+    text = '',
+    classNames = [],
+    children = [],
+    attributes = {},
+  }: BaseComponentParameters) {
     const node = document.createElement(tagName) as T;
-    if (classNames.length > 0) {
+
+    if (classNames.length) {
       node.classList.add(...classNames);
     }
+
+    if (Object.keys(attributes).length) {
+      for (let [key, value] of Object.entries(attributes)) {
+        if (typeof value === 'boolean') {
+          if (value) {
+            node.setAttribute(key, '');
+          } else {
+            node.removeAttribute(key);
+          }
+        } else {
+          node.setAttribute(key, value);
+        }
+      }
+    }
+
     node.textContent = text;
     this.node = node;
 
@@ -32,6 +55,13 @@ export class Component<T extends HTMLElement = HTMLElement> {
     if (child instanceof Component) {
       this.children.push(child);
       this.node.append(child.getNode());
+    }
+  }
+
+  public prepend(child: Component): void {
+    if (child instanceof Component) {
+      this.children.push(child);
+      this.node.prepend(child.getNode());
     }
   }
 
