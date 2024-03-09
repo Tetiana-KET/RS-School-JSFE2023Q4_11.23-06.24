@@ -9,4 +9,5 @@ const ddd = new Component({ tagName: 'h3', text: 'Hello world' });
 ddd.append(btn);
 
 document.body.append(ddd.getNode());
-document.body.append(new LoginPage().getNode());
+// создание и вставка формы на страницу
+//document.body.append(new LoginPage().getNode());
