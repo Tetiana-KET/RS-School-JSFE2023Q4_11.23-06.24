@@ -4,10 +4,10 @@
   height: 10vh;
   display: flex;
   align-items: center;
-  padding: 15px 0;
-  background: var(--beige-3);
-  opacity: 0.7;
-  box-shadow: 0px -3px 3px rgba(46, 20, 7, 0.5);
+  padding: 15px 35px;
+  background: rgba(3, 6, 25, 0.7);
+  opacity: 0.9;
+  box-shadow: 0px -3px 3px rgba(13, 96, 111, 0.5);
   transition: all 0.5s;
 }
 
@@ -16,7 +16,7 @@
   max-width: 1650px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .developer .social-item-link {
-  color: var(--chocolate-dark);
+  color: var(--main-color);
 }
 
 .social-item-link svg {
@@ -63,5 +63,6 @@
   .social-item:hover {
     cursor: pointer;
     transform: scale(1.1);
+    box-shadow: 0 0.8em 0.8em -0.4em #7c3fcc;
   }
 }
