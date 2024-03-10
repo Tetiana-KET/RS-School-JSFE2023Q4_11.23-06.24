@@ -1,4 +1,5 @@
 import { Component } from '../../components';
+import { storeUserData } from '../../utils/commonUtils';
 import classes from './LoginPage.module.css';
 
 export class LoginPage extends Component {
@@ -46,7 +47,6 @@ export class LoginPage extends Component {
         name: 'fname',
         id: 'fname',
         minlength: '3',
-        pattern: '^[A-Z][a-z]{2,}(-[A-Z][a-z]{2,})?$',
       },
     });
 
@@ -60,7 +60,6 @@ export class LoginPage extends Component {
         name: 'sname',
         id: 'sname',
         minlength: '4',
-        pattern: '^[A-Z][a-z]{3,}(-[A-Z][a-z]{3,})?$',
       },
     });
 
@@ -99,76 +98,94 @@ export class LoginPage extends Component {
     // Add event listeners to input fields
     this.firstNameInput.getNode().addEventListener('input', this.checkFormValidity.bind(this));
     this.surnameInput.getNode().addEventListener('input', this.checkFormValidity.bind(this));
+    // Add event listener for form submission
+    this.form.getNode().addEventListener('submit', event => {
+      event.preventDefault();
+      this.handleFormSubmit();
+    });
+  }
+
+  private checkValidity(value: string, tooltip: HTMLElement, minLength: number): boolean {
+    if (value === '') {
+      tooltip.textContent = 'This field is required';
+      tooltip.classList.add(classes.inputTooltipActive);
+      return false;
+    }
+
+    if (value.length < minLength) {
+      tooltip.textContent = `Minimum ${minLength} characters required`;
+      tooltip.classList.add(classes.inputTooltipActive);
+      return false;
+    }
+
+    if (!/^[A-Za-z\-]+$/.test(value)) {
+      tooltip.textContent = 'Only English letters and "-" allowed';
+      tooltip.classList.add(classes.inputTooltipActive);
+      return false;
+    }
+
+    if (value[0] === '-') {
+      if (value[1] !== value[1].toUpperCase()) {
+        tooltip.textContent = 'First letter after hyphen should be uppercase';
+        tooltip.classList.add(classes.inputTooltipActive);
+        return false;
+      }
+
+      if (value.slice(2) !== value.slice(2).toLowerCase()) {
+        tooltip.textContent = 'ONLY FIRST letter may be uppercase';
+        tooltip.classList.add(classes.inputTooltipActive);
+        return false;
+      }
+    } else {
+      if (value[0] !== value[0].toUpperCase()) {
+        tooltip.textContent = 'First letter should be uppercase';
+        tooltip.classList.add(classes.inputTooltipActive);
+        return false;
+      }
+
+      if (value.slice(1) !== value.slice(1).toLowerCase()) {
+        tooltip.textContent = 'ONLY FIRST letter may be uppercase';
+        tooltip.classList.add(classes.inputTooltipActive);
+        return false;
+      }
+    }
+
+    tooltip.classList.remove(classes.inputTooltipActive);
+    return true;
   }
 
   private checkFormValidity(): void {
-    const firstNameInput = this.firstNameInput.getNode();
-    const surnameInput = this.surnameInput.getNode();
-    const firstNameValue = firstNameInput.value.trim();
-    const surnameValue = surnameInput.value.trim();
-    const surnameTooltip = this.surnameTooltip.getNode();
-    const firstNameTooltip = this.firstNameTooltip.getNode();
+    const firstNameValue = this.firstNameInput.getNode().value.trim();
+    const surnameValue = this.surnameInput.getNode().value.trim();
 
-    if (firstNameValue) {
-      if (firstNameValue[0] !== firstNameValue[0].toUpperCase()) {
-        firstNameTooltip.textContent = 'First letter should be uppercase';
-        firstNameTooltip.classList.add(classes.inputTooltipActive);
-      }
+    const firstNameMinLength = parseInt(this.firstNameInput.getNode().getAttribute('minlength') || '0');
+    const surnameMinLength = parseInt(this.surnameInput.getNode().getAttribute('minlength') || '0');
 
-      if (firstNameValue.slice(1) !== firstNameValue.slice(1).toLowerCase()) {
-        firstNameTooltip.textContent = 'ONLY FIRST letter may be uppercase';
-        firstNameTooltip.classList.add(classes.inputTooltipActive);
-      }
+    const firstNameValid = this.checkValidity(firstNameValue, this.firstNameTooltip.getNode(), firstNameMinLength);
+    const surnameValid = this.checkValidity(surnameValue, this.surnameTooltip.getNode(), surnameMinLength);
 
-      if (!/^[A-Za-z\-]+$/.test(firstNameValue)) {
-        firstNameTooltip.textContent = 'Only English letters and "-" allowed';
-        firstNameTooltip.classList.add(classes.inputTooltipActive);
-      }
-
-      setTimeout(() => {
-        firstNameTooltip.classList.remove(classes.inputTooltipActive);
-      }, 2000);
-    }
-
-    if (surnameValue) {
-      if (surnameValue[0] !== surnameValue[0].toUpperCase()) {
-        surnameTooltip.textContent = 'First letter should be uppercase';
-        surnameTooltip.classList.add(classes.inputTooltipActive);
-      }
-
-      if (surnameValue.slice(1) !== surnameValue.slice(1).toLowerCase()) {
-        surnameTooltip.textContent = 'ONLY FIRST letter may be uppercase';
-        surnameTooltip.classList.add(classes.inputTooltipActive);
-      }
-
-      if (!/^[A-Za-z\-]+$/.test(surnameValue)) {
-        surnameTooltip.textContent = 'Only English letters and "-" allowed';
-        surnameTooltip.classList.add(classes.inputTooltipActive);
-      }
-      setTimeout(() => {
-        surnameTooltip.classList.remove(classes.inputTooltipActive);
-      }, 2000);
-    }
-    const firstNameValid =
-      this.firstNameInput.getNode().value.trim() !== '' && this.firstNameInput.getNode().value.trim().length >= 3;
-    const surnameValid =
-      this.surnameInput.getNode().value.trim() !== '' && this.surnameInput.getNode().value.trim().length >= 4;
     this.loginButton.getNode().disabled = !(firstNameValid && surnameValid);
   }
 
-  public getFirstName(): string {
+  private handleFormSubmit(): void {
+    const firstName = this.getFirstName();
+    const surname = this.getSurname();
+    storeUserData(firstName, surname);
+  }
+
+  protected getFirstName(): string {
     return this.firstNameInput.getNode().value;
   }
 
-  public getSurname(): string {
+  protected getSurname(): string {
     return this.surnameInput.getNode().value;
   }
 
-  public setFirstName(value: string): void {
+  protected setFirstName(value: string): void {
     this.firstNameInput.getNode().value = value;
   }
 
-  public setSurname(value: string): void {
+  protected setSurname(value: string): void {
     this.surnameInput.getNode().value = value;
   }
 }
