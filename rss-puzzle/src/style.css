@@ -1,14 +1,20 @@
 :root {
-  --grey-color: #8e8e8e;
+  --main-color: #da90ef;
+  --main-light: #edc1fa;
+  --blue-color: #16849d;
   --white-color: #ffffff;
   --accent-color: #bb945f;
+  --beige-color: #e8cba8;
   --black-color: #000000;
-  --dark-color: #0c0c0e;
+  --dark-color: #15032b;
+  --chocolate-dark: #220103;
   --warning-color: #eb1212;
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 body {
   height: 100vh;
   color: var(--black-color);
@@ -16,6 +22,27 @@ body {
   font-size: 20px;
   font-weight: 400;
 }
+
 body.no-scroll {
   overflow: hidden;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+
+.logout-btn,
+.logout-btn {
+  width: 100px;
+  height: 35px;
+  border-radius: 2px;
+  background-color: var(--main-color);
+  color: var(--white-color);
+  box-shadow:
+    rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  transition: all 0.5s;
 }
