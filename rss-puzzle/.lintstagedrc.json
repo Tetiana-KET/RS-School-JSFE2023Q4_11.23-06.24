@@ -1,4 +1,4 @@
 {
   "./src/.": ["npm run ci:format"],
-  "./src/**.*": ["npm run format"]
+  "./src/**/*.*": ["npm run format"]
 }

@@ -42,3 +42,62 @@
     color: var(--main-light);
   }
 }
+
+@media (max-width: 768px) {
+  .header-logo {
+    font-size: 18px;
+  }
+
+  .user-greeting {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: normal;
+  }
+}
+
+@keyframes masked {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -10000px 5000px;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+.user-greeting {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+  background: -webkit-linear-gradient(left, #0ff 0%, #f6a8f8 25%, #97b1fb 50%, #0ff 100%) repeat;
+  -webkit-background-clip: text;
+  -ms-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -ms-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  animation:
+    masked 15s linear infinite,
+    fadeInDown 1.5s both 1;
+  -webkit-animation:
+    masked 15s linear infinite,
+    fadeInDown 1.5s both 1;
+  -moz-animation:
+    masked 15s linear infinite,
+    fadeInDown 1.5s both 1;
+  -o-animation:
+    masked 15s linear infinite,
+    fadeInDown 1.5s both 1;
+}
