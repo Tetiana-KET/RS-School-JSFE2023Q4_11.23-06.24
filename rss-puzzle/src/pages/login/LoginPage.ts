@@ -1,5 +1,6 @@
 import { Component } from '../../components';
 import { storeUserData } from '../../utils/commonUtils';
+import { StartScreen } from '../startScreen/StartScreen';
 import classes from './LoginPage.module.css';
 
 export class LoginPage extends Component {
@@ -172,6 +173,8 @@ export class LoginPage extends Component {
     const surname = this.getSurname();
     const isLoggedIn = true;
     storeUserData(firstName, surname, isLoggedIn);
+    this.destroy();
+    document.body.prepend(new StartScreen().getNode());
   }
 
   protected getFirstName(): string {

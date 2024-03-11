@@ -1,3 +1,4 @@
+import { LoginPage } from '../../pages';
 import { generateGreeting } from '../../utils/commonUtils';
 import { Component } from '../Component';
 import classes from './Header.module.css';
@@ -46,5 +47,10 @@ export class Header extends Component {
 
   private handleLogout(): void {
     localStorage.removeItem('userData');
+    if (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+
+    document.body.prepend(new LoginPage().getNode());
   }
 }
