@@ -3,6 +3,7 @@ import { Footer } from '../../components/footer/Footer';
 import { Header } from '../../components/header/Header';
 import classes from './StartScreen.module.css';
 import bg from '../../assets/bg.jpg';
+import { GamePage } from '../gamePage/GamePage';
 
 export class StartScreen extends Component {
   private header: Component;
@@ -53,9 +54,20 @@ export class StartScreen extends Component {
       classNames: [classes.startBtn],
     });
     this.mainContent.append(this.startButton);
+    //event listener
+    this.startButton.getNode().addEventListener('click', this.handleStartClick.bind(this));
 
     // Footer
     this.footer = new Footer();
     this.append(this.footer);
+  }
+
+  private handleStartClick(): void {
+    localStorage.setItem('isPlaying', 'true');
+    if (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+
+    document.body.prepend(new GamePage().getNode());
   }
 }
