@@ -1,8 +1,13 @@
 import { Component } from '../../components';
+import { GameHeader } from '../../components/gameHeader/GameHeader';
 import classes from './GamePage.module.css';
 
 export class GamePage extends Component {
+  private header: Component;
   constructor() {
-    super({ tagName: 'div', text: 'this is game page', classNames: [classes.gamePageContainer] });
+    super({ tagName: 'div', classNames: [classes.gamePageContainer] });
+    // header
+    this.header = new GameHeader();
+    this.append(this.header);
   }
 }
