@@ -58,8 +58,4 @@ export class StartScreen extends Component {
     this.footer = new Footer();
     this.append(this.footer);
   }
-
-  private handleLogout(): void {
-    // logout logic here (clear local storage, redirect to login page)
-  }
 }

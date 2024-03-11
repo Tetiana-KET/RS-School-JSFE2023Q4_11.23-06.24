@@ -170,7 +170,8 @@ export class LoginPage extends Component {
   private handleFormSubmit(): void {
     const firstName = this.getFirstName();
     const surname = this.getSurname();
-    storeUserData(firstName, surname);
+    const isLoggedIn = true;
+    storeUserData(firstName, surname, isLoggedIn);
   }
 
   protected getFirstName(): string {
