@@ -19,7 +19,6 @@
   justify-content: space-between;
   align-items: center;
 }
-
 .logout-btn {
   width: 100px;
   height: 35px;
@@ -75,6 +74,7 @@
     transform: translateY(0px);
   }
 }
+
 .user-greeting {
   text-align: center;
   font-size: 26px;
