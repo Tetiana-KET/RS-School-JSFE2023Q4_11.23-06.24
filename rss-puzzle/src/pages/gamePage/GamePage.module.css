@@ -1,3 +1,7 @@
+.game-page-bg {
+  position: relative;
+}
+
 .game-page-container {
   height: 100vh;
   display: flex;
@@ -8,10 +12,11 @@
 
 .game-wrap,
 .game-source-data-block {
-  background: rgba(3, 6, 25, 0.7);
+  background: rgba(2, 5, 25, 0.9);
   opacity: 0.9;
-  box-shadow: 0px 0px 15px rgb(26, 135, 155);
+  box-shadow: 0px 0px 10px rgb(26, 135, 155);
 }
+
 .main-content-wrapper {
   width: 100%;
   height: 80vh;
@@ -22,7 +27,7 @@
   padding: 25px 15px 35px 15px;
   text-align: center;
   gap: 25px;
-  background: rgba(231, 220, 238);
+  background: rgba(89, 72, 100, 0.5);
   color: var(--main-light);
 }
 
