@@ -1,3 +1,5 @@
+import { Data } from '../interfaces/Data.interface';
+
 type NullLike = null | undefined;
 type Nullable<T> = T | NullLike;
 
@@ -38,4 +40,16 @@ export function checkUserStatus(): boolean {
     return true;
   }
   return false;
+}
+//fetching data
+export async function fetchWordData() {
+  try {
+    const response = await fetch(
+      'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/data/wordCollectionLevel1.json'
+    );
+    const data: Data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
 }

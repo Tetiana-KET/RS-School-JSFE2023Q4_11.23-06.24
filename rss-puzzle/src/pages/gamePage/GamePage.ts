@@ -4,6 +4,8 @@ import { GameButtonsBlock } from '../../components/GameButtonsBlock/GameButtonsB
 import { GameHeader } from '../../components/gameHeader/GameHeader';
 import classes from './GamePage.module.css';
 import bg from '../../assets/bg.jpg';
+import { fetchWordData } from '../../utils/commonUtils';
+import { Data } from '../../interfaces/Data.interface';
 
 export class GamePage extends Component {
   private gamePageContainer: Component;
@@ -13,6 +15,7 @@ export class GamePage extends Component {
   private gameSourceDataBlock: Component<HTMLDivElement>;
   private gameButtonsBlock: Component;
   private footer: Component;
+  private fetchedWordData: Data | null = null;
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
@@ -59,5 +62,22 @@ export class GamePage extends Component {
     // Footer
     this.footer = new Footer();
     this.gamePageContainer.append(this.footer);
+
+    // Fetch word data
+    fetchWordData()
+      .then(data => {
+        this.fetchedWordData = data;
+        console.log(this.fetchedWordData);
+        this.handleFetchedData(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
   }
+
+  private handleFetchedData(data: Data) {
+    this.populateGameSourceDataBlock(data);
+  }
+
+  private populateGameSourceDataBlock(data: Data) {}
 }
