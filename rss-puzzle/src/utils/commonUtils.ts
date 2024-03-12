@@ -41,11 +41,12 @@ export function checkUserStatus(): boolean {
   }
   return false;
 }
+
 //fetching data
-export async function fetchWordData() {
+export async function fetchWordData(level: number) {
   try {
     const response = await fetch(
-      'https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/data/wordCollectionLevel1.json'
+      `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/data/wordCollectionLevel${level}.json`
     );
     const data: Data = await response.json();
     return data;
