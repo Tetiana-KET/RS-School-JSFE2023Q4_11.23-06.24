@@ -12,7 +12,7 @@
 
 .game-wrap,
 .game-source-data-block {
-  background: rgba(2, 5, 25, 0.9);
+  background: rgba(2, 5, 25, 0.8);
   opacity: 0.9;
   box-shadow: 0px 0px 10px rgb(26, 135, 155);
 }
@@ -42,6 +42,28 @@
 
 .game-source-data-block {
   width: 90%;
-  height: 10vh;
+  height: 7vh;
+  padding: 5px 3px;
   display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.word-card {
+  flex: 1;
+  flex-basis: auto;
+  padding: 3px;
+  line-height: 24px;
+  background: rgba(2, 5, 25);
+  box-shadow: 0px 0px 5px rgb(26, 135, 155);
+  border: solid 1px rgb(26, 135, 155);
+  outline-offset: 2px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .word-card:hover {
+    box-shadow: 0px 0px 15px rgb(28, 191, 220);
+  }
 }

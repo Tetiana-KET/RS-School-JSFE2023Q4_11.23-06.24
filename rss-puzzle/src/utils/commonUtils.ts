@@ -54,3 +54,27 @@ export async function fetchWordData(level: number) {
     throw error;
   }
 }
+
+// shuffle words
+export function shuffleWords(sentence: string): string {
+  const words = sentence.split(' ');
+
+  for (let i = words.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [words[i], words[j]] = [words[j], words[i]];
+  }
+  return words.join(' ');
+}
+
+// create word cards
+export function createWordCards(sentence: string): HTMLElement[] {
+  const words = sentence.split(' ');
+
+  const wordCards: HTMLElement[] = words.map((word, index) => {
+    const wordCard = document.createElement('div');
+    wordCard.textContent = word;
+    wordCard.setAttribute('data-index', index.toString());
+    return wordCard;
+  });
+  return wordCards;
+}

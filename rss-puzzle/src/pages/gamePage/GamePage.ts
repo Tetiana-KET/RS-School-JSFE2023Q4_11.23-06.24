@@ -2,7 +2,7 @@ import { Component } from '../../components';
 import { Footer } from '../../components/footer/Footer';
 import { GameButtonsBlock } from '../../components/GameButtonsBlock/GameButtonsBlock';
 import { GameHeader } from '../../components/gameHeader/GameHeader';
-import { fetchWordData } from '../../utils/commonUtils';
+import { createWordCards, fetchWordData, shuffleWords } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
 import bg from '../../assets/bg.jpg';
@@ -80,10 +80,8 @@ export class GamePage extends Component {
   // handle fetched data
   private handleFetchedData() {
     if (this.fetchedWordData) {
-      // Assuming each round contains sentences
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
       console.log(this.sentencesForRound);
-
       this.displaySentence();
     }
   }
@@ -91,6 +89,13 @@ export class GamePage extends Component {
   // Method to display the current sentence in the game source data block
   private displaySentence() {
     const currentSentence = this.sentencesForRound[this.currentSentenceIndex];
-    this.gameSourceDataBlock.getNode().textContent = currentSentence;
+    const shuffledWords = shuffleWords(currentSentence);
+    const wordCards = createWordCards(shuffledWords);
+
+    this.gameSourceDataBlock.getNode().innerHTML = '';
+    wordCards.forEach(wordCard => {
+      wordCard.classList.add(classes.wordCard);
+      this.gameSourceDataBlock.getNode().append(wordCard);
+    });
   }
 }
