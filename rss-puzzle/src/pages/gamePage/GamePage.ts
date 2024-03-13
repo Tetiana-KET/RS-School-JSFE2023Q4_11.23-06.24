@@ -1,17 +1,12 @@
 import { Component } from '../../components';
 import { Footer } from '../../components/footer/Footer';
 import { GameHeader } from '../../components/gameHeader/GameHeader';
-import {
-  calculateCharWidth,
-  clickHandlerToWordCards,
-  createWordCards,
-  fetchWordData,
-  shuffleWords,
-} from '../../utils/commonUtils';
+import { fetchWordData, shuffleWords } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
 import bg from '../../assets/bg.jpg';
 import { GameButtonsBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
+import { calculateCharWidth, createWordCards, clickHandlerToWordCards } from '../../utils/wordCardsHandlers';
 
 export class GamePage extends Component {
   private gamePageContainer: Component;
@@ -27,10 +22,12 @@ export class GamePage extends Component {
   private sentencesForRound: string[] = [];
   private currentSentenceIndex: number = 0;
   private currentSentenceCards: HTMLElement[];
+  private currentSentence: string;
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
     this.currentSentenceCards = [];
+    this.currentSentence = '';
 
     this.getNode().style.backgroundImage = `url(${bg})`;
     this.getNode().style.backgroundSize = 'cover';
@@ -72,6 +69,7 @@ export class GamePage extends Component {
     //buttons
     this.gameButtonsBlock = new GameButtonsBlock();
     this.mainContent.append(this.gameButtonsBlock);
+
     // Footer
     this.footer = new Footer();
     this.gamePageContainer.append(this.footer);
@@ -109,8 +107,8 @@ export class GamePage extends Component {
     this.currentSentenceCards.length = 0;
     this.gameSourceDataBlock.getNode().innerHTML = '';
 
-    const currentSentence = this.sentencesForRound[this.currentSentenceIndex];
-    const shuffledWords = shuffleWords(currentSentence);
+    this.currentSentence = this.sentencesForRound[this.currentSentenceIndex];
+    const shuffledWords = shuffleWords(this.currentSentence);
     const wordCards = createWordCards(shuffledWords);
 
     this.setCardsWidth(wordCards);
@@ -130,7 +128,9 @@ export class GamePage extends Component {
       `${classes.gameSourceDataBlock}`,
       `${classes.sentenceLine}`,
       this.currentSentenceIndex,
-      `${classes.selected}`
+      `${classes.selected}`,
+      this.currentSentence,
+      this.gameButtonsBlock
     );
   }
 
