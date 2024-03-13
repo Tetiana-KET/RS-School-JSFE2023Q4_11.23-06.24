@@ -19,8 +19,8 @@ export class GamePage extends Component {
   private fetchedWordData: Data | null = null;
   private currentLevel: number = 1;
   private currentRound: number = 0;
-  private sentencesForRound: string[] = [];
-  private currentSentenceIndex: number = 0;
+  public sentencesForRound: string[] = [];
+  public currentSentenceIndex: number = 0;
   private currentSentenceCards: HTMLElement[];
   private currentSentence: string;
 
@@ -67,7 +67,7 @@ export class GamePage extends Component {
     });
     this.mainContent.append(this.gameSourceDataBlock);
     //buttons
-    this.gameButtonsBlock = new GameButtonsBlock();
+    this.gameButtonsBlock = new GameButtonsBlock(this);
     this.mainContent.append(this.gameButtonsBlock);
 
     // Footer
@@ -103,7 +103,7 @@ export class GamePage extends Component {
   }
 
   // display current sentence in the game source data block
-  private displaySentence() {
+  public displaySentence() {
     this.currentSentenceCards.length = 0;
     this.gameSourceDataBlock.getNode().innerHTML = '';
 
@@ -115,6 +115,14 @@ export class GamePage extends Component {
 
     wordCards.forEach(wordCard => {
       wordCard.classList.add(classes.wordCard);
+      wordCards.forEach((wordCard, index) => {
+        setTimeout(
+          () => {
+            wordCard.style.visibility = 'visible';
+          },
+          (index + 1) * 100
+        );
+      });
       this.gameSourceDataBlock.getNode().append(wordCard);
     });
     this.addClickHandlersToWordCards(wordCards);
