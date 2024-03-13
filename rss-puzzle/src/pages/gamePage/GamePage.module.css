@@ -60,7 +60,8 @@
   justify-content: center;
   float: inline-start;
   height: 100%;
-  font-size: 24px;
+  padding: 5px;
+  font-size: 2vw;
   background: rgba(2, 5, 25);
   box-shadow: 0px 0px 5px rgb(26, 135, 155);
   border: solid 1px rgb(26, 135, 155);
