@@ -2,13 +2,14 @@
 .game-buttons-block {
   width: 90%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 25px;
 }
 
-.solution-button {
+.button {
   height: 40px;
+  width: 120px;
   padding: 5px 10px;
   border-radius: 2px;
   font-weight: 600;
@@ -18,9 +19,19 @@
   transition: all 0.5s;
 }
 
+.button:disabled {
+  pointer-events: none;
+  background-color: rgb(218, 144, 239, 0.4);
+}
+
+/* .solution-button {
+}
+.continue-button {
+} */
+
 /* HOVER */
 @media (hover: hover) and (pointer: fine) {
-  .solution-button:hover {
+  .button:hover {
     cursor: pointer;
     transform: scale(1.1);
     box-shadow: 0 0.8em 0.8em -0.4em #7c3fcc;
