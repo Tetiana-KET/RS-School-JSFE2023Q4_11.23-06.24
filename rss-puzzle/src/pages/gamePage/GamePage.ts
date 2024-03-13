@@ -2,7 +2,7 @@ import { Component } from '../../components';
 import { Footer } from '../../components/footer/Footer';
 import { GameButtonsBlock } from '../../components/GameButtonsBlock/GameButtonsBlock';
 import { GameHeader } from '../../components/gameHeader/GameHeader';
-import { createWordCards, fetchWordData, shuffleWords } from '../../utils/commonUtils';
+import { calculateCharWidth, createWordCards, fetchWordData, shuffleWords } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
 import bg from '../../assets/bg.jpg';
@@ -49,6 +49,12 @@ export class GamePage extends Component {
       classNames: [classes.gameWrap],
     });
     this.mainContent.append(this.gameWrap);
+    // Add lines for sentences
+    for (let i = 1; i <= 10; i++) {
+      const sentenceLine = document.createElement('div');
+      sentenceLine.classList.add(classes.sentenceLine);
+      this.gameWrap.getNode().appendChild(sentenceLine);
+    }
     // game source data block
     this.gameSourceDataBlock = new Component({
       tagName: 'div',
@@ -81,21 +87,44 @@ export class GamePage extends Component {
   private handleFetchedData() {
     if (this.fetchedWordData) {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
-      console.log(this.sentencesForRound);
       this.displaySentence();
     }
   }
 
-  // Method to display the current sentence in the game source data block
+  // display current sentence in the game source data block
   private displaySentence() {
     const currentSentence = this.sentencesForRound[this.currentSentenceIndex];
     const shuffledWords = shuffleWords(currentSentence);
     const wordCards = createWordCards(shuffledWords);
 
+    this.setCardsWidth(wordCards);
     this.gameSourceDataBlock.getNode().innerHTML = '';
     wordCards.forEach(wordCard => {
       wordCard.classList.add(classes.wordCard);
       this.gameSourceDataBlock.getNode().append(wordCard);
     });
+    this.addClickHandlersToWordCards(wordCards);
+  }
+
+  private addClickHandlersToWordCards(wordCards: HTMLElement[]) {
+    wordCards.forEach(wordCard => {
+      wordCard.addEventListener('click', () => {
+        wordCard.remove();
+        const sentenceLine = Array.from(this.gameWrap.getNode().querySelectorAll(`.${classes.sentenceLine}`))[
+          this.currentSentenceIndex
+        ];
+        sentenceLine.append(wordCard);
+      });
+    });
+  }
+
+  private setCardsWidth(wordCards: HTMLElement[]): void {
+    const currentSentence = this.sentencesForRound[this.currentSentenceIndex];
+    const parent = this.gameSourceDataBlock;
+    const charWidth = calculateCharWidth(currentSentence, parent);
+
+    for (let i = 0; i < wordCards.length; i += 1) {
+      wordCards[i].style.width = `${wordCards[i].textContent!.length * charWidth}px`;
+    }
   }
 }

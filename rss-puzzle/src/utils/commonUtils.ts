@@ -1,3 +1,4 @@
+import { Component } from '../components';
 import { Data } from '../interfaces/Data.interface';
 
 type NullLike = null | undefined;
@@ -77,4 +78,13 @@ export function createWordCards(sentence: string): HTMLElement[] {
     return wordCard;
   });
   return wordCards;
+}
+
+//calculate Char Width
+export function calculateCharWidth(sentence: string, parent: Component<HTMLDivElement>): number {
+  const container = parent.getNode();
+  const length = sentence.split(' ').reduce((acc: number, el: string) => {
+    return acc + el.length;
+  }, 0);
+  return Math.floor(container.clientWidth - 2) / length;
 }
