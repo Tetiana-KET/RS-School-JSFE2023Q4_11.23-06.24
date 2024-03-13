@@ -1,11 +1,17 @@
 import { Component } from '../../components';
 import { Footer } from '../../components/footer/Footer';
-import { GameButtonsBlock } from '../../components/GameButtonsBlock/GameButtonsBlock';
 import { GameHeader } from '../../components/gameHeader/GameHeader';
-import { calculateCharWidth, createWordCards, fetchWordData, shuffleWords } from '../../utils/commonUtils';
+import {
+  calculateCharWidth,
+  clickHandlerToWordCards,
+  createWordCards,
+  fetchWordData,
+  shuffleWords,
+} from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
 import bg from '../../assets/bg.jpg';
+import { GameButtonsBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
 
 export class GamePage extends Component {
   private gamePageContainer: Component;
@@ -118,15 +124,14 @@ export class GamePage extends Component {
   }
 
   private addClickHandlersToWordCards(wordCards: HTMLElement[]) {
-    wordCards.forEach(wordCard => {
-      wordCard.addEventListener('click', () => {
-        wordCard.remove();
-        const sentenceLine = Array.from(this.gameWrap.getNode().querySelectorAll(`.${classes.sentenceLine}`))[
-          this.currentSentenceIndex
-        ];
-        sentenceLine.append(wordCard);
-      });
-    });
+    clickHandlerToWordCards(
+      wordCards,
+      this.gameWrap,
+      `${classes.gameSourceDataBlock}`,
+      `${classes.sentenceLine}`,
+      this.currentSentenceIndex,
+      `${classes.selected}`
+    );
   }
 
   private setCardsWidth(wordCards: HTMLElement[]): void {

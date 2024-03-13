@@ -88,3 +88,38 @@ export function calculateCharWidth(sentence: string, parent: Component<HTMLDivEl
   }, 0);
   return Math.floor(container.clientWidth - 2) / length;
 }
+
+//add Click Handlers To Word Cards in source block
+export function clickHandlerToWordCards(
+  wordCards: HTMLElement[],
+  gameWrap: Component<HTMLDivElement>,
+  sourceClassName: string,
+  resultClassName: string,
+  index: number,
+  selectedClass: string
+): void {
+  wordCards.forEach(wordCard => {
+    wordCard.addEventListener('mousedown', () => {
+      wordCard.classList.add(selectedClass);
+    });
+    wordCard.addEventListener('mouseup', () => {
+      setTimeout(() => {
+        wordCard.classList.remove(selectedClass);
+      }, 100);
+    });
+
+    wordCard.addEventListener('click', () => {
+      if (wordCard.parentElement) {
+        if (wordCard.parentElement.className === sourceClassName) {
+          wordCard.remove();
+          const sentenceLine = Array.from(gameWrap.getNode().querySelectorAll(`.${resultClassName}`))[index];
+          sentenceLine.append(wordCard);
+        } else if (wordCard.parentElement.className === resultClassName) {
+          wordCard.remove();
+          const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
+          gameSourceDataBlock!.append(wordCard);
+        }
+      }
+    });
+  });
+}
