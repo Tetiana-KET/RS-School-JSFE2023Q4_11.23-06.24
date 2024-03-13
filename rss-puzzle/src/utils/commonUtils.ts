@@ -95,9 +95,19 @@ export function clickHandlerToWordCards(
   gameWrap: Component<HTMLDivElement>,
   sourceClassName: string,
   resultClassName: string,
-  index: number
+  index: number,
+  selectedClass: string
 ): void {
   wordCards.forEach(wordCard => {
+    wordCard.addEventListener('mousedown', () => {
+      wordCard.classList.add(selectedClass);
+    });
+    wordCard.addEventListener('mouseup', () => {
+      setTimeout(() => {
+        wordCard.classList.remove(selectedClass);
+      }, 100);
+    });
+
     wordCard.addEventListener('click', () => {
       if (wordCard.parentElement) {
         if (wordCard.parentElement.className === sourceClassName) {

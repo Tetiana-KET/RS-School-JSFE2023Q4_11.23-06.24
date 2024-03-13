@@ -69,8 +69,12 @@
   transition: all 0.5s;
 }
 
+.word-card.selected {
+  background: rgb(6, 92, 108);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .word-card:hover {
-    box-shadow: 0px 0px 15px rgb(28, 191, 220);
+    box-shadow: 0px 0px 17px rgb(18 206 239);
   }
 }

@@ -129,7 +129,8 @@ export class GamePage extends Component {
       this.gameWrap,
       `${classes.gameSourceDataBlock}`,
       `${classes.sentenceLine}`,
-      this.currentSentenceIndex
+      this.currentSentenceIndex,
+      `${classes.selected}`
     );
   }
 
