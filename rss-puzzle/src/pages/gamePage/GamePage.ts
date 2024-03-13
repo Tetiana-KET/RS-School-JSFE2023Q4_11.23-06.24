@@ -16,13 +16,15 @@ export class GamePage extends Component {
   private gameButtonsBlock: Component;
   private footer: Component;
   private fetchedWordData: Data | null = null;
-  private currentSentenceIndex: number = 0;
   private currentLevel: number = 1;
   private currentRound: number = 0;
   private sentencesForRound: string[] = [];
+  private currentSentenceIndex: number = 0;
+  private currentSentenceCards: HTMLElement[];
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
+    this.currentSentenceCards = [];
 
     this.getNode().style.backgroundImage = `url(${bg})`;
     this.getNode().style.backgroundSize = 'cover';
@@ -69,13 +71,18 @@ export class GamePage extends Component {
     this.gamePageContainer.append(this.footer);
     // fetch data
     this.fetchWordData();
+    // event listener for window resize
+    window.addEventListener('resize', () => {
+      if (this.currentSentenceCards.length) {
+        this.setCardsWidth(this.currentSentenceCards);
+      }
+    });
   }
 
   private fetchWordData() {
     fetchWordData(this.currentLevel)
       .then(data => {
         this.fetchedWordData = data;
-        console.log(this.fetchedWordData);
         this.handleFetchedData();
       })
       .catch(error => {
@@ -93,17 +100,21 @@ export class GamePage extends Component {
 
   // display current sentence in the game source data block
   private displaySentence() {
+    this.currentSentenceCards.length = 0;
+    this.gameSourceDataBlock.getNode().innerHTML = '';
+
     const currentSentence = this.sentencesForRound[this.currentSentenceIndex];
     const shuffledWords = shuffleWords(currentSentence);
     const wordCards = createWordCards(shuffledWords);
 
     this.setCardsWidth(wordCards);
-    this.gameSourceDataBlock.getNode().innerHTML = '';
+
     wordCards.forEach(wordCard => {
       wordCard.classList.add(classes.wordCard);
       this.gameSourceDataBlock.getNode().append(wordCard);
     });
     this.addClickHandlersToWordCards(wordCards);
+    this.currentSentenceCards.push(...wordCards);
   }
 
   private addClickHandlersToWordCards(wordCards: HTMLElement[]) {
