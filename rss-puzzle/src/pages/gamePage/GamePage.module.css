@@ -38,7 +38,7 @@
 }
 
 .sentence-line {
-  display: block;
+  display: flex;
   width: 100%;
   height: 10%;
 }

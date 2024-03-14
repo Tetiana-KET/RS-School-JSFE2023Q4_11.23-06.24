@@ -153,4 +153,43 @@ export class GamePage extends Component {
       wordCards[i].style.width = `${wordCards[i].textContent!.length * charWidth}px`;
     }
   }
+
+  public autoCompleteSentence(): void {
+    const sentenceLine = this.gameWrap.getNode().children[this.currentSentenceIndex];
+    const sourceWordCards = Array.from(this.gameSourceDataBlock.getNode().children) as HTMLElement[];
+    const resultWordCards = Array.from(sentenceLine.children) as HTMLElement[];
+    const correctOrderWords = this.currentSentence.split(' ');
+    const continueButton = this.gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
+    const checkButton = this.gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
+
+    if (sourceWordCards.length) {
+      sourceWordCards.forEach((wordCard, index) => {
+        wordCard.style.visibility = 'hidden';
+        wordCard.style.opacity = '0';
+        setTimeout(
+          () => {
+            wordCard.remove();
+            sentenceLine.append(wordCard);
+            resultWordCards.push(wordCard);
+            wordCard.style.visibility = 'visible';
+            wordCard.style.opacity = '1';
+
+            correctOrderWords.forEach((word, index) => {
+              resultWordCards.forEach(card => {
+                if (card.getAttribute('data-value') === word) {
+                  card.style.order = `${index}`;
+                  card.style.transition = 'order 5s';
+                }
+              });
+            });
+          },
+          (index + 1) * 100
+        );
+      });
+    }
+
+    continueButton.removeAttribute('disabled');
+    continueButton.removeAttribute('invisible');
+    checkButton.setAttribute('invisible', 'true');
+  }
 }

@@ -61,6 +61,7 @@ export class GameButtonsBlock extends Component {
     // Event listener for logout button
     this.checkButton.getNode().addEventListener('click', this.handleCheckButtonClick.bind(this));
     this.continueButton.getNode().addEventListener('click', this.handleContinueButtonClick.bind(this));
+    this.autoCompleteButton.getNode().addEventListener('click', this.handleAutoCompleteButtonClick.bind(this));
   }
 
   private handleCheckButtonClick() {
@@ -77,5 +78,11 @@ export class GameButtonsBlock extends Component {
       this.checkButton.removeAttribute('invisible');
       this.gamePageInstance.displaySentence();
     }
+  }
+
+  // Handle click event for Auto-Complete button
+  private handleAutoCompleteButtonClick(): void {
+    // Call the autoCompleteSentence method of the GamePage class
+    this.gamePageInstance.autoCompleteSentence();
   }
 }
