@@ -4,6 +4,7 @@ import { GameHeader } from '../../components/gameHeader/GameHeader';
 import { fetchWordData, shuffleWords } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
+
 import bg from '../../assets/bg.jpg';
 import { GameButtonsBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
 import { calculateCharWidth, createWordCards, clickHandlerToWordCards } from '../../utils/wordCardsHandlers';

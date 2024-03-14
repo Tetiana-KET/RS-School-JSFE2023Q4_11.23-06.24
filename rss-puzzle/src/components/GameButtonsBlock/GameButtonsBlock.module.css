@@ -1,6 +1,4 @@
-/* FOOTER */
 .game-buttons-block {
-  position: relative;
   width: 90%;
   height: 40px;
   display: flex;
@@ -9,11 +7,21 @@
   gap: 25px;
 }
 
+.check-button-wrap,
+.complete-button-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 150px;
+}
+
 .button {
   position: absolute;
   height: 40px;
-  width: 120px;
-  padding: 5px 10px;
+  width: 140px;
+  padding: 5px;
   border-radius: 2px;
   font-weight: 600;
   background-color: var(--main-color);
@@ -25,10 +33,14 @@
 }
 
 .button:disabled {
-  visibility: hidden;
-  opacity: 0;
   pointer-events: none;
   background-color: rgb(218, 144, 239, 0.1);
+}
+
+button[invisible] {
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.2, 0.2);
 }
 
 /* .solution-button {
@@ -36,7 +48,8 @@
 .continue-button {
 }
 
-.check-button{}*/
+.check-button {
+} */
 
 /* HOVER */
 @media (hover: hover) and (pointer: fine) {
