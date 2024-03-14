@@ -4,7 +4,7 @@ import { Component } from '../Component';
 import classes from './GameButtonsBlock.module.css';
 
 export class GameButtonsBlock extends Component {
-  private solutionButton: Component<HTMLButtonElement>;
+  private checkButton: Component<HTMLButtonElement>;
   private continueButton: Component<HTMLButtonElement>;
   private gamePageInstance: GamePage;
 
@@ -13,13 +13,15 @@ export class GameButtonsBlock extends Component {
 
     this.gamePageInstance = gamePageInstance;
 
-    //Solution button
-    this.solutionButton = new Component({
+    //Check button
+    this.checkButton = new Component({
       tagName: 'button',
-      text: `Solution`,
-      classNames: [classes.button, classes.solutionButton],
+      text: `Check`,
+      classNames: [classes.button, classes.checkButton],
+      attributes: { type: 'button', disabled: true },
     });
-    this.append(this.solutionButton);
+    this.append(this.checkButton);
+
     //continue button
     this.continueButton = new Component<HTMLButtonElement>({
       tagName: 'button',
@@ -28,12 +30,13 @@ export class GameButtonsBlock extends Component {
       attributes: { type: 'button', disabled: true },
     });
     this.append(this.continueButton);
+
     // Event listener for logout button
-    this.solutionButton.getNode().addEventListener('click', this.handleSolutionButtonClick.bind(this));
+    this.checkButton.getNode().addEventListener('click', this.handleCheckButtonClick.bind(this));
     this.continueButton.getNode().addEventListener('click', this.handleContinueButtonClick.bind(this));
   }
 
-  private handleSolutionButtonClick() {
+  private handleCheckButtonClick() {
     console.log(`click`);
   }
   private handleContinueButtonClick() {

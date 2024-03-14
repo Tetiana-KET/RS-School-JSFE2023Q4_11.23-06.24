@@ -119,6 +119,7 @@ export class GamePage extends Component {
         setTimeout(
           () => {
             wordCard.style.visibility = 'visible';
+            wordCard.style.opacity = '1';
           },
           (index + 1) * 100
         );

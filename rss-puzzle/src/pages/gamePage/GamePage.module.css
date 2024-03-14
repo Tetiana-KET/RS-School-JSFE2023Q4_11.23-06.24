@@ -71,6 +71,7 @@
 
 .game-source-data-block .word-card {
   visibility: hidden;
+  opacity: 0;
 }
 
 .word-card.selected {

@@ -21,13 +21,15 @@
 
 .button:disabled {
   pointer-events: none;
-  background-color: rgb(218, 144, 239, 0.4);
+  background-color: rgb(218, 144, 239, 0.1);
 }
 
 /* .solution-button {
 }
 .continue-button {
-} */
+}
+
+.check-button{}*/
 
 /* HOVER */
 @media (hover: hover) and (pointer: fine) {
