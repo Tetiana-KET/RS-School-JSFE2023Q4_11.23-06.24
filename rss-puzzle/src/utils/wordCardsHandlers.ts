@@ -49,7 +49,7 @@ export function clickHandlerToWordCards(
       let isCorrect = false;
       const continueButton = gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
       const checkButton = gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
-
+      const autoCompleteButton = gameButtonsBlock.getNode().firstChild?.firstChild as HTMLButtonElement;
       const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
       const sentenceLine = Array.from(gameWrap.getNode().querySelectorAll(`.${resultClassName}`))[index];
 
@@ -60,6 +60,7 @@ export function clickHandlerToWordCards(
 
           if (gameSourceDataBlock?.children.length === 0) {
             checkButton.removeAttribute('disabled');
+            autoCompleteButton.setAttribute('disabled', 'disabled');
 
             isCorrect = verifySentenceAssembly(currentSentence, sentenceLine);
             if (isCorrect && gameButtonsBlock.getNode().lastChild !== null) {

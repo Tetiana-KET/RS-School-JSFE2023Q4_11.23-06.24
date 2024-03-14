@@ -65,6 +65,7 @@ export class GameButtonsBlock extends Component {
   }
 
   private handleCheckButtonClick() {
+    this.autoCompleteButton.removeAttribute('disabled');
     const index = this.gamePageInstance.currentSentenceIndex;
     const sentenceLine = Array.from(this.gamePageInstance.gameWrap.getNode().children)[index];
     verifyWordOrder(this.gamePageInstance.currentSentence, sentenceLine);
@@ -75,14 +76,16 @@ export class GameButtonsBlock extends Component {
     if (this.gamePageInstance.currentSentenceIndex < this.gamePageInstance.sentencesForRound.length) {
       this.continueButton.setAttribute('disabled', 'disabled');
       this.continueButton.setAttribute('invisible', 'true');
+      this.checkButton.setAttribute('disabled', 'disabled');
       this.checkButton.removeAttribute('invisible');
+      this.autoCompleteButton.removeAttribute('disabled');
       this.gamePageInstance.displaySentence();
     }
   }
 
   // Handle click event for Auto-Complete button
   private handleAutoCompleteButtonClick(): void {
-    // Call the autoCompleteSentence method of the GamePage class
+    this.autoCompleteButton.setAttribute('disabled', 'disabled');
     this.gamePageInstance.autoCompleteSentence();
   }
 }
