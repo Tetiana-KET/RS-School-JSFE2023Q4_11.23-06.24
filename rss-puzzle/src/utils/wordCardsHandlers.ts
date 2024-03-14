@@ -1,4 +1,5 @@
 import { Component } from '../components';
+import classes from '../pages/gamePage/GamePage.module.css';
 
 // create word cards
 export function createWordCards(sentence: string): HTMLElement[] {
@@ -54,7 +55,6 @@ export function clickHandlerToWordCards(
       if (wordCard.parentElement) {
         if (wordCard.parentElement.className === sourceClassName) {
           wordCard.remove();
-
           sentenceLine.append(wordCard);
 
           if (gameSourceDataBlock?.children.length === 0) {
@@ -69,10 +69,17 @@ export function clickHandlerToWordCards(
           wordCard.remove();
           const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
           gameSourceDataBlock!.append(wordCard);
+          wordCard.classList.remove(`${classes.wrongOrder}`);
         }
       }
       if (isCorrect === false || gameSourceDataBlock?.children.length !== 0) {
         continueButton.setAttribute('disabled', 'disabled');
+      }
+      if ((isCorrect === true || gameSourceDataBlock?.children.length) !== 0) {
+        checkButton.setAttribute('disabled', 'disabled');
+        wordCards.forEach(card => {
+          card.classList.remove(`${classes.wrongOrder}`);
+        });
       }
     });
   });
@@ -91,4 +98,17 @@ export function verifySentenceAssembly(originalSentence: string, resultBlock: El
   }
 
   return originalSentence === resultSentence;
+}
+
+//verify the correctness of the word order
+export function verifyWordOrder(originalSentence: string, resultBlock: Element): void {
+  const resultBlockCards = Array.from(resultBlock.children);
+  const resultWords = Array.from(resultBlock.children).map(card => card.getAttribute('data-value'));
+  const originalWords = originalSentence.split(' ');
+
+  resultBlockCards.forEach((card, i) => {
+    if (resultWords[i] !== originalWords[i]) {
+      card.classList.add(`${classes.wrongOrder}`);
+    }
+  });
 }

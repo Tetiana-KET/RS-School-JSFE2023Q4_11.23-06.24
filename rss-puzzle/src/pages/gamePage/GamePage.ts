@@ -12,7 +12,7 @@ export class GamePage extends Component {
   private gamePageContainer: Component;
   private header: Component;
   private mainContent: Component<HTMLDivElement>;
-  private gameWrap: Component<HTMLDivElement>;
+  public gameWrap: Component<HTMLDivElement>;
   private gameSourceDataBlock: Component<HTMLDivElement>;
   private gameButtonsBlock: Component;
   private footer: Component;
@@ -22,7 +22,7 @@ export class GamePage extends Component {
   public sentencesForRound: string[] = [];
   public currentSentenceIndex: number = 0;
   private currentSentenceCards: HTMLElement[];
-  private currentSentence: string;
+  public currentSentence: string;
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });

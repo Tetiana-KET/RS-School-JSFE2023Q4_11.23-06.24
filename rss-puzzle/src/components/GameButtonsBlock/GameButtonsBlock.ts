@@ -1,5 +1,6 @@
 // Footer.ts
 import { GamePage } from '../../pages/gamePage/GamePage';
+import { verifyWordOrder } from '../../utils/wordCardsHandlers';
 import { Component } from '../Component';
 import classes from './GameButtonsBlock.module.css';
 
@@ -37,8 +38,11 @@ export class GameButtonsBlock extends Component {
   }
 
   private handleCheckButtonClick() {
-    console.log(`click`);
+    const index = this.gamePageInstance.currentSentenceIndex;
+    const sentenceLine = Array.from(this.gamePageInstance.gameWrap.getNode().children)[index];
+    verifyWordOrder(this.gamePageInstance.currentSentence, sentenceLine);
   }
+
   private handleContinueButtonClick() {
     this.gamePageInstance.currentSentenceIndex += 1;
     if (this.gamePageInstance.currentSentenceIndex < this.gamePageInstance.sentencesForRound.length) {
