@@ -47,8 +47,9 @@ export function clickHandlerToWordCards(
 
     wordCard.addEventListener('click', () => {
       let isCorrect = false;
-      const continueButton = gameButtonsBlock.getNode().lastChild as HTMLButtonElement;
-      const checkButton = gameButtonsBlock.getNode().firstChild as HTMLButtonElement;
+      const continueButton = gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
+      const checkButton = gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
+      const autoCompleteButton = gameButtonsBlock.getNode().firstChild?.firstChild as HTMLButtonElement;
       const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
       const sentenceLine = Array.from(gameWrap.getNode().querySelectorAll(`.${resultClassName}`))[index];
 
@@ -59,10 +60,13 @@ export function clickHandlerToWordCards(
 
           if (gameSourceDataBlock?.children.length === 0) {
             checkButton.removeAttribute('disabled');
+            autoCompleteButton.setAttribute('disabled', 'disabled');
 
             isCorrect = verifySentenceAssembly(currentSentence, sentenceLine);
             if (isCorrect && gameButtonsBlock.getNode().lastChild !== null) {
               continueButton.removeAttribute('disabled');
+              continueButton.removeAttribute('invisible');
+              checkButton.setAttribute('invisible', 'true');
             }
           }
         } else if (wordCard.parentElement.className === resultClassName) {
@@ -74,6 +78,8 @@ export function clickHandlerToWordCards(
       }
       if (isCorrect === false || gameSourceDataBlock?.children.length !== 0) {
         continueButton.setAttribute('disabled', 'disabled');
+        continueButton.setAttribute('invisible', 'true');
+        checkButton.removeAttribute('invisible');
       }
       if ((isCorrect === true || gameSourceDataBlock?.children.length) !== 0) {
         checkButton.setAttribute('disabled', 'disabled');

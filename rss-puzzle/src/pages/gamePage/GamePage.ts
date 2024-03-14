@@ -4,9 +4,15 @@ import { GameHeader } from '../../components/gameHeader/GameHeader';
 import { fetchWordData, shuffleWords } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
+
 import bg from '../../assets/bg.jpg';
 import { GameButtonsBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
-import { calculateCharWidth, createWordCards, clickHandlerToWordCards } from '../../utils/wordCardsHandlers';
+import {
+  calculateCharWidth,
+  createWordCards,
+  clickHandlerToWordCards,
+  verifySentenceAssembly,
+} from '../../utils/wordCardsHandlers';
 
 export class GamePage extends Component {
   private gamePageContainer: Component;
@@ -151,5 +157,56 @@ export class GamePage extends Component {
     for (let i = 0; i < wordCards.length; i += 1) {
       wordCards[i].style.width = `${wordCards[i].textContent!.length * charWidth}px`;
     }
+  }
+
+  public autoCompleteSentence(): void {
+    const sentenceLine = this.gameWrap.getNode().children[this.currentSentenceIndex];
+    const sourceWordCards = Array.from(this.gameSourceDataBlock.getNode().children) as HTMLElement[];
+    const resultWordCards = Array.from(sentenceLine.children) as HTMLElement[];
+    const correctOrderWords = this.currentSentence.split(' ');
+    const continueButton = this.gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
+    const checkButton = this.gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
+    const isCorrect = verifySentenceAssembly(this.currentSentence, sentenceLine);
+
+    if (sourceWordCards.length) {
+      sourceWordCards.forEach((wordCard, index) => {
+        wordCard.style.visibility = 'hidden';
+        wordCard.style.opacity = '0';
+        setTimeout(
+          () => {
+            wordCard.remove();
+            sentenceLine.append(wordCard);
+            resultWordCards.push(wordCard);
+            wordCard.style.visibility = 'visible';
+            wordCard.style.opacity = '1';
+
+            correctOrderWords.forEach((word, index) => {
+              resultWordCards.forEach(card => {
+                if (card.getAttribute('data-value') === word) {
+                  card.style.order = `${index}`;
+                  card.style.transition = 'order 5s';
+                }
+              });
+            });
+          },
+          (index + 1) * 100
+        );
+      });
+    } else if (!isCorrect) {
+      correctOrderWords.forEach((word, index) => {
+        resultWordCards.forEach(card => {
+          card.classList.remove(`${classes.wrongOrder}`);
+          if (card.getAttribute('data-value') === word) {
+            card.style.order = `${index}`;
+            card.style.transition = 'order 5s';
+          }
+        });
+      });
+    }
+    setTimeout(() => {
+      continueButton.removeAttribute('disabled');
+      continueButton.removeAttribute('invisible');
+      checkButton.setAttribute('invisible', 'true');
+    }, 1000);
   }
 }
