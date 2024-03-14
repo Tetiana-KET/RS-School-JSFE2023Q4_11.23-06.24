@@ -71,14 +71,23 @@
 
 .game-source-data-block .word-card {
   visibility: hidden;
+  opacity: 0;
 }
 
 .word-card.selected {
   background: rgb(6, 92, 108);
 }
 
+.word-card.wrong-order {
+  box-shadow: 0px 0px 5px rgb(146, 26, 155);
+  border: solid 1px rgb(155, 26, 134);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .word-card:hover {
     box-shadow: 0px 0px 17px rgb(18 206 239);
+  }
+  .word-card.wrong-order:hover {
+    box-shadow: 0px 0px 17px rgb(218, 41, 231);
   }
 }
