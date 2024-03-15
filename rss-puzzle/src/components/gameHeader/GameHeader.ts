@@ -1,6 +1,6 @@
 import { GamePage } from '../../pages/gamePage/GamePage';
 import { fetchAudioData } from '../../utils/commonUtils';
-import { handleTranslateHint } from '../../utils/handleCluesClick';
+import { handlePronounceHint, handleTranslateHint } from '../../utils/handleCluesClick';
 import { Component } from '../Component';
 import classes from './GameHeader.module.css';
 
@@ -61,7 +61,7 @@ export class GameHeader extends Component {
     this.playSoundButton = new Component({
       tagName: 'button',
       classNames: [classes.playSoundButton, classes.clueButton],
-      attributes: { disabled: true },
+      attributes: { disabled: true, id: 'playSoundButton' },
     });
     this.headerContainer.append(this.playSoundButton);
     this.playSoundButton.getNode().addEventListener('click', this.handleClick.bind(this));
@@ -106,6 +106,7 @@ export class GameHeader extends Component {
           target.setAttribute('active-hint', 'true');
           this.playSoundButton.removeAttribute('disabled');
         }
+        handlePronounceHint(this.gamePageInstance);
       }
       if (target.classList.contains(`${classes.playSoundButton}`)) {
         target.setAttribute('active-hint', 'true');
