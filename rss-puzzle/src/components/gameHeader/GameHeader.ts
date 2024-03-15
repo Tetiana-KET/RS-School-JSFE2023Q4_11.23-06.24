@@ -1,3 +1,5 @@
+import { GamePage } from '../../pages/gamePage/GamePage';
+import { handleTranslateHint } from '../../utils/handleCluesClick';
 import { Component } from '../Component';
 import classes from './GameHeader.module.css';
 
@@ -7,9 +9,11 @@ export class GameHeader extends Component {
   private selectLevelOption: HTMLSelectElement;
   private selectPageOption: HTMLSelectElement;
   private gameCluesWrap: Component<HTMLDivElement>;
+  private gamePageInstance: GamePage;
 
-  constructor() {
+  constructor(gamePageInstance: GamePage) {
     super({ tagName: 'header', classNames: [classes.gameHeaderContainer] });
+    this.gamePageInstance = gamePageInstance;
 
     // Wrapper
     this.headerContainer = new Component({
@@ -62,6 +66,7 @@ export class GameHeader extends Component {
       clueButton.classList.add(classes.clueButton);
       this.gameCluesWrap.getNode().appendChild(clueButton);
     }
+    this.gameCluesWrap.getNode().children[0].classList.add(`${classes.translateHint}`);
 
     // Event listener for clue buttons
     this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
@@ -70,8 +75,15 @@ export class GameHeader extends Component {
   private handleClick(event: MouseEvent): void {
     // Handle click event for clue buttons
     const target = event.target as HTMLElement;
-    if (target && target.classList.contains('clue-button')) {
-      // Logic for handling clue button click
+    if (target && target.classList.contains(`${classes.clueButton}`)) {
+      if (target.classList.contains(`${classes.translateHint}`)) {
+        if (target.getAttribute('active-hint')) {
+          target.removeAttribute('active-hint');
+        } else {
+          target.setAttribute('active-hint', 'true');
+        }
+        handleTranslateHint(this.gamePageInstance);
+      }
     }
   }
 }
