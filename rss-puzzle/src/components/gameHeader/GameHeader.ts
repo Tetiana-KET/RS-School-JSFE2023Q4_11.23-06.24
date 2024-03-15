@@ -67,7 +67,7 @@ export class GameHeader extends Component {
       this.gameCluesWrap.getNode().appendChild(clueButton);
     }
     this.gameCluesWrap.getNode().children[0].classList.add(`${classes.translateHint}`);
-
+    this.gameCluesWrap.getNode().children[0].setAttribute('id', 'translateHint');
     // Event listener for clue buttons
     this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
   }

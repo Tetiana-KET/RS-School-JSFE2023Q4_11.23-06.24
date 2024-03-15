@@ -1,16 +1,13 @@
 import { GamePage } from '../pages/gamePage/GamePage';
+import { updateLocalStorage } from './localStorage';
 
 export function handleTranslateHint(gamePageInstance: GamePage) {
-  const translation =
-    gamePageInstance.fetchedWordData?.rounds[gamePageInstance.currentRound].words[gamePageInstance.currentSentenceIndex]
-      .textExampleTranslate;
-
-  gamePageInstance.translationWrap.setTextContent(`${translation}`);
-  console.log(gamePageInstance.translationWrap);
-
   if (gamePageInstance.translationWrap.getNode().getAttribute('data-active')) {
     gamePageInstance.translationWrap.getNode().removeAttribute('data-active');
+    updateLocalStorage('userData', 'translateEnabled', false);
   } else {
     gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
+    gamePageInstance.displayTranslation();
+    updateLocalStorage('userData', 'translateEnabled', true);
   }
 }

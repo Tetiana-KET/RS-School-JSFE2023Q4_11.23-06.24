@@ -80,6 +80,13 @@ export class GameButtonsBlock extends Component {
       this.checkButton.removeAttribute('invisible');
       this.autoCompleteButton.removeAttribute('disabled');
       this.gamePageInstance.displaySentence();
+      //display translation if enabled
+      this.gamePageInstance.isTranslateEnabled = this.gamePageInstance.checkIsTranslateEnabled();
+      if (this.gamePageInstance.isTranslateEnabled) {
+        this.gamePageInstance.displayTranslation();
+      } else {
+        this.gamePageInstance.translationWrap.getNode().removeAttribute('data-active');
+      }
     }
   }
 
