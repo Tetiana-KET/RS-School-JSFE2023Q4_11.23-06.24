@@ -1,4 +1,5 @@
 import { Component } from '../components';
+import { GamePage } from '../pages/gamePage/GamePage';
 import classes from '../pages/gamePage/GamePage.module.css';
 
 // create word cards
@@ -33,7 +34,8 @@ export function clickHandlerToWordCards(
   index: number,
   selectedClass: string,
   currentSentence: string,
-  gameButtonsBlock: Component
+  gameButtonsBlock: Component,
+  gamePageInstance: GamePage
 ): void {
   wordCards.forEach(wordCard => {
     wordCard.addEventListener('mousedown', () => {
@@ -67,6 +69,10 @@ export function clickHandlerToWordCards(
               continueButton.removeAttribute('disabled');
               continueButton.removeAttribute('invisible');
               checkButton.setAttribute('invisible', 'true');
+              console.log(`show translate`);
+              //display translation if enabled
+              gamePageInstance.displayTranslation();
+              gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
             }
           }
         } else if (wordCard.parentElement.className === resultClassName) {
