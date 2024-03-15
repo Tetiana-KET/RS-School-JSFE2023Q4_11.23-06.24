@@ -73,6 +73,14 @@ export class GameButtonsBlock extends Component {
 
   private handleContinueButtonClick() {
     this.gamePageInstance.currentSentenceIndex += 1;
+
+    this.gamePageInstance.audioExample =
+      this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
+        this.gamePageInstance.currentSentenceIndex
+      ]?.audioExample;
+
+    console.log(`from CONTINUE button click: `, this.gamePageInstance.audioExample);
+
     if (this.gamePageInstance.currentSentenceIndex < this.gamePageInstance.sentencesForRound.length) {
       this.continueButton.setAttribute('disabled', 'disabled');
       this.continueButton.setAttribute('invisible', 'true');
