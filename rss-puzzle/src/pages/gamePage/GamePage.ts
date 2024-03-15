@@ -155,11 +155,14 @@ export class GamePage extends Component {
     this.currentSentenceCards.push(...wordCards);
   }
 
-  private checkIsTranslateEnabled(): boolean {
+  public checkIsTranslateEnabled(): boolean {
     return checkLocalStoragePropertyFlag('userData', 'translateEnabled') === true;
   }
 
   public displayTranslation() {
+    if (!this.translationWrap.getNode().getAttribute('data-active')) {
+      this.translationWrap.getNode().setAttribute('data-active', 'true');
+    }
     const translation =
       this.fetchedWordData?.rounds[this.currentRound].words[this.currentSentenceIndex].textExampleTranslate;
     this.translationWrap.setTextContent(`${translation}`);
@@ -221,6 +224,8 @@ export class GamePage extends Component {
           (index + 1) * 100
         );
       });
+
+      this.displayTranslation();
     } else if (!isCorrect) {
       correctOrderWords.forEach((word, index) => {
         resultWordCards.forEach(card => {

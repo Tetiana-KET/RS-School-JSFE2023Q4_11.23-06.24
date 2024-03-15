@@ -81,10 +81,11 @@ export class GameButtonsBlock extends Component {
       this.autoCompleteButton.removeAttribute('disabled');
       this.gamePageInstance.displaySentence();
       //display translation if enabled
+      this.gamePageInstance.isTranslateEnabled = this.gamePageInstance.checkIsTranslateEnabled();
       if (this.gamePageInstance.isTranslateEnabled) {
-        // this.gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
-        // this.gamePageInstance.header.getNode().querySelector('#translateHint')!.setAttribute('active-hint', 'true');
         this.gamePageInstance.displayTranslation();
+      } else {
+        this.gamePageInstance.translationWrap.getNode().removeAttribute('data-active');
       }
     }
   }
