@@ -62,8 +62,18 @@
   background-size: 35px 35px;
 }
 
+.clue-button.pronunciation-hint {
+  background: #da90ef url('../../assets/icons/sound.png') 50% no-repeat;
+  background-size: 35px 35px;
+}
+
 .clue-button.translate-hint[active-hint] {
   background: #16849d url('../../assets/icons/translate_light.png') 50% no-repeat;
+  background-size: 35px 35px;
+}
+
+.clue-button.pronunciation-hint[active-hint] {
+  background: #16849d url('../../assets/icons/sound_light.png') 50% no-repeat;
   background-size: 35px 35px;
 }
 
@@ -77,8 +87,14 @@
     transform: translateY(-0.1em);
     color: var(--main-light);
   }
+
   .clue-button.translate-hint:hover {
     background: #16849d url('../../assets/icons/translate_light.png') 50% no-repeat;
+    background-size: 35px 35px;
+  }
+
+  .clue-button.pronunciation-hint:hover {
+    background: #16849d url('../../assets/icons/sound_light.png') 50% no-repeat;
     background-size: 35px 35px;
   }
 }

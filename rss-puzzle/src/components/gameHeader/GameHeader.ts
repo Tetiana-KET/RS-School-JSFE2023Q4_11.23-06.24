@@ -68,6 +68,8 @@ export class GameHeader extends Component {
     }
     this.gameCluesWrap.getNode().children[0].classList.add(`${classes.translateHint}`);
     this.gameCluesWrap.getNode().children[0].setAttribute('id', 'translateHint');
+    this.gameCluesWrap.getNode().children[1].classList.add(`${classes.pronunciationHint}`);
+    this.gameCluesWrap.getNode().children[1].setAttribute('id', 'pronunciationHint');
     // Event listener for clue buttons
     this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
   }
