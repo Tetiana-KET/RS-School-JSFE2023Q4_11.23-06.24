@@ -33,12 +33,14 @@ export class GamePage extends Component {
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
   public isTranslateEnabled: boolean = false;
+  public isPronounceEnabled: boolean = false;
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
     this.currentSentenceCards = [];
     this.currentSentence = '';
     this.isTranslateEnabled = this.checkIsTranslateEnabled();
+    this.isPronounceEnabled = this.checkIsPronounceEnabled();
 
     this.getNode().style.backgroundImage = `url(${bg})`;
     this.getNode().style.backgroundSize = 'cover';
@@ -127,11 +129,14 @@ export class GamePage extends Component {
         this.header.getNode().querySelector('#translateHint')!.setAttribute('active-hint', 'true');
         this.displayTranslation();
       }
+
+      //display pronounce button if enabled
+      if (this.isPronounceEnabled) {
+        this.header.getNode().querySelector('#playSoundButton')!.removeAttribute('disabled');
+        this.header.getNode().querySelector('#pronunciationHint')!.setAttribute('active-hint', 'true');
+      }
     }
   }
-
-  // update sound source
-  public updateSoundSource() {}
 
   // display current sentence in the game source data block
   public displaySentence() {
@@ -163,6 +168,10 @@ export class GamePage extends Component {
 
   public checkIsTranslateEnabled(): boolean {
     return checkLocalStoragePropertyFlag('userData', 'translateEnabled') === true;
+  }
+
+  public checkIsPronounceEnabled(): boolean {
+    return checkLocalStoragePropertyFlag('userData', 'pronounceEnabled') === true;
   }
 
   public displayTranslation() {

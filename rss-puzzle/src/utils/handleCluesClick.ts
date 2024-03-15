@@ -11,3 +11,13 @@ export function handleTranslateHint(gamePageInstance: GamePage) {
     updateLocalStorage('userData', 'translateEnabled', true);
   }
 }
+
+export function handlePronounceHint(gamePageInstance: GamePage) {
+  if (!gamePageInstance.header.getNode().querySelector('#playSoundButton')!.getAttribute('disabled')) {
+    gamePageInstance.header.getNode().querySelector('#playSoundButton')!.removeAttribute('disabled');
+    updateLocalStorage('userData', 'pronounceEnabled', true);
+  } else {
+    gamePageInstance.header.getNode().querySelector('#playSoundButton')!.setAttribute('disabled', 'true');
+    updateLocalStorage('userData', 'pronounceEnabled', false);
+  }
+}
