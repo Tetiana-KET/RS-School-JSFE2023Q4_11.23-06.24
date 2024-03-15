@@ -1,5 +1,5 @@
-import { Component } from '../components';
 import { Data } from '../interfaces/Data.interface';
+import { getUserInfoFromLocalStorage } from './localStorage';
 
 type NullLike = null | undefined;
 type Nullable<T> = T | NullLike;
@@ -10,17 +10,6 @@ export function isNull<T>(value: Nullable<T>): value is NullLike {
 
 export function isNotNull<T>(value: Nullable<T>): value is NonNullable<T> {
   return value !== null && value !== undefined;
-}
-
-export function storeUserData(firstName: string, surname: string, isLoggedIn: boolean): void {
-  const userData = { firstName, surname, isLoggedIn };
-  localStorage.setItem('userData', JSON.stringify(userData));
-}
-
-//get user name
-function getUserInfoFromLocalStorage(): { firstName: string; surname: string; isLoggedIn: boolean } | null {
-  const userData = localStorage.getItem('userData');
-  return userData ? JSON.parse(userData) : null;
 }
 
 // generate greeting

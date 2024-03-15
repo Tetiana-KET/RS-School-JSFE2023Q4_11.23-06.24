@@ -13,10 +13,11 @@ import {
   clickHandlerToWordCards,
   verifySentenceAssembly,
 } from '../../utils/wordCardsHandlers';
+import { checkLocalStoragePropertyFlag } from '../../utils/localStorage';
 
 export class GamePage extends Component {
   private gamePageContainer: Component;
-  private header: Component;
+  public header: Component;
   private mainContent: Component<HTMLDivElement>;
   public gameWrap: Component<HTMLDivElement>;
   private gameSourceDataBlock: Component<HTMLDivElement>;
@@ -30,11 +31,13 @@ export class GamePage extends Component {
   private currentSentenceCards: HTMLElement[];
   public currentSentence: string;
   public translationWrap: Component<HTMLDivElement>;
+  public isTranslateEnabled: boolean = false;
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
     this.currentSentenceCards = [];
     this.currentSentence = '';
+    this.isTranslateEnabled = this.checkIsTranslateEnabled();
 
     this.getNode().style.backgroundImage = `url(${bg})`;
     this.getNode().style.backgroundSize = 'cover';
@@ -90,6 +93,7 @@ export class GamePage extends Component {
     this.gamePageContainer.append(this.footer);
     // fetch data
     this.fetchWordData();
+
     // event listener for window resize
     window.addEventListener('resize', () => {
       if (this.currentSentenceCards.length) {
@@ -114,6 +118,12 @@ export class GamePage extends Component {
     if (this.fetchedWordData) {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
       this.displaySentence();
+      //display translation if enabled
+      if (this.isTranslateEnabled) {
+        this.translationWrap.getNode().setAttribute('data-active', 'true');
+        this.header.getNode().querySelector('#translateHint')!.setAttribute('active-hint', 'true');
+        this.displayTranslation();
+      }
     }
   }
 
@@ -143,6 +153,16 @@ export class GamePage extends Component {
     });
     this.addClickHandlersToWordCards(wordCards);
     this.currentSentenceCards.push(...wordCards);
+  }
+
+  private checkIsTranslateEnabled(): boolean {
+    return checkLocalStoragePropertyFlag('userData', 'translateEnabled') === true;
+  }
+
+  public displayTranslation() {
+    const translation =
+      this.fetchedWordData?.rounds[this.currentRound].words[this.currentSentenceIndex].textExampleTranslate;
+    this.translationWrap.setTextContent(`${translation}`);
   }
 
   private addClickHandlersToWordCards(wordCards: HTMLElement[]) {
