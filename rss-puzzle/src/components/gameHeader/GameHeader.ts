@@ -87,8 +87,7 @@ export class GameHeader extends Component {
     this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
   }
 
-  private handleClick(event: MouseEvent): void {
-    // Handle click event for clue buttons
+  private async handleClick(event: MouseEvent): Promise<void> {
     const target = event.target as HTMLElement;
     if (target && target.classList.contains(`${classes.clueButton}`)) {
       if (target.classList.contains(`${classes.translateHint}`)) {
@@ -110,18 +109,15 @@ export class GameHeader extends Component {
       }
       if (target.classList.contains(`${classes.playSoundButton}`)) {
         target.setAttribute('active-hint', 'true');
-
-        console.log(`from PLAY sound click: `, this.gamePageInstance.audioExample);
-
         this.gamePageInstance.audioExample =
           this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
             this.gamePageInstance.currentSentenceIndex
           ]?.audioExample;
 
+        await this.getAudio();
         this.playAudio();
       }
     }
-    this.getAudio();
   }
 
   public async getAudio(): Promise<void> {
@@ -129,8 +125,6 @@ export class GameHeader extends Component {
       this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
         this.gamePageInstance.currentSentenceIndex
       ]?.audioExample;
-
-    console.log(`from GET audio: `, this.gamePageInstance.audioExample);
 
     if (this.gamePageInstance.audioExample) {
       try {
@@ -142,7 +136,6 @@ export class GameHeader extends Component {
   }
   public playAudio() {
     if (this.audio) {
-      console.log(this.audio);
       this.playSoundButton.setAttribute('isPlaying', 'true');
       const source = this.audioContext.createBufferSource();
       source.buffer = this.audio;
