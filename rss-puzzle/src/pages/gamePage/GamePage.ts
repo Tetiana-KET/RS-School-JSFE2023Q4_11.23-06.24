@@ -22,13 +22,14 @@ export class GamePage extends Component {
   private gameSourceDataBlock: Component<HTMLDivElement>;
   private gameButtonsBlock: Component;
   private footer: Component;
-  private fetchedWordData: Data | null = null;
-  private currentLevel: number = 1;
-  private currentRound: number = 0;
+  public fetchedWordData: Data | null = null;
+  public currentLevel: number = 1;
+  public currentRound: number = 0;
   public sentencesForRound: string[] = [];
   public currentSentenceIndex: number = 0;
   private currentSentenceCards: HTMLElement[];
   public currentSentence: string;
+  public translationWrap: Component<HTMLDivElement>;
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
@@ -46,14 +47,22 @@ export class GamePage extends Component {
     });
     this.append(this.gamePageContainer);
     // header
-    this.header = new GameHeader();
+    this.header = new GameHeader(this);
     this.gamePageContainer.append(this.header);
+
     // main content wrapper
     this.mainContent = new Component({
       tagName: 'main',
       classNames: [classes.mainContentWrapper],
     });
     this.gamePageContainer.append(this.mainContent);
+
+    // translation wrap
+    this.translationWrap = new Component({
+      tagName: 'div',
+      classNames: [classes.translationWrap],
+    });
+    this.mainContent.append(this.translationWrap);
     // game wrapper
     this.gameWrap = new Component({
       tagName: 'div',
