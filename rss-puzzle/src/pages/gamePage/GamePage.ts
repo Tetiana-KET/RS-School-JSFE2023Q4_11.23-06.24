@@ -30,6 +30,7 @@ export class GamePage extends Component {
   public currentSentenceIndex: number = 0;
   private currentSentenceCards: HTMLElement[];
   public currentSentence: string;
+  public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
   public isTranslateEnabled: boolean = false;
 
@@ -117,6 +118,8 @@ export class GamePage extends Component {
   private handleFetchedData() {
     if (this.fetchedWordData) {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
+      this.audioExample =
+        this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
       this.displaySentence();
       //display translation if enabled
       if (this.isTranslateEnabled) {
@@ -126,6 +129,9 @@ export class GamePage extends Component {
       }
     }
   }
+
+  // update sound source
+  public updateSoundSource() {}
 
   // display current sentence in the game source data block
   public displaySentence() {

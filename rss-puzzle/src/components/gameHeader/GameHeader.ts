@@ -1,4 +1,5 @@
 import { GamePage } from '../../pages/gamePage/GamePage';
+import { fetchAudioData } from '../../utils/commonUtils';
 import { handleTranslateHint } from '../../utils/handleCluesClick';
 import { Component } from '../Component';
 import classes from './GameHeader.module.css';
@@ -8,8 +9,11 @@ export class GameHeader extends Component {
   private gameHeaderOptions: Component<HTMLDivElement>;
   private selectLevelOption: HTMLSelectElement;
   private selectPageOption: HTMLSelectElement;
+  private playSoundButton: Component<HTMLButtonElement>;
   private gameCluesWrap: Component<HTMLDivElement>;
   private gamePageInstance: GamePage;
+  private audioContext = new AudioContext();
+  public audio: AudioBuffer | null = null;
 
   constructor(gamePageInstance: GamePage) {
     super({ tagName: 'header', classNames: [classes.gameHeaderContainer] });
@@ -53,6 +57,15 @@ export class GameHeader extends Component {
     }
     this.gameHeaderOptions.getNode().append(this.selectPageOption);
 
+    // play sound button
+    this.playSoundButton = new Component({
+      tagName: 'button',
+      classNames: [classes.playSoundButton, classes.clueButton],
+      attributes: { disabled: true },
+    });
+    this.headerContainer.append(this.playSoundButton);
+    this.playSoundButton.getNode().addEventListener('click', this.handleClick.bind(this));
+
     // Clues Buttons wrap
     this.gameCluesWrap = new Component({
       tagName: 'div',
@@ -86,6 +99,58 @@ export class GameHeader extends Component {
         }
         handleTranslateHint(this.gamePageInstance);
       }
+      if (target.classList.contains(`${classes.pronunciationHint}`)) {
+        if (target.getAttribute('active-hint')) {
+          target.removeAttribute('active-hint');
+          this.playSoundButton.setAttribute('disabled', 'true');
+        } else {
+          target.setAttribute('active-hint', 'true');
+          this.playSoundButton.removeAttribute('disabled');
+        }
+      }
+      if (target.classList.contains(`${classes.playSoundButton}`)) {
+        target.setAttribute('active-hint', 'true');
+
+        console.log(`from PLAY sound click: `, this.gamePageInstance.audioExample);
+
+        this.gamePageInstance.audioExample =
+          this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
+            this.gamePageInstance.currentSentenceIndex
+          ]?.audioExample;
+
+        this.playAudio();
+      }
+    }
+    this.getAudio();
+  }
+
+  public async getAudio(): Promise<void> {
+    this.gamePageInstance.audioExample =
+      this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
+        this.gamePageInstance.currentSentenceIndex
+      ]?.audioExample;
+
+    console.log(`from GET audio: `, this.gamePageInstance.audioExample);
+
+    if (this.gamePageInstance.audioExample) {
+      try {
+        this.audio = await fetchAudioData(this.gamePageInstance.audioExample, this.audioContext);
+      } catch (error) {
+        console.error('Error fetching audio:', error);
+      }
+    }
+  }
+  public playAudio() {
+    if (this.audio) {
+      console.log(this.audio);
+      this.playSoundButton.setAttribute('isPlaying', 'true');
+      const source = this.audioContext.createBufferSource();
+      source.buffer = this.audio;
+      source.connect(this.audioContext.destination);
+      source.onended = () => {
+        this.playSoundButton.removeAttribute('isPlaying');
+      };
+      source.start(this.audioContext.currentTime);
     }
   }
 }

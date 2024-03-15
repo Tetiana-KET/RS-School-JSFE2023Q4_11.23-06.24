@@ -67,6 +67,16 @@
   background-size: 35px 35px;
 }
 
+.clue-button.play-sound-button {
+  background: #da90ef url('../../assets/icons/play.png') 50% no-repeat;
+  background-size: 30px 30px;
+}
+
+.clue-button.play-sound-button:disabled {
+  visibility: hidden;
+  opacity: 0;
+}
+
 .clue-button.translate-hint[active-hint] {
   background: #16849d url('../../assets/icons/translate_light.png') 50% no-repeat;
   background-size: 35px 35px;
@@ -75,6 +85,36 @@
 .clue-button.pronunciation-hint[active-hint] {
   background: #16849d url('../../assets/icons/sound_light.png') 50% no-repeat;
   background-size: 35px 35px;
+}
+
+.clue-button.play-sound-button[active-hint] {
+  /* background: #16849d url('../../assets/icons/play_light.png') 50% no-repeat; */
+  background-size: 30px 30px;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-1px);
+  }
+  50% {
+    transform: translateY(1px);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.clue-button.play-sound-button[isPlaying] {
+  background: #16849d url('../../assets/icons/isplaying.png') 50% no-repeat;
+  background-size: 30px 30px;
+  animation: shake 0.3s ease-in-out infinite;
+  pointer-events: none;
 }
 
 /* HOVER */
@@ -96,5 +136,10 @@
   .clue-button.pronunciation-hint:hover {
     background: #16849d url('../../assets/icons/sound_light.png') 50% no-repeat;
     background-size: 35px 35px;
+  }
+
+  .clue-button.play-sound-button:hover {
+    background: #16849d url('../../assets/icons/play_light.png') 50% no-repeat;
+    background-size: 30px 30px;
   }
 }

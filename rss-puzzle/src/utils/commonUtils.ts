@@ -45,6 +45,20 @@ export async function fetchWordData(level: number) {
   }
 }
 
+//fetching audio
+export async function fetchAudioData(source: string, audioContext: AudioContext): Promise<AudioBuffer> {
+  const audioLink = `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/`;
+  try {
+    const context = audioContext;
+    const response = await fetch(`${audioLink}${source}`);
+    const data = await response.arrayBuffer();
+    const arrayBuffer = await context.decodeAudioData(data);
+    return arrayBuffer;
+  } catch (error) {
+    throw new Error();
+  }
+}
+
 // shuffle words
 export function shuffleWords(sentence: string): string {
   const words = sentence.split(' ');
