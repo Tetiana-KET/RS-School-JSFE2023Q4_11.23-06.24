@@ -1,7 +1,7 @@
 import { Component } from '../../components';
 import { Footer } from '../../components/footer/Footer';
 import { GameHeader } from '../../components/gameHeader/GameHeader';
-import { fetchWordData, shuffleWords } from '../../utils/commonUtils';
+import { fetchImageData, fetchWordData, shuffleWords } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
 
@@ -23,6 +23,7 @@ export class GamePage extends Component {
   private gameSourceDataBlock: Component<HTMLDivElement>;
   private gameButtonsBlock: Component;
   private footer: Component;
+
   public fetchedWordData: Data | null = null;
   public currentLevel: number = 1;
   public currentRound: number = 0;
@@ -30,10 +31,12 @@ export class GamePage extends Component {
   public currentSentenceIndex: number = 0;
   private currentSentenceCards: HTMLElement[];
   public currentSentence: string;
+
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
   public isTranslateEnabled: boolean = false;
   public isPronounceEnabled: boolean = false;
+  private imageSource: string = '';
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
@@ -75,6 +78,7 @@ export class GamePage extends Component {
       classNames: [classes.gameWrap],
     });
     this.mainContent.append(this.gameWrap);
+
     // Add lines for sentences
     for (let i = 1; i <= 10; i++) {
       const sentenceLine = document.createElement('div');
@@ -122,7 +126,11 @@ export class GamePage extends Component {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
       this.audioExample =
         this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
+      this.imageSource = this.fetchedWordData.rounds[this.currentRound].levelData.imageSrc;
+
+      this.getImageForRound();
       this.displaySentence();
+
       //display translation if enabled
       if (this.isTranslateEnabled) {
         this.translationWrap.getNode().setAttribute('data-active', 'true');
@@ -258,5 +266,15 @@ export class GamePage extends Component {
       continueButton.removeAttribute('invisible');
       checkButton.setAttribute('invisible', 'true');
     }, 1000);
+  }
+
+  public async getImageForRound() {
+    try {
+      const image = await fetchImageData(this.imageSource);
+      // Set the background image
+      this.gameWrap.getNode().style.backgroundImage = `url(${image.src})`;
+    } catch (error) {
+      console.error('Error fetching image:', error);
+    }
   }
 }

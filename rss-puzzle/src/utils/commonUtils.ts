@@ -59,6 +59,24 @@ export async function fetchAudioData(source: string, audioContext: AudioContext)
   }
 }
 
+//fetching image
+export async function fetchImageData(source: string): Promise<HTMLImageElement> {
+  const imageLink = `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/images/${source}`;
+  try {
+    const response = await fetch(imageLink);
+    const blob = await response.blob();
+    const imageUrl = URL.createObjectURL(blob);
+    const image = new Image();
+    image.src = imageUrl;
+    return new Promise((resolve, reject) => {
+      image.onload = () => resolve(image);
+      image.onerror = error => reject(error);
+    });
+  } catch (error) {
+    throw new Error();
+  }
+}
+
 // shuffle words
 export function shuffleWords(sentence: string): string {
   const words = sentence.split(' ');
