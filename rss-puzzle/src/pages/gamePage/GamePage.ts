@@ -162,7 +162,7 @@ export class GamePage extends Component {
       this.imageUrl,
       this.gameSourceDataBlock
     );
-    console.log(wordCards);
+
     this.setCardsWidth(wordCards);
 
     const shuffledWordCards = shuffleWords(wordCards);
@@ -230,7 +230,7 @@ export class GamePage extends Component {
     const sentenceLine = this.gameWrap.getNode().children[this.currentSentenceIndex];
     const sourceWordCards = Array.from(this.gameSourceDataBlock.getNode().children) as HTMLElement[];
     const resultWordCards = Array.from(sentenceLine.children) as HTMLElement[];
-    const correctOrderWords = this.currentSentence.split(' ');
+    const correctOrderWords = this.currentSentenceCards;
     const continueButton = this.gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
     const checkButton = this.gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
     const isCorrect = verifySentenceAssembly(this.currentSentence, sentenceLine);
@@ -249,7 +249,7 @@ export class GamePage extends Component {
 
             correctOrderWords.forEach((word, index) => {
               resultWordCards.forEach(card => {
-                if (card.getAttribute('data-value') === word) {
+                if (card.getAttribute('data-index') === index.toString()) {
                   card.style.order = `${index}`;
                   card.style.transition = 'order 5s';
                 }
@@ -265,7 +265,7 @@ export class GamePage extends Component {
       correctOrderWords.forEach((word, index) => {
         resultWordCards.forEach(card => {
           card.classList.remove(`${classes.wrongOrder}`);
-          if (card.getAttribute('data-value') === word) {
+          if (card.getAttribute('data-index') === index.toString()) {
             card.style.order = `${index}`;
             card.style.transition = 'order 5s';
           }
@@ -289,10 +289,6 @@ export class GamePage extends Component {
         element.style.backgroundImage = `url(${image.src})`;
       });
       this.imageUrl = `url(${image.src})`;
-
-      // this.displaySentence();
-
-      console.log(`from get Image For Round: `, this.imageUrl);
     } catch (error) {
       console.error('Error fetching image:', error);
     }

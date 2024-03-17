@@ -13,6 +13,7 @@ export function shuffleWords(wordCards: HTMLElement[]): HTMLElement[] {
   return shuffledCards;
 }
 
+//create Word Cards
 export function createWordCards(
   sentence: string,
   resultsClass: string,
@@ -47,7 +48,7 @@ export function createWordCards(
     wordCard.getNode().style.height = `${rowHeight}px`;
 
     wordCard.getNode().style.backgroundImage = `url(${imageUrl})`;
-    console.log(`from create cards: `, imageUrl);
+
     wordCard.getNode().style.backgroundSize = `${resultsWidth}px ${resultsHeight}px`;
     wordCard.getNode().style.backgroundPosition = `-${startWidth}px ${-startedHeight}px`;
 
@@ -113,7 +114,6 @@ export function clickHandlerToWordCards(
               continueButton.removeAttribute('disabled');
               continueButton.removeAttribute('invisible');
               checkButton.setAttribute('invisible', 'true');
-              console.log(`show translate`);
               //display translation if enabled
               gamePageInstance.displayTranslation();
               gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
@@ -157,13 +157,11 @@ export function verifySentenceAssembly(originalSentence: string, resultBlock: El
 }
 
 //verify the correctness of the word order
-export function verifyWordOrder(originalSentence: string, resultBlock: Element): void {
+export function verifyWordOrder(resultBlock: Element): void {
   const resultBlockCards = Array.from(resultBlock.children);
-  const resultWords = Array.from(resultBlock.children).map(card => card.getAttribute('data-value'));
-  const originalWords = originalSentence.split(' ');
 
   resultBlockCards.forEach((card, i) => {
-    if (resultWords[i] !== originalWords[i]) {
+    if (i !== Number(card.getAttribute('data-index'))) {
       card.classList.add(`${classes.wrongOrder}`);
     }
   });

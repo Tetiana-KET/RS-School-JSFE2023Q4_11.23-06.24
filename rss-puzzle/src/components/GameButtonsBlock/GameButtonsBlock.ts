@@ -68,7 +68,7 @@ export class GameButtonsBlock extends Component {
     this.autoCompleteButton.removeAttribute('disabled');
     const index = this.gamePageInstance.currentSentenceIndex;
     const sentenceLine = Array.from(this.gamePageInstance.gameWrap.getNode().children)[index];
-    verifyWordOrder(this.gamePageInstance.currentSentence, sentenceLine);
+    verifyWordOrder(sentenceLine);
   }
 
   private handleContinueButtonClick() {
