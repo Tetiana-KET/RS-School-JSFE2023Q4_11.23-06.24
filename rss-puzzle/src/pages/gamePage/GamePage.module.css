@@ -54,6 +54,7 @@
   width: 90%;
   max-width: 1420px;
   height: 55vh;
+  background-size: 100% 100%;
 }
 
 .sentence-line {
@@ -73,7 +74,15 @@
   padding: 10px 0px;
 }
 
+.game-wrap.bg-active,
+.game-source-data-block.bg-active {
+  font-weight: 600;
+  filter: hue-rotate(240deg) saturate(1);
+  box-shadow: 0px 0px 10px #9b1a74;
+}
+
 .word-card {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,9 +92,23 @@
   font-size: 2vw;
   background: rgba(2, 5, 25);
   box-shadow: 0px 0px 5px rgb(26, 135, 155);
-  border: solid 1px rgb(26, 135, 155);
+  border: solid 0.2px rgb(26, 135, 155);
+  text-shadow: rgb(0, 0, 0) 0 0 3px;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.5s;
+}
+
+.game-wrap .word-card {
+  box-shadow: none;
+  border: solid 0.1px rgb(26, 135, 155, 0.5);
+}
+
+.word-card.bg-active {
+  color: #fff;
+  text-shadow: rgb(0, 0, 0) 0 0 10px;
+  box-shadow: 0px 0px 5px #9b1a74;
+  border: solid 1px #9b1a74;
 }
 
 .game-source-data-block .word-card {
@@ -93,13 +116,24 @@
   opacity: 0;
 }
 
-.word-card.selected {
-  background: rgb(6, 92, 108);
-}
-
 .word-card.wrong-order {
   box-shadow: 0px 0px 5px rgb(146, 26, 155);
   border: solid 1px rgb(155, 26, 134);
+}
+
+.word-card.bg-active.wrong-order {
+  box-shadow: 0px 0px 5px rgb(155, 135, 26);
+  border: solid 1px rgb(155, 135, 26);
+}
+
+.word-card.selected::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(91, 4, 196, 0.2);
+  border: solid 0.2px rgb(91, 4, 196);
+  box-shadow: 0px 0px 10px rgb(91, 4, 196);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -108,5 +142,13 @@
   }
   .word-card.wrong-order:hover {
     box-shadow: 0px 0px 17px rgb(218, 41, 231);
+  }
+
+  .word-card.bg-active:hover {
+    box-shadow: 0px 0px 17px rgb(231, 41, 131);
+  }
+
+  .word-card.wrong-order.bg-active:hover {
+    box-shadow: 0px 0px 17px rgb(155, 135, 26);
   }
 }

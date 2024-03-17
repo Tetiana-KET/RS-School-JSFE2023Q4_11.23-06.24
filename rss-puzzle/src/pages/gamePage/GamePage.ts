@@ -1,7 +1,7 @@
 import { Component } from '../../components';
 import { Footer } from '../../components/footer/Footer';
 import { GameHeader } from '../../components/gameHeader/GameHeader';
-import { fetchWordData, shuffleWords } from '../../utils/commonUtils';
+import { fetchImageData, fetchWordData } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
 
@@ -12,6 +12,7 @@ import {
   createWordCards,
   clickHandlerToWordCards,
   verifySentenceAssembly,
+  shuffleWords,
 } from '../../utils/wordCardsHandlers';
 import { checkLocalStoragePropertyFlag } from '../../utils/localStorage';
 
@@ -23,6 +24,7 @@ export class GamePage extends Component {
   private gameSourceDataBlock: Component<HTMLDivElement>;
   private gameButtonsBlock: Component;
   private footer: Component;
+
   public fetchedWordData: Data | null = null;
   public currentLevel: number = 1;
   public currentRound: number = 0;
@@ -30,10 +32,13 @@ export class GamePage extends Component {
   public currentSentenceIndex: number = 0;
   private currentSentenceCards: HTMLElement[];
   public currentSentence: string;
+
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
   public isTranslateEnabled: boolean = false;
   public isPronounceEnabled: boolean = false;
+  private imageSource: string = '';
+  private imageUrl: string = '';
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
@@ -75,6 +80,7 @@ export class GamePage extends Component {
       classNames: [classes.gameWrap],
     });
     this.mainContent.append(this.gameWrap);
+
     // Add lines for sentences
     for (let i = 1; i <= 10; i++) {
       const sentenceLine = document.createElement('div');
@@ -110,6 +116,8 @@ export class GamePage extends Component {
       .then(data => {
         this.fetchedWordData = data;
         this.handleFetchedData();
+        this.displaySentence();
+        this.getImageForRound();
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -122,7 +130,8 @@ export class GamePage extends Component {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
       this.audioExample =
         this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
-      this.displaySentence();
+      this.imageSource = this.fetchedWordData.rounds[this.currentRound].levelData.imageSrc;
+
       //display translation if enabled
       if (this.isTranslateEnabled) {
         this.translationWrap.getNode().setAttribute('data-active', 'true');
@@ -144,14 +153,23 @@ export class GamePage extends Component {
     this.gameSourceDataBlock.getNode().innerHTML = '';
 
     this.currentSentence = this.sentencesForRound[this.currentSentenceIndex];
-    const shuffledWords = shuffleWords(this.currentSentence);
-    const wordCards = createWordCards(shuffledWords);
+
+    const wordCards = createWordCards(
+      this.currentSentence,
+      classes.gameWrap,
+      this.sentencesForRound.length,
+      this.currentSentenceIndex,
+      this.imageUrl,
+      this.gameSourceDataBlock
+    );
 
     this.setCardsWidth(wordCards);
 
-    wordCards.forEach(wordCard => {
+    const shuffledWordCards = shuffleWords(wordCards);
+
+    shuffledWordCards.forEach(wordCard => {
       wordCard.classList.add(classes.wordCard);
-      wordCards.forEach((wordCard, index) => {
+      shuffledWordCards.forEach((wordCard, index) => {
         setTimeout(
           () => {
             wordCard.style.visibility = 'visible';
@@ -160,6 +178,7 @@ export class GamePage extends Component {
           (index + 1) * 100
         );
       });
+
       this.gameSourceDataBlock.getNode().append(wordCard);
     });
     this.addClickHandlersToWordCards(wordCards);
@@ -211,7 +230,7 @@ export class GamePage extends Component {
     const sentenceLine = this.gameWrap.getNode().children[this.currentSentenceIndex];
     const sourceWordCards = Array.from(this.gameSourceDataBlock.getNode().children) as HTMLElement[];
     const resultWordCards = Array.from(sentenceLine.children) as HTMLElement[];
-    const correctOrderWords = this.currentSentence.split(' ');
+    const correctOrderWords = this.currentSentenceCards;
     const continueButton = this.gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
     const checkButton = this.gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
     const isCorrect = verifySentenceAssembly(this.currentSentence, sentenceLine);
@@ -230,7 +249,7 @@ export class GamePage extends Component {
 
             correctOrderWords.forEach((word, index) => {
               resultWordCards.forEach(card => {
-                if (card.getAttribute('data-value') === word) {
+                if (card.getAttribute('data-index') === index.toString()) {
                   card.style.order = `${index}`;
                   card.style.transition = 'order 5s';
                 }
@@ -246,7 +265,7 @@ export class GamePage extends Component {
       correctOrderWords.forEach((word, index) => {
         resultWordCards.forEach(card => {
           card.classList.remove(`${classes.wrongOrder}`);
-          if (card.getAttribute('data-value') === word) {
+          if (card.getAttribute('data-index') === index.toString()) {
             card.style.order = `${index}`;
             card.style.transition = 'order 5s';
           }
@@ -258,5 +277,20 @@ export class GamePage extends Component {
       continueButton.removeAttribute('invisible');
       checkButton.setAttribute('invisible', 'true');
     }, 1000);
+  }
+
+  public async getImageForRound() {
+    try {
+      const image = await fetchImageData(this.imageSource);
+      // Set the background image
+      this.gameWrap.getNode().style.backgroundImage = `url(${image.src})`;
+      const elements = Array.from(this.gameSourceDataBlock.getNode().children) as HTMLElement[];
+      elements.forEach(element => {
+        element.style.backgroundImage = `url(${image.src})`;
+      });
+      this.imageUrl = `url(${image.src})`;
+    } catch (error) {
+      console.error('Error fetching image:', error);
+    }
   }
 }
