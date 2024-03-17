@@ -78,6 +78,7 @@ export class GameButtonsBlock extends Component {
       this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
         this.gamePageInstance.currentSentenceIndex
       ]?.audioExample;
+    this.gamePageInstance.getImageForRound();
 
     console.log(`from CONTINUE button click: `, this.gamePageInstance.audioExample);
 

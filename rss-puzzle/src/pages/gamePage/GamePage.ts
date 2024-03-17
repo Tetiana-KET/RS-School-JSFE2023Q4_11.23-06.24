@@ -1,7 +1,7 @@
 import { Component } from '../../components';
 import { Footer } from '../../components/footer/Footer';
 import { GameHeader } from '../../components/gameHeader/GameHeader';
-import { fetchImageData, fetchWordData, shuffleWords } from '../../utils/commonUtils';
+import { fetchImageData, fetchWordData } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
 
@@ -12,6 +12,7 @@ import {
   createWordCards,
   clickHandlerToWordCards,
   verifySentenceAssembly,
+  shuffleWords,
 } from '../../utils/wordCardsHandlers';
 import { checkLocalStoragePropertyFlag } from '../../utils/localStorage';
 
@@ -37,6 +38,7 @@ export class GamePage extends Component {
   public isTranslateEnabled: boolean = false;
   public isPronounceEnabled: boolean = false;
   private imageSource: string = '';
+  private imageUrl: string = '';
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
@@ -114,6 +116,8 @@ export class GamePage extends Component {
       .then(data => {
         this.fetchedWordData = data;
         this.handleFetchedData();
+        this.displaySentence();
+        this.getImageForRound();
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -127,9 +131,6 @@ export class GamePage extends Component {
       this.audioExample =
         this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
       this.imageSource = this.fetchedWordData.rounds[this.currentRound].levelData.imageSrc;
-
-      this.getImageForRound();
-      this.displaySentence();
 
       //display translation if enabled
       if (this.isTranslateEnabled) {
@@ -152,14 +153,23 @@ export class GamePage extends Component {
     this.gameSourceDataBlock.getNode().innerHTML = '';
 
     this.currentSentence = this.sentencesForRound[this.currentSentenceIndex];
-    const shuffledWords = shuffleWords(this.currentSentence);
-    const wordCards = createWordCards(shuffledWords);
 
+    const wordCards = createWordCards(
+      this.currentSentence,
+      classes.gameWrap,
+      this.sentencesForRound.length,
+      this.currentSentenceIndex,
+      this.imageUrl,
+      this.gameSourceDataBlock
+    );
+    console.log(wordCards);
     this.setCardsWidth(wordCards);
 
-    wordCards.forEach(wordCard => {
+    const shuffledWordCards = shuffleWords(wordCards);
+
+    shuffledWordCards.forEach(wordCard => {
       wordCard.classList.add(classes.wordCard);
-      wordCards.forEach((wordCard, index) => {
+      shuffledWordCards.forEach((wordCard, index) => {
         setTimeout(
           () => {
             wordCard.style.visibility = 'visible';
@@ -168,6 +178,7 @@ export class GamePage extends Component {
           (index + 1) * 100
         );
       });
+
       this.gameSourceDataBlock.getNode().append(wordCard);
     });
     this.addClickHandlersToWordCards(wordCards);
@@ -273,6 +284,15 @@ export class GamePage extends Component {
       const image = await fetchImageData(this.imageSource);
       // Set the background image
       this.gameWrap.getNode().style.backgroundImage = `url(${image.src})`;
+      const elements = Array.from(this.gameSourceDataBlock.getNode().children) as HTMLElement[];
+      elements.forEach(element => {
+        element.style.backgroundImage = `url(${image.src})`;
+      });
+      this.imageUrl = `url(${image.src})`;
+
+      // this.displaySentence();
+
+      console.log(`from get Image For Round: `, this.imageUrl);
     } catch (error) {
       console.error('Error fetching image:', error);
     }

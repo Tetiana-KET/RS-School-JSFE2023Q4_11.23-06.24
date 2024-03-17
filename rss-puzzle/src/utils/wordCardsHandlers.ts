@@ -2,17 +2,61 @@ import { Component } from '../components';
 import { GamePage } from '../pages/gamePage/GamePage';
 import classes from '../pages/gamePage/GamePage.module.css';
 
-// create word cards
-export function createWordCards(sentence: string): HTMLElement[] {
-  const words = sentence.split(' ');
+// shuffle words
+export function shuffleWords(wordCards: HTMLElement[]): HTMLElement[] {
+  const shuffledCards = wordCards.slice();
 
-  const wordCards: HTMLElement[] = words.map((word, index) => {
-    const wordCard = document.createElement('div');
-    wordCard.textContent = word;
-    wordCard.setAttribute('data-index', index.toString());
-    wordCard.setAttribute('data-value', word);
-    return wordCard;
+  for (let i = shuffledCards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledCards[i], shuffledCards[j]] = [shuffledCards[j], shuffledCards[i]];
+  }
+  return shuffledCards;
+}
+
+export function createWordCards(
+  sentence: string,
+  resultsClass: string,
+  SentencesPerRound: number,
+  sentenceNumber: number,
+  imageUrl: string,
+  parent: Component<HTMLDivElement>
+): HTMLElement[] {
+  const words = sentence.split(' ');
+  const wordCards: HTMLElement[] = [];
+
+  // Calculate the dimensions and positioning for the background image
+  const resultsWidth: number | 0 = document.querySelector(`.${resultsClass}`)!.clientWidth;
+  const resultsHeight: number | 0 = document.querySelector(`.${resultsClass}`)!.clientHeight;
+  const rowHeight = resultsHeight / SentencesPerRound;
+  const startedHeight = rowHeight * sentenceNumber;
+  const pxPerChar = calculateCharWidth(sentence, parent);
+
+  let startWidth = 0;
+
+  // Create a word card for each word in the sentence
+  words.forEach((word, index) => {
+    const wordLength = word.length * pxPerChar;
+
+    const wordCard = new Component({
+      tagName: 'div',
+      text: word,
+      attributes: { 'data-index': index.toString(), 'data-value': word },
+    });
+
+    wordCard.getNode().style.width = `${wordLength}px`;
+    wordCard.getNode().style.height = `${rowHeight}px`;
+
+    wordCard.getNode().style.backgroundImage = `url(${imageUrl})`;
+    console.log(`from create cards: `, imageUrl);
+    wordCard.getNode().style.backgroundSize = `${resultsWidth}px ${resultsHeight}px`;
+    wordCard.getNode().style.backgroundPosition = `-${startWidth}px ${-startedHeight}px`;
+
+    wordCards.push(wordCard.getNode());
+
+    // Update the starting width for the next word card
+    startWidth += wordLength;
   });
+
   return wordCards;
 }
 

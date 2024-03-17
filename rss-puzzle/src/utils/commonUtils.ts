@@ -76,14 +76,3 @@ export async function fetchImageData(source: string): Promise<HTMLImageElement> 
     throw new Error();
   }
 }
-
-// shuffle words
-export function shuffleWords(sentence: string): string {
-  const words = sentence.split(' ');
-
-  for (let i = words.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [words[i], words[j]] = [words[j], words[i]];
-  }
-  return words.join(' ');
-}
