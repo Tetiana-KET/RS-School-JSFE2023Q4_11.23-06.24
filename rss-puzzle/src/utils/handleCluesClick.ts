@@ -21,3 +21,13 @@ export function handlePronounceHint(gamePageInstance: GamePage) {
     updateLocalStorage('userData', 'pronounceEnabled', false);
   }
 }
+
+// export function handleBgImageHint(gamePageInstance: GamePage) {
+//   if (!gamePageInstance.header.getNode().querySelector('#bgImageHint')!.getAttribute('disabled')) {
+//     gamePageInstance.header.getNode().querySelector('#bgImageHint')!.removeAttribute('disabled');
+//     // updateLocalStorage('userData', 'pronounceEnabled', true);
+//   } else {
+//     gamePageInstance.header.getNode().querySelector('#bgImageHint')!.setAttribute('disabled', 'true');
+//     // updateLocalStorage('userData', 'pronounceEnabled', false);
+//   }
+// }
