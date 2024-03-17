@@ -72,6 +72,11 @@
   background-size: 30px 30px;
 }
 
+.clue-button.bg-image-hint {
+  background: #da90ef url('../../assets/icons/picture.png') 50% no-repeat;
+  background-size: 35px 35px;
+}
+
 .clue-button.play-sound-button:disabled {
   visibility: hidden;
   opacity: 0;
@@ -84,6 +89,11 @@
 
 .clue-button.pronunciation-hint[active-hint] {
   background: #16849d url('../../assets/icons/sound_light.png') 50% no-repeat;
+  background-size: 35px 35px;
+}
+
+.clue-button.bg-image-hint[active-hint] {
+  background: #16849d url('../../assets/icons/picture_light.png') 50% no-repeat;
   background-size: 35px 35px;
 }
 
@@ -141,5 +151,10 @@
   .clue-button.play-sound-button:hover {
     background: #16849d url('../../assets/icons/play_light.png') 50% no-repeat;
     background-size: 30px 30px;
+  }
+
+  .clue-button.bg-image-hint:hover {
+    background: #16849d url('../../assets/icons/picture_light.png') 50% no-repeat;
+    background-size: 35px 35px;
   }
 }
