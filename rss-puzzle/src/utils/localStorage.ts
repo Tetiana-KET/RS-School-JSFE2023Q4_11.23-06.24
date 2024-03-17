@@ -1,10 +1,19 @@
-export function storeUserData(firstName: string, surname: string, isLoggedIn: boolean): void {
-  const userData = { firstName, surname, isLoggedIn };
+export function storeUserData(
+  firstName: string,
+  surname: string,
+  isLoggedIn: boolean,
+  pronounceEnabled: boolean = true,
+  translateEnabled: boolean = true,
+  bgImageHintEnabled: boolean = true
+): void {
+  const userData = { firstName, surname, isLoggedIn, pronounceEnabled, translateEnabled, bgImageHintEnabled };
   localStorage.setItem('userData', JSON.stringify(userData));
 }
 
 //get user name
-export function getUserInfoFromLocalStorage(): { firstName: string; surname: string; isLoggedIn: boolean } | null {
+export function getUserInfoFromLocalStorage(): {
+  [key: string]: string | boolean;
+} | null {
   const userData = localStorage.getItem('userData');
   return userData ? JSON.parse(userData) : null;
 }

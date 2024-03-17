@@ -47,6 +47,7 @@ export class Header extends Component {
 
   private handleLogout(): void {
     localStorage.removeItem('userData');
+    localStorage.setItem('isPlaying', 'false');
     if (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }

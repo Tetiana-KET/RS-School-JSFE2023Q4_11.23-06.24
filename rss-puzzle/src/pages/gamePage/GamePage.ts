@@ -35,8 +35,9 @@ export class GamePage extends Component {
 
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
-  public isTranslateEnabled: boolean = false;
-  public isPronounceEnabled: boolean = false;
+  public isTranslateEnabled: boolean = true;
+  public isPronounceEnabled: boolean = true;
+  public isBgImageHintEnabled: boolean = true;
   private imageSource: string = '';
   private imageUrl: string = '';
 
@@ -46,9 +47,9 @@ export class GamePage extends Component {
     this.currentSentence = '';
     this.isTranslateEnabled = this.checkIsTranslateEnabled();
     this.isPronounceEnabled = this.checkIsPronounceEnabled();
+    this.isBgImageHintEnabled = this.checkIsBgImageHintEnabled();
 
     this.getNode().style.backgroundImage = `url(${bg})`;
-    this.getNode().style.backgroundSize = 'cover';
     this.getNode().style.backgroundRepeat = 'no-repeat';
     this.getNode().style.backgroundPosition = 'center';
     // gamePageContainer
@@ -144,6 +145,12 @@ export class GamePage extends Component {
         this.header.getNode().querySelector('#playSoundButton')!.removeAttribute('disabled');
         this.header.getNode().querySelector('#pronunciationHint')!.setAttribute('active-hint', 'true');
       }
+
+      //display pronounce button if enabled
+      if (this.isBgImageHintEnabled) {
+        // this.header.getNode().querySelector('#bgImageHint')!.removeAttribute('disabled');
+        this.header.getNode().querySelector('#bgImageHint')!.setAttribute('active-hint', 'true');
+      }
     }
   }
 
@@ -193,10 +200,11 @@ export class GamePage extends Component {
     return checkLocalStoragePropertyFlag('userData', 'pronounceEnabled') === true;
   }
 
+  public checkIsBgImageHintEnabled(): boolean {
+    return checkLocalStoragePropertyFlag('userData', 'bgImageHintEnabled') === true;
+  }
+
   public displayTranslation() {
-    if (!this.translationWrap.getNode().getAttribute('data-active')) {
-      this.translationWrap.getNode().setAttribute('data-active', 'true');
-    }
     const translation =
       this.fetchedWordData?.rounds[this.currentRound].words[this.currentSentenceIndex].textExampleTranslate;
     this.translationWrap.setTextContent(`${translation}`);
