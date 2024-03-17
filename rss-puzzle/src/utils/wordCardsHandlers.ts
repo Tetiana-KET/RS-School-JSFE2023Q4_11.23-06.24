@@ -99,6 +99,7 @@ export function clickHandlerToWordCards(
       const autoCompleteButton = gameButtonsBlock.getNode().firstChild?.firstChild as HTMLButtonElement;
       const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
       const sentenceLine = Array.from(gameWrap.getNode().querySelectorAll(`.${resultClassName}`))[index];
+      const currentResultLineCards = Array.from(sentenceLine.querySelectorAll('div[bg-image-disabled="true"]'));
 
       if (wordCard.parentElement) {
         if (wordCard.parentElement.className === sourceClassName) {
@@ -110,6 +111,7 @@ export function clickHandlerToWordCards(
             autoCompleteButton.setAttribute('disabled', 'disabled');
 
             isCorrect = verifySentenceAssembly(currentSentence, sentenceLine);
+
             if (isCorrect && gameButtonsBlock.getNode().lastChild !== null) {
               continueButton.removeAttribute('disabled');
               continueButton.removeAttribute('invisible');
@@ -117,6 +119,14 @@ export function clickHandlerToWordCards(
               //display translation if enabled
               gamePageInstance.displayTranslation();
               gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
+              // show backdround image
+
+              if (wordCard.getAttribute('bg-image-disabled')) {
+                wordCard.removeAttribute('bg-image-disabled');
+                currentResultLineCards.forEach(card => {
+                  card.removeAttribute('bg-image-disabled');
+                });
+              }
             }
           }
         } else if (wordCard.parentElement.className === resultClassName) {

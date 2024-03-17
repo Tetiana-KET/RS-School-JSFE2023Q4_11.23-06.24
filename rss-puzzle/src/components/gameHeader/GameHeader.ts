@@ -85,6 +85,8 @@ export class GameHeader extends Component {
     this.gameCluesWrap.getNode().children[1].setAttribute('id', 'pronunciationHint');
     this.gameCluesWrap.getNode().children[2].classList.add(`${classes.bgImageHint}`);
     this.gameCluesWrap.getNode().children[2].setAttribute('id', 'bgImageHint');
+    this.gameCluesWrap.getNode().children[2].setAttribute('active-hint', 'true');
+
     // Event listener for clue buttons
     this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
   }
@@ -119,6 +121,23 @@ export class GameHeader extends Component {
 
         await this.getAudio();
         this.playAudio();
+      }
+
+      if (target.classList.contains(`${classes.bgImageHint}`)) {
+        if (target.getAttribute('active-hint')) {
+          target.removeAttribute('active-hint');
+          this.gamePageInstance.gameWrap.getNode().setAttribute('bg-image-disabled', 'true');
+          Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
+            child.setAttribute('bg-image-disabled', 'true');
+          });
+        } else {
+          target.setAttribute('active-hint', 'true');
+          this.gamePageInstance.gameWrap.getNode().removeAttribute('bg-image-disabled');
+          Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
+            child.removeAttribute('bg-image-disabled');
+          });
+        }
+        // handleBgImageHint(this.gamePageInstance);
       }
     }
   }

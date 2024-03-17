@@ -21,7 +21,7 @@ export class GamePage extends Component {
   public header: Component;
   private mainContent: Component<HTMLDivElement>;
   public gameWrap: Component<HTMLDivElement>;
-  private gameSourceDataBlock: Component<HTMLDivElement>;
+  public gameSourceDataBlock: Component<HTMLDivElement>;
   private gameButtonsBlock: Component;
   private footer: Component;
 
@@ -252,6 +252,9 @@ export class GamePage extends Component {
                 if (card.getAttribute('data-index') === index.toString()) {
                   card.style.order = `${index}`;
                   card.style.transition = 'order 5s';
+                  if (card.getAttribute('bg-image-disabled')) {
+                    card.removeAttribute('bg-image-disabled');
+                  }
                 }
               });
             });
