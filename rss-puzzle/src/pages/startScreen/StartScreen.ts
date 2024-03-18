@@ -1,9 +1,9 @@
 import { Component } from '../../components';
 import { Footer } from '../../components/footer/Footer';
 import { Header } from '../../components/header/Header';
-import classes from './StartScreen.module.css';
-import bg from '../../assets/bg.jpg';
 import { GamePage } from '../gamePage/GamePage';
+import bg from '../../assets/bg.jpg';
+import classes from './StartScreen.module.css';
 
 export class StartScreen extends Component {
   private header: Component;

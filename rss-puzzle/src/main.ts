@@ -1,8 +1,8 @@
-import { LoginPage } from './pages';
 import './normalize.css';
 import './style.css';
-import { StartScreen } from './pages/startScreen/StartScreen';
 import { checkUserStatus } from './utils/commonUtils';
+import { LoginPage } from './pages';
+import { StartScreen } from './pages/startScreen/StartScreen';
 import { GamePage } from './pages/gamePage/GamePage';
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,12 +1,11 @@
 import { Component } from '../../components';
 import { Footer } from '../../components/footer/Footer';
+import { Header } from '../../components/header/Header';
 import { GameHeader } from '../../components/gameHeader/GameHeader';
+import { GameButtonBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
 import { fetchImageData, fetchWordData } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
-import classes from './GamePage.module.css';
-
-import bg from '../../assets/bg.jpg';
-import { GameButtonBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
+import { checkLocalStoragePropertyFlag } from '../../utils/localStorage';
 import {
   calculateCharWidth,
   createWordCards,
@@ -14,8 +13,8 @@ import {
   verifySentenceAssembly,
   shuffleWords,
 } from '../../utils/wordCardsHandlers';
-import { checkLocalStoragePropertyFlag } from '../../utils/localStorage';
-import { Header } from '../../components/header/Header';
+import classes from './GamePage.module.css';
+import bg from '../../assets/bg.jpg';
 
 export class GamePage extends Component {
   private gamePageContainer: Component;

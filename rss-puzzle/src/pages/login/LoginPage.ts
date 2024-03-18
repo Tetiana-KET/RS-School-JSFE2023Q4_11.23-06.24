@@ -1,6 +1,5 @@
 import { Component } from '../../components';
 import { storeUserData } from '../../utils/localStorage';
-
 import { StartScreen } from '../startScreen/StartScreen';
 import classes from './LoginPage.module.css';
 
