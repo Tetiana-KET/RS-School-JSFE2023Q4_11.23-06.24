@@ -4,7 +4,7 @@ import { verifyWordOrder } from '../../utils/wordCardsHandlers';
 import { Component } from '../Component';
 import classes from './GameButtonsBlock.module.css';
 
-export class GameButtonsBlock extends Component {
+export class GameButtonBlock extends Component {
   private checkButton: Component<HTMLButtonElement>;
   private continueButton: Component<HTMLButtonElement>;
   private autoCompleteButton: Component<HTMLButtonElement>;

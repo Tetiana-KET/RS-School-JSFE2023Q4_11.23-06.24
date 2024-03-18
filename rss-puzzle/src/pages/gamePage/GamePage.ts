@@ -6,7 +6,7 @@ import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
 
 import bg from '../../assets/bg.jpg';
-import { GameButtonsBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
+import { GameButtonBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
 import {
   calculateCharWidth,
   createWordCards,
@@ -109,7 +109,7 @@ export class GamePage extends Component {
     });
     this.mainContent.append(this.gameSourceDataBlock);
     //buttons
-    this.gameButtonsBlock = new GameButtonsBlock(this);
+    this.gameButtonsBlock = new GameButtonBlock(this);
     this.mainContent.append(this.gameButtonsBlock);
 
     // Footer
