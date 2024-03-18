@@ -54,6 +54,7 @@ export class GamePage extends Component {
     this.getNode().style.backgroundImage = `url(${bg})`;
     this.getNode().style.backgroundRepeat = 'no-repeat';
     this.getNode().style.backgroundPosition = 'center';
+    this.getNode().style.backgroundSize = '100%';
 
     // gamePageContainer
     this.gamePageContainer = new Component({

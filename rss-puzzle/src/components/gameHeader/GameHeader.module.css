@@ -1,5 +1,6 @@
 .game-header-container {
   width: 90%;
+  max-width: 1420px;
   display: flex;
   align-items: center;
   padding: 5px 35px;
