@@ -282,7 +282,10 @@ export class GamePage extends Component {
 
             correctOrderWords.forEach((word, index) => {
               resultWordCards.forEach(card => {
-                if (card.getAttribute('data-index') === index.toString()) {
+                if (
+                  card.getAttribute('data-index') === index.toString() &&
+                  card.getAttribute('data-value') === word.getAttribute('data-value')
+                ) {
                   card.style.order = `${index}`;
                   card.style.transition = 'order 5s';
                   if (card.getAttribute('bg-image-disabled')) {
@@ -301,9 +304,15 @@ export class GamePage extends Component {
       correctOrderWords.forEach((word, index) => {
         resultWordCards.forEach(card => {
           card.classList.remove(`${classes.wrongOrder}`);
-          if (card.getAttribute('data-index') === index.toString()) {
+          if (
+            card.getAttribute('data-index') === index.toString() &&
+            card.getAttribute('data-value') === word.getAttribute('data-value')
+          ) {
             card.style.order = `${index}`;
             card.style.transition = 'order 5s';
+            if (card.getAttribute('bg-image-disabled')) {
+              card.removeAttribute('bg-image-disabled');
+            }
           }
         });
       });
