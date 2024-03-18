@@ -200,6 +200,7 @@ export class GamePage extends Component {
     });
     this.addClickHandlersToWordCards(wordCards);
     this.currentSentenceCards.push(...wordCards);
+
     //display bg image button if enabled
     if (this.isBgImageHintEnabled) {
       this.header.getNode().querySelector('#bgImageHint')!.setAttribute('active-hint', 'true');

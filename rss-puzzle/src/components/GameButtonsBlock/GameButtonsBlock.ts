@@ -80,8 +80,6 @@ export class GameButtonBlock extends Component {
       ]?.audioExample;
     this.gamePageInstance.getImageForRound();
 
-    console.log(`from CONTINUE button click: `, this.gamePageInstance.audioExample);
-
     if (this.gamePageInstance.currentSentenceIndex < this.gamePageInstance.sentencesForRound.length) {
       this.continueButton.setAttribute('disabled', 'disabled');
       this.continueButton.setAttribute('invisible', 'true');
@@ -89,12 +87,29 @@ export class GameButtonBlock extends Component {
       this.checkButton.removeAttribute('invisible');
       this.autoCompleteButton.removeAttribute('disabled');
       this.gamePageInstance.displaySentence();
+
       //display translation if enabled
       this.gamePageInstance.isTranslateEnabled = this.gamePageInstance.checkIsTranslateEnabled();
       if (this.gamePageInstance.isTranslateEnabled) {
         this.gamePageInstance.displayTranslation();
       } else {
         this.gamePageInstance.translationWrap.getNode().removeAttribute('data-active');
+      }
+
+      //display bg image if enabled
+      this.gamePageInstance.isBgImageHintEnabled = this.gamePageInstance.checkIsBgImageHintEnabled();
+      if (this.gamePageInstance.isBgImageHintEnabled) {
+        this.gamePageInstance.header.getNode().querySelector('#bgImageHint')!.setAttribute('active-hint', 'true');
+        this.gamePageInstance.gameWrap.getNode()!.removeAttribute('bg-image-disabled');
+        Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
+          child.removeAttribute('bg-image-disabled');
+        });
+      } else {
+        this.gamePageInstance.header.getNode().querySelector('#bgImageHint')!.removeAttribute('active-hint');
+        this.gamePageInstance.gameWrap.getNode()!.setAttribute('bg-image-disabled', 'true');
+        Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
+          child.setAttribute('bg-image-disabled', 'true');
+        });
       }
     }
   }
