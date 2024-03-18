@@ -6,7 +6,7 @@ import { Data } from '../../interfaces/Data.interface';
 import classes from './GamePage.module.css';
 
 import bg from '../../assets/bg.jpg';
-import { GameButtonsBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
+import { GameButtonBlock } from '../../components/gameButtonsBlock/GameButtonsBlock';
 import {
   calculateCharWidth,
   createWordCards,
@@ -109,7 +109,7 @@ export class GamePage extends Component {
     });
     this.mainContent.append(this.gameSourceDataBlock);
     //buttons
-    this.gameButtonsBlock = new GameButtonsBlock(this);
+    this.gameButtonsBlock = new GameButtonBlock(this);
     this.mainContent.append(this.gameButtonsBlock);
 
     // Footer
@@ -200,6 +200,7 @@ export class GamePage extends Component {
     });
     this.addClickHandlersToWordCards(wordCards);
     this.currentSentenceCards.push(...wordCards);
+
     //display bg image button if enabled
     if (this.isBgImageHintEnabled) {
       this.header.getNode().querySelector('#bgImageHint')!.setAttribute('active-hint', 'true');
@@ -281,7 +282,10 @@ export class GamePage extends Component {
 
             correctOrderWords.forEach((word, index) => {
               resultWordCards.forEach(card => {
-                if (card.getAttribute('data-index') === index.toString()) {
+                if (
+                  card.getAttribute('data-index') === index.toString() &&
+                  card.getAttribute('data-value') === word.getAttribute('data-value')
+                ) {
                   card.style.order = `${index}`;
                   card.style.transition = 'order 5s';
                   if (card.getAttribute('bg-image-disabled')) {
@@ -294,15 +298,21 @@ export class GamePage extends Component {
           (index + 1) * 100
         );
       });
-
+      this.translationWrap.getNode().setAttribute('data-active', 'true');
       this.displayTranslation();
     } else if (!isCorrect) {
       correctOrderWords.forEach((word, index) => {
         resultWordCards.forEach(card => {
           card.classList.remove(`${classes.wrongOrder}`);
-          if (card.getAttribute('data-index') === index.toString()) {
+          if (
+            card.getAttribute('data-index') === index.toString() &&
+            card.getAttribute('data-value') === word.getAttribute('data-value')
+          ) {
             card.style.order = `${index}`;
             card.style.transition = 'order 5s';
+            if (card.getAttribute('bg-image-disabled')) {
+              card.removeAttribute('bg-image-disabled');
+            }
           }
         });
       });
