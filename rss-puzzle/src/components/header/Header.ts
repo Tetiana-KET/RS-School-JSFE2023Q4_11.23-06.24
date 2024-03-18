@@ -30,6 +30,7 @@ export class Header extends Component {
     this.userGreeting = new Component({
       tagName: 'p',
       classNames: [classes.userGreeting],
+      attributes: { id: 'userGreeting' },
     });
     this.userGreeting.setTextContent(`${generateGreeting()}`);
     this.headerContainer.append(this.userGreeting);

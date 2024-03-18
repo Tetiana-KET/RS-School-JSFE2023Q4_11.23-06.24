@@ -16,7 +16,7 @@ export class GameHeader extends Component {
   public audio: AudioBuffer | null = null;
 
   constructor(gamePageInstance: GamePage) {
-    super({ tagName: 'header', classNames: [classes.gameHeaderContainer] });
+    super({ tagName: 'div', classNames: [classes.gameHeaderContainer] });
     this.gamePageInstance = gamePageInstance;
 
     // Wrapper
@@ -74,7 +74,7 @@ export class GameHeader extends Component {
     this.headerContainer.append(this.gameCluesWrap);
 
     // Add clue buttons
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 3; i++) {
       const clueButton = document.createElement('button');
       clueButton.classList.add(classes.clueButton);
       this.gameCluesWrap.getNode().appendChild(clueButton);
@@ -114,8 +114,9 @@ export class GameHeader extends Component {
 
       //PRONOUNCE HINT
       if (target.classList.contains(`${classes.pronunciationHint}`)) {
-        handlePronounceHint(this.gamePageInstance, target, this.playSoundButton);
+        handlePronounceHint(target, this.playSoundButton);
       }
+
       if (target.classList.contains(`${classes.playSoundButton}`)) {
         target.setAttribute('active-hint', 'true');
         this.gamePageInstance.audioExample =
@@ -130,20 +131,6 @@ export class GameHeader extends Component {
       //IMAGE HINT
       if (target.classList.contains(`${classes.bgImageHint}`)) {
         handleBgImageHint(this.gamePageInstance, target);
-        if (target.getAttribute('active-hint')) {
-          target.removeAttribute('active-hint');
-          this.gamePageInstance.gameWrap.getNode().setAttribute('bg-image-disabled', 'true');
-          Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
-            child.setAttribute('bg-image-disabled', 'true');
-          });
-        } else {
-          target.setAttribute('active-hint', 'true');
-          this.gamePageInstance.gameWrap.getNode().removeAttribute('bg-image-disabled');
-          Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
-            child.removeAttribute('bg-image-disabled');
-          });
-        }
-        // handleBgImageHint(this.gamePageInstance);
       }
     }
   }

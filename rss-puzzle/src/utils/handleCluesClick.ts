@@ -4,8 +4,6 @@ import { checkLocalStoragePropertyFlag, updateLocalStorage } from './localStorag
 
 export function handleTranslateHint(gamePageInstance: GamePage, button: HTMLElement) {
   const isTranslateEnabled = checkLocalStoragePropertyFlag('userData', 'translateEnabled');
-  console.log(button);
-  console.log('isTranslateEnabled', isTranslateEnabled);
   if (isTranslateEnabled) {
     gamePageInstance.translationWrap.getNode().removeAttribute('data-active');
     button.removeAttribute('active-hint');
@@ -15,48 +13,39 @@ export function handleTranslateHint(gamePageInstance: GamePage, button: HTMLElem
     button.setAttribute('active-hint', 'true');
     gamePageInstance.displayTranslation();
     updateLocalStorage('userData', 'translateEnabled', true);
-
-    gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
-    gamePageInstance.header.getNode().querySelector('#translateHint')!.setAttribute('active-hint', 'true');
+  }
+}
+export function handlePronounceHint(button: HTMLElement, playSoundButton: Component<HTMLButtonElement>) {
+  const isPronounceEnabled = checkLocalStoragePropertyFlag('userData', 'pronounceEnabled');
+  if (isPronounceEnabled) {
+    playSoundButton.setAttribute('disabled', 'true');
+    button.removeAttribute('active-hint');
+    updateLocalStorage('userData', 'pronounceEnabled', false);
+  } else {
+    playSoundButton.removeAttribute('disabled');
+    button.setAttribute('active-hint', 'true');
+    updateLocalStorage('userData', 'pronounceEnabled', true);
   }
 }
 
 export function handleBgImageHint(gamePageInstance: GamePage, button: HTMLElement) {
-  const isBgImageHintEnabled = gamePageInstance.isBgImageHintEnabled;
+  const isBgImageHintEnabled = checkLocalStoragePropertyFlag('userData', 'bgImageHintEnabled');
 
-  if (!isBgImageHintEnabled) {
-    gamePageInstance.header.getNode().querySelector('#bgImageHint')!.setAttribute('data-active', 'true');
-    button.setAttribute('active-hint', 'true');
-    updateLocalStorage('userData', 'bgImageHintEnabled', true);
-  } else {
-    gamePageInstance.header.getNode().querySelector('#bgImageHint')!.removeAttribute('disabled');
-    updateLocalStorage('userData', 'bgImageHintEnabled', false);
-  }
-}
-
-export function handlePronounceHint(
-  gamePageInstance: GamePage,
-  button: HTMLElement,
-  playSoundButton: Component<HTMLButtonElement>
-) {
-  const isPronounceEnabled = checkLocalStoragePropertyFlag('userData', 'pronounceEnabled');
-
-  console.log(button);
-  console.log('isPronounceEnabled', isPronounceEnabled);
-
-  if (!gamePageInstance.header.getNode().querySelector('#playSoundButton')!.getAttribute('disabled')) {
-    gamePageInstance.header.getNode().querySelector('#playSoundButton')!.removeAttribute('disabled');
-    updateLocalStorage('userData', 'pronounceEnabled', true);
-  } else {
-    gamePageInstance.header.getNode().querySelector('#playSoundButton')!.setAttribute('disabled', 'true');
-    updateLocalStorage('userData', 'pronounceEnabled', false);
-  }
-
-  if (button.getAttribute('active-hint')) {
+  if (isBgImageHintEnabled) {
+    gamePageInstance.header.getNode().querySelector('#bgImageHint')!.removeAttribute('data-active');
+    gamePageInstance.gameWrap.getNode().setAttribute('bg-image-disabled', 'true');
     button.removeAttribute('active-hint');
-    playSoundButton.setAttribute('disabled', 'true');
+    Array.from(gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
+      child.setAttribute('bg-image-disabled', 'true');
+    });
+    updateLocalStorage('userData', 'bgImageHintEnabled', false);
   } else {
     button.setAttribute('active-hint', 'true');
-    playSoundButton.removeAttribute('disabled');
+    gamePageInstance.header.getNode().querySelector('#bgImageHint')!.setAttribute('data-active', 'true');
+    gamePageInstance.gameWrap.getNode().removeAttribute('bg-image-disabled');
+    Array.from(gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
+      child.removeAttribute('bg-image-disabled');
+    });
+    updateLocalStorage('userData', 'bgImageHintEnabled', true);
   }
 }
