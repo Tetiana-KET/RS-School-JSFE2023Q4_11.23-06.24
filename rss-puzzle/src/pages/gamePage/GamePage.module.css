@@ -92,6 +92,8 @@
   max-width: 1420px;
   height: 7vh;
   padding: 4px 0px;
+  line-height: 46px;
+  font-size: 30px;
 }
 
 .word-card {

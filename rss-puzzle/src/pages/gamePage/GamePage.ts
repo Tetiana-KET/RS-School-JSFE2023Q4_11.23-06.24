@@ -329,8 +329,8 @@ export class GamePage extends Component {
       checkButton.setAttribute('invisible', 'true');
     }, 1000);
     this.correctlyAssembledSentences += 1;
-    if (this.correctlyAssembledSentences === 2) {
-      // reveal image this.sentencesForRound.length
+    if (this.correctlyAssembledSentences === this.sentencesForRound.length) {
+      // reveal image
       setTimeout(() => {
         this.revealImage();
       }, 2000);
@@ -358,11 +358,17 @@ export class GamePage extends Component {
       card.setAttribute('bg-revealed', 'true');
     });
     this.gameWrap.getNode().setAttribute('bg-revealed', 'true');
+    this.gameWrap.getNode().removeAttribute('bg-image-disabled');
+    this.translationWrap.getNode().removeAttribute('data-active');
     this.displayImageInformation();
   }
 
   // display image information
   private displayImageInformation() {
-    console.log(`display image information`);
+    const year = this.fetchedWordData!.rounds[this.currentRound].levelData.year;
+    const author = this.fetchedWordData!.rounds[this.currentRound].levelData.author;
+    const name = this.fetchedWordData!.rounds[this.currentRound].levelData.name;
+    const description = `${author} - ${name} (${year})`;
+    this.gameSourceDataBlock.getNode().innerHTML = `${description}`;
   }
 }
