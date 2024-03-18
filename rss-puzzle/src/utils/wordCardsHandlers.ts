@@ -113,14 +113,19 @@ export function clickHandlerToWordCards(
             isCorrect = verifySentenceAssembly(currentSentence, sentenceLine);
 
             if (isCorrect && gameButtonsBlock.getNode().lastChild !== null) {
+              gamePageInstance.correctlyAssembledSentences += 1;
+              if (gamePageInstance.correctlyAssembledSentences === gamePageInstance.sentencesForRound.length) {
+                // reveal image
+                gamePageInstance.revealImage();
+              }
+
               continueButton.removeAttribute('disabled');
               continueButton.removeAttribute('invisible');
               checkButton.setAttribute('invisible', 'true');
               //display translation if enabled
               gamePageInstance.displayTranslation();
               gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
-              // show backdround image
-
+              // show background image
               if (wordCard.getAttribute('bg-image-disabled')) {
                 wordCard.removeAttribute('bg-image-disabled');
                 currentResultLineCards.forEach(card => {
@@ -176,3 +181,15 @@ export function verifyWordOrder(resultBlock: Element): void {
     }
   });
 }
+
+// export function revealBackgroundImage(
+//   wordCards: HTMLElement[],
+//   gameWrap: Component<HTMLDivElement>,
+//   sourceClassName: string,
+//   resultClassName: string,
+//   index: number,
+//   selectedClass: string,
+//   currentSentence: string,
+//   gameButtonsBlock: Component,
+//   gamePageInstance: GamePage
+// ) {}

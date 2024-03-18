@@ -43,10 +43,13 @@ export class GamePage extends Component {
   private imageSource: string = '';
   private imageUrl: string = '';
 
+  public correctlyAssembledSentences: number;
+
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
     this.currentSentenceCards = [];
     this.currentSentence = '';
+    this.correctlyAssembledSentences = 0;
     this.isTranslateEnabled = this.checkIsTranslateEnabled();
     this.isPronounceEnabled = this.checkIsPronounceEnabled();
     this.isBgImageHintEnabled = this.checkIsBgImageHintEnabled();
@@ -96,12 +99,6 @@ export class GamePage extends Component {
     });
     this.mainContent.append(this.gameWrap);
 
-    // Add lines for sentences
-    for (let i = 1; i <= 10; i++) {
-      const sentenceLine = document.createElement('div');
-      sentenceLine.classList.add(classes.sentenceLine);
-      this.gameWrap.getNode().appendChild(sentenceLine);
-    }
     // game source data block
     this.gameSourceDataBlock = new Component({
       tagName: 'div',
@@ -125,14 +122,23 @@ export class GamePage extends Component {
       }
     });
   }
+  public addLinesForSentence() {
+    for (let i = 1; i <= this.sentencesForRound.length; i += 1) {
+      const sentenceLine = document.createElement('div');
+      sentenceLine.classList.add(classes.sentenceLine);
+      this.gameWrap.getNode().appendChild(sentenceLine);
+    }
+  }
 
-  private fetchWordData() {
+  public fetchWordData() {
     fetchWordData(this.currentLevel)
       .then(data => {
         this.fetchedWordData = data;
         this.handleFetchedData();
         this.displaySentence();
         this.getImageForRound();
+        // Add lines for sentences
+        this.addLinesForSentence();
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -322,6 +328,13 @@ export class GamePage extends Component {
       continueButton.removeAttribute('invisible');
       checkButton.setAttribute('invisible', 'true');
     }, 1000);
+    this.correctlyAssembledSentences += 1;
+    if (this.correctlyAssembledSentences === 2) {
+      // reveal image this.sentencesForRound.length
+      setTimeout(() => {
+        this.revealImage();
+      }, 2000);
+    }
   }
 
   public async getImageForRound() {
@@ -337,5 +350,19 @@ export class GamePage extends Component {
     } catch (error) {
       console.error('Error fetching image:', error);
     }
+  }
+
+  //reveal the background image
+  public revealImage() {
+    Array.from(this.getNode().querySelectorAll(`.${classes.wordCard}`)).forEach(card => {
+      card.setAttribute('bg-revealed', 'true');
+    });
+    this.gameWrap.getNode().setAttribute('bg-revealed', 'true');
+    this.displayImageInformation();
+  }
+
+  // display image information
+  private displayImageInformation() {
+    console.log(`display image information`);
   }
 }

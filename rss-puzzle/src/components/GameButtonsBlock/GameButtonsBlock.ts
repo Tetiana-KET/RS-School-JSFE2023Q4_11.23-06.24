@@ -1,7 +1,7 @@
 // Footer.ts
+import { Component } from '../Component';
 import { GamePage } from '../../pages/gamePage/GamePage';
 import { verifyWordOrder } from '../../utils/wordCardsHandlers';
-import { Component } from '../Component';
 import classes from './GameButtonsBlock.module.css';
 
 export class GameButtonBlock extends Component {
@@ -73,6 +73,17 @@ export class GameButtonBlock extends Component {
 
   private handleContinueButtonClick() {
     this.gamePageInstance.currentSentenceIndex += 1;
+    // if (this.gamePageInstance.currentSentenceIndex <= this.gamePageInstance.sentencesForRound.length - 1) {
+    //   this.gamePageInstance.currentSentenceIndex += 1;
+    // } else {
+    //   this.gamePageInstance.currentRound += 1;
+    //   this.gamePageInstance.currentSentenceIndex = 0;
+
+    //   this.gamePageInstance.gameWrap.destroyChildren();
+    //   this.gamePageInstance.currentRound += 1;
+    //   this.gamePageInstance.currentSentenceIndex = 0;
+    //   this.gamePageInstance.fetchWordData();
+    // }
 
     this.gamePageInstance.audioExample =
       this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
