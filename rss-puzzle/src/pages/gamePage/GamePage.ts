@@ -298,7 +298,7 @@ export class GamePage extends Component {
           (index + 1) * 100
         );
       });
-
+      this.translationWrap.getNode().setAttribute('data-active', 'true');
       this.displayTranslation();
     } else if (!isCorrect) {
       correctOrderWords.forEach((word, index) => {
