@@ -15,10 +15,13 @@ import {
   shuffleWords,
 } from '../../utils/wordCardsHandlers';
 import { checkLocalStoragePropertyFlag } from '../../utils/localStorage';
+import { Header } from '../../components/header/Header';
 
 export class GamePage extends Component {
   private gamePageContainer: Component;
+  public mainHeader: Component;
   public header: Component;
+
   private mainContent: Component<HTMLDivElement>;
   public gameWrap: Component<HTMLDivElement>;
   public gameSourceDataBlock: Component<HTMLDivElement>;
@@ -35,8 +38,9 @@ export class GamePage extends Component {
 
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
-  public isTranslateEnabled: boolean = false;
-  public isPronounceEnabled: boolean = false;
+  public isTranslateEnabled: boolean = true;
+  public isPronounceEnabled: boolean = true;
+  public isBgImageHintEnabled: boolean = true;
   private imageSource: string = '';
   private imageUrl: string = '';
 
@@ -46,20 +50,27 @@ export class GamePage extends Component {
     this.currentSentence = '';
     this.isTranslateEnabled = this.checkIsTranslateEnabled();
     this.isPronounceEnabled = this.checkIsPronounceEnabled();
+    this.isBgImageHintEnabled = this.checkIsBgImageHintEnabled();
 
     this.getNode().style.backgroundImage = `url(${bg})`;
-    this.getNode().style.backgroundSize = 'cover';
     this.getNode().style.backgroundRepeat = 'no-repeat';
     this.getNode().style.backgroundPosition = 'center';
+
     // gamePageContainer
     this.gamePageContainer = new Component({
       tagName: 'div',
       classNames: [classes.gamePageContainer],
     });
     this.append(this.gamePageContainer);
+
     // header
-    this.header = new GameHeader(this);
-    this.gamePageContainer.append(this.header);
+    this.mainHeader = new Header();
+    this.gamePageContainer.append(this.mainHeader);
+    this.mainHeader.getNode().style.background = 'rgba(3, 6, 25, 0.7)';
+    const userGreetingElement = this.mainHeader.getNode().querySelector('#userGreeting') as HTMLElement | null;
+    if (userGreetingElement) {
+      userGreetingElement.style.visibility = 'hidden';
+    }
 
     // main content wrapper
     this.mainContent = new Component({
@@ -67,6 +78,10 @@ export class GamePage extends Component {
       classNames: [classes.mainContentWrapper],
     });
     this.gamePageContainer.append(this.mainContent);
+
+    // Game header
+    this.header = new GameHeader(this);
+    this.mainContent.append(this.header);
 
     // translation wrap
     this.translationWrap = new Component({
@@ -143,6 +158,8 @@ export class GamePage extends Component {
       if (this.isPronounceEnabled) {
         this.header.getNode().querySelector('#playSoundButton')!.removeAttribute('disabled');
         this.header.getNode().querySelector('#pronunciationHint')!.setAttribute('active-hint', 'true');
+      } else {
+        this.header.getNode().querySelector('#playSoundButton')!.setAttribute('disabled', 'true');
       }
     }
   }
@@ -183,6 +200,20 @@ export class GamePage extends Component {
     });
     this.addClickHandlersToWordCards(wordCards);
     this.currentSentenceCards.push(...wordCards);
+    //display bg image button if enabled
+    if (this.isBgImageHintEnabled) {
+      this.header.getNode().querySelector('#bgImageHint')!.setAttribute('active-hint', 'true');
+      this.gameWrap.getNode()!.removeAttribute('bg-image-disabled');
+      Array.from(this.gameSourceDataBlock.getNode().children).forEach(child => {
+        child.removeAttribute('bg-image-disabled');
+      });
+    } else {
+      this.header.getNode().querySelector('#bgImageHint')!.removeAttribute('active-hint');
+      this.gameWrap.getNode()!.setAttribute('bg-image-disabled', 'true');
+      Array.from(this.gameSourceDataBlock.getNode().children).forEach(child => {
+        child.setAttribute('bg-image-disabled', 'true');
+      });
+    }
   }
 
   public checkIsTranslateEnabled(): boolean {
@@ -193,10 +224,11 @@ export class GamePage extends Component {
     return checkLocalStoragePropertyFlag('userData', 'pronounceEnabled') === true;
   }
 
+  public checkIsBgImageHintEnabled(): boolean {
+    return checkLocalStoragePropertyFlag('userData', 'bgImageHintEnabled') === true;
+  }
+
   public displayTranslation() {
-    if (!this.translationWrap.getNode().getAttribute('data-active')) {
-      this.translationWrap.getNode().setAttribute('data-active', 'true');
-    }
     const translation =
       this.fetchedWordData?.rounds[this.currentRound].words[this.currentSentenceIndex].textExampleTranslate;
     this.translationWrap.setTextContent(`${translation}`);

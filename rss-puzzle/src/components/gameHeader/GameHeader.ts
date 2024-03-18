@@ -1,6 +1,6 @@
 import { GamePage } from '../../pages/gamePage/GamePage';
 import { fetchAudioData } from '../../utils/commonUtils';
-import { handlePronounceHint, handleTranslateHint } from '../../utils/handleCluesClick';
+import { handleBgImageHint, handlePronounceHint, handleTranslateHint } from '../../utils/handleCluesClick';
 import { Component } from '../Component';
 import classes from './GameHeader.module.css';
 
@@ -16,7 +16,7 @@ export class GameHeader extends Component {
   public audio: AudioBuffer | null = null;
 
   constructor(gamePageInstance: GamePage) {
-    super({ tagName: 'header', classNames: [classes.gameHeaderContainer] });
+    super({ tagName: 'div', classNames: [classes.gameHeaderContainer] });
     this.gamePageInstance = gamePageInstance;
 
     // Wrapper
@@ -61,7 +61,7 @@ export class GameHeader extends Component {
     this.playSoundButton = new Component({
       tagName: 'button',
       classNames: [classes.playSoundButton, classes.clueButton],
-      attributes: { disabled: true, id: 'playSoundButton' },
+      attributes: { id: 'playSoundButton' },
     });
     this.headerContainer.append(this.playSoundButton);
     this.playSoundButton.getNode().addEventListener('click', this.handleClick.bind(this));
@@ -74,44 +74,49 @@ export class GameHeader extends Component {
     this.headerContainer.append(this.gameCluesWrap);
 
     // Add clue buttons
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 3; i++) {
       const clueButton = document.createElement('button');
       clueButton.classList.add(classes.clueButton);
       this.gameCluesWrap.getNode().appendChild(clueButton);
     }
     this.gameCluesWrap.getNode().children[0].classList.add(`${classes.translateHint}`);
     this.gameCluesWrap.getNode().children[0].setAttribute('id', 'translateHint');
+
     this.gameCluesWrap.getNode().children[1].classList.add(`${classes.pronunciationHint}`);
     this.gameCluesWrap.getNode().children[1].setAttribute('id', 'pronunciationHint');
+
     this.gameCluesWrap.getNode().children[2].classList.add(`${classes.bgImageHint}`);
     this.gameCluesWrap.getNode().children[2].setAttribute('id', 'bgImageHint');
-    this.gameCluesWrap.getNode().children[2].setAttribute('active-hint', 'true');
+
+    this.toggleDefaultSettings();
 
     // Event listener for clue buttons
     this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
   }
 
+  private toggleDefaultSettings() {
+    if (this.gamePageInstance.isTranslateEnabled) {
+      this.gameCluesWrap.getNode().children[0].setAttribute('active-hint', 'true');
+    } else if (this.gamePageInstance.isPronounceEnabled) {
+      this.gameCluesWrap.getNode().children[1].setAttribute('active-hint', 'true');
+    } else if (this.gamePageInstance.isBgImageHintEnabled) {
+      this.gameCluesWrap.getNode().children[2].setAttribute('active-hint', 'true');
+    }
+  }
+
   private async handleClick(event: MouseEvent): Promise<void> {
     const target = event.target as HTMLElement;
     if (target && target.classList.contains(`${classes.clueButton}`)) {
+      //TRANSLATE HINT
       if (target.classList.contains(`${classes.translateHint}`)) {
-        if (target.getAttribute('active-hint')) {
-          target.removeAttribute('active-hint');
-        } else {
-          target.setAttribute('active-hint', 'true');
-        }
-        handleTranslateHint(this.gamePageInstance);
+        handleTranslateHint(this.gamePageInstance, target);
       }
+
+      //PRONOUNCE HINT
       if (target.classList.contains(`${classes.pronunciationHint}`)) {
-        if (target.getAttribute('active-hint')) {
-          target.removeAttribute('active-hint');
-          this.playSoundButton.setAttribute('disabled', 'true');
-        } else {
-          target.setAttribute('active-hint', 'true');
-          this.playSoundButton.removeAttribute('disabled');
-        }
-        handlePronounceHint(this.gamePageInstance);
+        handlePronounceHint(target, this.playSoundButton);
       }
+
       if (target.classList.contains(`${classes.playSoundButton}`)) {
         target.setAttribute('active-hint', 'true');
         this.gamePageInstance.audioExample =
@@ -123,21 +128,9 @@ export class GameHeader extends Component {
         this.playAudio();
       }
 
+      //IMAGE HINT
       if (target.classList.contains(`${classes.bgImageHint}`)) {
-        if (target.getAttribute('active-hint')) {
-          target.removeAttribute('active-hint');
-          this.gamePageInstance.gameWrap.getNode().setAttribute('bg-image-disabled', 'true');
-          Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
-            child.setAttribute('bg-image-disabled', 'true');
-          });
-        } else {
-          target.setAttribute('active-hint', 'true');
-          this.gamePageInstance.gameWrap.getNode().removeAttribute('bg-image-disabled');
-          Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
-            child.removeAttribute('bg-image-disabled');
-          });
-        }
-        // handleBgImageHint(this.gamePageInstance);
+        handleBgImageHint(this.gamePageInstance, target);
       }
     }
   }

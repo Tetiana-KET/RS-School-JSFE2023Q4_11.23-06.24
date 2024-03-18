@@ -30,6 +30,7 @@ export class Header extends Component {
     this.userGreeting = new Component({
       tagName: 'p',
       classNames: [classes.userGreeting],
+      attributes: { id: 'userGreeting' },
     });
     this.userGreeting.setTextContent(`${generateGreeting()}`);
     this.headerContainer.append(this.userGreeting);
@@ -47,6 +48,7 @@ export class Header extends Component {
 
   private handleLogout(): void {
     localStorage.removeItem('userData');
+    localStorage.setItem('isPlaying', 'false');
     if (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
