@@ -64,7 +64,7 @@ export class GameHeader extends Component {
   }
 
   private addClueButtons(): void {
-    for (let i = 1; i <= 3; i += 1) {
+    for (let i = 1; i <= 4; i += 1) {
       const clueButton = document.createElement('button');
       clueButton.classList.add(classes.clueButton);
       this.gameCluesWrap.getNode().appendChild(clueButton);
@@ -77,6 +77,9 @@ export class GameHeader extends Component {
 
     this.gameCluesWrap.getNode().children[2].classList.add(`${classes.bgImageHint}`);
     this.gameCluesWrap.getNode().children[2].setAttribute('id', 'bgImageHint');
+
+    this.gameCluesWrap.getNode().children[3].classList.add(`${classes.statisticBtn}`);
+    this.gameCluesWrap.getNode().children[3].setAttribute('id', 'statisticBtn');
   }
   private toggleDefaultSettings(): void {
     if (this.gamePageInstance.isTranslateEnabled) {

@@ -30,6 +30,7 @@
     "no-param-reassign": "off",
     "no-restricted-syntax": "off",
     "import/no-cycle": "off",
+    "import/no-unresolved": "off",
     "no-debugger": "off",
     "class-methods-use-this": "off",
     "import/extensions": "off",
