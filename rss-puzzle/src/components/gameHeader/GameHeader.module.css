@@ -78,7 +78,13 @@
   background-size: 25px 25px;
 }
 
-.clue-button.play-sound-button:disabled {
+.clue-button.statistic-Btn {
+  background: #da90ef url('../../assets/icons/statistic.png') 50% no-repeat;
+  background-size: 25px 25px;
+}
+
+.clue-button.play-sound-button:disabled,
+.clue-button.statistic-Btn:disabled {
   visibility: hidden;
   opacity: 0;
 }
@@ -155,6 +161,10 @@
 
   .clue-button.bg-image-hint:hover {
     background: #16849d url('../../assets/icons/picture_light.png') 50% no-repeat;
+    background-size: 25px 25px;
+  }
+  .clue-button.statistic-Btn:hover {
+    background: #16849d url('../../assets/icons/statistic_light.png') 50% no-repeat;
     background-size: 25px 25px;
   }
 }

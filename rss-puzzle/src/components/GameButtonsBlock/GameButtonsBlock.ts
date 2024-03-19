@@ -8,6 +8,7 @@ export class GameButtonBlock extends Component {
   private checkButton: Component<HTMLButtonElement>;
   private continueButton: Component<HTMLButtonElement>;
   private autoCompleteButton: Component<HTMLButtonElement>;
+  private resultsButton: Component<HTMLButtonElement>;
   private checkButtonWrap: Component<HTMLDivElement>;
   private completeButtonWrap: Component<HTMLDivElement>;
   private gamePageInstance: GamePage;
@@ -15,17 +16,9 @@ export class GameButtonBlock extends Component {
   constructor(gamePageInstance: GamePage) {
     super({ tagName: 'div', classNames: [classes.gameButtonsBlock] });
     this.gamePageInstance = gamePageInstance;
-    // auto-complete Button Wrap
-    this.completeButtonWrap = new Component({
-      tagName: 'div',
-      classNames: [classes.completeButtonWrap],
-    });
+    this.completeButtonWrap = new Component({ tagName: 'div', classNames: [classes.completeButtonWrap] });
     this.append(this.completeButtonWrap);
-    // check-continue Button Wrap
-    this.checkButtonWrap = new Component({
-      tagName: 'div',
-      classNames: [classes.checkButtonWrap],
-    });
+    this.checkButtonWrap = new Component({ tagName: 'div', classNames: [classes.checkButtonWrap] });
     this.append(this.checkButtonWrap);
     this.autoCompleteButton = new Component<HTMLButtonElement>({
       tagName: 'button',
@@ -34,6 +27,13 @@ export class GameButtonBlock extends Component {
       attributes: { type: 'button' },
     });
     this.completeButtonWrap.append(this.autoCompleteButton);
+    this.resultsButton = new Component<HTMLButtonElement>({
+      tagName: 'button',
+      classNames: [classes.button, classes.resultButton],
+      text: 'Results',
+      attributes: { type: 'button', disabled: true, invisible: 'true' },
+    });
+    this.completeButtonWrap.append(this.resultsButton);
     this.checkButton = new Component({
       tagName: 'button',
       text: `Check`,
@@ -48,9 +48,14 @@ export class GameButtonBlock extends Component {
       attributes: { type: 'button', disabled: true, invisible: 'true' },
     });
     this.checkButtonWrap.append(this.continueButton);
+    this.addEventListeners();
+  }
+
+  private addEventListeners(): void {
     this.checkButton.getNode().addEventListener('click', this.handleCheckButtonClick.bind(this));
     this.continueButton.getNode().addEventListener('click', this.handleContinueButtonClick.bind(this));
     this.autoCompleteButton.getNode().addEventListener('click', this.handleAutoCompleteButtonClick.bind(this));
+    this.resultsButton.getNode().addEventListener('click', this.handleResultButtonClick.bind(this));
   }
 
   private handleCheckButtonClick(): void {
@@ -105,5 +110,11 @@ export class GameButtonBlock extends Component {
   private handleAutoCompleteButtonClick(): void {
     this.autoCompleteButton.setAttribute('disabled', 'disabled');
     this.gamePageInstance.autoCompleteSentence();
+  }
+
+  private handleResultButtonClick(): void {
+    alert(`This button navigates to a detailed view of the player's performance statistics.
+    the page is in development`);
+    console.log(`This button navigates to a detailed view of the player's performance statistics.`);
   }
 }

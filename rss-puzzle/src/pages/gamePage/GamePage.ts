@@ -249,6 +249,8 @@ export class GamePage extends Component {
     const sourceWordCards = Array.from(this.gameSourceDataBlock.getNode().children) as HTMLElement[];
     const resultWordCards = Array.from(sentenceLine.children) as HTMLElement[];
     const correctOrderWords = this.currentSentenceCards;
+    const autocompleteButton = this.gameButtonsBlock.getNode().firstChild?.firstChild as HTMLButtonElement;
+    const resultButton = this.gameButtonsBlock.getNode().firstChild?.lastChild as HTMLButtonElement;
     const continueButton = this.gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
     const checkButton = this.gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
     const isCorrect = verifySentenceAssembly(this.currentSentence, sentenceLine);
@@ -263,11 +265,9 @@ export class GamePage extends Component {
     this.correctlyAssembledSentences += 1;
     if (this.correctlyAssembledSentences === this.sentencesForRound.length) {
       this.revealImage();
-      setTimeout(() => {
-        this.toggleButtons(continueButton, checkButton);
-      }, 1000);
+      this.toggleCompleteResultButtons(resultButton, autocompleteButton, continueButton, checkButton);
     } else {
-      this.toggleButtons(continueButton, checkButton);
+      this.toggleContinueCkeckButtons(continueButton, checkButton);
     }
   }
 
@@ -325,11 +325,40 @@ export class GamePage extends Component {
     });
   }
 
-  private toggleButtons(continueButton: HTMLButtonElement, checkButton: HTMLButtonElement): void {
+  private toggleContinueCkeckButtons(continueButton: HTMLButtonElement, checkButton: HTMLButtonElement): void {
     setTimeout(() => {
       continueButton.removeAttribute('disabled');
       continueButton.removeAttribute('invisible');
       checkButton.setAttribute('invisible', 'true');
+    }, 1000);
+  }
+
+  private toggleCompleteResultButtons(
+    continueButton: HTMLButtonElement,
+    checkButton: HTMLButtonElement,
+    resultButton: HTMLButtonElement,
+    autocompleteButton: HTMLButtonElement
+  ): void {
+    setTimeout(() => {
+      resultButton.removeAttribute('disabled');
+      resultButton.removeAttribute('invisible');
+      autocompleteButton.setAttribute('invisible', 'true');
+      autocompleteButton.setAttribute('disabled', 'true');
+
+      continueButton.removeAttribute('disabled');
+      continueButton.removeAttribute('invisible');
+      checkButton.setAttribute('invisible', 'true');
+    }, 1000);
+  }
+
+  private disableResultButton(): void {
+    setTimeout(() => {
+      const resultButton = this.gameButtonsBlock.getNode().firstChild?.lastChild as HTMLButtonElement;
+      const autocompleteButton = this.gameButtonsBlock.getNode().firstChild?.firstChild as HTMLButtonElement;
+      resultButton.setAttribute('disabled', 'true');
+      resultButton.setAttribute('invisible', 'true');
+      autocompleteButton.removeAttribute('invisible');
+      autocompleteButton.removeAttribute('disabled');
     }, 1000);
   }
 
@@ -382,7 +411,7 @@ export class GamePage extends Component {
     this.currentSentenceIndex = 0;
     this.sentencesForRound.length = 0;
     this.currentSentenceCards.length = 0;
-
+    this.disableResultButton();
     if (this.currentRound < this.totalRoundsCount) {
       this.currentRound += 1;
       // set next round data
