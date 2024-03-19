@@ -18,46 +18,18 @@ export class GameHeader extends Component {
   constructor(gamePageInstance: GamePage) {
     super({ tagName: 'div', classNames: [classes.gameHeaderContainer] });
     this.gamePageInstance = gamePageInstance;
-
-    // Wrapper
-    this.headerContainer = new Component({
-      tagName: 'div',
-      classNames: [classes.headerContainer],
-    });
+    this.headerContainer = new Component({ tagName: 'div', classNames: [classes.headerContainer] });
     this.append(this.headerContainer);
-
-    // Options container
-    this.gameHeaderOptions = new Component({
-      tagName: 'div',
-      classNames: [classes.gameHeaderOptions],
-    });
+    this.gameHeaderOptions = new Component({ tagName: 'div', classNames: [classes.gameHeaderOptions] });
     this.headerContainer.append(this.gameHeaderOptions);
-
-    // Level select
     this.selectLevelOption = document.createElement('select');
     this.selectLevelOption.classList.add(classes.selectLevelOption, classes.select);
-    // Add options for different game levels
-    for (let i = 1; i <= 10; i += 1) {
-      const option = document.createElement('option');
-      option.value = `Level ${i}`;
-      option.textContent = `Level ${i}`;
-      this.selectLevelOption.appendChild(option);
-    }
+    this.createOptionsForLevel();
     this.gameHeaderOptions.getNode().append(this.selectLevelOption);
-
-    // Page select
     this.selectPageOption = document.createElement('select');
     this.selectPageOption.classList.add(classes.pageSelectOption, classes.select);
-    // Add options for different game levels
-    for (let i = 1; i <= 10; i += 1) {
-      const option = document.createElement('option');
-      option.value = `Page ${i}`;
-      option.textContent = `Page ${i}`;
-      this.selectPageOption.appendChild(option);
-    }
+    this.createOptionsForRound();
     this.gameHeaderOptions.getNode().append(this.selectPageOption);
-
-    // play sound button
     this.playSoundButton = new Component({
       tagName: 'button',
       classNames: [classes.playSoundButton, classes.clueButton],
@@ -65,16 +37,34 @@ export class GameHeader extends Component {
     });
     this.headerContainer.append(this.playSoundButton);
     this.playSoundButton.getNode().addEventListener('click', this.handleClick.bind(this));
-
-    // Clues Buttons wrap
-    this.gameCluesWrap = new Component({
-      tagName: 'div',
-      classNames: [classes.gameCluesWrap],
-    });
+    this.gameCluesWrap = new Component({ tagName: 'div', classNames: [classes.gameCluesWrap] });
     this.headerContainer.append(this.gameCluesWrap);
+    this.addClueButtons();
+    this.toggleDefaultSettings();
+    this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
+  }
+  // Add options for different game levels
+  private createOptionsForLevel(): void {
+    for (let i = 1; i <= 10; i += 1) {
+      const option = document.createElement('option');
+      option.value = `Level ${i}`;
+      option.textContent = `Level ${i}`;
+      this.selectLevelOption.appendChild(option);
+    }
+  }
 
-    // Add clue buttons
-    for (let i = 1; i <= 4; i += 1) {
+  // Add options for different game rounds
+  private createOptionsForRound(): void {
+    for (let i = 1; i <= 10; i += 1) {
+      const option = document.createElement('option');
+      option.value = `Page ${i}`;
+      option.textContent = `Page ${i}`;
+      this.selectPageOption.appendChild(option);
+    }
+  }
+
+  private addClueButtons(): void {
+    for (let i = 1; i <= 3; i += 1) {
       const clueButton = document.createElement('button');
       clueButton.classList.add(classes.clueButton);
       this.gameCluesWrap.getNode().appendChild(clueButton);
@@ -87,14 +77,8 @@ export class GameHeader extends Component {
 
     this.gameCluesWrap.getNode().children[2].classList.add(`${classes.bgImageHint}`);
     this.gameCluesWrap.getNode().children[2].setAttribute('id', 'bgImageHint');
-
-    this.toggleDefaultSettings();
-
-    // Event listener for clue buttons
-    this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
   }
-
-  private toggleDefaultSettings() {
+  private toggleDefaultSettings(): void {
     if (this.gamePageInstance.isTranslateEnabled) {
       this.gameCluesWrap.getNode().children[0].setAttribute('active-hint', 'true');
     } else if (this.gamePageInstance.isPronounceEnabled) {
@@ -107,12 +91,12 @@ export class GameHeader extends Component {
   private async handleClick(event: MouseEvent): Promise<void> {
     const target = event.target as HTMLElement;
     if (target && target.classList.contains(`${classes.clueButton}`)) {
-      //TRANSLATE HINT
+      // TRANSLATE HINT
       if (target.classList.contains(`${classes.translateHint}`)) {
         handleTranslateHint(this.gamePageInstance, target);
       }
 
-      //PRONOUNCE HINT
+      // PRONOUNCE HINT
       if (target.classList.contains(`${classes.pronunciationHint}`)) {
         handlePronounceHint(target, this.playSoundButton);
       }
@@ -128,7 +112,7 @@ export class GameHeader extends Component {
         this.playAudio();
       }
 
-      //IMAGE HINT
+      // IMAGE HINT
       if (target.classList.contains(`${classes.bgImageHint}`)) {
         handleBgImageHint(this.gamePageInstance, target);
       }
@@ -149,13 +133,13 @@ export class GameHeader extends Component {
       }
     }
   }
-  public playAudio() {
+  public playAudio(): void {
     if (this.audio) {
       this.playSoundButton.setAttribute('isPlaying', 'true');
       const source = this.audioContext.createBufferSource();
       source.buffer = this.audio;
       source.connect(this.audioContext.destination);
-      source.onended = () => {
+      source.onended = (): void => {
         this.playSoundButton.removeAttribute('isPlaying');
       };
       source.start(this.audioContext.currentTime);

@@ -24,7 +24,7 @@ export class Component<T extends HTMLElement = HTMLElement> {
     }
 
     if (Object.keys(attributes).length) {
-      for (let [key, value] of Object.entries(attributes)) {
+      for (const [key, value] of Object.entries(attributes)) {
         if (typeof value === 'boolean') {
           if (value) {
             node.setAttribute(key, '');
@@ -65,11 +65,11 @@ export class Component<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  public getNode() {
+  public getNode(): T {
     return this.node;
   }
 
-  public getChildren() {
+  public getChildren(): Component<HTMLElement>[] {
     return this.children;
   }
 
@@ -89,14 +89,14 @@ export class Component<T extends HTMLElement = HTMLElement> {
     this.node.classList.toggle(className);
   }
 
-  public destroyChildren() {
+  public destroyChildren(): void {
     this.children.forEach(child => {
       child.destroy();
     });
     this.children.length = 0;
   }
 
-  public destroy() {
+  public destroy(): void {
     this.destroyChildren();
     this.node.remove();
   }

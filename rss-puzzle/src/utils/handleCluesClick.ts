@@ -2,7 +2,7 @@ import { Component } from '../components';
 import { GamePage } from '../pages/gamePage/GamePage';
 import { checkLocalStoragePropertyFlag, updateLocalStorage } from './localStorage';
 
-export function handleTranslateHint(gamePageInstance: GamePage, button: HTMLElement) {
+export function handleTranslateHint(gamePageInstance: GamePage, button: HTMLElement): void {
   const isTranslateEnabled = checkLocalStoragePropertyFlag('userData', 'translateEnabled');
   if (isTranslateEnabled) {
     gamePageInstance.translationWrap.getNode().removeAttribute('data-active');
@@ -15,7 +15,7 @@ export function handleTranslateHint(gamePageInstance: GamePage, button: HTMLElem
     updateLocalStorage('userData', 'translateEnabled', true);
   }
 }
-export function handlePronounceHint(button: HTMLElement, playSoundButton: Component<HTMLButtonElement>) {
+export function handlePronounceHint(button: HTMLElement, playSoundButton: Component<HTMLButtonElement>): void {
   const isPronounceEnabled = checkLocalStoragePropertyFlag('userData', 'pronounceEnabled');
   if (isPronounceEnabled) {
     playSoundButton.setAttribute('disabled', 'true');
@@ -28,11 +28,11 @@ export function handlePronounceHint(button: HTMLElement, playSoundButton: Compon
   }
 }
 
-export function handleBgImageHint(gamePageInstance: GamePage, button: HTMLElement) {
+export function handleBgImageHint(gamePageInstance: GamePage, button: HTMLElement): void {
   const isBgImageHintEnabled = checkLocalStoragePropertyFlag('userData', 'bgImageHintEnabled');
 
   if (isBgImageHintEnabled) {
-    gamePageInstance.header.getNode().querySelector('#bgImageHint')!.removeAttribute('data-active');
+    gamePageInstance.header.getNode().querySelector('#bgImageHint')?.removeAttribute('data-active');
     gamePageInstance.gameWrap.getNode().setAttribute('bg-image-disabled', 'true');
     button.removeAttribute('active-hint');
     Array.from(gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
@@ -41,7 +41,7 @@ export function handleBgImageHint(gamePageInstance: GamePage, button: HTMLElemen
     updateLocalStorage('userData', 'bgImageHintEnabled', false);
   } else {
     button.setAttribute('active-hint', 'true');
-    gamePageInstance.header.getNode().querySelector('#bgImageHint')!.setAttribute('data-active', 'true');
+    gamePageInstance.header.getNode().querySelector('#bgImageHint')?.setAttribute('data-active', 'true');
     gamePageInstance.gameWrap.getNode().removeAttribute('bg-image-disabled');
     Array.from(gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
       child.removeAttribute('bg-image-disabled');

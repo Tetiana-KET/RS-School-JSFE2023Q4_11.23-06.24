@@ -15,22 +15,16 @@ export class StartScreen extends Component {
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.startScreen] });
-    this.getNode().style.backgroundImage = `url(${bg})`;
-    this.getNode().style.backgroundSize = 'cover';
-    this.getNode().style.backgroundRepeat = 'no-repeat';
-    this.getNode().style.backgroundPosition = 'center';
-
+    this.setBackground();
     // header
     this.header = new Header();
     this.append(this.header);
-
     // main content wrapper
     this.mainContent = new Component({
       tagName: 'div',
       classNames: [classes.mainContentWrapper],
     });
     this.append(this.mainContent);
-
     // Title
     this.appName = new Component({
       tagName: 'h1',
@@ -38,7 +32,6 @@ export class StartScreen extends Component {
       classNames: [classes.appTitle],
     });
     this.mainContent.append(this.appName);
-
     // Game description
     this.gameDescription = new Component({
       tagName: 'p',
@@ -46,7 +39,6 @@ export class StartScreen extends Component {
       classNames: [classes.gameDescription],
     });
     this.mainContent.append(this.gameDescription);
-
     // Start button
     this.startButton = new Component({
       tagName: 'button',
@@ -54,9 +46,8 @@ export class StartScreen extends Component {
       classNames: [classes.startBtn],
     });
     this.mainContent.append(this.startButton);
-    //event listener
+    // event listener
     this.startButton.getNode().addEventListener('click', this.handleStartClick.bind(this));
-
     // Footer
     this.footer = new Footer();
     this.append(this.footer);
@@ -69,5 +60,12 @@ export class StartScreen extends Component {
     }
 
     document.body.prepend(new GamePage().getNode());
+  }
+
+  private setBackground(): void {
+    this.getNode().style.backgroundImage = `url(${bg})`;
+    this.getNode().style.backgroundSize = 'cover';
+    this.getNode().style.backgroundRepeat = 'no-repeat';
+    this.getNode().style.backgroundPosition = 'center';
   }
 }

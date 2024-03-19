@@ -14,24 +14,19 @@ export class GameButtonBlock extends Component {
 
   constructor(gamePageInstance: GamePage) {
     super({ tagName: 'div', classNames: [classes.gameButtonsBlock] });
-
     this.gamePageInstance = gamePageInstance;
-
-    //auto-complete Button Wrap
+    // auto-complete Button Wrap
     this.completeButtonWrap = new Component({
       tagName: 'div',
       classNames: [classes.completeButtonWrap],
     });
     this.append(this.completeButtonWrap);
-
-    //check-continue Button Wrap
+    // check-continue Button Wrap
     this.checkButtonWrap = new Component({
       tagName: 'div',
       classNames: [classes.checkButtonWrap],
     });
     this.append(this.checkButtonWrap);
-
-    //auto complete button
     this.autoCompleteButton = new Component<HTMLButtonElement>({
       tagName: 'button',
       classNames: [classes.button, classes.autoCompleteButton],
@@ -39,8 +34,6 @@ export class GameButtonBlock extends Component {
       attributes: { type: 'button' },
     });
     this.completeButtonWrap.append(this.autoCompleteButton);
-
-    //Check button
     this.checkButton = new Component({
       tagName: 'button',
       text: `Check`,
@@ -48,8 +41,6 @@ export class GameButtonBlock extends Component {
       attributes: { type: 'button', disabled: true },
     });
     this.checkButtonWrap.append(this.checkButton);
-
-    //continue button
     this.continueButton = new Component<HTMLButtonElement>({
       tagName: 'button',
       classNames: [classes.button],
@@ -57,21 +48,19 @@ export class GameButtonBlock extends Component {
       attributes: { type: 'button', disabled: true, invisible: 'true' },
     });
     this.checkButtonWrap.append(this.continueButton);
-
-    // Event listener for logout button
     this.checkButton.getNode().addEventListener('click', this.handleCheckButtonClick.bind(this));
     this.continueButton.getNode().addEventListener('click', this.handleContinueButtonClick.bind(this));
     this.autoCompleteButton.getNode().addEventListener('click', this.handleAutoCompleteButtonClick.bind(this));
   }
 
-  private handleCheckButtonClick() {
+  private handleCheckButtonClick(): void {
     this.autoCompleteButton.removeAttribute('disabled');
     const index = this.gamePageInstance.currentSentenceIndex;
     const sentenceLine = Array.from(this.gamePageInstance.gameWrap.getNode().children)[index];
     verifyWordOrder(sentenceLine);
   }
 
-  private handleContinueButtonClick() {
+  private handleContinueButtonClick(): void {
     if (this.gamePageInstance.correctlyAssembledSentences === this.gamePageInstance.sentencesForRound.length) {
       this.gamePageInstance.proceedToNextRound();
     } else {
@@ -82,7 +71,6 @@ export class GameButtonBlock extends Component {
         ]?.audioExample;
       this.gamePageInstance.getImageForRound();
     }
-
     if (this.gamePageInstance.currentSentenceIndex < this.gamePageInstance.sentencesForRound.length) {
       this.continueButton.setAttribute('disabled', 'disabled');
       this.continueButton.setAttribute('invisible', 'true');
@@ -90,26 +78,22 @@ export class GameButtonBlock extends Component {
       this.checkButton.removeAttribute('invisible');
       this.autoCompleteButton.removeAttribute('disabled');
       this.gamePageInstance.displaySentence();
-
-      //display translation if enabled
       this.gamePageInstance.isTranslateEnabled = this.gamePageInstance.checkIsTranslateEnabled();
       if (this.gamePageInstance.isTranslateEnabled) {
         this.gamePageInstance.displayTranslation();
       } else {
         this.gamePageInstance.translationWrap.getNode().removeAttribute('data-active');
       }
-
-      //display bg image if enabled
       this.gamePageInstance.isBgImageHintEnabled = this.gamePageInstance.checkIsBgImageHintEnabled();
       if (this.gamePageInstance.isBgImageHintEnabled) {
-        this.gamePageInstance.header.getNode().querySelector('#bgImageHint')!.setAttribute('active-hint', 'true');
-        this.gamePageInstance.gameWrap.getNode()!.removeAttribute('bg-image-disabled');
+        this.gamePageInstance.header.getNode().querySelector('#bgImageHint')?.setAttribute('active-hint', 'true');
+        this.gamePageInstance.gameWrap.getNode().removeAttribute('bg-image-disabled');
         Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
           child.removeAttribute('bg-image-disabled');
         });
       } else {
-        this.gamePageInstance.header.getNode().querySelector('#bgImageHint')!.removeAttribute('active-hint');
-        this.gamePageInstance.gameWrap.getNode()!.setAttribute('bg-image-disabled', 'true');
+        this.gamePageInstance.header.getNode().querySelector('#bgImageHint')?.removeAttribute('active-hint');
+        this.gamePageInstance.gameWrap.getNode().setAttribute('bg-image-disabled', 'true');
         Array.from(this.gamePageInstance.gameSourceDataBlock.getNode().children).forEach(child => {
           child.setAttribute('bg-image-disabled', 'true');
         });

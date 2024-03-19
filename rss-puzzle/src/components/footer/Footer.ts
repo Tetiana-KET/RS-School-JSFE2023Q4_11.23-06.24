@@ -8,10 +8,9 @@ export class Footer extends Component {
     this.render();
   }
 
-  render(): void {
+  private render(): void {
     this.node.innerHTML = `
     <div class="${classes.footerContainer}">
-
       <ul class="${classes.socialItems} ${classes.developer}">
         <li class="${classes.socialItem}">
           <a class="${classes.socialItemLink}" href="https://github.com/Tetiana-KET" target="_blank">
@@ -24,12 +23,10 @@ export class Footer extends Component {
           </a>
         </li>
       </ul>
-
       <div class="${classes.rsIconWrap} ${classes.rsIconWrap}">
         <a href="https://rs.school/" class="${classes.socialItem} ${classes.rsschoolLink}" target="_blank">
         </a>
       </div>
-
       <ul class="${classes.socialItems} ${classes.rsSchool}">
         <li class="${classes.socialItem}">
           <a class="${classes.socialItemLink}" href="https://github.com/rolling-scopes/rsschool-app" target="_blank">
@@ -47,7 +44,6 @@ export class Footer extends Component {
           </a>
         </li>
       </ul>
-    </div>
-    `;
+    </div>`;
   }
 }
