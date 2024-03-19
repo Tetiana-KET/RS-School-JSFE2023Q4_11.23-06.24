@@ -181,15 +181,3 @@ export function verifyWordOrder(resultBlock: Element): void {
     }
   });
 }
-
-// export function revealBackgroundImage(
-//   wordCards: HTMLElement[],
-//   gameWrap: Component<HTMLDivElement>,
-//   sourceClassName: string,
-//   resultClassName: string,
-//   index: number,
-//   selectedClass: string,
-//   currentSentence: string,
-//   gameButtonsBlock: Component,
-//   gamePageInstance: GamePage
-// ) {}

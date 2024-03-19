@@ -30,18 +30,19 @@ export class GamePage extends Component {
   public fetchedWordData: Data | null = null;
   public currentLevel: number = 1;
   public currentRound: number = 0;
+  private totalRoundsCount: number = 0;
   public sentencesForRound: string[] = [];
   public currentSentenceIndex: number = 0;
   private currentSentenceCards: HTMLElement[];
   public currentSentence: string;
-
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
+  private imageSource: string = '';
+  private imageUrl: string = '';
+
   public isTranslateEnabled: boolean = true;
   public isPronounceEnabled: boolean = true;
   public isBgImageHintEnabled: boolean = true;
-  private imageSource: string = '';
-  private imageUrl: string = '';
 
   public correctlyAssembledSentences: number;
 
@@ -152,6 +153,7 @@ export class GamePage extends Component {
       this.audioExample =
         this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
       this.imageSource = this.fetchedWordData.rounds[this.currentRound].levelData.imageSrc;
+      this.totalRoundsCount = this.fetchedWordData.roundsCount;
 
       //display translation if enabled
       if (this.isTranslateEnabled) {
@@ -337,6 +339,7 @@ export class GamePage extends Component {
     }
   }
 
+  //get Image For Round
   public async getImageForRound() {
     try {
       const image = await fetchImageData(this.imageSource);
@@ -370,5 +373,27 @@ export class GamePage extends Component {
     const name = this.fetchedWordData!.rounds[this.currentRound].levelData.name;
     const description = `${author} - ${name} (${year})`;
     this.gameSourceDataBlock.getNode().innerHTML = `${description}`;
+  }
+
+  //proceed to the next round
+  public proceedToNextRound() {
+    this.gameWrap.getNode().removeAttribute('bg-revealed');
+    this.gameWrap.getNode().innerHTML = '';
+    this.addLinesForSentence();
+    this.correctlyAssembledSentences = 0;
+    this.currentSentenceIndex = 0;
+    this.sentencesForRound.length = 0;
+    this.currentSentenceCards.length = 0;
+
+    if (this.currentRound < this.totalRoundsCount) {
+      this.currentRound += 1;
+      // set next round data
+      this.handleFetchedData();
+      this.displaySentence();
+      this.getImageForRound();
+    } else {
+      console.log('Game completed!');
+    }
+    // }
   }
 }

@@ -72,24 +72,16 @@ export class GameButtonBlock extends Component {
   }
 
   private handleContinueButtonClick() {
-    this.gamePageInstance.currentSentenceIndex += 1;
-    // if (this.gamePageInstance.currentSentenceIndex <= this.gamePageInstance.sentencesForRound.length - 1) {
-    //   this.gamePageInstance.currentSentenceIndex += 1;
-    // } else {
-    //   this.gamePageInstance.currentRound += 1;
-    //   this.gamePageInstance.currentSentenceIndex = 0;
-
-    //   this.gamePageInstance.gameWrap.destroyChildren();
-    //   this.gamePageInstance.currentRound += 1;
-    //   this.gamePageInstance.currentSentenceIndex = 0;
-    //   this.gamePageInstance.fetchWordData();
-    // }
-
-    this.gamePageInstance.audioExample =
-      this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
-        this.gamePageInstance.currentSentenceIndex
-      ]?.audioExample;
-    this.gamePageInstance.getImageForRound();
+    if (this.gamePageInstance.correctlyAssembledSentences === this.gamePageInstance.sentencesForRound.length) {
+      this.gamePageInstance.proceedToNextRound();
+    } else {
+      this.gamePageInstance.currentSentenceIndex += 1;
+      this.gamePageInstance.audioExample =
+        this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
+          this.gamePageInstance.currentSentenceIndex
+        ]?.audioExample;
+      this.gamePageInstance.getImageForRound();
+    }
 
     if (this.gamePageInstance.currentSentenceIndex < this.gamePageInstance.sentencesForRound.length) {
       this.continueButton.setAttribute('disabled', 'disabled');
