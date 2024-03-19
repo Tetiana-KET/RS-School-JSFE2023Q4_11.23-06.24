@@ -18,75 +18,69 @@ export class LoginPage extends Component {
     super({ tagName: 'div', classNames: [classes.loginFormWrapper] });
     this.form = new Component({ tagName: 'form', classNames: [classes.loginForm] });
     this.append(this.form);
-
-    // Create title fields
-    this.formTitle = new Component<HTMLElement>({
-      tagName: 'h2',
-      classNames: [classes.loginFormTitle],
-      text: 'login',
-    });
-
-    // create tooltips
-    this.surnameTooltip = new Component<HTMLSpanElement>({
-      tagName: 'span',
-      classNames: [classes.inputTooltip, classes.inputTooltipSurname],
-    });
-
-    this.firstNameTooltip = new Component<HTMLSpanElement>({
-      tagName: 'span',
-      classNames: [classes.inputTooltip, classes.inputTooltipName],
-    });
-
-    // Create input fields
-    this.firstNameInput = new Component<HTMLInputElement>({
-      tagName: 'input',
-      classNames: [classes.loginFormInput, classes.firstNameInput],
-      attributes: {
-        type: 'text',
-        placeholder: 'First Name',
-        required: true,
-        name: 'fname',
-        id: 'fname',
-        minlength: '3',
-      },
-    });
-
-    this.surnameInput = new Component<HTMLInputElement>({
-      tagName: 'input',
-      classNames: [classes.loginFormInput, classes.surnameInput],
-      attributes: {
-        type: 'text',
-        placeholder: 'Surname',
-        required: true,
-        name: 'sname',
-        id: 'sname',
-        minlength: '4',
-      },
-    });
-
-    // Create label for fields
+    this.formTitle = new Component<HTMLElement>({ tagName: 'h2', classNames: [classes.loginFormTitle], text: 'login' });
+    this.surnameTooltip = new Component<HTMLSpanElement>({ tagName: 'span' });
+    this.firstNameTooltip = new Component<HTMLSpanElement>({ tagName: 'span' });
+    this.firstNameInput = new Component<HTMLInputElement>({ tagName: 'input' });
+    this.surnameInput = new Component<HTMLInputElement>({ tagName: 'input' });
     this.firstNameLabel = new Component<HTMLLabelElement>({
       tagName: 'label',
       text: 'First Name',
       classNames: [classes.loginFormLabel, classes.firstNameLabel],
       attributes: { for: 'fname' },
     });
-
     this.surnameLabel = new Component<HTMLLabelElement>({
       tagName: 'label',
       text: 'Last Name',
       classNames: [classes.loginFormLabel, classes.surnameLabel],
       attributes: { for: 'sname' },
     });
-
-    // Create login button
     this.loginButton = new Component<HTMLButtonElement>({
       tagName: 'button',
       classNames: [classes.button, classes.loginBtn],
       text: 'Login',
       attributes: { type: 'submit', disabled: true },
     });
+    this.setFormElements();
+    this.setEventListenerToForm();
+    this.setInputsProperties();
+    this.setInputClass();
+  }
 
+  private setEventListenerToForm(): void {
+    this.firstNameInput.getNode().addEventListener('input', this.checkFormValidity.bind(this));
+    this.surnameInput.getNode().addEventListener('input', this.checkFormValidity.bind(this));
+    this.form.getNode().addEventListener('submit', event => {
+      event.preventDefault();
+      this.handleFormSubmit();
+    });
+  }
+
+  private setInputsProperties(): void {
+    this.surnameTooltip.getNode().classList.add(classes.inputTooltip, classes.inputTooltipSurname);
+    this.firstNameTooltip.getNode().classList.add(classes.inputTooltip, classes.inputTooltipName);
+
+    this.firstNameInput.getNode().setAttribute('type', 'text');
+    this.firstNameInput.getNode().setAttribute('required', 'true');
+    this.firstNameInput.getNode().setAttribute('name', 'fname');
+    this.firstNameInput.getNode().setAttribute('id', 'fname');
+    this.firstNameInput.getNode().setAttribute('placeholder', 'First Name');
+    this.firstNameInput.getNode().setAttribute('minlength', '3');
+
+    this.surnameInput.getNode().setAttribute('type', 'text');
+    this.surnameInput.getNode().setAttribute('required', 'true');
+    this.surnameInput.getNode().setAttribute('name', 'sname');
+    this.surnameInput.getNode().setAttribute('id', 'sname');
+    this.surnameInput.getNode().setAttribute('placeholder', 'Surname');
+    this.surnameInput.getNode().setAttribute('minlength', '4');
+  }
+
+  private setInputClass(): void {
+    this.firstNameInput.getNode().classList.add(classes.loginFormInput, classes.firstNameInput);
+    this.surnameInput.getNode().classList.add(classes.loginFormInput, classes.surnameInput);
+  }
+
+  private setFormElements(): void {
     this.form.prepend(this.formTitle);
     this.form.append(this.firstNameLabel);
     this.firstNameLabel.append(this.firstNameTooltip);
@@ -95,15 +89,6 @@ export class LoginPage extends Component {
     this.surnameLabel.append(this.surnameTooltip);
     this.form.append(this.surnameInput);
     this.form.append(this.loginButton);
-
-    // Add event listeners to input fields
-    this.firstNameInput.getNode().addEventListener('input', this.checkFormValidity.bind(this));
-    this.surnameInput.getNode().addEventListener('input', this.checkFormValidity.bind(this));
-    // Add event listener for form submission
-    this.form.getNode().addEventListener('submit', event => {
-      event.preventDefault();
-      this.handleFormSubmit();
-    });
   }
 
   private handleFormSubmit(): void {

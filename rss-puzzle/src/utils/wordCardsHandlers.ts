@@ -75,80 +75,125 @@ export function clickHandlerToWordCards(
   gamePageInstance: GamePage
 ): void {
   wordCards.forEach(wordCard => {
-    wordCard.addEventListener('mousedown', () => {
-      wordCard.classList.add(selectedClass);
-    });
-    wordCard.addEventListener('mouseup', () => {
-      setTimeout(() => {
-        wordCard.classList.remove(selectedClass);
-      }, 100);
-    });
+    handleMouseEventOnCard(wordCard, selectedClass);
+    handleClickOnCard(
+      wordCard,
+      wordCards,
+      gameWrap,
+      sourceClassName,
+      resultClassName,
+      index,
+      currentSentence,
+      gameButtonsBlock,
+      gamePageInstance
+    );
+  });
+}
 
-    wordCard.addEventListener('click', () => {
-      let isCorrect = false;
-      const continueButton = gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
-      const checkButton = gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
-      const autoCompleteButton = gameButtonsBlock.getNode().firstChild?.firstChild as HTMLButtonElement;
-      const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
-      const sentenceLine = Array.from(gameWrap.getNode().querySelectorAll(`.${resultClassName}`))[index];
-      const currentResultLineCards = Array.from(sentenceLine.querySelectorAll('div[bg-image-disabled="true"]'));
-
-      if (wordCard.parentElement) {
-        if (wordCard.parentElement.className === sourceClassName) {
-          wordCard.remove();
-          sentenceLine.append(wordCard);
-
-          if (gameSourceDataBlock?.children.length === 0) {
-            checkButton.removeAttribute('disabled');
-            autoCompleteButton.setAttribute('disabled', 'disabled');
-
-            isCorrect = verifySentenceAssembly(currentSentence, sentenceLine);
-
-            if (isCorrect && gameButtonsBlock.getNode().lastChild !== null) {
-              gamePageInstance.correctlyAssembledSentences += 1;
-              if (gamePageInstance.correctlyAssembledSentences === gamePageInstance.sentencesForRound.length) {
-                // reveal image
-                gamePageInstance.revealImage();
-              }
-
-              continueButton.removeAttribute('disabled');
-              continueButton.removeAttribute('invisible');
-              checkButton.setAttribute('invisible', 'true');
-              // display translation if enabled
-              gamePageInstance.displayTranslation();
-              gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
-              // show background image
-              if (wordCard.getAttribute('bg-image-disabled')) {
-                wordCard.removeAttribute('bg-image-disabled');
-                currentResultLineCards.forEach(card => {
-                  card.removeAttribute('bg-image-disabled');
-                });
-              }
-            }
-          }
-        } else if (wordCard.parentElement.className === resultClassName) {
-          wordCard.remove();
-          // const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
-          if (gameSourceDataBlock) {
-            gameSourceDataBlock.append(wordCard);
-          }
-
-          wordCard.classList.remove(`${classes.wrongOrder}`);
+export function handleClickOnCard(
+  wordCard: HTMLElement,
+  wordCards: HTMLElement[],
+  gameWrap: Component<HTMLDivElement>,
+  sourceClassName: string,
+  resultClassName: string,
+  index: number,
+  currentSentence: string,
+  gameButtonsBlock: Component,
+  gamePageInstance: GamePage
+): void {
+  wordCard.addEventListener('click', () => {
+    let isCorrect = false;
+    const continueButton = gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
+    const checkButton = gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
+    const autoCompleteButton = gameButtonsBlock.getNode().firstChild?.firstChild as HTMLButtonElement;
+    const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
+    const sentenceLine = Array.from(gameWrap.getNode().querySelectorAll(`.${resultClassName}`))[index];
+    const currentResultLineCards = Array.from(sentenceLine.querySelectorAll('div[bg-image-disabled="true"]'));
+    if (wordCard.parentElement && wordCard.parentElement.className === sourceClassName) {
+      wordCard.remove();
+      sentenceLine.append(wordCard);
+      if (gameSourceDataBlock?.children.length === 0) {
+        checkButton.removeAttribute('disabled');
+        autoCompleteButton.setAttribute('disabled', 'disabled');
+        isCorrect = verifySentenceAssembly(currentSentence, sentenceLine);
+        if (isCorrect && gameButtonsBlock.getNode().lastChild !== null) {
+          handleCorrectAssemble(gamePageInstance, continueButton, checkButton, wordCard, currentResultLineCards);
         }
       }
-      if (isCorrect === false || gameSourceDataBlock?.children.length !== 0) {
-        continueButton.setAttribute('disabled', 'disabled');
-        continueButton.setAttribute('invisible', 'true');
-        checkButton.removeAttribute('invisible');
+    } else if (wordCard.parentElement && wordCard.parentElement.className === resultClassName) {
+      wordCard.remove();
+      if (gameSourceDataBlock) {
+        gameSourceDataBlock.append(wordCard);
       }
-      if ((isCorrect === true || gameSourceDataBlock?.children.length) !== 0) {
-        checkButton.setAttribute('disabled', 'disabled');
-        wordCards.forEach(card => {
-          card.classList.remove(`${classes.wrongOrder}`);
-        });
-      }
-    });
+      wordCard.classList.remove(`${classes.wrongOrder}`);
+    }
+    toggleButtonState(isCorrect, gameSourceDataBlock, continueButton, checkButton, wordCards);
   });
+}
+
+export function handleCorrectAssemble(
+  gamePageInstance: GamePage,
+  continueButton: HTMLButtonElement,
+  checkButton: HTMLButtonElement,
+  wordCard: HTMLElement,
+  currentResultLineCards: Element[]
+): void {
+  gamePageInstance.correctlyAssembledSentences += 1;
+  if (gamePageInstance.correctlyAssembledSentences === gamePageInstance.sentencesForRound.length) {
+    gamePageInstance.revealImage();
+  }
+  continueButtonEnable(continueButton, checkButton);
+  gamePageInstance.displayTranslation();
+  gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
+  showBackground(wordCard, currentResultLineCards);
+}
+
+export function handleResultCardClick(): void {}
+
+export function showBackground(wordCard: HTMLElement, currentResultLineCards: Element[]): void {
+  if (wordCard.getAttribute('bg-image-disabled')) {
+    wordCard.removeAttribute('bg-image-disabled');
+    currentResultLineCards.forEach(card => {
+      card.removeAttribute('bg-image-disabled');
+    });
+  }
+}
+
+export function handleMouseEventOnCard(wordCard: HTMLElement, selectedClass: string): void {
+  wordCard.addEventListener('mousedown', () => {
+    wordCard.classList.add(selectedClass);
+  });
+  wordCard.addEventListener('mouseup', () => {
+    setTimeout(() => {
+      wordCard.classList.remove(selectedClass);
+    }, 100);
+  });
+}
+
+export function toggleButtonState(
+  isCorrect: boolean,
+  gameSourceDataBlock: Element | null,
+  continueButton: HTMLButtonElement,
+  checkButton: HTMLButtonElement,
+  wordCards: HTMLElement[]
+): void {
+  if (isCorrect === false || gameSourceDataBlock?.children.length !== 0) {
+    continueButton.setAttribute('disabled', 'disabled');
+    continueButton.setAttribute('invisible', 'true');
+    checkButton.removeAttribute('invisible');
+  }
+  if ((isCorrect === true || gameSourceDataBlock?.children.length) !== 0) {
+    checkButton.setAttribute('disabled', 'disabled');
+    wordCards.forEach(card => {
+      card.classList.remove(`${classes.wrongOrder}`);
+    });
+  }
+}
+
+export function continueButtonEnable(continueButton: HTMLButtonElement, checkButton: HTMLButtonElement): void {
+  continueButton.removeAttribute('disabled');
+  continueButton.removeAttribute('invisible');
+  checkButton.setAttribute('invisible', 'true');
 }
 
 // verifying the correct assembly of the current sentence.
