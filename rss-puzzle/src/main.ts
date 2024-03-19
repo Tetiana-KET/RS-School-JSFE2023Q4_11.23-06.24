@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 console.log(`Still in process! Do not be in a hurry, please 🙏
-**Score: CrossCheck Criteria:  155 / 245 points**
+**Score: CrossCheck Criteria:  165 / 245 points**
   - [x] User Name Entry Page Evaluation Criteria (Total Points: 20) 📋👤
   - [x] Access and Session Management Evaluation Criteria (Total Points: 10) 🔐🔄
   - [x] Start Screen Evaluation Criteria (Total Points: 15) 🌐🎮
@@ -29,9 +29,9 @@ console.log(`Still in process! Do not be in a hurry, please 🙏
       - [ ] Drag-and-Drop Functionality (15 points) 🖱️(15 points) 
       - [ ] Puzzle-Like Word Card Design (15 points) 🧩🃏
 - [x] Hint Functionality Evaluation Criteria (Total Points: 60) 💡🌐
+- [Х] Completion and Revelation of Background Image Evaluation Criteria (Total Points: 10) 🎨🖼️
 
 **not implemented yet**
 - [ ] Level and Round Selection Evaluation Criteria (Total Points: 25) 🎚️🔄
-- [ ] Completion and Revelation of Background Image Evaluation Criteria (Total Points: 10) 🎨🖼️
 - [ ] Statistics Page Evaluation Criteria (Total Points: 25) 📊🔍
 `);

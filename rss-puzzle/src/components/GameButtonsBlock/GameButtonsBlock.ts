@@ -55,7 +55,7 @@ export class GameButtonBlock extends Component {
     this.checkButton.getNode().addEventListener('click', this.handleCheckButtonClick.bind(this));
     this.continueButton.getNode().addEventListener('click', this.handleContinueButtonClick.bind(this));
     this.autoCompleteButton.getNode().addEventListener('click', this.handleAutoCompleteButtonClick.bind(this));
-    this.resultsButton.getNode().addEventListener('click', this.handleAutoCompleteButtonClick.bind(this));
+    this.resultsButton.getNode().addEventListener('click', this.handleResultButtonClick.bind(this));
   }
 
   private handleCheckButtonClick(): void {
@@ -110,5 +110,11 @@ export class GameButtonBlock extends Component {
   private handleAutoCompleteButtonClick(): void {
     this.autoCompleteButton.setAttribute('disabled', 'disabled');
     this.gamePageInstance.autoCompleteSentence();
+  }
+
+  private handleResultButtonClick(): void {
+    alert(`This button navigates to a detailed view of the player's performance statistics.
+    the page is in development`);
+    console.log(`This button navigates to a detailed view of the player's performance statistics.`);
   }
 }
