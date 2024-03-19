@@ -1,7 +1,7 @@
 // Footer.ts
+import { Component } from '../Component';
 import { GamePage } from '../../pages/gamePage/GamePage';
 import { verifyWordOrder } from '../../utils/wordCardsHandlers';
-import { Component } from '../Component';
 import classes from './GameButtonsBlock.module.css';
 
 export class GameButtonBlock extends Component {
@@ -72,13 +72,16 @@ export class GameButtonBlock extends Component {
   }
 
   private handleContinueButtonClick() {
-    this.gamePageInstance.currentSentenceIndex += 1;
-
-    this.gamePageInstance.audioExample =
-      this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
-        this.gamePageInstance.currentSentenceIndex
-      ]?.audioExample;
-    this.gamePageInstance.getImageForRound();
+    if (this.gamePageInstance.correctlyAssembledSentences === this.gamePageInstance.sentencesForRound.length) {
+      this.gamePageInstance.proceedToNextRound();
+    } else {
+      this.gamePageInstance.currentSentenceIndex += 1;
+      this.gamePageInstance.audioExample =
+        this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
+          this.gamePageInstance.currentSentenceIndex
+        ]?.audioExample;
+      this.gamePageInstance.getImageForRound();
+    }
 
     if (this.gamePageInstance.currentSentenceIndex < this.gamePageInstance.sentencesForRound.length) {
       this.continueButton.setAttribute('disabled', 'disabled');

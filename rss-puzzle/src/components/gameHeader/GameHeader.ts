@@ -37,7 +37,7 @@ export class GameHeader extends Component {
     this.selectLevelOption = document.createElement('select');
     this.selectLevelOption.classList.add(classes.selectLevelOption, classes.select);
     // Add options for different game levels
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 10; i += 1) {
       const option = document.createElement('option');
       option.value = `Level ${i}`;
       option.textContent = `Level ${i}`;
@@ -49,7 +49,7 @@ export class GameHeader extends Component {
     this.selectPageOption = document.createElement('select');
     this.selectPageOption.classList.add(classes.pageSelectOption, classes.select);
     // Add options for different game levels
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 10; i += 1) {
       const option = document.createElement('option');
       option.value = `Page ${i}`;
       option.textContent = `Page ${i}`;
@@ -74,7 +74,7 @@ export class GameHeader extends Component {
     this.headerContainer.append(this.gameCluesWrap);
 
     // Add clue buttons
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 4; i += 1) {
       const clueButton = document.createElement('button');
       clueButton.classList.add(classes.clueButton);
       this.gameCluesWrap.getNode().appendChild(clueButton);

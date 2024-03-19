@@ -30,23 +30,27 @@ export class GamePage extends Component {
   public fetchedWordData: Data | null = null;
   public currentLevel: number = 1;
   public currentRound: number = 0;
+  private totalRoundsCount: number = 0;
   public sentencesForRound: string[] = [];
   public currentSentenceIndex: number = 0;
   private currentSentenceCards: HTMLElement[];
   public currentSentence: string;
-
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
+  private imageSource: string = '';
+  private imageUrl: string = '';
+
   public isTranslateEnabled: boolean = true;
   public isPronounceEnabled: boolean = true;
   public isBgImageHintEnabled: boolean = true;
-  private imageSource: string = '';
-  private imageUrl: string = '';
+
+  public correctlyAssembledSentences: number;
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
     this.currentSentenceCards = [];
     this.currentSentence = '';
+    this.correctlyAssembledSentences = 0;
     this.isTranslateEnabled = this.checkIsTranslateEnabled();
     this.isPronounceEnabled = this.checkIsPronounceEnabled();
     this.isBgImageHintEnabled = this.checkIsBgImageHintEnabled();
@@ -96,12 +100,6 @@ export class GamePage extends Component {
     });
     this.mainContent.append(this.gameWrap);
 
-    // Add lines for sentences
-    for (let i = 1; i <= 10; i++) {
-      const sentenceLine = document.createElement('div');
-      sentenceLine.classList.add(classes.sentenceLine);
-      this.gameWrap.getNode().appendChild(sentenceLine);
-    }
     // game source data block
     this.gameSourceDataBlock = new Component({
       tagName: 'div',
@@ -125,14 +123,23 @@ export class GamePage extends Component {
       }
     });
   }
+  public addLinesForSentence() {
+    for (let i = 1; i <= this.sentencesForRound.length; i += 1) {
+      const sentenceLine = document.createElement('div');
+      sentenceLine.classList.add(classes.sentenceLine);
+      this.gameWrap.getNode().appendChild(sentenceLine);
+    }
+  }
 
-  private fetchWordData() {
+  public fetchWordData() {
     fetchWordData(this.currentLevel)
       .then(data => {
         this.fetchedWordData = data;
         this.handleFetchedData();
         this.displaySentence();
         this.getImageForRound();
+        // Add lines for sentences
+        this.addLinesForSentence();
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -146,6 +153,7 @@ export class GamePage extends Component {
       this.audioExample =
         this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
       this.imageSource = this.fetchedWordData.rounds[this.currentRound].levelData.imageSrc;
+      this.totalRoundsCount = this.fetchedWordData.roundsCount;
 
       //display translation if enabled
       if (this.isTranslateEnabled) {
@@ -322,8 +330,16 @@ export class GamePage extends Component {
       continueButton.removeAttribute('invisible');
       checkButton.setAttribute('invisible', 'true');
     }, 1000);
+    this.correctlyAssembledSentences += 1;
+    if (this.correctlyAssembledSentences === this.sentencesForRound.length) {
+      // reveal image
+      setTimeout(() => {
+        this.revealImage();
+      }, 2000);
+    }
   }
 
+  //get Image For Round
   public async getImageForRound() {
     try {
       const image = await fetchImageData(this.imageSource);
@@ -337,5 +353,47 @@ export class GamePage extends Component {
     } catch (error) {
       console.error('Error fetching image:', error);
     }
+  }
+
+  //reveal the background image
+  public revealImage() {
+    Array.from(this.getNode().querySelectorAll(`.${classes.wordCard}`)).forEach(card => {
+      card.setAttribute('bg-revealed', 'true');
+    });
+    this.gameWrap.getNode().setAttribute('bg-revealed', 'true');
+    this.gameWrap.getNode().removeAttribute('bg-image-disabled');
+    this.translationWrap.getNode().removeAttribute('data-active');
+    this.displayImageInformation();
+  }
+
+  // display image information
+  private displayImageInformation() {
+    const year = this.fetchedWordData!.rounds[this.currentRound].levelData.year;
+    const author = this.fetchedWordData!.rounds[this.currentRound].levelData.author;
+    const name = this.fetchedWordData!.rounds[this.currentRound].levelData.name;
+    const description = `${author} - ${name} (${year})`;
+    this.gameSourceDataBlock.getNode().innerHTML = `${description}`;
+  }
+
+  //proceed to the next round
+  public proceedToNextRound() {
+    this.gameWrap.getNode().removeAttribute('bg-revealed');
+    this.gameWrap.getNode().innerHTML = '';
+    this.addLinesForSentence();
+    this.correctlyAssembledSentences = 0;
+    this.currentSentenceIndex = 0;
+    this.sentencesForRound.length = 0;
+    this.currentSentenceCards.length = 0;
+
+    if (this.currentRound < this.totalRoundsCount) {
+      this.currentRound += 1;
+      // set next round data
+      this.handleFetchedData();
+      this.displaySentence();
+      this.getImageForRound();
+    } else {
+      console.log('Game completed!');
+    }
+    // }
   }
 }
