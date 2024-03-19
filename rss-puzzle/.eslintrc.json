@@ -6,7 +6,7 @@
     "node": true
   },
   "extends": [
-    "airbnb-base",
+    "airbnb",
     "airbnb-typescript",
     "eslint:recommended",
     "plugin:import/recommended",
@@ -23,15 +23,21 @@
   },
   "ignorePatterns": ["node_modules", "dist"],
   "rules": {
+    "react/require-render-return": "off",
+    "react/no-unused-class-component-methods": "off",
+    "react/sort-comp": "off",
+    "no-console": "off",
+    "no-param-reassign": "off",
+    "no-restricted-syntax": "off",
+    "import/no-cycle": "off",
     "no-debugger": "off",
-    "no-console": ["error", { "allow": ["warn", "error"] }],
     "class-methods-use-this": "off",
     "import/extensions": "off",
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-inferrable-types": "off",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
-    "@typescript-eslint/no-namespace": [2, { "allowDeclarations": true }],
     "@typescript-eslint/array-type": [
       "error",
       {
@@ -56,14 +62,12 @@
     "@typescript-eslint/no-non-null-assertion": "error",
     "curly": ["error", "all"],
     "@typescript-eslint/lines-between-class-members": "off",
-    "no-multi-spaces": "error", // Disallow multiple spaces
-    "space-in-parens": "error", // Enforce consistent spacing inside parentheses
-    "no-multiple-empty-lines": "error", // Disallow multiple empty lines
-    "no-var": "error", // Require let or const instead of var
-    "prefer-const": "error", // Require const declarations for variables that are never reassigned after declared
-    "quotes": ["error", "single", { "allowTemplateLiterals": true }],
-    "semi": ["error", "always"],
-    "space-infix-ops": ["error", { "int32Hint": false }], // Требовать пробелы вокруг инфиксных операторов =/+/-
-    "key-spacing": ["error", { "afterColon": true }]
+    "@typescript-eslint/no-this-alias": [
+      "error",
+      {
+        "allowDestructuring": true,
+        "allowedNames": ["context"]
+      }
+    ]
   }
 }

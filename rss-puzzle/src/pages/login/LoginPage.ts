@@ -106,68 +106,6 @@ export class LoginPage extends Component {
     });
   }
 
-  private checkValidity(value: string, tooltip: HTMLElement, minLength: number): boolean {
-    if (value === '') {
-      tooltip.textContent = 'This field is required';
-      tooltip.classList.add(classes.inputTooltipActive);
-      return false;
-    }
-
-    if (value.length < minLength) {
-      tooltip.textContent = `Minimum ${minLength} characters required`;
-      tooltip.classList.add(classes.inputTooltipActive);
-      return false;
-    }
-
-    if (!/^[A-Za-z\-]+$/.test(value)) {
-      tooltip.textContent = 'Only English letters and "-" allowed';
-      tooltip.classList.add(classes.inputTooltipActive);
-      return false;
-    }
-
-    if (value[0] === '-') {
-      if (value[1] !== value[1].toUpperCase()) {
-        tooltip.textContent = 'First letter after hyphen should be uppercase';
-        tooltip.classList.add(classes.inputTooltipActive);
-        return false;
-      }
-
-      if (value.slice(2) !== value.slice(2).toLowerCase()) {
-        tooltip.textContent = 'ONLY FIRST letter may be uppercase';
-        tooltip.classList.add(classes.inputTooltipActive);
-        return false;
-      }
-    } else {
-      if (value[0] !== value[0].toUpperCase()) {
-        tooltip.textContent = 'First letter should be uppercase';
-        tooltip.classList.add(classes.inputTooltipActive);
-        return false;
-      }
-
-      if (value.slice(1) !== value.slice(1).toLowerCase()) {
-        tooltip.textContent = 'ONLY FIRST letter may be uppercase';
-        tooltip.classList.add(classes.inputTooltipActive);
-        return false;
-      }
-    }
-
-    tooltip.classList.remove(classes.inputTooltipActive);
-    return true;
-  }
-
-  private checkFormValidity(): void {
-    const firstNameValue = this.firstNameInput.getNode().value.trim();
-    const surnameValue = this.surnameInput.getNode().value.trim();
-
-    const firstNameMinLength = parseInt(this.firstNameInput.getNode().getAttribute('minlength') || '0');
-    const surnameMinLength = parseInt(this.surnameInput.getNode().getAttribute('minlength') || '0');
-
-    const firstNameValid = this.checkValidity(firstNameValue, this.firstNameTooltip.getNode(), firstNameMinLength);
-    const surnameValid = this.checkValidity(surnameValue, this.surnameTooltip.getNode(), surnameMinLength);
-
-    this.loginButton.getNode().disabled = !(firstNameValid && surnameValid);
-  }
-
   private handleFormSubmit(): void {
     const firstName = this.getFirstName();
     const surname = this.getSurname();
@@ -185,11 +123,48 @@ export class LoginPage extends Component {
     return this.surnameInput.getNode().value;
   }
 
-  protected setFirstName(value: string): void {
-    this.firstNameInput.getNode().value = value;
+  private checkFormValidity(): void {
+    const firstNameValue = this.firstNameInput.getNode().value.trim();
+    const surnameValue = this.surnameInput.getNode().value.trim();
+
+    const firstNameMinLength = parseInt(this.firstNameInput.getNode().getAttribute('minlength') || '0', 10);
+    const surnameMinLength = parseInt(this.surnameInput.getNode().getAttribute('minlength') || '0', 10);
+
+    const firstNameValid = this.checkValidity(firstNameValue, this.firstNameTooltip.getNode(), firstNameMinLength);
+    const surnameValid = this.checkValidity(surnameValue, this.surnameTooltip.getNode(), surnameMinLength);
+
+    this.loginButton.getNode().disabled = !(firstNameValid && surnameValid);
   }
 
-  protected setSurname(value: string): void {
-    this.surnameInput.getNode().value = value;
+  private checkValidity(value: string, tooltip: HTMLElement, minLength: number): boolean {
+    if (value === '' || value.length < minLength) {
+      tooltip.textContent = value === '' ? 'This field is required' : `Minimum ${minLength} characters required`;
+      tooltip.classList.add(classes.inputTooltipActive);
+      return false;
+    }
+    if (!/^[A-Za-z-]+$/.test(value)) {
+      tooltip.textContent = 'Only English letters and "-" allowed';
+      tooltip.classList.add(classes.inputTooltipActive);
+      return false;
+    }
+    if (
+      (value[0] === '-' && value[1] !== value[1].toUpperCase()) ||
+      (value[0] !== '-' && value[0] !== value[0].toUpperCase())
+    ) {
+      tooltip.textContent =
+        value[0] === '-' ? 'First letter after hyphen should be uppercase' : 'First letter should be uppercase';
+      tooltip.classList.add(classes.inputTooltipActive);
+      return false;
+    }
+    if (
+      (value[0] === '-' && value.slice(2) !== value.slice(2).toLowerCase()) ||
+      (value[0] !== '-' && value.slice(1) !== value.slice(1).toLowerCase())
+    ) {
+      tooltip.textContent = 'ONLY FIRST letter may be uppercase';
+      tooltip.classList.add(classes.inputTooltipActive);
+      return false;
+    }
+    tooltip.classList.remove(classes.inputTooltipActive);
+    return true;
   }
 }

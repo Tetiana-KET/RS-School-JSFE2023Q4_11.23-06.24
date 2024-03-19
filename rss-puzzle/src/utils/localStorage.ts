@@ -10,7 +10,7 @@ export function storeUserData(
   localStorage.setItem('userData', JSON.stringify(userData));
 }
 
-//get user name
+// get user name
 export function getUserInfoFromLocalStorage(): {
   [key: string]: string | boolean;
 } | null {
@@ -21,7 +21,7 @@ export function getUserInfoFromLocalStorage(): {
 // Update the existing object in local storage
 export function updateLocalStorage(objToUpdate: string, newProperty: string, value: string | boolean): void {
   const objString = localStorage.getItem(objToUpdate);
-  let obj: {
+  const obj: {
     [key: string]: string | boolean;
   } = objString ? JSON.parse(objString) : {};
 
@@ -31,7 +31,7 @@ export function updateLocalStorage(objToUpdate: string, newProperty: string, val
 
 export function checkLocalStoragePropertyFlag(userDataObject: string, propertyToCheck: string): boolean {
   const objString = localStorage.getItem(userDataObject);
-  let obj: {
+  const obj: {
     [key: string]: boolean;
   } = objString ? JSON.parse(objString) : {};
 

@@ -17,9 +17,8 @@ export function generateGreeting(): string {
   const userData = getUserInfoFromLocalStorage();
   if (userData) {
     return `Welcome, ${userData.firstName} ${userData.surname}!`;
-  } else {
-    return 'Welcome!';
   }
+  return 'Welcome!';
 }
 
 // check is logged in or not
@@ -32,20 +31,16 @@ export function checkUserStatus(): boolean {
   return false;
 }
 
-//fetching data
-export async function fetchWordData(level: number) {
-  try {
-    const response = await fetch(
-      `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/data/wordCollectionLevel${level}.json`
-    );
-    const data: Data = await response.json();
-    return data;
-  } catch (error) {
-    throw error;
-  }
+// fetching data
+export async function fetchWordData(level: number): Promise<Data> {
+  const response = await fetch(
+    `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/data/wordCollectionLevel${level}.json`
+  );
+  const data: Data = await response.json();
+  return data;
 }
 
-//fetching audio
+// fetching audio
 export async function fetchAudioData(source: string, audioContext: AudioContext): Promise<AudioBuffer> {
   const audioLink = `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/`;
   try {
@@ -59,7 +54,7 @@ export async function fetchAudioData(source: string, audioContext: AudioContext)
   }
 }
 
-//fetching image
+// fetching image
 export async function fetchImageData(source: string): Promise<HTMLImageElement> {
   const imageLink = `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/images/${source}`;
   try {
@@ -68,11 +63,11 @@ export async function fetchImageData(source: string): Promise<HTMLImageElement> 
     const imageUrl = URL.createObjectURL(blob);
     const image = new Image();
     image.src = imageUrl;
-    return new Promise((resolve, reject) => {
-      image.onload = () => resolve(image);
-      image.onerror = error => reject(error);
+    return await new Promise((resolve, reject) => {
+      image.onload = (): void => resolve(image);
+      image.onerror = (error): void => reject(error);
     });
   } catch (error) {
-    throw new Error();
-  }
+    throw new Error(); // Missing return type on function
+  } // Missing return type on function
 }

@@ -54,11 +54,7 @@ export class GamePage extends Component {
     this.isTranslateEnabled = this.checkIsTranslateEnabled();
     this.isPronounceEnabled = this.checkIsPronounceEnabled();
     this.isBgImageHintEnabled = this.checkIsBgImageHintEnabled();
-
-    this.getNode().style.backgroundImage = `url(${bg})`;
-    this.getNode().style.backgroundRepeat = 'no-repeat';
-    this.getNode().style.backgroundPosition = 'center';
-    this.getNode().style.backgroundSize = '100%';
+    this.setBackground();
 
     // gamePageContainer
     this.gamePageContainer = new Component({
@@ -106,7 +102,7 @@ export class GamePage extends Component {
       classNames: [classes.gameSourceDataBlock],
     });
     this.mainContent.append(this.gameSourceDataBlock);
-    //buttons
+    // buttons
     this.gameButtonsBlock = new GameButtonBlock(this);
     this.mainContent.append(this.gameButtonsBlock);
 
@@ -123,7 +119,14 @@ export class GamePage extends Component {
       }
     });
   }
-  public addLinesForSentence() {
+  private setBackground(): void {
+    this.getNode().style.backgroundImage = `url(${bg})`;
+    this.getNode().style.backgroundRepeat = 'no-repeat';
+    this.getNode().style.backgroundPosition = 'center';
+    this.getNode().style.backgroundSize = '100% 100%';
+  }
+
+  public addLinesForSentence(): void {
     for (let i = 1; i <= this.sentencesForRound.length; i += 1) {
       const sentenceLine = document.createElement('div');
       sentenceLine.classList.add(classes.sentenceLine);
@@ -131,7 +134,7 @@ export class GamePage extends Component {
     }
   }
 
-  public fetchWordData() {
+  public fetchWordData(): void {
     fetchWordData(this.currentLevel)
       .then(data => {
         this.fetchedWordData = data;
@@ -147,7 +150,7 @@ export class GamePage extends Component {
   }
 
   // handle fetched data
-  private handleFetchedData() {
+  private handleFetchedData(): void {
     if (this.fetchedWordData) {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
       this.audioExample =
@@ -155,25 +158,25 @@ export class GamePage extends Component {
       this.imageSource = this.fetchedWordData.rounds[this.currentRound].levelData.imageSrc;
       this.totalRoundsCount = this.fetchedWordData.roundsCount;
 
-      //display translation if enabled
+      // display translation if enabled
       if (this.isTranslateEnabled) {
         this.translationWrap.getNode().setAttribute('data-active', 'true');
-        this.header.getNode().querySelector('#translateHint')!.setAttribute('active-hint', 'true');
+        this.header.getNode().querySelector('#translateHint')?.setAttribute('active-hint', 'true');
         this.displayTranslation();
       }
 
-      //display pronounce button if enabled
+      // display pronounce button if enabled
       if (this.isPronounceEnabled) {
-        this.header.getNode().querySelector('#playSoundButton')!.removeAttribute('disabled');
-        this.header.getNode().querySelector('#pronunciationHint')!.setAttribute('active-hint', 'true');
+        this.header.getNode().querySelector('#playSoundButton')?.removeAttribute('disabled');
+        this.header.getNode().querySelector('#pronunciationHint')?.setAttribute('active-hint', 'true');
       } else {
-        this.header.getNode().querySelector('#playSoundButton')!.setAttribute('disabled', 'true');
+        this.header.getNode().querySelector('#playSoundButton')?.setAttribute('disabled', 'true');
       }
     }
   }
 
   // display current sentence in the game source data block
-  public displaySentence() {
+  public displaySentence(): void {
     this.currentSentenceCards.length = 0;
     this.gameSourceDataBlock.getNode().innerHTML = '';
 
@@ -194,11 +197,11 @@ export class GamePage extends Component {
 
     shuffledWordCards.forEach(wordCard => {
       wordCard.classList.add(classes.wordCard);
-      shuffledWordCards.forEach((wordCard, index) => {
+      shuffledWordCards.forEach((shuffledWordCard, index) => {
         setTimeout(
           () => {
-            wordCard.style.visibility = 'visible';
-            wordCard.style.opacity = '1';
+            shuffledWordCard.style.visibility = 'visible';
+            shuffledWordCard.style.opacity = '1';
           },
           (index + 1) * 100
         );
@@ -209,16 +212,16 @@ export class GamePage extends Component {
     this.addClickHandlersToWordCards(wordCards);
     this.currentSentenceCards.push(...wordCards);
 
-    //display bg image button if enabled
+    // display bg image button if enabled
     if (this.isBgImageHintEnabled) {
-      this.header.getNode().querySelector('#bgImageHint')!.setAttribute('active-hint', 'true');
-      this.gameWrap.getNode()!.removeAttribute('bg-image-disabled');
+      this.header.getNode().querySelector('#bgImageHint')?.setAttribute('active-hint', 'true');
+      this.gameWrap.getNode().removeAttribute('bg-image-disabled');
       Array.from(this.gameSourceDataBlock.getNode().children).forEach(child => {
         child.removeAttribute('bg-image-disabled');
       });
     } else {
-      this.header.getNode().querySelector('#bgImageHint')!.removeAttribute('active-hint');
-      this.gameWrap.getNode()!.setAttribute('bg-image-disabled', 'true');
+      this.header.getNode().querySelector('#bgImageHint')?.removeAttribute('active-hint');
+      this.gameWrap.getNode().setAttribute('bg-image-disabled', 'true');
       Array.from(this.gameSourceDataBlock.getNode().children).forEach(child => {
         child.setAttribute('bg-image-disabled', 'true');
       });
@@ -237,13 +240,13 @@ export class GamePage extends Component {
     return checkLocalStoragePropertyFlag('userData', 'bgImageHintEnabled') === true;
   }
 
-  public displayTranslation() {
+  public displayTranslation(): void {
     const translation =
       this.fetchedWordData?.rounds[this.currentRound].words[this.currentSentenceIndex].textExampleTranslate;
     this.translationWrap.setTextContent(`${translation}`);
   }
 
-  private addClickHandlersToWordCards(wordCards: HTMLElement[]) {
+  private addClickHandlersToWordCards(wordCards: HTMLElement[]): void {
     clickHandlerToWordCards(
       wordCards,
       this.gameWrap,
@@ -263,7 +266,8 @@ export class GamePage extends Component {
     const charWidth = calculateCharWidth(currentSentence, parent);
 
     for (let i = 0; i < wordCards.length; i += 1) {
-      wordCards[i].style.width = `${wordCards[i].textContent!.length * charWidth}px`;
+      const textContentLength = wordCards[i].textContent?.length ?? 0;
+      wordCards[i].style.width = `${textContentLength * charWidth}px`;
     }
   }
 
@@ -288,13 +292,13 @@ export class GamePage extends Component {
             wordCard.style.visibility = 'visible';
             wordCard.style.opacity = '1';
 
-            correctOrderWords.forEach((word, index) => {
+            correctOrderWords.forEach((word, i) => {
               resultWordCards.forEach(card => {
                 if (
-                  card.getAttribute('data-index') === index.toString() &&
+                  card.getAttribute('data-index') === i.toString() &&
                   card.getAttribute('data-value') === word.getAttribute('data-value')
                 ) {
-                  card.style.order = `${index}`;
+                  card.style.order = `${i}`;
                   card.style.transition = 'order 5s';
                   if (card.getAttribute('bg-image-disabled')) {
                     card.removeAttribute('bg-image-disabled');
@@ -339,8 +343,8 @@ export class GamePage extends Component {
     }
   }
 
-  //get Image For Round
-  public async getImageForRound() {
+  // get Image For Round
+  public async getImageForRound(): Promise<void> {
     try {
       const image = await fetchImageData(this.imageSource);
       // Set the background image
@@ -355,8 +359,8 @@ export class GamePage extends Component {
     }
   }
 
-  //reveal the background image
-  public revealImage() {
+  // reveal the background image
+  public revealImage(): void {
     Array.from(this.getNode().querySelectorAll(`.${classes.wordCard}`)).forEach(card => {
       card.setAttribute('bg-revealed', 'true');
     });
@@ -367,16 +371,18 @@ export class GamePage extends Component {
   }
 
   // display image information
-  private displayImageInformation() {
-    const year = this.fetchedWordData!.rounds[this.currentRound].levelData.year;
-    const author = this.fetchedWordData!.rounds[this.currentRound].levelData.author;
-    const name = this.fetchedWordData!.rounds[this.currentRound].levelData.name;
-    const description = `${author} - ${name} (${year})`;
-    this.gameSourceDataBlock.getNode().innerHTML = `${description}`;
+  private displayImageInformation(): void {
+    if (this.fetchedWordData) {
+      const { year } = this.fetchedWordData.rounds[this.currentRound].levelData;
+      const { author } = this.fetchedWordData.rounds[this.currentRound].levelData;
+      const { name } = this.fetchedWordData.rounds[this.currentRound].levelData;
+      const description = `${author} - ${name} (${year})`;
+      this.gameSourceDataBlock.getNode().innerHTML = `${description}`;
+    }
   }
 
-  //proceed to the next round
-  public proceedToNextRound() {
+  // proceed to the next round
+  public proceedToNextRound(): void {
     this.gameWrap.getNode().removeAttribute('bg-revealed');
     this.gameWrap.getNode().innerHTML = '';
     this.addLinesForSentence();
@@ -391,9 +397,6 @@ export class GamePage extends Component {
       this.handleFetchedData();
       this.displaySentence();
       this.getImageForRound();
-    } else {
-      console.log('Game completed!');
     }
-    // }
   }
 }

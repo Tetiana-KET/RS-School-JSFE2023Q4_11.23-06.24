@@ -6,14 +6,14 @@ import classes from '../pages/gamePage/GamePage.module.css';
 export function shuffleWords(wordCards: HTMLElement[]): HTMLElement[] {
   const shuffledCards = wordCards.slice();
 
-  for (let i = shuffledCards.length - 1; i > 0; i--) {
+  for (let i = shuffledCards.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffledCards[i], shuffledCards[j]] = [shuffledCards[j], shuffledCards[i]];
   }
   return shuffledCards;
 }
 
-//create Word Cards
+// create Word Cards
 export function createWordCards(
   sentence: string,
   resultsClass: string,
@@ -24,44 +24,36 @@ export function createWordCards(
 ): HTMLElement[] {
   const words = sentence.split(' ');
   const wordCards: HTMLElement[] = [];
-
-  // Calculate the dimensions and positioning for the background image
-  const resultsWidth: number | 0 = document.querySelector(`.${resultsClass}`)!.clientWidth;
-  const resultsHeight: number | 0 = document.querySelector(`.${resultsClass}`)!.clientHeight;
+  const resultElement = document.querySelector(`.${resultsClass}`);
+  let resultsWidth: number = 0;
+  let resultsHeight: number = 0;
+  if (resultElement) {
+    resultsWidth = resultElement.clientWidth;
+    resultsHeight = resultElement.clientHeight;
+  }
   const rowHeight = resultsHeight / SentencesPerRound;
   const startedHeight = rowHeight * sentenceNumber;
   const pxPerChar = calculateCharWidth(sentence, parent);
-
   let startWidth = 0;
-
-  // Create a word card for each word in the sentence
   words.forEach((word, index) => {
     const wordLength = word.length * pxPerChar;
-
     const wordCard = new Component({
       tagName: 'div',
       text: word,
       attributes: { 'data-index': index.toString(), 'data-value': word },
     });
-
     wordCard.getNode().style.width = `${wordLength}px`;
     wordCard.getNode().style.height = `${rowHeight}px`;
-
     wordCard.getNode().style.backgroundImage = `url(${imageUrl})`;
-
     wordCard.getNode().style.backgroundSize = `${resultsWidth}px ${resultsHeight}px`;
     wordCard.getNode().style.backgroundPosition = `-${startWidth}px ${-startedHeight}px`;
-
     wordCards.push(wordCard.getNode());
-
-    // Update the starting width for the next word card
     startWidth += wordLength;
   });
-
   return wordCards;
 }
 
-//calculate Char Width
+// calculate Char Width
 export function calculateCharWidth(sentence: string, parent: Component<HTMLDivElement>): number {
   const container = parent.getNode();
   const length = sentence.split(' ').reduce((acc: number, el: string) => {
@@ -70,7 +62,7 @@ export function calculateCharWidth(sentence: string, parent: Component<HTMLDivEl
   return Math.floor(container.clientWidth - 2) / length;
 }
 
-//add Click Handlers To Word Cards in source block
+// add Click Handlers To Word Cards in source block
 export function clickHandlerToWordCards(
   wordCards: HTMLElement[],
   gameWrap: Component<HTMLDivElement>,
@@ -122,7 +114,7 @@ export function clickHandlerToWordCards(
               continueButton.removeAttribute('disabled');
               continueButton.removeAttribute('invisible');
               checkButton.setAttribute('invisible', 'true');
-              //display translation if enabled
+              // display translation if enabled
               gamePageInstance.displayTranslation();
               gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
               // show background image
@@ -136,8 +128,11 @@ export function clickHandlerToWordCards(
           }
         } else if (wordCard.parentElement.className === resultClassName) {
           wordCard.remove();
-          const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
-          gameSourceDataBlock!.append(wordCard);
+          // const gameSourceDataBlock = document.querySelector(`.${sourceClassName}`);
+          if (gameSourceDataBlock) {
+            gameSourceDataBlock.append(wordCard);
+          }
+
           wordCard.classList.remove(`${classes.wrongOrder}`);
         }
       }
@@ -156,7 +151,7 @@ export function clickHandlerToWordCards(
   });
 }
 
-//verifying the correct assembly of the current sentence.
+// verifying the correct assembly of the current sentence.
 export function verifySentenceAssembly(originalSentence: string, resultBlock: Element): boolean {
   let resultSentence;
 
@@ -171,7 +166,7 @@ export function verifySentenceAssembly(originalSentence: string, resultBlock: El
   return originalSentence === resultSentence;
 }
 
-//verify the correctness of the word order
+// verify the correctness of the word order
 export function verifyWordOrder(resultBlock: Element): void {
   const resultBlockCards = Array.from(resultBlock.children);
 

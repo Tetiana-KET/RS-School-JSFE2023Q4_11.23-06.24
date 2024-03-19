@@ -74,7 +74,7 @@ export class GameHeader extends Component {
     this.headerContainer.append(this.gameCluesWrap);
 
     // Add clue buttons
-    for (let i = 1; i <= 4; i += 1) {
+    for (let i = 1; i <= 3; i += 1) {
       const clueButton = document.createElement('button');
       clueButton.classList.add(classes.clueButton);
       this.gameCluesWrap.getNode().appendChild(clueButton);
@@ -94,7 +94,7 @@ export class GameHeader extends Component {
     this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
   }
 
-  private toggleDefaultSettings() {
+  private toggleDefaultSettings(): void {
     if (this.gamePageInstance.isTranslateEnabled) {
       this.gameCluesWrap.getNode().children[0].setAttribute('active-hint', 'true');
     } else if (this.gamePageInstance.isPronounceEnabled) {
@@ -107,12 +107,12 @@ export class GameHeader extends Component {
   private async handleClick(event: MouseEvent): Promise<void> {
     const target = event.target as HTMLElement;
     if (target && target.classList.contains(`${classes.clueButton}`)) {
-      //TRANSLATE HINT
+      // TRANSLATE HINT
       if (target.classList.contains(`${classes.translateHint}`)) {
         handleTranslateHint(this.gamePageInstance, target);
       }
 
-      //PRONOUNCE HINT
+      // PRONOUNCE HINT
       if (target.classList.contains(`${classes.pronunciationHint}`)) {
         handlePronounceHint(target, this.playSoundButton);
       }
@@ -128,7 +128,7 @@ export class GameHeader extends Component {
         this.playAudio();
       }
 
-      //IMAGE HINT
+      // IMAGE HINT
       if (target.classList.contains(`${classes.bgImageHint}`)) {
         handleBgImageHint(this.gamePageInstance, target);
       }
@@ -149,13 +149,13 @@ export class GameHeader extends Component {
       }
     }
   }
-  public playAudio() {
+  public playAudio(): void {
     if (this.audio) {
       this.playSoundButton.setAttribute('isPlaying', 'true');
       const source = this.audioContext.createBufferSource();
       source.buffer = this.audio;
       source.connect(this.audioContext.destination);
-      source.onended = () => {
+      source.onended = (): void => {
         this.playSoundButton.removeAttribute('isPlaying');
       };
       source.start(this.audioContext.currentTime);
