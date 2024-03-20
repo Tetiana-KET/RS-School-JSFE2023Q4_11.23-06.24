@@ -1,3 +1,4 @@
+import { GamePage } from '../../pages/gamePage/GamePage';
 import { Component } from '../Component';
 import classes from './ModalResults.module.css';
 
@@ -10,32 +11,34 @@ export class ModalResults extends Component {
   private modalResultsWrap: Component<HTMLDivElement>;
   private modalGuessedResults: Component<HTMLDivElement>;
   private modalGuessedTitle: Component<HTMLHeadingElement>;
+  private skippedItemsWrap: Component<HTMLDivElement>;
+  private guessedItemsWrap: Component<HTMLDivElement>;
+
   private modalSkippedResults: Component<HTMLDivElement>;
   private modalSkippedTitle: Component<HTMLHeadingElement>;
-  private modalResultItem: Component<HTMLDivElement>;
-  private modalItemAudio: Component<HTMLButtonElement>;
-  private modalItemText: Component<HTMLParagraphElement>;
+
   private skippedCount: Component<HTMLSpanElement>;
   private guessedCount: Component<HTMLSpanElement>;
+  private gameInstance: GamePage;
 
-  constructor() {
+  constructor(gameInstance: GamePage) {
     super({ tagName: 'div', classNames: [classes.modal], attributes: { id: 'modal' } });
+    this.gameInstance = gameInstance;
     this.modalContent = new Component({ tagName: 'div', classNames: [classes.modalContent] });
     this.modalFigure = new Component({ tagName: 'figure', classNames: [classes.modalFigure] });
     this.modalImageWrap = new Component({ tagName: 'div', classNames: [classes.modalImageWrap] });
     this.modalImage = new Component({ tagName: 'img', classNames: [classes.modalImage] });
     this.modalImageDescription = new Component({ tagName: 'figcaption', classNames: [classes.modalImageDescription] });
     this.modalResultsWrap = new Component({ tagName: 'div', classNames: [classes.modalResultsWrap] });
-    this.modalGuessedResults = new Component({ tagName: 'div', classNames: [classes.modalGuessedResults] });
+    this.modalGuessedResults = new Component({ tagName: 'div', classNames: [classes.modalGuessedResults], attributes: { id: 'guessed' } });
     this.modalGuessedTitle = new Component({ tagName: 'h2', classNames: [classes.modalGuessedTitle] });
-    this.modalSkippedResults = new Component({ tagName: 'div', classNames: [classes.modalSkippedResults] });
+    this.skippedItemsWrap = new Component({ tagName: 'div', classNames: [classes.skippedItemsWrap] });
+    this.modalSkippedResults = new Component({ tagName: 'div', classNames: [classes.modalSkippedResults], attributes: { id: 'skipped' } });
     this.modalSkippedTitle = new Component({ tagName: 'h2', classNames: [classes.modalSkippedTitle] });
-    this.modalResultItem = new Component({ tagName: 'div', classNames: [classes.modalResultItem] });
-    this.modalItemText = new Component({ tagName: 'p', classNames: [classes.modalItemText] });
-    this.modalItemAudio = new Component({ tagName: 'button', classNames: [classes.modalItemAudio] });
+    this.guessedItemsWrap = new Component({ tagName: 'div', classNames: [classes.guessedItemsWrap] });
+
     this.skippedCount = new Component({ tagName: 'span', classNames: [classes.skippedCount] });
     this.guessedCount = new Component({ tagName: 'span', classNames: [classes.guessedCount] });
-
     this.createTemplate();
   }
 
@@ -55,22 +58,41 @@ export class ModalResults extends Component {
     // Guessed
     this.modalResultsWrap.append(this.modalGuessedResults);
     this.modalGuessedResults.append(this.modalGuessedTitle);
+    this.modalGuessedResults.append(this.guessedItemsWrap);
     this.modalGuessedTitle.setTextContent('Personally assembled sentences');
+    this.modalGuessedTitle.append(this.guessedCount);
     // skipped
     this.modalResultsWrap.append(this.modalSkippedResults);
     this.modalSkippedResults.append(this.modalSkippedTitle);
+    this.modalSkippedResults.append(this.skippedItemsWrap);
     this.modalSkippedTitle.setTextContent('Assembled using Auto-complete button');
-    this.createResultItemTemplate(this.modalSkippedResults);
     this.modalSkippedTitle.append(this.skippedCount);
-    this.modalGuessedTitle.append(this.guessedCount);
   }
 
-  private createResultItemTemplate(parent: Component<HTMLDivElement>): void {
-    parent.append(this.modalResultItem);
-    this.modalResultItem.append(this.modalItemAudio);
-    this.modalItemAudio.setAttribute('type', 'button');
-    this.modalItemAudio.setAttribute('id', 'Number');
-    this.modalResultItem.append(this.modalItemText);
-    this.modalItemText.setTextContent('Completete sentence will be there');
+  private createResultItemTemplate(i: number, sentencesForRound: string[], parent: HTMLDivElement): void {
+    const modalResultItem = new Component({ tagName: 'div', classNames: [classes.modalResultItem] });
+    const modalItemText = new Component({ tagName: 'p', classNames: [classes.modalItemText] });
+    const modalItemAudio = new Component({
+      tagName: 'button',
+      classNames: [classes.modalItemAudio],
+      attributes: { type: 'button', id: `i_${i}` },
+    });
+    modalResultItem.append(modalItemAudio);
+    modalResultItem.append(modalItemText);
+    modalItemText.setTextContent(`${sentencesForRound[i]}`);
+    parent.append(modalResultItem.getNode());
+  }
+
+  public createResultItems(): void {
+    this.guessedItemsWrap.getNode().innerHTML = '';
+    this.skippedItemsWrap.getNode().innerHTML = '';
+
+    this.gameInstance.guessedSentences.forEach(index => {
+      this.createResultItemTemplate(index, this.gameInstance.sentencesForRound, this.guessedItemsWrap.getNode());
+    });
+
+    this.gameInstance.autoCompletedSentences.forEach(index => {
+      this.createResultItemTemplate(index, this.gameInstance.sentencesForRound, this.skippedItemsWrap.getNode());
+    });
   }
 }

@@ -10,13 +10,7 @@ export class Component<T extends HTMLElement = HTMLElement> {
   protected node: T;
   protected children: Component[] = [];
 
-  constructor({
-    tagName = 'div',
-    text = '',
-    classNames = [],
-    children = [],
-    attributes = {},
-  }: BaseComponentParameters) {
+  constructor({ tagName = 'div', text = '', classNames = [], children = [], attributes = {} }: BaseComponentParameters) {
     const node = document.createElement(tagName) as T;
 
     if (classNames.length) {
