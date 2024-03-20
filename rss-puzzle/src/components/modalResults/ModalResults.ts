@@ -35,7 +35,6 @@ export class ModalResults extends Component {
     this.modalItemAudio = new Component({ tagName: 'button', classNames: [classes.modalItemAudio] });
     this.skippedCount = new Component({ tagName: 'span', classNames: [classes.skippedCount] });
     this.guessedCount = new Component({ tagName: 'span', classNames: [classes.guessedCount] });
-
     this.createTemplate();
   }
 
@@ -60,7 +59,6 @@ export class ModalResults extends Component {
     this.modalResultsWrap.append(this.modalSkippedResults);
     this.modalSkippedResults.append(this.modalSkippedTitle);
     this.modalSkippedTitle.setTextContent('Assembled using Auto-complete button');
-    this.createResultItemTemplate(this.modalSkippedResults);
     this.modalSkippedTitle.append(this.skippedCount);
     this.modalGuessedTitle.append(this.guessedCount);
   }

@@ -319,6 +319,7 @@ export class GamePage extends Component {
                 if (card.getAttribute('bg-image-disabled')) {
                   card.removeAttribute('bg-image-disabled');
                 }
+                card.setAttribute('disabled', 'true');
               }
             });
           });

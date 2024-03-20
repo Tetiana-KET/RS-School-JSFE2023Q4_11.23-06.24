@@ -150,6 +150,10 @@
   transition: all 0.8s !important;
 }
 
+.sentence-line .word-card[disabled] {
+  pointer-events: none;
+}
+
 .game-wrap[bg-revealed]::after {
   background-color: transparent !important;
   transition: all 1s;
