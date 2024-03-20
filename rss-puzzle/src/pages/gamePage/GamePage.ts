@@ -416,9 +416,6 @@ export class GamePage extends Component {
       this.displaySentence();
       this.getImageForRound();
     }
-    console.log(this.correctlyAssembledSentences);
-    console.log(this.sentencesForRound);
-    console.log(this.guessedSentences);
   }
 
   // proceed to the next sentence

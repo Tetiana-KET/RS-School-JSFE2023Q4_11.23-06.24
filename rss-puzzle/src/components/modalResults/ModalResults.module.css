@@ -134,6 +134,34 @@
   transition: all 0.5s;
 }
 
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-1px);
+  }
+  50% {
+    transform: translateY(1px);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.modal-item-audio[isPlaying] {
+  background: #2aa7bd url('../../assets/icons/isplaying.png') 50% no-repeat;
+  background-size: 20px 20px;
+  animation: shake 0.3s ease-in-out infinite;
+  pointer-events: none;
+}
+.modal-item-audio[disabled] {
+  pointer-events: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .modal-item-audio:hover {
     background: #2aa7bd url('../../assets/icons/sound_light.png') 50% no-repeat;
