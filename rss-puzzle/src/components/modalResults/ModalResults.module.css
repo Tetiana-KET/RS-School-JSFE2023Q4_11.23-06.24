@@ -76,6 +76,11 @@
 
 .modal-skipped-results {
 }
+
+.skipped-items-wrap {
+}
+.guessed-items-wrap {
+}
 .modal-skipped-title,
 .modal-guessed-title {
   display: flex;
@@ -114,21 +119,24 @@
   align-items: center;
   padding: 0px 15px;
   gap: 20px;
+  line-height: 35px;
 }
 .modal-item-text {
   text-align: center;
 }
 .modal-item-audio {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 2px;
   box-shadow: 0px 0px 10px rgb(42, 167, 189);
   background: #ebc6f6 url('../../assets/icons/sound.png') 50% no-repeat;
+  background-size: 20px 20px;
   transition: all 0.5s;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .modal-item-audio:hover {
     background: #2aa7bd url('../../assets/icons/sound_light.png') 50% no-repeat;
+    background-size: 20px 20px;
   }
 }

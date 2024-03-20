@@ -3,6 +3,7 @@ import { Component } from '../Component';
 import { GamePage } from '../../pages/gamePage/GamePage';
 import { verifyWordOrder } from '../../utils/wordCardsHandlers';
 import classes from './GameButtonsBlock.module.css';
+import { ModalResults } from '../modalResults/ModalResults';
 
 export class GameButtonBlock extends Component {
   private checkButton: Component<HTMLButtonElement>;
@@ -12,9 +13,11 @@ export class GameButtonBlock extends Component {
   private checkButtonWrap: Component<HTMLDivElement>;
   private completeButtonWrap: Component<HTMLDivElement>;
   private gamePageInstance: GamePage;
+  private modal: ModalResults;
 
-  constructor(gamePageInstance: GamePage) {
+  constructor(gamePageInstance: GamePage, modal: ModalResults) {
     super({ tagName: 'div', classNames: [classes.gameButtonsBlock] });
+    this.modal = modal;
     this.gamePageInstance = gamePageInstance;
     this.completeButtonWrap = new Component({ tagName: 'div', classNames: [classes.completeButtonWrap] });
     this.append(this.completeButtonWrap);
@@ -111,6 +114,8 @@ export class GameButtonBlock extends Component {
   private handleResultButtonClick(): void {
     this.resultsButton.setAttribute('disabled', 'disabled');
     this.gamePageInstance.getNode().querySelector('#modal')?.setAttribute('modal-active', 'true');
+    // Create result items for guessed sentences
+    this.modal.createResultItems();
   }
 
   private hideResultModal(): void {

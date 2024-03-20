@@ -76,17 +76,7 @@ export function clickHandlerToWordCards(
 ): void {
   wordCards.forEach(wordCard => {
     handleMouseEventOnCard(wordCard, selectedClass);
-    handleClickOnCard(
-      wordCard,
-      wordCards,
-      gameWrap,
-      sourceClassName,
-      resultClassName,
-      index,
-      currentSentence,
-      gameButtonsBlock,
-      gamePageInstance
-    );
+    handleClickOnCard(wordCard, wordCards, gameWrap, sourceClassName, resultClassName, index, currentSentence, gameButtonsBlock, gamePageInstance);
   });
 }
 
@@ -117,7 +107,7 @@ export function handleClickOnCard(
         autoCompleteButton.setAttribute('disabled', 'disabled');
         isCorrect = verifySentenceAssembly(currentSentence, sentenceLine);
         if (isCorrect && gameButtonsBlock.getNode().lastChild !== null) {
-          handleCorrectAssemble(gamePageInstance, continueButton, checkButton, wordCard, currentResultLineCards);
+          handleCorrectAssemble(gamePageInstance, continueButton, checkButton, wordCard, currentResultLineCards, index);
         }
       }
     } else if (wordCard.parentElement && wordCard.parentElement.className === resultClassName) {
@@ -136,7 +126,8 @@ export function handleCorrectAssemble(
   continueButton: HTMLButtonElement,
   checkButton: HTMLButtonElement,
   wordCard: HTMLElement,
-  currentResultLineCards: Element[]
+  currentResultLineCards: Element[],
+  index: number
 ): void {
   gamePageInstance.correctlyAssembledSentences += 1;
   if (gamePageInstance.correctlyAssembledSentences === gamePageInstance.sentencesForRound.length) {
@@ -146,6 +137,7 @@ export function handleCorrectAssemble(
   gamePageInstance.displayTranslation();
   gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
   showBackground(wordCard, currentResultLineCards);
+  gamePageInstance.guessedSentences.push(index);
 }
 
 export function handleResultCardClick(): void {}

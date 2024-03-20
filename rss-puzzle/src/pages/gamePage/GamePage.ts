@@ -6,13 +6,7 @@ import { GameButtonBlock } from '../../components/gameButtonsBlock/GameButtonsBl
 import { fetchImageData, fetchWordData } from '../../utils/commonUtils';
 import { Data } from '../../interfaces/Data.interface';
 import { checkLocalStoragePropertyFlag } from '../../utils/localStorage';
-import {
-  calculateCharWidth,
-  createWordCards,
-  clickHandlerToWordCards,
-  verifySentenceAssembly,
-  shuffleWords,
-} from '../../utils/wordCardsHandlers';
+import { calculateCharWidth, createWordCards, clickHandlerToWordCards, verifySentenceAssembly, shuffleWords } from '../../utils/wordCardsHandlers';
 import classes from './GamePage.module.css';
 import bg from '../../assets/bg.jpg';
 import { ModalResults } from '../../components/modalResults/ModalResults';
@@ -46,10 +40,13 @@ export class GamePage extends Component {
   public isBgImageHintEnabled: boolean = true;
 
   public correctlyAssembledSentences: number;
-  private modalResultElement = new ModalResults();
+  public guessedSentences: number[] = [];
+  public autoCompletedSentences: number[] = [];
+  public modalResultElement;
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
+    this.modalResultElement = new ModalResults(this);
     this.currentSentenceCards = [];
     this.currentSentence = '';
     this.correctlyAssembledSentences = 0;
@@ -76,7 +73,7 @@ export class GamePage extends Component {
       classNames: [classes.gameSourceDataBlock],
     });
     this.mainContent.append(this.gameSourceDataBlock);
-    this.gameButtonsBlock = new GameButtonBlock(this);
+    this.gameButtonsBlock = new GameButtonBlock(this, this.modalResultElement);
     this.mainContent.append(this.gameButtonsBlock);
     this.footer = new Footer();
     this.gamePageContainer.append(this.footer);
@@ -134,8 +131,7 @@ export class GamePage extends Component {
   private handleFetchedData(): void {
     if (this.fetchedWordData) {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
-      this.audioExample =
-        this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
+      this.audioExample = this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
       this.imageSource = this.fetchedWordData.rounds[this.currentRound].levelData.imageSrc;
       this.totalRoundsCount = this.fetchedWordData.roundsCount;
       // display translation if enabled
@@ -216,8 +212,7 @@ export class GamePage extends Component {
   }
 
   public displayTranslation(): void {
-    const translation =
-      this.fetchedWordData?.rounds[this.currentRound].words[this.currentSentenceIndex].textExampleTranslate;
+    const translation = this.fetchedWordData?.rounds[this.currentRound].words[this.currentSentenceIndex].textExampleTranslate;
     this.translationWrap.setTextContent(`${translation}`);
     this.translationWrap.getNode().setAttribute('data-active', 'true');
   }
@@ -248,6 +243,7 @@ export class GamePage extends Component {
   }
 
   public autoCompleteSentence(): void {
+    this.autoCompletedSentences.push(this.currentSentenceIndex);
     const sentenceLine = this.gameWrap.getNode().children[this.currentSentenceIndex];
     const sourceWordCards = Array.from(this.gameSourceDataBlock.getNode().children) as HTMLElement[];
     const resultWordCards = Array.from(sentenceLine.children) as HTMLElement[];
@@ -278,10 +274,7 @@ export class GamePage extends Component {
     correctOrderWords.forEach((word, index) => {
       resultWordCards.forEach(card => {
         card.classList.remove(`${classes.wrongOrder}`);
-        if (
-          card.getAttribute('data-index') === index.toString() &&
-          card.getAttribute('data-value') === word.getAttribute('data-value')
-        ) {
+        if (card.getAttribute('data-index') === index.toString() && card.getAttribute('data-value') === word.getAttribute('data-value')) {
           card.style.order = `${index}`;
           card.style.transition = 'order 5s';
           if (card.getAttribute('bg-image-disabled')) {
@@ -310,10 +303,7 @@ export class GamePage extends Component {
           wordCard.style.opacity = '1';
           correctOrderWords.forEach((word, i) => {
             resultWordCards.forEach(card => {
-              if (
-                card.getAttribute('data-index') === i.toString() &&
-                card.getAttribute('data-value') === word.getAttribute('data-value')
-              ) {
+              if (card.getAttribute('data-index') === i.toString() && card.getAttribute('data-value') === word.getAttribute('data-value')) {
                 card.style.order = `${i}`;
                 card.style.transition = 'order 5s';
                 if (card.getAttribute('bg-image-disabled')) {
@@ -415,6 +405,9 @@ export class GamePage extends Component {
     this.currentSentenceIndex = 0;
     this.sentencesForRound.length = 0;
     this.currentSentenceCards.length = 0;
+    this.guessedSentences.length = 0;
+    this.autoCompletedSentences.length = 0;
+
     this.disableResultButton();
     if (this.currentRound < this.totalRoundsCount) {
       this.currentRound += 1;
@@ -423,6 +416,9 @@ export class GamePage extends Component {
       this.displaySentence();
       this.getImageForRound();
     }
+    console.log(this.correctlyAssembledSentences);
+    console.log(this.sentencesForRound);
+    console.log(this.guessedSentences);
   }
 
   // proceed to the next sentence

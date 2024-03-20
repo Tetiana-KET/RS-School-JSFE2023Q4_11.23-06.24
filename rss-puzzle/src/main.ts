@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 console.log(`Still in process! Do not be in a hurry, please 🙏
-**Score: CrossCheck Criteria:  170 / 245 points**
+**Score: CrossCheck Criteria:  180 / 245 points**
   - [x] User Name Entry Page Evaluation Criteria (Total Points: 20) 📋👤
   - [x] Access and Session Management Evaluation Criteria (Total Points: 10) 🔐🔄
   - [x] Start Screen Evaluation Criteria (Total Points: 15) 🌐🎮
@@ -33,6 +33,7 @@ console.log(`Still in process! Do not be in a hurry, please 🙏
 
 **not implemented yet**
 - [ ] Level and Round Selection Evaluation Criteria (Total Points: 25) 🎚️🔄
-- [ ] Statistics Page Evaluation Criteria (Total Points: 25) 📊🔍
+- [ ] Statistics Page Evaluation Criteria (Total Points: 15 / 25) 📊🔍
     - [x] Issue RSS-PZ-30: 'Continue' (or Alternative Label) Button on Statistics Page (5 points)
+    - [x] Issue RSS-PZ-31: Distinct 'Known' and 'Unknown' Sentence Sections on Statistics Page (10 points)
 `);

@@ -132,12 +132,8 @@ export class LoginPage extends Component {
       tooltip.classList.add(classes.inputTooltipActive);
       return false;
     }
-    if (
-      (value[0] === '-' && value[1] !== value[1].toUpperCase()) ||
-      (value[0] !== '-' && value[0] !== value[0].toUpperCase())
-    ) {
-      tooltip.textContent =
-        value[0] === '-' ? 'First letter after hyphen should be uppercase' : 'First letter should be uppercase';
+    if ((value[0] === '-' && value[1] !== value[1].toUpperCase()) || (value[0] !== '-' && value[0] !== value[0].toUpperCase())) {
+      tooltip.textContent = value[0] === '-' ? 'First letter after hyphen should be uppercase' : 'First letter should be uppercase';
       tooltip.classList.add(classes.inputTooltipActive);
       return false;
     }
