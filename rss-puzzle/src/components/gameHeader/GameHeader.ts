@@ -103,13 +103,7 @@ export class GameHeader extends Component {
 
       if (target.classList.contains(`${classes.playSoundButton}`)) {
         target.setAttribute('active-hint', 'true');
-        this.gamePageInstance.audioExample =
-          this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
-            this.gamePageInstance.currentSentenceIndex
-          ]?.audioExample;
-
-        await this.getAudio();
-        this.playAudio();
+        await this.handlePlayAudio();
       }
 
       // IMAGE HINT
@@ -133,6 +127,7 @@ export class GameHeader extends Component {
       }
     }
   }
+
   public playAudio(): void {
     if (this.audio) {
       this.playSoundButton.setAttribute('isPlaying', 'true');
@@ -144,5 +139,15 @@ export class GameHeader extends Component {
       };
       source.start(this.audioContext.currentTime);
     }
+  }
+
+  public async handlePlayAudio(): Promise<void> {
+    this.gamePageInstance.audioExample =
+      this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
+        this.gamePageInstance.currentSentenceIndex
+      ]?.audioExample;
+
+    await this.getAudio();
+    this.playAudio();
   }
 }

@@ -1,4 +1,5 @@
 import { GamePage } from '../../pages/gamePage/GamePage';
+import { fetchAudioData } from '../../utils/commonUtils';
 import { Component } from '../Component';
 import classes from './ModalResults.module.css';
 
@@ -20,7 +21,8 @@ export class ModalResults extends Component {
   private skippedCount: Component<HTMLSpanElement>;
   private guessedCount: Component<HTMLSpanElement>;
   private gameInstance: GamePage;
-
+  private audioContext = new AudioContext();
+  public audio: AudioBuffer | null = null;
   constructor(gameInstance: GamePage) {
     super({ tagName: 'div', classNames: [classes.modal], attributes: { id: 'modal' } });
     this.gameInstance = gameInstance;
@@ -81,6 +83,39 @@ export class ModalResults extends Component {
     modalResultItem.append(modalItemText);
     modalItemText.setTextContent(`${sentencesForRound[i]}`);
     parent.append(modalResultItem.getNode());
+    // Add event listener to play audio
+    modalItemAudio.getNode().addEventListener('click', () => {
+      this.playAudioForIndex(i);
+      modalItemAudio.getNode().setAttribute('isPlaying', 'true');
+      this.getNode()
+        .querySelectorAll(`.${classes.modalItemAudio}`)
+        .forEach(button => {
+          button.setAttribute('disabled', 'true');
+        });
+      setTimeout(() => {
+        modalItemAudio.getNode().removeAttribute('isPlaying');
+        this.getNode()
+          .querySelectorAll(`.${classes.modalItemAudio}`)
+          .forEach(button => {
+            button.removeAttribute('disabled');
+          });
+      }, 2000);
+    });
+  }
+
+  private async playAudioForIndex(index: number): Promise<void> {
+    const audioExample = this.gameInstance.fetchedWordData?.rounds[this.gameInstance.currentRound]?.words[index]?.audioExample;
+    if (audioExample) {
+      try {
+        const audio = await fetchAudioData(audioExample, this.audioContext);
+        const source = this.audioContext.createBufferSource();
+        source.buffer = audio;
+        source.connect(this.audioContext.destination);
+        source.start(this.audioContext.currentTime);
+      } catch (error) {
+        console.error('Error playing audio:', error);
+      }
+    }
   }
 
   public createResultItems(): void {
