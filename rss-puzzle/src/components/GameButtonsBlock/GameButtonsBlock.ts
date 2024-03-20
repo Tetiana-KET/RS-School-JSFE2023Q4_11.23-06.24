@@ -66,15 +66,11 @@ export class GameButtonBlock extends Component {
   }
 
   private handleContinueButtonClick(): void {
+    this.hideResultModal();
     if (this.gamePageInstance.correctlyAssembledSentences === this.gamePageInstance.sentencesForRound.length) {
       this.gamePageInstance.proceedToNextRound();
     } else {
-      this.gamePageInstance.currentSentenceIndex += 1;
-      this.gamePageInstance.audioExample =
-        this.gamePageInstance.fetchedWordData?.rounds[this.gamePageInstance.currentRound]?.words[
-          this.gamePageInstance.currentSentenceIndex
-        ]?.audioExample;
-      this.gamePageInstance.getImageForRound();
+      this.gamePageInstance.proceedToTheNextSentence();
     }
     if (this.gamePageInstance.currentSentenceIndex < this.gamePageInstance.sentencesForRound.length) {
       this.continueButton.setAttribute('disabled', 'disabled');
@@ -113,8 +109,13 @@ export class GameButtonBlock extends Component {
   }
 
   private handleResultButtonClick(): void {
-    alert(`This button navigates to a detailed view of the player's performance statistics.
-    the page is in development`);
-    console.log(`This button navigates to a detailed view of the player's performance statistics.`);
+    this.resultsButton.setAttribute('disabled', 'disabled');
+    this.gamePageInstance.getNode().querySelector('#modal')?.setAttribute('modal-active', 'true');
+  }
+
+  private hideResultModal(): void {
+    if (this.gamePageInstance.getNode().querySelector('#modal')?.getAttribute('modal-active')) {
+      this.gamePageInstance.getNode().querySelector('#modal')?.removeAttribute('modal-active');
+    }
   }
 }

@@ -15,6 +15,7 @@ import {
 } from '../../utils/wordCardsHandlers';
 import classes from './GamePage.module.css';
 import bg from '../../assets/bg.jpg';
+import { ModalResults } from '../../components/modalResults/ModalResults';
 
 export class GamePage extends Component {
   private gamePageContainer: Component;
@@ -45,6 +46,7 @@ export class GamePage extends Component {
   public isBgImageHintEnabled: boolean = true;
 
   public correctlyAssembledSentences: number;
+  private modalResultElement = new ModalResults();
 
   constructor() {
     super({ tagName: 'div', classNames: [classes.gamePageBg] });
@@ -80,6 +82,7 @@ export class GamePage extends Component {
     this.gamePageContainer.append(this.footer);
     this.fetchWordData();
     this.addEventListenerForResize();
+    this.mainContent.append(this.modalResultElement);
   }
 
   private addEventListenerForResize(): void {
@@ -388,7 +391,7 @@ export class GamePage extends Component {
       this.gameWrap.getNode().removeAttribute('bg-image-disabled');
       this.translationWrap.getNode().removeAttribute('data-active');
       this.displayImageInformation();
-    }, 2000);
+    }, 1000);
   }
 
   // display image information
@@ -419,5 +422,12 @@ export class GamePage extends Component {
       this.displaySentence();
       this.getImageForRound();
     }
+  }
+
+  // proceed to the next sentence
+  public proceedToTheNextSentence(): void {
+    this.currentSentenceIndex += 1;
+    this.audioExample = this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
+    this.getImageForRound();
   }
 }
