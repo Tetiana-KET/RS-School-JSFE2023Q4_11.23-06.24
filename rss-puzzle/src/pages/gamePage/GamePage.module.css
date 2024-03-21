@@ -150,6 +150,10 @@
   transition: all 0.8s !important;
 }
 
+.sentence-line[disabled] {
+  pointer-events: none;
+}
+
 .sentence-line .word-card[disabled] {
   pointer-events: none;
 }
@@ -170,5 +174,13 @@
   }
   .word-card.wrong-order:hover {
     box-shadow: 0px 0px 17px rgb(218, 41, 231);
+  }
+}
+
+@media (max-width: 670px) {
+  .translation-wrap {
+    height: 45px;
+    padding: 4px;
+    font-size: 18px;
   }
 }

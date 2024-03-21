@@ -54,7 +54,7 @@ export class StartScreen extends Component {
   }
 
   private handleStartClick(): void {
-    localStorage.setItem('isPlaying', 'true');
+    // localStorage.setItem('isPlaying', 'true');
     if (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }

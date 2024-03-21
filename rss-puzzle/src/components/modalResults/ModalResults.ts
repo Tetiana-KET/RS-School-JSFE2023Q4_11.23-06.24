@@ -53,8 +53,8 @@ export class ModalResults extends Component {
     this.modalFigure.append(this.modalImageWrap);
     this.modalImageWrap.append(this.modalImage);
     this.modalImage.setAttribute('alt', 'completed round image');
+    this.modalImage.setAttribute('id', 'modalCutImage');
     this.modalFigure.append(this.modalImageDescription);
-    this.modalImageDescription.setTextContent('Image information will be here');
     // modal Results Wrap
     this.modalContent.append(this.modalResultsWrap);
     // Guessed
@@ -62,16 +62,21 @@ export class ModalResults extends Component {
     this.modalGuessedResults.append(this.modalGuessedTitle);
     this.modalGuessedResults.append(this.guessedItemsWrap);
     this.modalGuessedTitle.setTextContent('Personally assembled sentences');
+
     this.modalGuessedTitle.append(this.guessedCount);
+
     // skipped
     this.modalResultsWrap.append(this.modalSkippedResults);
     this.modalSkippedResults.append(this.modalSkippedTitle);
     this.modalSkippedResults.append(this.skippedItemsWrap);
     this.modalSkippedTitle.setTextContent('Assembled using Auto-complete button');
+
     this.modalSkippedTitle.append(this.skippedCount);
   }
 
   private createResultItemTemplate(i: number, sentencesForRound: string[], parent: HTMLDivElement): void {
+    this.setImageInformation();
+
     const modalResultItem = new Component({ tagName: 'div', classNames: [classes.modalResultItem] });
     const modalItemText = new Component({ tagName: 'p', classNames: [classes.modalItemText] });
     const modalItemAudio = new Component({
@@ -118,9 +123,22 @@ export class ModalResults extends Component {
     }
   }
 
+  // set image information
+  private setImageInformation(): void {
+    if (this.gameInstance.fetchedWordData) {
+      const { year } = this.gameInstance.fetchedWordData.rounds[this.gameInstance.currentRound].levelData;
+      const { author } = this.gameInstance.fetchedWordData.rounds[this.gameInstance.currentRound].levelData;
+      const { name } = this.gameInstance.fetchedWordData.rounds[this.gameInstance.currentRound].levelData;
+      const description = `${author} - ${name} (${year})`;
+      this.modalImageDescription.setTextContent(`${description}`);
+    }
+  }
+
   public createResultItems(): void {
     this.guessedItemsWrap.getNode().innerHTML = '';
     this.skippedItemsWrap.getNode().innerHTML = '';
+    this.guessedCount.getNode().innerHTML = `${this.gameInstance.guessedSentences.length}`;
+    this.skippedCount.getNode().innerHTML = `${this.gameInstance.autoCompletedSentences.length}`;
 
     this.gameInstance.guessedSentences.forEach(index => {
       this.createResultItemTemplate(index, this.gameInstance.sentencesForRound, this.guessedItemsWrap.getNode());

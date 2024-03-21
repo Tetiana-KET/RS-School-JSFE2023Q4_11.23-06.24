@@ -33,16 +33,3 @@ button {
   background: none;
   cursor: pointer;
 }
-
-.logout-btn,
-.logout-btn {
-  width: 100px;
-  height: 35px;
-  border-radius: 2px;
-  background-color: var(--main-color);
-  color: var(--white-color);
-  box-shadow:
-    rgba(0, 0, 0, 0.25) 0px 14px 28px,
-    rgba(0, 0, 0, 0.22) 0px 10px 10px;
-  transition: all 0.5s;
-}

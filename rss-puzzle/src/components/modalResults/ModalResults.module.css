@@ -24,7 +24,7 @@
   gap: 20px;
   width: 60%;
   height: 98%;
-  padding: 20px;
+  padding: 20px 10px;
   color: #f3e4f7;
   background-color: rgba(2, 1, 30, 0.9);
   box-shadow: 0px 0px 10px rgb(26, 135, 155);
@@ -60,6 +60,7 @@
   height: 120px;
   border-radius: 3px;
   box-shadow: 0px 0px 10px rgb(26, 135, 155);
+  overflow: hidden;
 }
 .modal-image {
 }
@@ -102,14 +103,17 @@
 .guessed-count,
 .skipped-count {
   display: inline-block;
+  flex-shrink: 0;
   width: 25px;
   height: 25px;
+  font-size: 18px;
   border-radius: 3px;
   box-shadow: 0px 0px 10px rgb(26, 135, 155);
 }
 
 .guessed-count {
 }
+
 .skipped-count {
   box-shadow: 0px 0px 10px rgb(165, 21, 21);
 }
@@ -121,12 +125,15 @@
   gap: 20px;
   line-height: 35px;
 }
+
 .modal-item-text {
   text-align: center;
 }
+
 .modal-item-audio {
   width: 25px;
   height: 25px;
+  flex-shrink: 0;
   border-radius: 2px;
   box-shadow: 0px 0px 10px rgb(42, 167, 189);
   background: #ebc6f6 url('../../assets/icons/sound.png') 50% no-repeat;
@@ -166,5 +173,38 @@
   .modal-item-audio:hover {
     background: #2aa7bd url('../../assets/icons/sound_light.png') 50% no-repeat;
     background-size: 20px 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .modal-content {
+    width: 80%;
+  }
+
+  .modal-result-item {
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+    gap: 15px;
+    line-height: 35px;
+    font-size: 18px;
+  }
+  .modal-skipped-title,
+  .modal-guessed-title {
+    line-height: 25px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .modal-content {
+    width: 90%;
+  }
+
+  .modal-result-item {
+    padding: 0px 0px;
+    gap: 10px;
+    line-height: 32px;
+    font-size: 16px;
   }
 }

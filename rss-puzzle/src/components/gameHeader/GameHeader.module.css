@@ -27,6 +27,7 @@
 
 .page-select-option,
 .select-level-option {
+  width: 50px;
   height: 30px;
   padding: 3px;
   border-radius: 2px;
