@@ -76,7 +76,7 @@ export function clickHandlerToWordCards(
 ): void {
   wordCards.forEach(wordCard => {
     handleMouseEventOnCard(wordCard, selectedClass);
-    handleClickOnCard(wordCard, wordCards, gameWrap, sourceClassName, resultClassName, index, currentSentence, gameButtonsBlock, gamePageInstance);
+    handleClickOnCard(wordCard, wordCards, gameWrap, sourceClassName, resultClassName, index, gameButtonsBlock, gamePageInstance);
   });
 }
 
@@ -87,7 +87,6 @@ export function handleClickOnCard(
   sourceClassName: string,
   resultClassName: string,
   index: number,
-  currentSentence: string,
   gameButtonsBlock: Component,
   gamePageInstance: GamePage
 ): void {
@@ -105,9 +104,10 @@ export function handleClickOnCard(
       if (gameSourceDataBlock?.children.length === 0) {
         checkButton.removeAttribute('disabled');
         autoCompleteButton.setAttribute('disabled', 'disabled');
-        isCorrect = verifySentenceAssembly(currentSentence, sentenceLine);
+        isCorrect = verifySentenceAssembly(sentenceLine);
         if (isCorrect && gameButtonsBlock.getNode().lastChild !== null) {
           handleCorrectAssemble(gamePageInstance, continueButton, checkButton, wordCard, currentResultLineCards, index);
+          sentenceLine.setAttribute('disabled', 'true');
         }
       }
     } else if (wordCard.parentElement && wordCard.parentElement.className === resultClassName) {
@@ -137,6 +137,7 @@ export function handleCorrectAssemble(
   gamePageInstance.displayTranslation();
   gamePageInstance.translationWrap.getNode().setAttribute('data-active', 'true');
   showBackground(wordCard, currentResultLineCards);
+  currentResultLineCards.forEach(card => card.setAttribute('disabled', 'true'));
   gamePageInstance.guessedSentences.push(index);
 }
 
@@ -189,18 +190,21 @@ export function continueButtonEnable(continueButton: HTMLButtonElement, checkBut
 }
 
 // verifying the correct assembly of the current sentence.
-export function verifySentenceAssembly(originalSentence: string, resultBlock: Element): boolean {
+export function verifySentenceAssembly(resultBlock: Element): boolean {
+  let result = false;
   let resultSentence;
 
   if (resultBlock.children) {
-    resultSentence = Array.from(resultBlock.children)
-      .map(card => {
-        return card.getAttribute('data-value');
-      })
-      .join(' ');
+    resultSentence = Array.from(resultBlock.children).map(card => {
+      return Number(card.getAttribute('data-index'));
+    });
   }
-
-  return originalSentence === resultSentence;
+  if (resultSentence) {
+    result = resultSentence.every((item, index) => {
+      return item === index;
+    });
+  }
+  return result;
 }
 
 // verify the correctness of the word order

@@ -45,10 +45,10 @@ export class GameHeader extends Component {
   }
   // Add options for different game levels
   private createOptionsForLevel(): void {
-    for (let i = 1; i <= 10; i += 1) {
+    for (let i = 1; i <= 6; i += 1) {
       const option = document.createElement('option');
       option.value = `Level ${i}`;
-      option.textContent = `Level ${i}`;
+      option.textContent = `L ${i}`;
       this.selectLevelOption.appendChild(option);
     }
   }
@@ -57,8 +57,8 @@ export class GameHeader extends Component {
   private createOptionsForRound(): void {
     for (let i = 1; i <= 10; i += 1) {
       const option = document.createElement('option');
-      option.value = `Page ${i}`;
-      option.textContent = `Page ${i}`;
+      option.value = `Round ${i}`;
+      option.textContent = `R ${i}`;
       this.selectPageOption.appendChild(option);
     }
   }

@@ -19,6 +19,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .logout-btn {
   width: 100px;
   height: 35px;
@@ -42,15 +43,19 @@
   }
 }
 
-@media (max-width: 768px) {
-  .header-logo {
-    font-size: 18px;
-  }
-
+@media (max-width: 670px) {
+  .header-logo,
+  .logout-btn,
   .user-greeting {
     font-size: 18px;
-    font-weight: 600;
-    letter-spacing: normal;
+  }
+}
+
+@media (max-width: 500px) {
+  .header-logo,
+  .logout-btn,
+  .user-greeting {
+    font-size: 16px;
   }
 }
 

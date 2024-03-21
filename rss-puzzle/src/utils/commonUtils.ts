@@ -66,6 +66,6 @@ export async function fetchImageData(source: string): Promise<HTMLImageElement> 
       image.onerror = (error): void => reject(error);
     });
   } catch (error) {
-    throw new Error(); // Missing return type on function
-  } // Missing return type on function
+    throw new Error();
+  }
 }

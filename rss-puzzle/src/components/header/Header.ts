@@ -33,8 +33,8 @@ export class Header extends Component {
       attributes: { id: 'userGreeting' },
     });
     this.userGreeting.setTextContent(`${generateGreeting()}`);
+    this.setFontSize();
     this.headerContainer.append(this.userGreeting);
-
     // Log out Button
     this.logoutBtn = new Component({
       tagName: 'button',
@@ -44,6 +44,23 @@ export class Header extends Component {
     this.headerContainer.append(this.logoutBtn);
     // Event listener for logout button
     this.logoutBtn.getNode().addEventListener('click', this.handleLogout.bind(this));
+    // Add event listener for window resize
+    window.addEventListener('resize', () => {
+      this.setFontSize();
+    });
+  }
+
+  private setFontSize(): void {
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    let fontSize;
+    if (vw < 600) {
+      fontSize = '18px';
+    } else if (vw < 900) {
+      fontSize = '22px';
+    } else {
+      fontSize = '26px';
+    }
+    this.userGreeting.getNode().style.fontSize = fontSize;
   }
 
   private handleLogout(): void {

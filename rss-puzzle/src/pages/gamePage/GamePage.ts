@@ -33,7 +33,8 @@ export class GamePage extends Component {
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
   private imageSource: string = '';
-  private imageUrl: string = '';
+  public cutSrc: string = '';
+  public imageUrl: string = '';
 
   public isTranslateEnabled: boolean = true;
   public isPronounceEnabled: boolean = true;
@@ -93,7 +94,7 @@ export class GamePage extends Component {
   private hideUserGreetingElement(): void {
     const userGreetingElement = this.mainHeader.getNode().querySelector('#userGreeting') as HTMLElement | null;
     if (userGreetingElement) {
-      userGreetingElement.style.visibility = 'hidden';
+      userGreetingElement.style.display = 'none';
     }
   }
 
@@ -133,6 +134,7 @@ export class GamePage extends Component {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
       this.audioExample = this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
       this.imageSource = this.fetchedWordData.rounds[this.currentRound].levelData.imageSrc;
+      this.cutSrc = this.fetchedWordData.rounds[this.currentRound].levelData.cutSrc;
       this.totalRoundsCount = this.fetchedWordData.roundsCount;
       // display translation if enabled
       if (this.isTranslateEnabled) {
@@ -252,15 +254,17 @@ export class GamePage extends Component {
     const resultButton = this.gameButtonsBlock.getNode().firstChild?.lastChild as HTMLButtonElement;
     const continueButton = this.gameButtonsBlock.getNode().lastChild?.lastChild as HTMLButtonElement;
     const checkButton = this.gameButtonsBlock.getNode().lastChild?.firstChild as HTMLButtonElement;
-    const isCorrect = verifySentenceAssembly(this.currentSentence, sentenceLine);
+    const isCorrect = verifySentenceAssembly(sentenceLine);
 
     if (sourceWordCards.length) {
       this.handleCorrectOrder(correctOrderWords, resultWordCards, sourceWordCards, sentenceLine);
+      sentenceLine.setAttribute('disable', 'true');
       this.translationWrap.getNode().setAttribute('data-active', 'true');
       this.displayTranslation();
     } else if (!isCorrect) {
       this.handleWrongOrder(correctOrderWords, resultWordCards);
     }
+    sentenceLine.setAttribute('disable', 'true');
     this.correctlyAssembledSentences += 1;
     if (this.correctlyAssembledSentences === this.sentencesForRound.length) {
       this.revealImage();
@@ -268,6 +272,9 @@ export class GamePage extends Component {
     } else {
       this.toggleContinueCkeckButtons(continueButton, checkButton);
     }
+    resultWordCards.forEach(el => {
+      el.setAttribute('disable', 'true');
+    });
   }
 
   private handleWrongOrder(correctOrderWords: HTMLElement[], resultWordCards: HTMLElement[]): void {
@@ -317,6 +324,7 @@ export class GamePage extends Component {
         (index + 1) * 100
       );
     });
+    sentenceLine.setAttribute('disabled', 'true');
   }
 
   private toggleContinueCkeckButtons(continueButton: HTMLButtonElement, checkButton: HTMLButtonElement): void {
@@ -367,6 +375,9 @@ export class GamePage extends Component {
         element.style.backgroundImage = `url(${image.src})`;
       });
       this.imageUrl = `url(${image.src})`;
+      // set miniature to modal
+      const modalImg = this.modalResultElement.getNode().querySelector('#modalCutImage') as HTMLImageElement;
+      modalImg.src = `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/images/${this.cutSrc}`;
     } catch (error) {
       console.error('Error fetching image:', error);
     }
