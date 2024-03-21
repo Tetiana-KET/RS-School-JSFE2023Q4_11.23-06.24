@@ -1,4 +1,9 @@
 .round-item {
+  padding: 5px;
+  line-height: 24px;
+  border-bottom: 1px solid var(--beige-3);
+  cursor: pointer;
+  transition: all 0.5s;
 }
 
 .game-page-bg {
@@ -178,6 +183,13 @@
   .word-card.wrong-order:hover {
     box-shadow: 0px 0px 17px rgb(218, 41, 231);
   }
+
+  .round-item:hover {
+    cursor: pointer;
+    box-shadow: 0px 8px 8px rgba(13, 96, 111, 0.5);
+    background-color: var(--blue-color);
+    color: var(--main-light);
+  }
 }
 
 @media (max-width: 670px) {
@@ -185,5 +197,12 @@
     height: 45px;
     padding: 4px;
     font-size: 18px;
+  }
+}
+
+@media (max-width: 500px) {
+  .page-select-option {
+    width: 70px;
+    font-size: 16px;
   }
 }

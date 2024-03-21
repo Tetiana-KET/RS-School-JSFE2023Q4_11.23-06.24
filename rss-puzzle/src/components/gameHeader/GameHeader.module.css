@@ -1,4 +1,6 @@
 .game-header-container {
+  position: relative;
+  z-index: 5;
   width: 90%;
   max-width: 1420px;
   display: flex;

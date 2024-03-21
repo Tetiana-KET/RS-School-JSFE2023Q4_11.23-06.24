@@ -7,7 +7,7 @@
 .select-level-option {
   position: relative;
   z-index: 2;
-  width: 75px;
+  width: 100px;
   height: 30px;
   border-radius: 2px;
   font-weight: 400;
@@ -30,26 +30,49 @@
 .select-option-body,
 .select-round-body {
   position: absolute;
+  z-index: 10;
   left: 0;
   right: 0;
-  top: 98%;
-  padding: 10px;
+  top: 104%;
+  height: 230px;
+  padding: 10px 2px;
+  font-weight: 600;
+  overflow-y: auto;
   display: none;
-  background-color: var(--settings-bgr);
-  box-shadow: 0px 5px 10px 4px rgba(49, 25, 11, 0.3);
+  background-color: var(--main-color);
+  color: var(--dark-color);
+  box-shadow: 0px 0px 10px rgb(13, 96, 111);
   border-radius: 0 0 3px 3px;
   transition: all 0.5s;
 }
 
-.select-option-body[active],
-.select-round-body[active] {
+.select-round-body::-webkit-scrollbar,
+.select-option-body::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--main-color);
+  border-radius: 0 0 3px 0;
+}
+
+.select-round-body::-webkit-scrollbar,
+.select-option-body::-webkit-scrollbar {
+  height: 2px;
+}
+
+.select-round-body::-webkit-scrollbar-thumb,
+.select-option-body::-webkit-scrollbar-thumb {
+  background-color: #ebc6f6;
+  border-radius: 3px;
+}
+
+.select-level-option[active] .select-option-body,
+.select-round-option[active] .select-round-body {
   display: block;
 }
 
 .level-item,
 .round-item {
-  margin-bottom: 12px;
-  line-height: 34px;
+  padding: 5px;
+  line-height: 24px;
   border-bottom: 1px solid var(--beige-3);
   cursor: pointer;
   transition: all 0.5s;
@@ -71,10 +94,16 @@
   outline: none;
 }
 
-@media (max-width: 500px) {
-  .page-select-option,
+@media (max-width: 600px) {
+  .select-round-option,
   .select-level-option {
-    width: 50px;
+    width: 70px;
+    font-size: 14px;
+  }
+
+  .level-item,
+  .round-item {
+    line-height: 20px;
   }
 }
 
@@ -84,7 +113,14 @@
     cursor: pointer;
     box-shadow: 0px 8px 8px rgba(13, 96, 111, 0.5);
     background-color: var(--blue-color);
-    transform: translateY(-0.1em);
+    color: var(--main-light);
+  }
+
+  .level-item:hover,
+  .round-item:hover {
+    cursor: pointer;
+    box-shadow: 0px 8px 8px rgba(13, 96, 111, 0.5);
+    background-color: var(--blue-color);
     color: var(--main-light);
   }
 }

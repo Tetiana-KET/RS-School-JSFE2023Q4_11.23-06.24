@@ -28,7 +28,7 @@ export class GamePage extends Component {
   public totalRoundsCount: number = 0;
   public sentencesForRound: string[] = [];
   public currentSentenceIndex: number = 0;
-  private currentSentenceCards: HTMLElement[];
+  public currentSentenceCards: HTMLElement[];
   public currentSentence: string;
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
@@ -132,7 +132,7 @@ export class GamePage extends Component {
   }
 
   // handle fetched data
-  private handleFetchedData(): void {
+  public handleFetchedData(): void {
     if (this.fetchedWordData) {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
       this.audioExample = this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
@@ -428,6 +428,13 @@ export class GamePage extends Component {
       this.handleFetchedData();
       this.displaySentence();
       this.getImageForRound();
+    } else {
+      this.currentRound = 0;
+      this.currentLevel += 1;
+      // set next round data
+      this.handleFetchedData();
+      this.displaySentence();
+      this.getImageForRound();
     }
   }
 
@@ -448,6 +455,7 @@ export class GamePage extends Component {
     for (let i = 1; i <= roundCount; i += 1) {
       const option = document.createElement('div');
       option.classList.add(`${classes.roundItem}`);
+      option.setAttribute('data-class', 'roundItem');
       option.textContent = `Round ${i}`;
       selectOptionBody.appendChild(option);
     }
