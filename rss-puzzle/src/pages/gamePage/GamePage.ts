@@ -227,7 +227,6 @@ export class GamePage extends Component {
       `${classes.sentenceLine}`,
       this.currentSentenceIndex,
       `${classes.selected}`,
-      this.currentSentence,
       this.gameButtonsBlock,
       this
     );
