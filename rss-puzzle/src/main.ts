@@ -20,9 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.prepend(new LoginPage().getNode());
   }
 });
-console.log(`Do not be in a hurry, please 🙏
-Level and Round Selection - Still in process! 
-**Score: CrossCheck Criteria:  190 / 245 points**
+console.log(`
+**Score: CrossCheck Criteria:  215 / 245 points**
   - [x] User Name Entry Page Evaluation Criteria (Total Points: 20) 📋👤
   - [x] Access and Session Management Evaluation Criteria (Total Points: 10) 🔐🔄
   - [x] Start Screen Evaluation Criteria (Total Points: 15) 🌐🎮
@@ -30,9 +29,10 @@ Level and Round Selection - Still in process!
   - [x] Hint Functionality Evaluation Criteria (Total Points: 60) 💡🌐
   - [x] Completion and Revelation of Background Image Evaluation Criteria (Total Points: 10) 🎨🖼️
   - [x] Statistics Page Evaluation Criteria (Total Points: 25 / 25) 📊🔍
+  - [x] Level and Round Selection Evaluation Criteria (Total Points: 25) 🎚️🔄
 
-**not implemented yet - 55**
-- [ ] Level and Round Selection Evaluation Criteria (Total Points: 25) 🎚️🔄
+**not implemented yet - 30**
+
 - [ ] Drag-and-Drop Functionality (15 points) 🖱️(15 points) 
 - [ ] Puzzle-Like Word Card Design (15 points) 🧩🃏
 `);

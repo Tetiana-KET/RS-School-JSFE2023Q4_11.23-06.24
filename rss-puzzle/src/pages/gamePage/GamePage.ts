@@ -25,10 +25,10 @@ export class GamePage extends Component {
   public fetchedWordData: Data | null = null;
   public currentLevel: number = 1;
   public currentRound: number = 0;
-  private totalRoundsCount: number = 0;
+  public totalRoundsCount: number = 0;
   public sentencesForRound: string[] = [];
   public currentSentenceIndex: number = 0;
-  private currentSentenceCards: HTMLElement[];
+  public currentSentenceCards: HTMLElement[];
   public currentSentence: string;
   public audioExample: string | undefined;
   public translationWrap: Component<HTMLDivElement>;
@@ -122,6 +122,9 @@ export class GamePage extends Component {
         this.getImageForRound();
         // Add lines for sentences
         this.addLinesForSentence();
+        // Add options for different game rounds
+        this.createElementsForRound();
+        this.setTitleForRoundOption();
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -129,7 +132,7 @@ export class GamePage extends Component {
   }
 
   // handle fetched data
-  private handleFetchedData(): void {
+  public handleFetchedData(): void {
     if (this.fetchedWordData) {
       this.sentencesForRound = this.fetchedWordData.rounds[this.currentRound].words.map(word => word.textExample);
       this.audioExample = this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
@@ -425,6 +428,13 @@ export class GamePage extends Component {
       this.handleFetchedData();
       this.displaySentence();
       this.getImageForRound();
+    } else {
+      this.currentRound = 0;
+      this.currentLevel += 1;
+      // set next round data
+      this.handleFetchedData();
+      this.displaySentence();
+      this.getImageForRound();
     }
   }
 
@@ -433,5 +443,27 @@ export class GamePage extends Component {
     this.currentSentenceIndex += 1;
     this.audioExample = this.fetchedWordData?.rounds[this.currentRound]?.words[this.currentSentenceIndex]?.audioExample;
     this.getImageForRound();
+  }
+
+  // Add options for different game rounds
+  private createElementsForRound(): void {
+    const roundCount = this.totalRoundsCount;
+    const selectOptionBody = this.header.getNode().querySelector(`#selectRoundBody`) as HTMLDivElement;
+    const selectRoundTitle = this.header.getNode().querySelector(`#selectRoundTitle`) as HTMLDivElement;
+    selectRoundTitle.textContent = `Round ${this.currentRound + 1}`;
+
+    for (let i = 1; i <= roundCount; i += 1) {
+      const option = document.createElement('div');
+      option.classList.add(`${classes.roundItem}`);
+      option.setAttribute('data-class', 'roundItem');
+      option.textContent = `Round ${i}`;
+      selectOptionBody.appendChild(option);
+    }
+  }
+
+  // set current level title
+  private setTitleForRoundOption(): void {
+    const selectLevelTitle = this.header.getNode().querySelector(`#selectLevelTitle`) as HTMLDivElement;
+    selectLevelTitle.textContent = `Level ${this.currentLevel}`;
   }
 }
