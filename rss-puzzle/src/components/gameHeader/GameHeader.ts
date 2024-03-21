@@ -2,13 +2,13 @@ import { GamePage } from '../../pages/gamePage/GamePage';
 import { fetchAudioData } from '../../utils/commonUtils';
 import { handleBgImageHint, handlePronounceHint, handleTranslateHint } from '../../utils/handleCluesClick';
 import { Component } from '../Component';
+import { GameHeaderOptions } from '../gameHeaderOptions/GameHeaderOptions';
 import classes from './GameHeader.module.css';
 
 export class GameHeader extends Component {
   private headerContainer: Component<HTMLDivElement>;
-  private gameHeaderOptions: Component<HTMLDivElement>;
-  private selectLevelOption: HTMLSelectElement;
-  private selectPageOption: HTMLSelectElement;
+  private gameHeaderOptions: GameHeaderOptions;
+
   private playSoundButton: Component<HTMLButtonElement>;
   private gameCluesWrap: Component<HTMLDivElement>;
   private gamePageInstance: GamePage;
@@ -20,16 +20,10 @@ export class GameHeader extends Component {
     this.gamePageInstance = gamePageInstance;
     this.headerContainer = new Component({ tagName: 'div', classNames: [classes.headerContainer] });
     this.append(this.headerContainer);
-    this.gameHeaderOptions = new Component({ tagName: 'div', classNames: [classes.gameHeaderOptions] });
+
+    this.gameHeaderOptions = new GameHeaderOptions(this.gamePageInstance);
     this.headerContainer.append(this.gameHeaderOptions);
-    this.selectLevelOption = document.createElement('select');
-    this.selectLevelOption.classList.add(classes.selectLevelOption, classes.select);
-    this.createOptionsForLevel();
-    this.gameHeaderOptions.getNode().append(this.selectLevelOption);
-    this.selectPageOption = document.createElement('select');
-    this.selectPageOption.classList.add(classes.pageSelectOption, classes.select);
-    this.createOptionsForRound();
-    this.gameHeaderOptions.getNode().append(this.selectPageOption);
+
     this.playSoundButton = new Component({
       tagName: 'button',
       classNames: [classes.playSoundButton, classes.clueButton],
@@ -42,25 +36,6 @@ export class GameHeader extends Component {
     this.addClueButtons();
     this.toggleDefaultSettings();
     this.gameCluesWrap.getNode().addEventListener('click', this.handleClick.bind(this));
-  }
-  // Add options for different game levels
-  private createOptionsForLevel(): void {
-    for (let i = 1; i <= 6; i += 1) {
-      const option = document.createElement('option');
-      option.value = `Level ${i}`;
-      option.textContent = `L ${i}`;
-      this.selectLevelOption.appendChild(option);
-    }
-  }
-
-  // Add options for different game rounds
-  private createOptionsForRound(): void {
-    for (let i = 1; i <= 10; i += 1) {
-      const option = document.createElement('option');
-      option.value = `Round ${i}`;
-      option.textContent = `R ${i}`;
-      this.selectPageOption.appendChild(option);
-    }
   }
 
   private addClueButtons(): void {
