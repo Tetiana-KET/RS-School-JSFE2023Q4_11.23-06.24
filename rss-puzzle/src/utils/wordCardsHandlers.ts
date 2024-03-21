@@ -70,7 +70,6 @@ export function clickHandlerToWordCards(
   resultClassName: string,
   index: number,
   selectedClass: string,
-  currentSentence: string,
   gameButtonsBlock: Component,
   gamePageInstance: GamePage
 ): void {
