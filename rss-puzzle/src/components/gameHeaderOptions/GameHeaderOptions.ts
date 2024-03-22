@@ -14,8 +14,8 @@ export class GameHeaderOptions extends Component {
   private selectRoundTitle: Component<HTMLElement>;
   private selectRoundBody: Component<HTMLElement>;
 
-  private selectedLevel: number = 1;
-  private selectedRound: number = 0;
+  // private selectedLevel: number = 1;
+  // private selectedRound: number = 0;
 
   constructor(gamePageInstance: GamePage) {
     super({ tagName: 'div', classNames: [classes.gameHeaderOptions] });
@@ -35,7 +35,7 @@ export class GameHeaderOptions extends Component {
     this.selectRoundOption.append(this.selectRoundTitle);
     this.selectRoundBody = new Component({ tagName: 'div', classNames: [classes.selectRoundBody], attributes: { id: 'selectRoundBody' } });
     this.selectRoundOption.append(this.selectRoundBody);
-
+    this.setTitleForLevelOption();
     this.createElementsForRound();
     // Add event listeners for level and round options
     this.addEventListeners();
@@ -81,9 +81,9 @@ export class GameHeaderOptions extends Component {
       }
       if (target.hasAttribute('data-class') && target.textContent) {
         const round = parseInt(target.textContent.split(' ')[1], 10);
-        this.selectedRound = round;
+        // this.selectedRound = round;
         this.gamePageInstance.currentRound = round - 1;
-        console.log(round);
+
         this.setTitleForRoundOption();
         this.proceedToSelectedRound();
       }
@@ -101,9 +101,9 @@ export class GameHeaderOptions extends Component {
       }
       if (target.classList.contains(classes.levelItem) && target.textContent) {
         const level = parseInt(target.textContent.split(' ')[1], 10);
-        this.selectedLevel = level;
+        // this.selectedLevel = level;
         this.gamePageInstance.currentLevel = level;
-        console.log(level);
+
         this.setTitleForLevelOption();
         this.proceedToSelectedLevel();
       }
@@ -125,6 +125,7 @@ export class GameHeaderOptions extends Component {
     this.gamePageInstance.handleFetchedData();
     this.gamePageInstance.displaySentence();
     this.gamePageInstance.getImageForRound();
+    this.setTitleForRoundOption();
   }
 
   private proceedToSelectedLevel(): void {
@@ -132,12 +133,13 @@ export class GameHeaderOptions extends Component {
     this.gamePageInstance.gameWrap.getNode().innerHTML = '';
     this.gamePageInstance.correctlyAssembledSentences = 0;
     this.gamePageInstance.currentSentenceIndex = 0;
+    this.gamePageInstance.currentRound = 0;
     this.gamePageInstance.sentencesForRound.length = 0;
     this.gamePageInstance.currentSentenceCards.length = 0;
     this.gamePageInstance.guessedSentences.length = 0;
     this.gamePageInstance.autoCompletedSentences.length = 0;
 
-    fetchWordData(this.selectedLevel)
+    fetchWordData(this.gamePageInstance.currentLevel)
       .then(data => {
         this.gamePageInstance.fetchedWordData = data;
         this.gamePageInstance.handleFetchedData();
@@ -146,8 +148,8 @@ export class GameHeaderOptions extends Component {
         // Add lines for sentences
         this.gamePageInstance.addLinesForSentence();
         // Add options for different game rounds
-        this.createElementsForRound();
-        this.setTitleForRoundOption();
+        this.gamePageInstance.createElementsForRound();
+        this.setTitleForLevelOption();
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -157,12 +159,12 @@ export class GameHeaderOptions extends Component {
   // Method to update the title for the selected level option
   private setTitleForLevelOption(): void {
     const selectLevelTitle = this.selectOptionTitle.getNode() as HTMLDivElement;
-    selectLevelTitle.textContent = `Level ${this.selectedLevel}`;
+    selectLevelTitle.textContent = `Level ${this.gamePageInstance.currentLevel}`;
   }
 
   // Method to update the title for the selected round option
   private setTitleForRoundOption(): void {
     const selectRoundTitle = this.selectRoundTitle.getNode() as HTMLDivElement;
-    selectRoundTitle.textContent = `Round ${this.selectedRound}`;
+    selectRoundTitle.textContent = `Round ${this.gamePageInstance.currentRound + 1}`;
   }
 }
