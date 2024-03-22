@@ -2,6 +2,7 @@ import { Component } from '../../components';
 import { storeUserData } from '../../utils/localStorage';
 import { StartScreen } from '../startScreen/StartScreen';
 import classes from './LoginPage.module.css';
+import bg from '../../assets/bg.jpg';
 
 export class LoginPage extends Component {
   private form: Component<HTMLFormElement>;
@@ -45,6 +46,7 @@ export class LoginPage extends Component {
     this.setEventListenerToForm();
     this.setInputsProperties();
     this.setInputClass();
+    this.setBackground();
   }
 
   private setEventListenerToForm(): void {
@@ -147,5 +149,11 @@ export class LoginPage extends Component {
     }
     tooltip.classList.remove(classes.inputTooltipActive);
     return true;
+  }
+  private setBackground(): void {
+    this.getNode().style.backgroundImage = `url(${bg})`;
+    this.getNode().style.backgroundSize = '100% 100%';
+    this.getNode().style.backgroundRepeat = 'no-repeat';
+    this.getNode().style.backgroundPosition = 'center';
   }
 }
