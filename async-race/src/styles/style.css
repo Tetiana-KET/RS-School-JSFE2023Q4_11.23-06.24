@@ -1,0 +1,29 @@
+:root {
+  --white-color: #ffffff;
+  --black-color: #000000;
+  --warning-color: #eb1212;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100vh;
+  color: var(--white-color);
+  background-color: var(--black-color);
+  font-family: 'Inter';
+  font-size: 20px;
+  font-weight: 400;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}

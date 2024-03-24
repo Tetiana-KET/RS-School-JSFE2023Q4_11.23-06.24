@@ -1,2 +1,2 @@
-cd rss-puzzle
+cd async-race
 npx lint-staged
