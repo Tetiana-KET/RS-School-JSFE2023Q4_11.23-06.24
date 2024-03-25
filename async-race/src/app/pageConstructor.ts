@@ -1,15 +1,16 @@
 import { Component } from './components/Component';
-// import { Header } from '';
-// import { Footer } from '';
+import { Footer } from './components/footer/Footer';
+import { Header } from './components/header/Header';
 // import { WinnersView } from './views/winners';
 
 class SiteWrapperComponent extends Component {
   constructor() {
-    // const headerComponent = Header();
-    // const footerComponent = Footer();
+    const headerComponent = new Header();
+    const mainComponent = new Component({ tagName: 'main', classNames: ['main'] });
+    const footerComponent = new Footer();
     // const winnersViewComponent = WinnersView();
     // super({ className: 'site-wrapper' , children:[headerComponent, mainComponent, footerComponent, winnersViewComponent]});
-    super({ tagName: 'div', classNames: ['site-wrapper'], children: [new Component({ tagName: 'main', classNames: ['main'] })] });
+    super({ tagName: 'div', classNames: ['site-wrapper'], children: [headerComponent, mainComponent, footerComponent] });
   }
 }
 
