@@ -52,5 +52,8 @@
   }
 }
 
-@media (max-width: 670px) {
+@media (max-width: 450px) {
+  .header-logo {
+    font-size: 20px;
+  }
 }

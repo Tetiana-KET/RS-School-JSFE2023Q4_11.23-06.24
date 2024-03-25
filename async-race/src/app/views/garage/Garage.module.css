@@ -1,0 +1,138 @@
+.garage {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: 15px;
+}
+
+.settings {
+  display: flex;
+  padding: 20px 10px 1px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.garage-menu {
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+.form {
+}
+.car-form {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.car-form .button {
+  width: 80px;
+  height: 35px;
+}
+
+.form-name-input {
+  background-color: rgba(240, 248, 255, 0.9);
+}
+
+.button {
+  width: 120px;
+  height: 40px;
+  border-radius: 2px;
+  border: 1px solid var(--white-color);
+  color: var(--white-color);
+  font-size: 18px;
+  box-shadow: var(--box-shadow) 0px 0px 10px;
+  transition: all 0.5s;
+}
+.create-btn {
+}
+.update-btn {
+}
+.btn-disabled {
+}
+
+.garage-menu-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.title-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px;
+}
+.garage-title {
+}
+
+.cars-count {
+}
+
+.page-number {
+}
+.garage-page-number {
+}
+
+.pagination-wrapper {
+  display: flex;
+  align-self: center;
+  gap: 20px;
+}
+
+.button[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.prev-page {
+}
+.pagination-wrapper .button {
+  width: 100px;
+  height: 35px;
+}
+
+/* HOVER */
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    box-shadow: 0px 4px 12px var(--box-shadow-hover);
+    background-color: var(--blue-color);
+    transform: translateY(-0.1em);
+  }
+}
+
+@media (max-width: 670px) {
+  .settings {
+    flex-direction: column;
+  }
+
+  .garage-menu-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 450px) {
+  .form-name-input {
+    width: 200px;
+  }
+
+  .garage-menu-buttons {
+    gap: 10px;
+  }
+
+  .garage-menu-buttons .button {
+    width: 110px;
+    font-size: 15px;
+    padding: 0;
+  }
+}
