@@ -34,11 +34,25 @@
 }
 
 .car-track {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.car-track::before {
+  position: absolute;
+  top: 0;
+  right: 80px;
+  content: '';
+  height: 100%;
+  width: 50px;
+  background-image: url('../../../assets/icons/flag.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
 }
 
 .car-icon {
   border-bottom: 2px dashed var(--white-color);
-  margin-bottom: 10px;
 }
 
 .car-icon .car-svg {
