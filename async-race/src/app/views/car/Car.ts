@@ -51,7 +51,7 @@ export default class Car {
     carIconWrap.getNode().appendChild(svg);
     const track = new Component({ tagName: 'div', classNames: [classes.carTrack], children: [carIconWrap] });
 
-    const carTrackWrap = new Component({ tagName: 'div', classNames: [classes.carTrackWrap], children: [controls, track] });
+    const carTrackWrap = new Component({ tagName: 'div', classNames: [classes.carTrackWrap], children: [track, controls] });
     return carTrackWrap;
   }
 

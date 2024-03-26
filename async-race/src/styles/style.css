@@ -12,7 +12,7 @@ html {
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   color: var(--white-color);
   background-color: var(--black-color);
   font-family: 'Inter';
@@ -24,9 +24,20 @@ body.no-scroll {
   overflow: hidden;
 }
 
+body::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--black-color);
+  border-radius: 0 0 3px 0;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--blue-color);
+  border-radius: 3px;
+}
+
 .site-wrapper {
   display: flex;
-  height: 100%;
+  min-height: 100vh;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -39,7 +50,7 @@ button {
 }
 
 .main {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   max-width: 1650px;
   margin: 0 auto;

@@ -1,11 +1,14 @@
 .car-track-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding-bottom: 5px;
-  border-bottom: 2px dashed var(--white-color);
 }
 .car-track-controls {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 5px;
 }
 
 .button {
@@ -34,6 +37,8 @@
 }
 
 .car-icon {
+  border-bottom: 2px dashed var(--white-color);
+  margin-bottom: 10px;
 }
 
 .car-icon .car-svg {
