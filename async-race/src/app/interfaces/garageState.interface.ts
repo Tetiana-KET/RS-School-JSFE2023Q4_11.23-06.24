@@ -1,9 +1,9 @@
-import { Car } from './car.interface';
+import { CarInterface } from './car.interface';
 
 export interface GarageState {
   currentPage: number;
   carsLength: number;
   pageLength: number | null;
   activeCarsId: number[];
-  winnerCar: Car | null;
+  winnerCar: CarInterface | null;
 }

@@ -73,7 +73,8 @@
 .garage-title {
 }
 
-.cars-count {
+.cars-count h2 {
+  font-size: 30px;
 }
 
 .page-number {
@@ -97,6 +98,10 @@
 .pagination-wrapper .button {
   width: 100px;
   height: 35px;
+}
+
+.garage-race {
+  height: 100%;
 }
 
 /* HOVER */

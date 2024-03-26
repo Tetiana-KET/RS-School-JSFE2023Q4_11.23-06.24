@@ -1,21 +1,41 @@
 import classes from './Garage.module.css';
 import { Component } from '../../components/Component';
-import GarageRace from './GarageRace';
+import { CARS_LIMIT, currentPage, getCars } from '../../modules/InteractionAPI';
+import { GarageInterface } from '../../interfaces/car.interface';
 
 export default class GarageView extends Component {
+  private totalCars: number = 0;
+  private carsInGarage: GarageInterface = [];
   constructor() {
     const formWrapper = new Component({ tagName: 'div', classNames: [classes.settings] });
     const titleWrapper = new Component({ tagName: 'div', classNames: [classes.titleWrapper] });
-    const garageRaceComponent = new GarageRace();
+    const garageRaceComponent = new Component({ tagName: 'div', classNames: [classes.garageRace] });
     const paginationWrapper = new Component({ tagName: 'div', classNames: [classes.paginationWrapper] });
     super({ tagName: 'section', classNames: [classes.garage] });
+
     formWrapper.getNode().innerHTML = this.createFormWrapper();
-    titleWrapper.getNode().innerHTML = this.createGarageTitle(1, 1);
+    this.getGarageState();
+    titleWrapper.getNode().innerHTML = this.createGarageTitle(1);
     paginationWrapper.getNode().innerHTML = this.createPagination();
     this.append(formWrapper);
     this.append(titleWrapper);
     this.append(garageRaceComponent);
     this.append(paginationWrapper);
+  }
+
+  private async getGarageState(): Promise<void> {
+    const [cars, totalCars] = await getCars(currentPage, CARS_LIMIT);
+    this.totalCars = totalCars;
+    this.carsInGarage = await cars;
+    console.log(this.carsInGarage);
+    this.updateGarageTitle();
+  }
+
+  private updateGarageTitle(): void {
+    const titleWrapper = this.getNode().querySelector(`.${classes.carsCount} h2`);
+    if (titleWrapper) {
+      titleWrapper.innerHTML = `<h2>Cars in Garage: ( ${this.totalCars} )</h2>`;
+    }
   }
 
   private createFormWrapper(): string {
@@ -42,15 +62,16 @@ export default class GarageView extends Component {
         <button class="${(classes.generateBtn, classes.button)}">Generate cars</button>
       </div>`;
   }
-  private createGarageTitle(page: number, totalCars: number): string {
+
+  private createGarageTitle(page: number): string {
     return `
-      <div class="${classes.carsCount}">
-        <h2>Cars in Garage: ( ${totalCars} )</h2>
-      </div>
-      <div class="${classes.garagePageNumber}">
-        <h3 class="${classes.pageNumber}" data-page="${page}">Page: ( № ${page} )</h3>
-      </div>
-  `;
+        <div class="${classes.carsCount}">
+          <h2></h2>
+        </div>
+        <div class="${classes.garagePageNumber}">
+          <h3 class="${classes.pageNumber}" data-page="${page}">Page: ( № ${page} )</h3>
+        </div>
+    `;
   }
 
   private createPagination(): string {
