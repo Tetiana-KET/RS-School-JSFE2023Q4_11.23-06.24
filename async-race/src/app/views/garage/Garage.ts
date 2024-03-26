@@ -2,33 +2,55 @@ import classes from './Garage.module.css';
 import { Component } from '../../components/Component';
 import { CARS_LIMIT, currentPage, getCars } from '../../modules/InteractionAPI';
 import { GarageInterface } from '../../interfaces/car.interface';
+import Car from '../car/Car';
 
 export default class GarageView extends Component {
   private totalCars: number = 0;
   private carsInGarage: GarageInterface = [];
   constructor() {
-    const formWrapper = new Component({ tagName: 'div', classNames: [classes.settings] });
-    const titleWrapper = new Component({ tagName: 'div', classNames: [classes.titleWrapper] });
-    const garageRaceComponent = new Component({ tagName: 'div', classNames: [classes.garageRace] });
-    const paginationWrapper = new Component({ tagName: 'div', classNames: [classes.paginationWrapper] });
+    const formWrap = new Component({ tagName: 'div', classNames: [classes.settings] });
+    const titleWrap = new Component({ tagName: 'div', classNames: [classes.titleWrapper] });
+    const garageRaceContainer = new Component({ tagName: 'div', classNames: [classes.garageRaceContainer] });
+    const paginationWrap = new Component({ tagName: 'div', classNames: [classes.paginationWrapper] });
     super({ tagName: 'section', classNames: [classes.garage] });
 
-    formWrapper.getNode().innerHTML = this.createFormWrapper();
-    this.getGarageState();
-    titleWrapper.getNode().innerHTML = this.createGarageTitle(1);
-    paginationWrapper.getNode().innerHTML = this.createPagination();
+    formWrap.getNode().innerHTML = this.createFormWrapper();
+    titleWrap.getNode().innerHTML = this.createGarageTitle(1);
+    paginationWrap.getNode().innerHTML = this.createPagination();
+
+    this.appendElements(formWrap, titleWrap, garageRaceContainer, paginationWrap);
+
+    this.getGarageState(garageRaceContainer);
+  }
+
+  private appendElements(
+    formWrapper: Component<HTMLElement>,
+    titleWrapper: Component<HTMLElement>,
+    garageRaceComponent: Component<HTMLElement>,
+    paginationWrapper: Component<HTMLElement>
+  ): void {
     this.append(formWrapper);
     this.append(titleWrapper);
     this.append(garageRaceComponent);
     this.append(paginationWrapper);
   }
 
-  private async getGarageState(): Promise<void> {
+  private async getGarageState(garageContainer: Component<HTMLElement>): Promise<void> {
+    const garageRaceContainer = garageContainer;
     const [cars, totalCars] = await getCars(currentPage, CARS_LIMIT);
     this.totalCars = totalCars;
     this.carsInGarage = await cars;
-    console.log(this.carsInGarage);
+    this.createCars(garageRaceContainer);
     this.updateGarageTitle();
+  }
+
+  private createCars(garageContainer: Component<HTMLElement>): void {
+    this.carsInGarage.forEach(carData => {
+      const car = new Car(carData);
+      const garageRaceContainer = garageContainer;
+      const carElement = car.getElement();
+      garageRaceContainer?.append(carElement);
+    });
   }
 
   private updateGarageTitle(): void {

@@ -1,10 +1,10 @@
-export interface CarInterface {
+export interface CarOptions {
+  id: number;
   name: string;
   color: string;
-  id: number;
 }
 
-export type GarageInterface = CarInterface[];
+export type GarageInterface = CarOptions[];
 
 // Example garage data
 const garage: GarageInterface = [

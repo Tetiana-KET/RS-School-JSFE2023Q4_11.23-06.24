@@ -1,0 +1,61 @@
+import classes from './Car.module.css';
+import { Component } from '../../components/Component';
+import { CarOptions } from '../../interfaces/car.interface';
+import { generateRandomNumber } from '../../utils/commonUtils';
+
+export default class Car {
+  private id: number;
+  private name: string;
+  private color: string;
+  private element: Component<HTMLElement>;
+
+  constructor(options: CarOptions) {
+    this.id = options.id;
+    this.name = options.name;
+    this.color = options.color;
+    this.element = this.createCarElement();
+  }
+
+  private createCarElement(): Component<HTMLElement> {
+    const startButton = new Component({ tagName: 'button', text: 'Start', classNames: [classes.startBtn, classes.button] });
+    const stopButton = new Component({
+      tagName: 'button',
+      text: 'Stop',
+      classNames: [classes.stopBtn, classes.button],
+      attributes: { disabled: 'true' },
+    });
+    const selectButton = new Component({ tagName: 'button', text: 'Select', classNames: [classes.selectBtn, classes.button] });
+    const deleteButton = new Component({ tagName: 'button', text: 'Delete', classNames: [classes.deleteBtn, classes.button] });
+    const nameSpan: Component<HTMLElement> = new Component({
+      tagName: 'span',
+      text: `${this.name}`,
+      classNames: [classes.carName],
+      attributes: { 'data-id': `${this.id}` },
+    });
+    const controls = new Component({
+      tagName: 'div',
+      classNames: [classes.carTrackControls],
+      children: [startButton, stopButton, selectButton, deleteButton, nameSpan],
+    });
+
+    const model = generateRandomNumber();
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+
+    use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `/sprite.svg#car${model}`);
+    svg.classList.add(classes.carSvg);
+    svg.style.fill = this.color;
+    svg.append(use);
+
+    const carIconWrap = new Component({ tagName: 'div', classNames: [classes.carIcon] });
+    carIconWrap.getNode().appendChild(svg);
+    const track = new Component({ tagName: 'div', classNames: [classes.carTrack], children: [carIconWrap] });
+
+    const carTrackWrap = new Component({ tagName: 'div', classNames: [classes.carTrackWrap], children: [controls, track] });
+    return carTrackWrap;
+  }
+
+  public getElement(): Component<HTMLElement> {
+    return this.element;
+  }
+}
