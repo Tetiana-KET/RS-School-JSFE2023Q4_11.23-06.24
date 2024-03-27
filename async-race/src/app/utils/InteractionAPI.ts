@@ -1,4 +1,4 @@
-import { GarageInterface } from '../interfaces/car.interface';
+import { CreatedCarOptions, GarageInterface } from '../interfaces/car.interface';
 
 const serverUrl: string = 'http://localhost:3000';
 const path = {
@@ -19,4 +19,22 @@ export const getCars = async (page: number, limit: number): GetCarsResponse => {
   const total: number = Number(response.headers.get('X-Total-Count'));
   console.log(`response `, response);
   return [cars, total];
+};
+
+export const updateServerState = async (carData: CreatedCarOptions): Promise<void> => {
+  try {
+    const response = await fetch(`${serverUrl}${path.garage}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(carData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update server state');
+    }
+  } catch (error) {
+    console.error('Error updating server state:', error);
+  }
 };

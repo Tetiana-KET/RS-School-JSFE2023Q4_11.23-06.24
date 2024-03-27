@@ -80,9 +80,10 @@ export default class Car {
     console.log(`select`, this);
   }
 
-  private clickDeleteButtonHandler(): void {
+  private async clickDeleteButtonHandler(): Promise<void> {
     console.log(`delete`, this);
   }
+
   public getElement(): Component<HTMLElement> {
     return this.element;
   }
