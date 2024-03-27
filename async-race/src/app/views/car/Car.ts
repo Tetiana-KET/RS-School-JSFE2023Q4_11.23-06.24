@@ -77,7 +77,16 @@ export default class Car {
   }
 
   private clickSelectButtonHandler(): void {
-    console.log(`select`, this);
+    const { color } = this;
+    const { name } = this;
+    const { id } = this;
+    const updateCarNameInput = document.querySelector('#update-car-name') as HTMLInputElement;
+    const updateCarColorInput = document.querySelector('#update-car-color') as HTMLInputElement;
+    const updateBtn = document.querySelector(`#updateBtn`) as HTMLButtonElement;
+    updateBtn.disabled = false;
+    updateCarNameInput.value = name;
+    updateCarColorInput.value = color;
+    updateCarNameInput.setAttribute('car-id', `${id}`);
   }
 
   private async clickDeleteButtonHandler(): Promise<void> {

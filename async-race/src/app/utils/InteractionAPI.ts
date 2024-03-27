@@ -1,4 +1,4 @@
-import { CreatedCarOptions, GarageInterface } from '../interfaces/car.interface';
+import { CarOptions, CreatedCarOptions, GarageInterface } from '../interfaces/car.interface';
 
 const serverUrl: string = 'http://localhost:3000';
 const path = {
@@ -46,6 +46,25 @@ export const deleteCar = async (thisId: number): Promise<void> => {
     });
     if (!response.ok) {
       console.error('Failed to delete car. Status:', response.status);
+    }
+  } catch (error) {
+    console.error('Error updating server state:', error);
+  }
+};
+
+export const updateCar = async (carData: CarOptions): Promise<void> => {
+  const { id } = carData;
+  try {
+    const response = await fetch(`${serverUrl}${path.garage}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(carData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update server state');
     }
   } catch (error) {
     console.error('Error updating server state:', error);

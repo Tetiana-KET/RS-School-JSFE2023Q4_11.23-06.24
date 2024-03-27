@@ -1,6 +1,6 @@
 import classes from './Garage.module.css';
 import { Component } from '../../components/Component';
-import { CARS_LIMIT, currentPage, getCars, updateServerState } from '../../utils/InteractionAPI';
+import { CARS_LIMIT, currentPage, getCars, updateCar, updateServerState } from '../../utils/InteractionAPI';
 import { GarageInterface } from '../../interfaces/car.interface';
 import Car from '../car/Car';
 
@@ -29,6 +29,9 @@ export default class GarageView extends Component {
     this.children[0].getNode().querySelector('#create-car-name')?.addEventListener('input', this.createCarNameInputHandler.bind(this));
     this.children[0].getNode().querySelector('#create-car-color')?.addEventListener('input', this.createCarColorInputHandler.bind(this));
     this.children[0].getNode().querySelector(`.${classes.createBtn}`)?.addEventListener('click', this.createBtnClickHandler.bind(this));
+
+    // UPDATE CAR
+    this.children[0].getNode().querySelector(`.${classes.updateBtn}`)?.addEventListener('click', this.updateBtnClickHandler.bind(this));
   }
   // private addEventListeners(): void {
   // create NEW CAR
@@ -123,7 +126,21 @@ export default class GarageView extends Component {
   }
 
   private async updateBtnClickHandler(): Promise<void> {
-    console.log(`update a car`, this);
+    const nameInput = this.children[0].getNode().querySelector(`#update-car-name`) as HTMLInputElement;
+    const carName = nameInput.value;
+    const colorInput = this.children[0].getNode().querySelector(`#update-car-color`) as HTMLInputElement;
+    const carColor = colorInput.value;
+    const CarId = Number(nameInput.getAttribute('car-id'));
+    try {
+      await updateCar({ id: CarId, name: carName, color: carColor });
+    } catch {
+      throw new Error();
+    }
+    this.getGarageState(this.children[2]);
+    nameInput.value = '';
+    colorInput.value = '#ffffff';
+    const updateBtn = document.querySelector(`#updateBtn`) as HTMLButtonElement;
+    updateBtn.disabled = true;
   }
 
   private raceBtnClickHandler(): void {
@@ -143,16 +160,16 @@ export default class GarageView extends Component {
       <div class="${classes.formWrapper}">
         <div class="${classes.form}">
           <form action="" class="${classes.carForm}" id="create-car">
-            <input class="${classes.formNameInput}" type="text" id="create-car-name" name="car-name" minlength="4" placeholder="Enter your new car Name"><br>
+            <input class="${classes.formNameInput}" type="text" id="create-car-name" name="car-name" minlength="3" placeholder="Enter your new car Name"><br>
             <input type="color" id="create-car-color" name="car-color" value="#ffffff">
             <button type="button" class="${classes.createBtn} ${classes.button}" id="createBtn" disabled>Create</button>
           </form>
         </div>
         <div class="${classes.form}">
           <form action="" class="${classes.carForm}" id="update-car">
-            <input class="${classes.formNameInput}" type="text" id="update-car-name" name="car-name" minlength="4" placeholder="Enter car to edit Name"><br>
+            <input class="${classes.formNameInput}" type="text" id="update-car-name" name="car-name" minlength="3" placeholder="Enter car to edit Name"><br>
             <input type="color" id="update-car-color" name="car-color" value="#ffffff">
-            <button type="button" class="${classes.updateBtn} ${classes.button}" disabled>Update</button>
+            <button type="button" class="${classes.updateBtn} ${classes.button}" disabled id="updateBtn">Update</button>
           </form>
         </div>
       </div>
