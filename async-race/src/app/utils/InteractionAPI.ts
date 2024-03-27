@@ -17,7 +17,6 @@ export const getCars = async (page: number, limit: number): GetCarsResponse => {
   const response: Response = await fetch(`${serverUrl}${path.garage}?_page=${page}&_limit=${limit}`);
   const cars = await response.json();
   const total: number = Number(response.headers.get('X-Total-Count'));
-  console.log(`response `, response);
   return [cars, total];
 };
 

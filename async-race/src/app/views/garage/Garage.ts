@@ -21,7 +21,31 @@ export default class GarageView extends Component {
     this.appendElements(formWrap, titleWrap, garageRaceContainer, paginationWrap);
 
     this.getGarageState(garageRaceContainer);
+    this.createNewCar();
   }
+
+  private createNewCar(): void {
+    // create NEW CAR
+    this.children[0].getNode().querySelector('#create-car-name')?.addEventListener('input', this.createCarNameInputHandler.bind(this));
+    this.children[0].getNode().querySelector('#create-car-color')?.addEventListener('input', this.createCarColorInputHandler.bind(this));
+    this.children[0].getNode().querySelector(`.${classes.createBtn}`)?.addEventListener('click', this.createBtnClickHandler.bind(this));
+  }
+  // private addEventListeners(): void {
+  // create NEW CAR
+  // UPDATE CAR
+  // const updateCarNameInput = document.querySelector('#update-car-name') as HTMLInputElement;
+  // const updateCarColorInput = document.querySelector('#update-car-color') as HTMLInputElement;
+  // const updateBtn = document.querySelector(`.${classes.updateBtn}`) as HTMLButtonElement;
+  // updateBtn.addEventListener('click', this.updateBtnClickHandler.bind(this));
+  // updateCarNameInput.addEventListener('input', this.updateCarNameInputHandler.bind(this));
+  // updateCarColorInput.addEventListener('input', this.updateCarColorInputHandler.bind(this));
+  // const raceBtn = document.querySelector(`.${classes.raceBtn}`) as HTMLButtonElement;
+  // const resetBtn = document.querySelector(`.${classes.resetBtn}`) as HTMLButtonElement;
+  // const generateBtn = document.querySelector(`.${classes.generateBtn}`) as HTMLButtonElement;
+  // raceBtn.addEventListener('click', this.raceBtnClickHandler.bind(this));
+  // resetBtn.addEventListener('click', this.resetBtnClickHandler.bind(this));
+  // generateBtn.addEventListener('click', this.generateBtnClickHandler.bind(this));
+  // }
 
   private appendElements(
     formWrapper: Component<HTMLElement>,
@@ -37,13 +61,12 @@ export default class GarageView extends Component {
 
   private async getGarageState(garageContainer: Component<HTMLElement>): Promise<void> {
     const garageRaceContainer = garageContainer;
+    this.carsInGarage.length = 0;
     const [cars, totalCars] = await getCars(currentPage, CARS_LIMIT);
     this.totalCars = totalCars;
     this.carsInGarage = await cars;
     this.createCars(garageRaceContainer);
     this.updateGarageTitle();
-    // Call addEventListeners for settings buttons
-    this.addEventListeners();
   }
 
   private createCars(garageContainer: Component<HTMLElement>): void {
@@ -62,6 +85,57 @@ export default class GarageView extends Component {
     if (titleWrapper) {
       titleWrapper.innerHTML = `<h2>Cars in Garage: ( ${this.totalCars} )</h2>`;
     }
+  }
+
+  // Create Name
+  private createCarNameInputHandler(): void {
+    const createButton = this.children[0].getNode().querySelector(`.${classes.createBtn}`) as HTMLButtonElement;
+    const input = this.children[0].getNode().querySelector('#create-car-name') as HTMLInputElement;
+    createButton.disabled = input.value.length < 3;
+  }
+  // Create Color
+  private createCarColorInputHandler(): void {
+    console.log(`input`, this);
+  }
+
+  private updateCarNameInputHandler(): void {
+    console.log(`input`, this);
+  }
+  private updateCarColorInputHandler(): void {
+    console.log(`input`, this);
+  }
+
+  private async createBtnClickHandler(): Promise<void> {
+    const nameInput = this.children[0].getNode().querySelector(`#create-car-name`) as HTMLInputElement;
+    const carName = nameInput.value;
+    const colorInput = this.children[0].getNode().querySelector(`#create-car-color`) as HTMLInputElement;
+    const carColor = colorInput.value;
+    try {
+      await updateServerState({ name: carName, color: carColor });
+    } catch {
+      throw new Error();
+    }
+    this.getGarageState(this.children[2]);
+    nameInput.value = '';
+    colorInput.value = '#ffffff';
+    const createButton = this.children[0].getNode().querySelector(`.${classes.createBtn}`) as HTMLButtonElement;
+    createButton.disabled = true;
+  }
+
+  private async updateBtnClickHandler(): Promise<void> {
+    console.log(`update a car`, this);
+  }
+
+  private raceBtnClickHandler(): void {
+    console.log(`start race`, this);
+  }
+
+  private resetBtnClickHandler(): void {
+    console.log(`stop race`, this);
+  }
+
+  private generateBtnClickHandler(): void {
+    console.log(`generate 100 cars`, this);
   }
 
   private createFormWrapper(): string {
@@ -104,79 +178,5 @@ export default class GarageView extends Component {
     return `
       <button type="button" class="${(classes.prevPage, classes.button)}" disabled>Previous</button>
       <button type="button" class="${(classes.nextPage, classes.button)}">Next</button>`;
-  }
-
-  private addEventListeners(): void {
-    // create NEW CAR
-    const createCarNameInput = document.querySelector('#create-car-name') as HTMLInputElement;
-    const createCarColorInput = document.querySelector('#create-car-color') as HTMLInputElement;
-    const createBtn = document.querySelector(`.${classes.createBtn}`) as HTMLButtonElement;
-    createBtn.addEventListener('click', this.createBtnClickHandler.bind(this));
-    createCarNameInput.addEventListener('input', this.createCarNameInputHandler.bind(this, createBtn));
-    createCarColorInput.addEventListener('input', this.createCarColorInputHandler.bind(this));
-
-    // UPDATE CAR
-    const updateCarNameInput = document.querySelector('#update-car-name') as HTMLInputElement;
-    const updateCarColorInput = document.querySelector('#update-car-color') as HTMLInputElement;
-    const updateBtn = document.querySelector(`.${classes.updateBtn}`) as HTMLButtonElement;
-    updateBtn.addEventListener('click', this.updateBtnClickHandler.bind(this));
-    updateCarNameInput.addEventListener('input', this.updateCarNameInputHandler.bind(this));
-    updateCarColorInput.addEventListener('input', this.updateCarColorInputHandler.bind(this));
-
-    const raceBtn = document.querySelector(`.${classes.raceBtn}`) as HTMLButtonElement;
-    const resetBtn = document.querySelector(`.${classes.resetBtn}`) as HTMLButtonElement;
-    const generateBtn = document.querySelector(`.${classes.generateBtn}`) as HTMLButtonElement;
-
-    raceBtn.addEventListener('click', this.raceBtnClickHandler.bind(this));
-    resetBtn.addEventListener('click', this.resetBtnClickHandler.bind(this));
-    generateBtn.addEventListener('click', this.generateBtnClickHandler.bind(this));
-  }
-  // Create Name
-  private createCarNameInputHandler(createBtn: HTMLButtonElement, event: Event): void {
-    const createButton = createBtn;
-    const input = event.target as HTMLInputElement;
-    createButton.disabled = input.value.length < 3;
-  }
-  // Create Color
-  private createCarColorInputHandler(): void {
-    console.log(`input`, this);
-  }
-
-  private updateCarNameInputHandler(): void {
-    console.log(`input`, this);
-  }
-  private updateCarColorInputHandler(): void {
-    console.log(`input`, this);
-  }
-
-  private async createBtnClickHandler(): Promise<void> {
-    const nameInput = this.children[0].getNode().querySelector(`#create-car-name`) as HTMLInputElement;
-    const carName = nameInput.value;
-    const colorInput = this.children[0].getNode().querySelector(`#create-car-color`) as HTMLInputElement;
-    const carColor = colorInput.value;
-    try {
-      await updateServerState({ name: carName, color: carColor });
-    } catch {
-      throw new Error();
-    }
-    this.getGarageState(this.children[2]);
-    nameInput.value = '';
-    colorInput.value = '#ffffff';
-  }
-
-  private async updateBtnClickHandler(): Promise<void> {
-    console.log(`update a car`, this);
-  }
-
-  private raceBtnClickHandler(): void {
-    console.log(`start race`, this);
-  }
-
-  private resetBtnClickHandler(): void {
-    console.log(`stop race`, this);
-  }
-
-  private generateBtnClickHandler(): void {
-    console.log(`generate 100 cars`, this);
   }
 }
