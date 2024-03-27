@@ -37,3 +37,17 @@ export const updateServerState = async (carData: CreatedCarOptions): Promise<voi
     console.error('Error updating server state:', error);
   }
 };
+
+export const deleteCar = async (thisId: number): Promise<void> => {
+  const id = thisId;
+  try {
+    const response = await fetch(`${serverUrl}${path.garage}/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      console.error('Failed to delete car. Status:', response.status);
+    }
+  } catch (error) {
+    console.error('Error updating server state:', error);
+  }
+};

@@ -1,7 +1,7 @@
 import classes from './Car.module.css';
 import { Component } from '../../components/Component';
 import { CarOptions } from '../../interfaces/car.interface';
-import { generateRandomNumber } from '../../utils/commonUtils';
+import { deleteCar } from '../../utils/InteractionAPI';
 
 export default class Car {
   private id: number;
@@ -37,22 +37,22 @@ export default class Car {
       classNames: [classes.carTrackControls],
       children: [startButton, stopButton, selectButton, deleteButton, nameSpan],
     });
-
     this.clickHandler(startButton, stopButton, selectButton, deleteButton);
-
-    const model = generateRandomNumber();
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-    use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `/sprite.svg#car${model}`);
+    use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `/sprite.svg#car${(this.id % 7) + 1}`);
     svg.classList.add(classes.carSvg);
     svg.style.fill = this.color;
     svg.append(use);
-
     const carIconWrap = new Component({ tagName: 'div', classNames: [classes.carIconWrap] });
     carIconWrap.getNode().appendChild(svg);
     const track = new Component({ tagName: 'div', classNames: [classes.carTrack], children: [carIconWrap] });
-
-    const carTrackWrap = new Component({ tagName: 'div', classNames: [classes.carTrackWrap], children: [track, controls] });
+    const carTrackWrap = new Component({
+      tagName: 'div',
+      classNames: [classes.carTrackWrap],
+      children: [track, controls],
+      attributes: { id: `${this.id}` },
+    });
     return carTrackWrap;
   }
 
@@ -82,6 +82,8 @@ export default class Car {
 
   private async clickDeleteButtonHandler(): Promise<void> {
     console.log(`delete`, this);
+    deleteCar(this.id);
+    this.getElement().getNode().remove();
   }
 
   public getElement(): Component<HTMLElement> {
