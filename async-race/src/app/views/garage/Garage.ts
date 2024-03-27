@@ -42,6 +42,8 @@ export default class GarageView extends Component {
     this.carsInGarage = await cars;
     this.createCars(garageRaceContainer);
     this.updateGarageTitle();
+    // Call addEventListeners for settings buttons
+    this.addEventListeners();
   }
 
   private createCars(garageContainer: Component<HTMLElement>): void {
@@ -67,21 +69,21 @@ export default class GarageView extends Component {
           <form action="" class="${classes.carForm}" id="create-car">
             <input class="${classes.formNameInput}" type="text" id="create-car-name" name="car-name"><br>
             <input type="color" id="create-car-color" name="car-color" value="#ffffff">
-            <button type="button" class="${(classes.createBtn, classes.button)} ">Create</button>
+            <button type="button" class="${classes.createBtn} ${classes.button}" id="createBtn">Create</button>
           </form>
         </div>
         <div class="${classes.form}">
           <form action="" class="${classes.carForm}" id="update-car">
             <input class="${classes.formNameInput}" type="text" id="update-car-name" name="car-name"><br>
             <input type="color" id="update-car-color" name="car-color" value="#ffffff">
-            <button type="button" class="${(classes.updateBtn, classes.button)}" disabled>Update</button>
+            <button type="button" class="${classes.updateBtn} ${classes.button}" disabled>Update</button>
           </form>
         </div>
       </div>
       <div class="${classes.garageMenuButtons}">
-        <button class="${(classes.raceBtn, classes.button)}">Start Race</button>
-        <button class="${(classes.resetBtn, classes.button)}" disabled>Reset</button>
-        <button class="${(classes.generateBtn, classes.button)}">Generate cars</button>
+        <button class="${classes.raceBtn} ${classes.button}">Start Race</button>
+        <button class="${classes.resetBtn} ${classes.button}" disabled>Reset</button>
+        <button class="${classes.generateBtn} ${classes.button}">Generate cars</button>
       </div>`;
   }
 
@@ -100,5 +102,39 @@ export default class GarageView extends Component {
     return `
       <button type="button" class="${(classes.prevPage, classes.button)}" disabled>Previous</button>
       <button type="button" class="${(classes.nextPage, classes.button)}">Next</button>`;
+  }
+
+  private addEventListeners(): void {
+    const createBtn = document.querySelector(`.${classes.createBtn}`) as HTMLButtonElement;
+    const updateBtn = document.querySelector(`.${classes.updateBtn}`) as HTMLButtonElement;
+    const raceBtn = document.querySelector(`.${classes.raceBtn}`) as HTMLButtonElement;
+    const resetBtn = document.querySelector(`.${classes.resetBtn}`) as HTMLButtonElement;
+    const generateBtn = document.querySelector(`.${classes.generateBtn}`) as HTMLButtonElement;
+
+    createBtn.addEventListener('click', this.createBtnClickHandler.bind(this));
+    updateBtn.addEventListener('click', this.updateBtnClickHandler.bind(this));
+    raceBtn.addEventListener('click', this.raceBtnClickHandler.bind(this));
+    resetBtn.addEventListener('click', this.resetBtnClickHandler.bind(this));
+    generateBtn.addEventListener('click', this.generateBtnClickHandler.bind(this));
+  }
+
+  private createBtnClickHandler(): void {
+    console.log(`create a car`, this);
+  }
+
+  private updateBtnClickHandler(): void {
+    console.log(`update a car`, this);
+  }
+
+  private raceBtnClickHandler(): void {
+    console.log(`start race`, this);
+  }
+
+  private resetBtnClickHandler(): void {
+    console.log(`stop race`, this);
+  }
+
+  private generateBtnClickHandler(): void {
+    console.log(`generate 100 cars`, this);
   }
 }

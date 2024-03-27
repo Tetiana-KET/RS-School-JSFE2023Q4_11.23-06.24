@@ -51,13 +51,18 @@
   background-position: bottom;
 }
 
-.car-icon {
+.car-icon-wrap {
   border-bottom: 2px dashed var(--white-color);
 }
 
-.car-icon .car-svg {
+.car-icon-wrap .car-svg {
   max-width: 90px;
   max-height: 40px;
+}
+
+.button[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 @media (hover: hover) and (pointer: fine) {
