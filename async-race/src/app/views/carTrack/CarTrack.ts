@@ -1,4 +1,4 @@
-import classes from './Car.module.css';
+import classes from './CarTrack.module.css';
 import { Component } from '../../components/Component';
 import { CarOptions } from '../../interfaces/car.interface';
 

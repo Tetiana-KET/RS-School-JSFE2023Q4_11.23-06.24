@@ -1,3 +1,3 @@
-export function generateRandomNumber(): number {
-  return Math.floor(Math.random() * 7) + 1;
+export function generateRandomNumber(max: number): number {
+  return Math.floor(Math.random() * max) + 1;
 }

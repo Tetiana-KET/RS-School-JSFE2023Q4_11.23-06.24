@@ -2,8 +2,9 @@ import classes from './Garage.module.css';
 import { Component } from '../../components/Component';
 import { createCar, deleteCar, updateCar } from '../../utils/InteractionAPI';
 import { createCarsInGarage, updateGarageTitle } from '../../utils/RenderingUI';
-import Car from '../car/Car';
-import { createFormWrapper, createGarageTitle } from './garage.utils';
+import Car from '../carTrack/CarTrack';
+import { createFormWrapper, createGarageTitle } from './garage.templates';
+import CarModelGenerator from '../../utils/carModelGenerator';
 
 export default class GarageView extends Component {
   private formWrap: Component<HTMLDivElement>;
@@ -12,6 +13,8 @@ export default class GarageView extends Component {
   private paginationWrap: Component<HTMLDivElement>;
   private CARS_LIMIT: number = 7;
   private currentPage: number = 1;
+  private CarModelGenerator = new CarModelGenerator();
+
   constructor() {
     super({ tagName: 'section', classNames: [classes.garage] });
     this.titleWrap = new Component({ tagName: 'div', classNames: [classes.titleWrapper] });
@@ -45,7 +48,7 @@ export default class GarageView extends Component {
 
   private generateBtnAddListener(): void {
     const generateBtn = this.formWrap.getNode().querySelector(`.${classes.generateBtn}`);
-    generateBtn?.addEventListener('click', this.generateBtnClickHandler);
+    generateBtn?.addEventListener('click', this.generateBtnClickHandler.bind(this));
   }
 
   private appendElements(
@@ -144,6 +147,7 @@ export default class GarageView extends Component {
 
   private generateBtnClickHandler(): void {
     console.log(`generate 100 cars`, this);
+    console.log(this.CarModelGenerator.generateRandomCar()); // {name: 'ЗАЗ M5 Sedan (F90) 2017', color: 'hsl(18, 12%, 72%)'}
   }
 
   private createFormWrapper(): string {
