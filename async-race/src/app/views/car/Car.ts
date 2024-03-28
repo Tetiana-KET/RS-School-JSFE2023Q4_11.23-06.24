@@ -1,19 +1,26 @@
 import classes from './Car.module.css';
 import { Component } from '../../components/Component';
 import { CarOptions } from '../../interfaces/car.interface';
-import { deleteCar } from '../../utils/InteractionAPI';
+
+type CarActionsHandlers = {
+  onDeleteClick: (input: { id: number }) => void;
+  onStartClick: (input: { id: number }) => void;
+  onStopClick: (input: { id: number }) => void;
+};
 
 export default class Car {
   private id: number;
   private name: string;
   private color: string;
   private element: Component<HTMLElement>;
+  private handlers: CarActionsHandlers;
 
-  constructor(options: CarOptions) {
+  constructor(options: CarOptions & CarActionsHandlers) {
     this.id = options.id;
     this.name = options.name;
     this.color = options.color;
     this.element = this.createCarElement();
+    this.handlers = options;
   }
 
   private createCarElement(): Component<HTMLElement> {
@@ -68,14 +75,6 @@ export default class Car {
     deleteButton.getNode().addEventListener('click', this.clickDeleteButtonHandler.bind(this));
   }
 
-  private clickStartButtonHandler(): void {
-    console.log(`start`, this); // Car {id: 4, name: 'Ford', color: '#ef3c40', element: Component}
-  }
-
-  private clickStopButtonHandler(): void {
-    console.log(`stop`, this);
-  }
-
   private clickSelectButtonHandler(): void {
     const { color } = this;
     const { name } = this;
@@ -89,13 +88,21 @@ export default class Car {
     updateCarNameInput.setAttribute('car-id', `${id}`);
   }
 
-  private async clickDeleteButtonHandler(): Promise<void> {
-    console.log(`delete`, this);
-    deleteCar(this.id);
-    this.getElement().getNode().remove();
+  private clickDeleteButtonHandler(): void {
+    this.handlers.onDeleteClick({ id: this.id });
   }
 
-  public getElement(): Component<HTMLElement> {
-    return this.element;
+  private clickStartButtonHandler(): void {
+    console.log(`start`, this);
+    this.handlers.onStartClick({ id: this.id });
+  }
+
+  private clickStopButtonHandler(): void {
+    console.log(`stop`, this);
+    this.handlers.onStopClick({ id: this.id });
+  }
+
+  public getElement(): HTMLElement {
+    return this.element.getNode();
   }
 }

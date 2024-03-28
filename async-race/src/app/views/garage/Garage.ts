@@ -1,54 +1,45 @@
 import classes from './Garage.module.css';
 import { Component } from '../../components/Component';
-import { CARS_LIMIT, currentPage, getCars, updateCar, updateServerState } from '../../utils/InteractionAPI';
-import { GarageInterface } from '../../interfaces/car.interface';
+import { createCar, deleteCar, updateCar } from '../../utils/InteractionAPI';
+import { createCarsInGarage, updateGarageTitle } from '../../utils/RenderingUI';
 import Car from '../car/Car';
 
 export default class GarageView extends Component {
-  private totalCars: number = 0;
-  private carsInGarage: GarageInterface = [];
+  private formWrap: Component<HTMLDivElement>;
+  private titleWrap: Component<HTMLDivElement>;
+  private garageRaceContainer: Component<HTMLDivElement>;
+  private paginationWrap: Component<HTMLDivElement>;
+  private CARS_LIMIT: number = 7;
+  private currentPage: number = 1;
   constructor() {
-    const formWrap = new Component({ tagName: 'div', classNames: [classes.settings] });
-    const titleWrap = new Component({ tagName: 'div', classNames: [classes.titleWrapper] });
-    const garageRaceContainer = new Component({ tagName: 'div', classNames: [classes.garageRaceContainer] });
-    const paginationWrap = new Component({ tagName: 'div', classNames: [classes.paginationWrapper] });
     super({ tagName: 'section', classNames: [classes.garage] });
-
-    formWrap.getNode().innerHTML = this.createFormWrapper();
-    titleWrap.getNode().innerHTML = this.createGarageTitle(1);
-    paginationWrap.getNode().innerHTML = this.createPagination();
-
-    this.appendElements(formWrap, titleWrap, garageRaceContainer, paginationWrap);
-
-    this.getGarageState(garageRaceContainer);
-    this.createNewCar();
+    this.titleWrap = new Component({ tagName: 'div', classNames: [classes.titleWrapper] });
+    this.paginationWrap = new Component({ tagName: 'div', classNames: [classes.paginationWrapper] });
+    this.garageRaceContainer = new Component({ tagName: 'div', classNames: [classes.garageRaceContainer] });
+    this.formWrap = new Component({ tagName: 'div', classNames: [classes.settings] });
+    this.formWrap.getNode().innerHTML = this.createFormWrapper();
+    this.titleWrap.getNode().innerHTML = this.createGarageTitle(this.currentPage);
+    this.paginationWrap.getNode().innerHTML = this.createPagination();
+    this.appendElements(this.formWrap, this.titleWrap, this.garageRaceContainer, this.paginationWrap);
+    this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
   }
 
-  private createNewCar(): void {
+  private createBtnAddListener(): void {
     // create NEW CAR
-    this.children[0].getNode().querySelector('#create-car-name')?.addEventListener('input', this.createCarNameInputHandler.bind(this));
-    this.children[0].getNode().querySelector('#create-car-color')?.addEventListener('input', this.createCarColorInputHandler.bind(this));
-    this.children[0].getNode().querySelector(`.${classes.createBtn}`)?.addEventListener('click', this.createBtnClickHandler.bind(this));
+    const carNameInput = this.formWrap.getNode().querySelector('#create-car-name');
+    carNameInput?.addEventListener('input', this.createCarNameInputHandler.bind(this));
 
-    // UPDATE CAR
-    this.children[0].getNode().querySelector(`.${classes.updateBtn}`)?.addEventListener('click', this.updateBtnClickHandler.bind(this));
+    const carColorInput = this.formWrap.getNode().querySelector('#create-car-color');
+    carColorInput?.addEventListener('input', this.createCarColorInputHandler.bind(this));
+
+    const createBtn = this.formWrap.getNode().querySelector(`.${classes.createBtn}`);
+    createBtn?.addEventListener('click', this.createBtnClickHandler);
   }
-  // private addEventListeners(): void {
-  // create NEW CAR
-  // UPDATE CAR
-  // const updateCarNameInput = document.querySelector('#update-car-name') as HTMLInputElement;
-  // const updateCarColorInput = document.querySelector('#update-car-color') as HTMLInputElement;
-  // const updateBtn = document.querySelector(`.${classes.updateBtn}`) as HTMLButtonElement;
-  // updateBtn.addEventListener('click', this.updateBtnClickHandler.bind(this));
-  // updateCarNameInput.addEventListener('input', this.updateCarNameInputHandler.bind(this));
-  // updateCarColorInput.addEventListener('input', this.updateCarColorInputHandler.bind(this));
-  // const raceBtn = document.querySelector(`.${classes.raceBtn}`) as HTMLButtonElement;
-  // const resetBtn = document.querySelector(`.${classes.resetBtn}`) as HTMLButtonElement;
-  // const generateBtn = document.querySelector(`.${classes.generateBtn}`) as HTMLButtonElement;
-  // raceBtn.addEventListener('click', this.raceBtnClickHandler.bind(this));
-  // resetBtn.addEventListener('click', this.resetBtnClickHandler.bind(this));
-  // generateBtn.addEventListener('click', this.generateBtnClickHandler.bind(this));
-  // }
+
+  private updateBtnAddListener(): void {
+    // UPDATE CAR
+    this.formWrap.getNode().querySelector(`.${classes.updateBtn}`)?.addEventListener('click', this.updateBtnClickHandler.bind(this));
+  }
 
   private appendElements(
     formWrapper: Component<HTMLElement>,
@@ -62,33 +53,33 @@ export default class GarageView extends Component {
     this.append(paginationWrapper);
   }
 
-  private async getGarageState(garageContainer: Component<HTMLElement>): Promise<void> {
-    const garageRaceContainer = garageContainer;
-    this.carsInGarage.length = 0;
-    const [cars, totalCars] = await getCars(currentPage, CARS_LIMIT);
-    this.totalCars = totalCars;
-    this.carsInGarage = await cars;
-    this.createCars(garageRaceContainer);
-    this.updateGarageTitle();
-  }
+  private async createGarageView(garageContainer: HTMLElement, currentPage: number, CARS_LIMIT: number): Promise<void> {
+    const carsInGarage = await createCarsInGarage(garageContainer, currentPage, CARS_LIMIT);
+    this.createBtnAddListener();
+    this.updateBtnAddListener();
+    const container = garageContainer;
+    container.innerHTML = '';
 
-  private createCars(garageContainer: Component<HTMLElement>): void {
-    const garageCWrap = garageContainer;
-    garageCWrap.getNode().innerHTML = '';
-
-    this.carsInGarage.forEach(carData => {
-      const car = new Car(carData);
+    carsInGarage.forEach(carData => {
+      const car = new Car({ ...carData, onDeleteClick: this.onDeleteCar, onStartClick: this.onStartCar, onStopClick: this.onStopCar });
       const carElement = car.getElement();
-      garageContainer?.append(carElement);
+      container?.append(carElement);
     });
+    updateGarageTitle(carsInGarage.length);
   }
 
-  private updateGarageTitle(): void {
-    const titleWrapper = this.getNode().querySelector(`.${classes.carsCount} h2`);
-    if (titleWrapper) {
-      titleWrapper.innerHTML = `<h2>Cars in Garage: ( ${this.totalCars} )</h2>`;
-    }
-  }
+  private onDeleteCar = async (input: { id: number }): Promise<void> => {
+    await deleteCar(input.id);
+    await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
+  };
+
+  private onStartCar = async (input: { id: number }): Promise<void> => {
+    console.log(`car with id="${input.id}" Started`);
+  };
+
+  private onStopCar = async (input: { id: number }): Promise<void> => {
+    console.log(`car with id="${input.id}" Stopped`);
+  };
 
   // Create Name
   private createCarNameInputHandler(): void {
@@ -101,29 +92,22 @@ export default class GarageView extends Component {
     console.log(`input`, this);
   }
 
-  private updateCarNameInputHandler(): void {
-    console.log(`input`, this);
-  }
-  private updateCarColorInputHandler(): void {
-    console.log(`input`, this);
-  }
-
-  private async createBtnClickHandler(): Promise<void> {
+  private createBtnClickHandler = async (): Promise<void> => {
     const nameInput = this.children[0].getNode().querySelector(`#create-car-name`) as HTMLInputElement;
     const carName = nameInput.value;
     const colorInput = this.children[0].getNode().querySelector(`#create-car-color`) as HTMLInputElement;
     const carColor = colorInput.value;
     try {
-      await updateServerState({ name: carName, color: carColor });
+      await createCar({ name: carName, color: carColor });
     } catch {
       throw new Error();
     }
-    this.getGarageState(this.children[2]);
+    this.createGarageView(this.children[2].getNode(), this.currentPage, this.CARS_LIMIT);
     nameInput.value = '';
     colorInput.value = '#ffffff';
     const createButton = this.children[0].getNode().querySelector(`.${classes.createBtn}`) as HTMLButtonElement;
     createButton.disabled = true;
-  }
+  };
 
   private async updateBtnClickHandler(): Promise<void> {
     const nameInput = this.children[0].getNode().querySelector(`#update-car-name`) as HTMLInputElement;
@@ -136,7 +120,7 @@ export default class GarageView extends Component {
     } catch {
       throw new Error();
     }
-    this.getGarageState(this.children[2]);
+    this.createGarageView(this.children[2].getNode(), this.currentPage, this.CARS_LIMIT);
     nameInput.value = '';
     colorInput.value = '#ffffff';
     const updateBtn = document.querySelector(`#updateBtn`) as HTMLButtonElement;
@@ -160,14 +144,14 @@ export default class GarageView extends Component {
       <div class="${classes.formWrapper}">
         <div class="${classes.form}">
           <form action="" class="${classes.carForm}" id="create-car">
-            <input class="${classes.formNameInput}" type="text" id="create-car-name" name="car-name" minlength="3" placeholder="Enter your new car Name"><br>
+            <input class="${classes.formNameInput}" type="text" id="create-car-name" name="car-name" minlength="3" placeholder="Car name (min 3 symbols)"><br>
             <input type="color" id="create-car-color" name="car-color" value="#ffffff">
             <button type="button" class="${classes.createBtn} ${classes.button}" id="createBtn" disabled>Create</button>
           </form>
         </div>
         <div class="${classes.form}">
           <form action="" class="${classes.carForm}" id="update-car">
-            <input class="${classes.formNameInput}" type="text" id="update-car-name" name="car-name" minlength="3" placeholder="Enter car to edit Name"><br>
+            <input class="${classes.formNameInput}" type="text" id="update-car-name" name="car-name" minlength="3" placeholder="Select car with select button"><br>
             <input type="color" id="update-car-color" name="car-color" value="#ffffff">
             <button type="button" class="${classes.updateBtn} ${classes.button}" disabled id="updateBtn">Update</button>
           </form>
@@ -182,7 +166,7 @@ export default class GarageView extends Component {
 
   private createGarageTitle(page: number): string {
     return `
-        <div class="${classes.carsCount}">
+        <div class="${classes.carsCount}" id="carsCount">
           <h2></h2>
         </div>
         <div class="${classes.garagePageNumber}">

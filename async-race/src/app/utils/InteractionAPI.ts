@@ -7,9 +7,6 @@ const path = {
   winners: '/winners',
 };
 
-export const CARS_LIMIT = 7;
-export const currentPage = 1;
-
 // garage cars
 type GetCarsResponse = Promise<[Promise<GarageInterface>, number]>;
 
@@ -20,7 +17,7 @@ export const getCars = async (page: number, limit: number): GetCarsResponse => {
   return [cars, total];
 };
 
-export const updateServerState = async (carData: CreatedCarOptions): Promise<void> => {
+export const createCar = async (carData: CreatedCarOptions): Promise<void> => {
   try {
     const response = await fetch(`${serverUrl}${path.garage}`, {
       method: 'POST',

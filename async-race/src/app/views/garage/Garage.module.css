@@ -1,13 +1,13 @@
 .garage {
   display: flex;
   flex-direction: column;
-  min-height: 80vh;
+  min-height: 85vh;
   padding: 0px 20px 15px;
 }
 
 .settings {
   display: flex;
-  padding: 10px 0px 0px;
+  padding: 15px 0px 0px;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
