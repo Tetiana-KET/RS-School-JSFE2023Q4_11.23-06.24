@@ -5,6 +5,7 @@ import { createCarsInGarage, updateGarageTitle } from '../../utils/RenderingUI';
 import Car from '../carTrack/CarTrack';
 import { createFormWrapper, createGarageTitle } from './garage.templates';
 import CarModelGenerator from '../../utils/carModelGenerator';
+import { CreatedCarOptions } from '../../interfaces/car.interface';
 
 export default class GarageView extends Component {
   private formWrap: Component<HTMLDivElement>;
@@ -112,7 +113,7 @@ export default class GarageView extends Component {
     } catch {
       throw new Error();
     }
-    this.createGarageView(this.children[2].getNode(), this.currentPage, this.CARS_LIMIT);
+    this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     nameInput.value = '';
     colorInput.value = '#ffffff';
     const createButton = this.children[0].getNode().querySelector(`.${classes.createBtn}`) as HTMLButtonElement;
@@ -130,7 +131,7 @@ export default class GarageView extends Component {
     } catch {
       throw new Error();
     }
-    this.createGarageView(this.children[2].getNode(), this.currentPage, this.CARS_LIMIT);
+    this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     nameInput.value = '';
     colorInput.value = '#ffffff';
     const updateBtn = document.querySelector(`#updateBtn`) as HTMLButtonElement;
@@ -146,8 +147,16 @@ export default class GarageView extends Component {
   }
 
   private generateBtnClickHandler(): void {
-    console.log(`generate 100 cars`, this);
-    console.log(this.CarModelGenerator.generateRandomCar()); // {name: 'ЗАЗ M5 Sedan (F90) 2017', color: 'hsl(18, 12%, 72%)'}
+    console.log(`generate 100 cars`, this.garageRaceContainer.getNode());
+    this.hundredCarGeneration();
+
+    this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
+  }
+
+  private async hundredCarGeneration(): Promise<void> {
+    const carsInfoArray = [...Array(100)].map(() => this.CarModelGenerator.generateRandomCar());
+    const promises = carsInfoArray.map((carInfo: CreatedCarOptions) => createCar(carInfo));
+    await Promise.all(promises);
   }
 
   private createFormWrapper(): string {
