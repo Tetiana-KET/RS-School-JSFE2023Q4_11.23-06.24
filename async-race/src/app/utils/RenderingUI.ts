@@ -2,12 +2,12 @@ import { GarageInterface } from '../interfaces/car.interface';
 
 import { getCars } from './InteractionAPI';
 
-export function updateGarageTitle(carsCount: number, currentPage: number, lastPage: number = 1): void {
-  const titleWrapper = document.querySelector(`#carsCount h2`);
+export function updatePageTitle(carsCount: number, currentPage: number, pageName: string, lastPage: number = 1): void {
+  const titleWrapper = document.querySelector(`#${pageName}CarsCount h2`);
   if (titleWrapper) {
     titleWrapper.innerHTML = `<h2>Cars in Garage: ( ${carsCount} )</h2>`;
   }
-  const pageNumberWrapper = document.querySelector(`#pageNumber`);
+  const pageNumberWrapper = document.querySelector(`#${pageName}pageNumber`);
   if (pageNumberWrapper) {
     pageNumberWrapper.textContent = `Page: ( № ${currentPage} / ${lastPage})`;
   }

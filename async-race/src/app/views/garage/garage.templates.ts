@@ -22,14 +22,3 @@ export function createFormWrapper(classes: CSSModuleClasses): string {
         <button class="${classes.generateBtn} ${classes.button}">Generate cars</button>
       </div>`;
 }
-
-export function createGarageTitle(page: number, classes: CSSModuleClasses): string {
-  return `
-        <div class="${classes.carsCount}" id="carsCount">
-          <h2></h2>
-        </div>
-        <div class="${classes.garagePageNumber}">
-          <h3 class="${classes.pageNumber}" data-page="${page}" id="pageNumber">Page: ( № ${page} )</h3>
-        </div>
-    `;
-}

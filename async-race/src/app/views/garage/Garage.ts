@@ -3,10 +3,11 @@ import { Component } from '../../components/Component';
 import { Pagination } from '../../components/pagination/Pagination';
 import Car from '../carTrack/CarTrack';
 import CarModelGenerator from '../../utils/carModelGenerator';
-import { createFormWrapper, createGarageTitle } from './garage.templates';
+import { createFormWrapper } from './garage.templates';
 import { CreatedCarOptions } from '../../interfaces/car.interface';
-import { createCarsInGarage, togglePaginationBtnsState, updateGarageTitle } from '../../utils/RenderingUI';
+import { createCarsInGarage, togglePaginationBtnsState, updatePageTitle } from '../../utils/RenderingUI';
 import { createCar, deleteCar, updateCar } from '../../utils/InteractionAPI';
+import { createPageTitle } from '../../components/pageTitle';
 
 export default class GarageView extends Component {
   private formWrap: Component<HTMLDivElement>;
@@ -87,7 +88,7 @@ export default class GarageView extends Component {
       container?.append(carElement);
     });
     this.lastPage = this.updateLastPage(total);
-    updateGarageTitle(total, currentPage, this.lastPage);
+    updatePageTitle(total, currentPage, this.lastPage, 'garage');
   }
 
   private updateLastPage(totalCars: number): number {
@@ -208,6 +209,6 @@ export default class GarageView extends Component {
   }
 
   private createGarageTitle(page: number): string {
-    return createGarageTitle(page, classes);
+    return createPageTitle(page, classes, 'garage');
   }
 }
