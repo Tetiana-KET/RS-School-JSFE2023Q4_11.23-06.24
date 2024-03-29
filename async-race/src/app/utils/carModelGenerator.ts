@@ -12,10 +12,16 @@ export default class CarModelGenerator {
   }
 
   private getRandomColor(): string {
-    const hue = Math.floor(Math.random() * 360);
-    const saturation = Math.floor(Math.random() * 51) + 50;
-    const lightness = Math.floor(Math.random() * 51) + 50;
-    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    const red = Math.floor(Math.random() * 256);
+    const green = Math.floor(Math.random() * 256);
+    const blue = Math.floor(Math.random() * 256);
+
+    const redHex = red.toString(16).padStart(2, '0');
+    const greenHex = green.toString(16).padStart(2, '0');
+    const blueHex = blue.toString(16).padStart(2, '0');
+
+    const color = `#${redHex}${greenHex}${blueHex}`;
+    return color;
   }
 
   private generateRandomName(): string {
