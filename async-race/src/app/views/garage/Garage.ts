@@ -5,7 +5,7 @@ import Car from '../carTrack/CarTrack';
 import CarModelGenerator from '../../utils/carModelGenerator';
 import { createFormWrapper, createGarageTitle } from './garage.templates';
 import { CreatedCarOptions } from '../../interfaces/car.interface';
-import { createCarsInGarage, updateGarageTitle } from '../../utils/RenderingUI';
+import { createCarsInGarage, togglePaginationBtnsState, updateGarageTitle } from '../../utils/RenderingUI';
 import { createCar, deleteCar, updateCar } from '../../utils/InteractionAPI';
 
 export default class GarageView extends Component {
@@ -15,6 +15,7 @@ export default class GarageView extends Component {
 
   private CARS_LIMIT: number = 7;
   private currentPage: number = 1;
+  private lastPage: number = 1;
   private paginationWrap: Pagination;
   private CarModelGenerator = new CarModelGenerator();
 
@@ -46,9 +47,6 @@ export default class GarageView extends Component {
     // create NEW CAR
     const carNameInput = this.formWrap.getNode().querySelector('#create-car-name');
     carNameInput?.addEventListener('input', this.createCarNameInputHandler.bind(this));
-
-    const carColorInput = this.formWrap.getNode().querySelector('#create-car-color');
-    carColorInput?.addEventListener('input', this.createCarColorInputHandler.bind(this));
 
     const createBtn = this.formWrap.getNode().querySelector(`.${classes.createBtn}`);
     createBtn?.addEventListener('click', this.createBtnClickHandler);
@@ -88,7 +86,12 @@ export default class GarageView extends Component {
       const carElement = car.getElement();
       container?.append(carElement);
     });
-    updateGarageTitle(total);
+    this.lastPage = this.updateLastPage(total);
+    updateGarageTitle(total, currentPage, this.lastPage);
+  }
+
+  private updateLastPage(totalCars: number): number {
+    return Math.ceil(totalCars / this.CARS_LIMIT);
   }
 
   private onDeleteCar = async (input: { id: number }): Promise<void> => {
@@ -104,20 +107,36 @@ export default class GarageView extends Component {
     console.log(`car with id="${input.id}" Stopped`);
   };
 
+  // click first page pagination button
   private onFirstClick = async (): Promise<void> => {
-    console.log(` Go to first page clicked`);
+    this.currentPage = 1;
+    await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
+    this.setPaginationPageNum();
+    togglePaginationBtnsState(this.currentPage, this.lastPage);
   };
 
+  // click prev page pagination button
   private onPrevClick = async (): Promise<void> => {
-    console.log(` Go to previous page clicked`);
+    this.currentPage -= 1;
+    await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
+    this.setPaginationPageNum();
+    togglePaginationBtnsState(this.currentPage, this.lastPage);
   };
 
+  // click next page pagination button
   private onNextClick = async (): Promise<void> => {
-    console.log(` Go to the next page clicked`);
+    this.currentPage += 1;
+    await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
+    this.setPaginationPageNum();
+    togglePaginationBtnsState(this.currentPage, this.lastPage);
   };
 
+  // click last page pagination button
   private onLastClick = async (): Promise<void> => {
-    console.log(` Go to the last page clicked`);
+    this.currentPage = this.lastPage;
+    await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
+    this.setPaginationPageNum();
+    togglePaginationBtnsState(this.currentPage, this.lastPage);
   };
 
   // Create Name
@@ -126,11 +145,8 @@ export default class GarageView extends Component {
     const input = this.children[0].getNode().querySelector('#create-car-name') as HTMLInputElement;
     createButton.disabled = input.value.length < 3;
   }
-  // Create Color
-  private createCarColorInputHandler(): void {
-    console.log(`input`, this);
-  }
 
+  // click create button
   private createBtnClickHandler = async (): Promise<void> => {
     const nameInput = this.children[0].getNode().querySelector(`#create-car-name`) as HTMLInputElement;
     const carName = nameInput.value;
@@ -148,6 +164,7 @@ export default class GarageView extends Component {
     createButton.disabled = true;
   };
 
+  // click update button
   private async updateBtnClickHandler(): Promise<void> {
     const nameInput = this.children[0].getNode().querySelector(`#update-car-name`) as HTMLInputElement;
     const carName = nameInput.value;
@@ -174,10 +191,9 @@ export default class GarageView extends Component {
   //   console.log(`stop race`, this);
   // }
 
+  // click generate button
   private generateBtnClickHandler(): void {
-    console.log(`generate 100 cars`, this.garageRaceContainer.getNode());
     this.hundredCarGeneration();
-
     this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
   }
 
@@ -194,10 +210,4 @@ export default class GarageView extends Component {
   private createGarageTitle(page: number): string {
     return createGarageTitle(page, classes);
   }
-
-  // private createPagination(): string {
-  //   return `
-  //     <button type="button" class="${(classes.prevPage, classes.button)}" disabled>Previous</button>
-  //     <button type="button" class="${(classes.nextPage, classes.button)}">Next</button>`;
-  // }
 }

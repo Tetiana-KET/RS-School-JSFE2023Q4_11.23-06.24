@@ -29,7 +29,7 @@ export function createGarageTitle(page: number, classes: CSSModuleClasses): stri
           <h2></h2>
         </div>
         <div class="${classes.garagePageNumber}">
-          <h3 class="${classes.pageNumber}" data-page="${page}">Page: ( № ${page} )</h3>
+          <h3 class="${classes.pageNumber}" data-page="${page}" id="pageNumber">Page: ( № ${page} )</h3>
         </div>
     `;
 }
