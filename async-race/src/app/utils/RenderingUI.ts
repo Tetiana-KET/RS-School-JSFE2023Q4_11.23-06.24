@@ -9,8 +9,9 @@ export function updateGarageTitle(carsCount: number): void {
   }
 }
 
-export async function createCarsInGarage(garageContainer: HTMLElement, page: number, limit: number): Promise<GarageInterface> {
-  const [cars] = await getCars(page, limit);
+export async function createCarsInGarage(garageContainer: HTMLElement, page: number, limit: number): Promise<[GarageInterface, number]> {
+  const [cars, total] = await getCars(page, limit);
   const carsInGarage = await cars;
-  return carsInGarage;
+  const totalCars = total;
+  return [carsInGarage, totalCars];
 }

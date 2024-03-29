@@ -41,7 +41,7 @@
 .car-track::before {
   position: absolute;
   top: 0;
-  right: 80px;
+  right: 8%;
   content: '';
   height: 100%;
   width: 50px;

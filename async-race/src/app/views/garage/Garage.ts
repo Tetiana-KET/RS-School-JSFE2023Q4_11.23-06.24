@@ -65,7 +65,7 @@ export default class GarageView extends Component {
   }
 
   private async createGarageView(garageContainer: HTMLElement, currentPage: number, CARS_LIMIT: number): Promise<void> {
-    const carsInGarage = await createCarsInGarage(garageContainer, currentPage, CARS_LIMIT);
+    const [carsInGarage, total] = await createCarsInGarage(garageContainer, currentPage, CARS_LIMIT);
     this.createBtnAddListener();
     this.updateBtnAddListener();
     const container = garageContainer;
@@ -76,7 +76,7 @@ export default class GarageView extends Component {
       const carElement = car.getElement();
       container?.append(carElement);
     });
-    updateGarageTitle(carsInGarage.length);
+    updateGarageTitle(total);
   }
 
   private onDeleteCar = async (input: { id: number }): Promise<void> => {

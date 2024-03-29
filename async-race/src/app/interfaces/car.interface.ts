@@ -9,4 +9,4 @@ export interface CreatedCarOptions {
   color: string;
 }
 
-export type GarageInterface = CarOptions[] & number;
+export type GarageInterface = CarOptions[];
