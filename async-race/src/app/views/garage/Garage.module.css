@@ -98,7 +98,7 @@
 .garage-page-number {
 }
 
-.pagination-wrapper {
+/* .pagination-wrapper {
   display: flex;
   align-self: center;
   gap: 20px;
@@ -110,7 +110,7 @@
 .pagination-wrapper .button {
   width: 90px;
   height: 30px;
-}
+} */
 
 .garage-race-container {
   display: flex;
