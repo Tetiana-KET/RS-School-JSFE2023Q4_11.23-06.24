@@ -99,27 +99,23 @@
 .garage-page-number {
 }
 
-/* .pagination-wrapper {
-  display: flex;
-  align-self: center;
-  gap: 20px;
-  margin-top: auto;
-}
-
-.prev-page {
-}
-.pagination-wrapper .button {
-  width: 90px;
-  height: 30px;
-} */
-
 .garage-race-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  height: 60vh;
+  overflow: auto;
   margin-bottom: 10px;
-  gap: 10px;
+  padding-right: 15px;
+  gap: 15px;
+}
+.garage-race-container::-webkit-scrollbar {
+  width: 8px;
+  background: linear-gradient(315deg, #02343d 0%, #0d011b 74%) fixed;
+  border-radius: 50px;
+}
+.garage-race-container::-webkit-scrollbar-thumb {
+  background-color: var(--box-shadow);
+  border-radius: 3px;
 }
 
 /* HOVER */

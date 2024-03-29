@@ -20,11 +20,11 @@ export async function createCarsInGarage(page: number, limit: number): Promise<[
   return [carsInGarage, totalCars];
 }
 
-export function togglePaginationBtnsState(currentPage: number, lastPage: number): void {
-  const firstPageBtn = document.querySelector('#firstPageBtn') as HTMLButtonElement;
-  const prevBtn = document.querySelector('#prevBtn') as HTMLButtonElement;
-  const nextBtn = document.querySelector('#nextBtn') as HTMLButtonElement;
-  const lastPageBtn = document.querySelector('#lastPageBtn') as HTMLButtonElement;
+export function togglePaginationBtnsState(currentPage: number, lastPage: number, pageName: string): void {
+  const firstPageBtn = document.querySelector(`#${pageName}FirstPageBtn`) as HTMLButtonElement;
+  const prevBtn = document.querySelector(`#${pageName}PrevBtn`) as HTMLButtonElement;
+  const nextBtn = document.querySelector(`#${pageName}NextBtn`) as HTMLButtonElement;
+  const lastPageBtn = document.querySelector(`#${pageName}LastPageBtn`) as HTMLButtonElement;
 
   if (currentPage > 1) {
     firstPageBtn.removeAttribute('disabled');

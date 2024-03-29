@@ -4,6 +4,7 @@
 .header {
   display: flex;
   align-items: center;
+  height: 7vh;
   padding: 12px 35px;
   color: var(--white-color);
   background: rgba(21, 3, 43, 0.7);

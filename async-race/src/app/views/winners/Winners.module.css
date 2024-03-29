@@ -1,0 +1,28 @@
+.winners {
+  min-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 35px;
+  width: 100%;
+  max-width: 1650px;
+  /* display: none; */
+}
+
+.title-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px;
+  margin-bottom: 10px;
+}
+
+.winners-table-container {
+  align-self: center;
+  width: 99%;
+
+  overflow: auto;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+}

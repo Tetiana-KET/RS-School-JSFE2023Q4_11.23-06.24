@@ -32,6 +32,7 @@ export default class GarageView extends Component {
       onPrevClick: this.onPrevClick,
       onNextClick: this.onNextClick,
       onLastClick: this.onLastClick,
+      pageName: 'garage',
     });
     this.appendElements(this.formWrap, this.titleWrap, this.garageRaceContainer, this.paginationWrap);
     this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
@@ -40,7 +41,7 @@ export default class GarageView extends Component {
   }
 
   private setPaginationPageNum(): void {
-    const pageNumElement = this.paginationWrap.getNode().querySelector(`#pageNum`) as HTMLElement;
+    const pageNumElement = this.paginationWrap.getNode().querySelector(`#garagePageNum`) as HTMLElement;
     pageNumElement.textContent = this.currentPage.toString();
   }
 
@@ -88,7 +89,7 @@ export default class GarageView extends Component {
       container?.append(carElement);
     });
     this.lastPage = this.updateLastPage(total);
-    updatePageTitle(total, currentPage, this.lastPage, 'garage');
+    updatePageTitle(total, currentPage, 'garage', this.lastPage);
   }
 
   private updateLastPage(totalCars: number): number {
@@ -113,7 +114,7 @@ export default class GarageView extends Component {
     this.currentPage = 1;
     await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     this.setPaginationPageNum();
-    togglePaginationBtnsState(this.currentPage, this.lastPage);
+    togglePaginationBtnsState(this.currentPage, this.lastPage, 'garage');
   };
 
   // click prev page pagination button
@@ -121,7 +122,7 @@ export default class GarageView extends Component {
     this.currentPage -= 1;
     await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     this.setPaginationPageNum();
-    togglePaginationBtnsState(this.currentPage, this.lastPage);
+    togglePaginationBtnsState(this.currentPage, this.lastPage, 'garage');
   };
 
   // click next page pagination button
@@ -129,7 +130,7 @@ export default class GarageView extends Component {
     this.currentPage += 1;
     await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     this.setPaginationPageNum();
-    togglePaginationBtnsState(this.currentPage, this.lastPage);
+    togglePaginationBtnsState(this.currentPage, this.lastPage, 'garage');
   };
 
   // click last page pagination button
@@ -137,7 +138,7 @@ export default class GarageView extends Component {
     this.currentPage = this.lastPage;
     await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     this.setPaginationPageNum();
-    togglePaginationBtnsState(this.currentPage, this.lastPage);
+    togglePaginationBtnsState(this.currentPage, this.lastPage, 'garage');
   };
 
   // Create Name

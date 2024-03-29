@@ -1,0 +1,48 @@
+.score-table {
+  width: 100%;
+  border: 2px solid var(--box-shadow);
+  border-radius: 4px;
+  box-shadow: 0px 0px 4px var(--box-shadow-hover);
+}
+.score-title {
+  caption-side: top;
+  padding: 10px;
+  margin-bottom: 25px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.score-table {
+  width: 100%;
+  height: 65vh;
+  overflow: auto;
+}
+.score-headers {
+  font-size: 1.4dvw;
+}
+.score-headers-items {
+}
+.score-headers-position {
+  width: 5%;
+}
+
+.score-table-body {
+}
+.score-row {
+}
+.car-img {
+}
+.carName {
+}
+.winsCount {
+  width: 8%;
+}
+.timeValue {
+  width: 10%;
+}
+.score-footer {
+}
+.score-table th,
+.score-table td {
+  border: 1px solid var(--box-shadow);
+  padding: 6px 3px;
+}

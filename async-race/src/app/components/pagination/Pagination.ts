@@ -6,6 +6,7 @@ type PaginationActionsHandlers = {
   onPrevClick: () => void;
   onNextClick: () => void;
   onLastClick: () => void;
+  pageName: string;
 };
 
 export class Pagination extends Component {
@@ -24,31 +25,31 @@ export class Pagination extends Component {
     this.pageNum = new Component({
       tagName: 'div',
       classNames: [classes.paginationBtn, classes.pageNum],
-      attributes: { id: 'pageNum' },
+      attributes: { id: `${handlers.pageName}PageNum` },
     });
     this.firstPageBtn = new Component({
       tagName: 'button',
       text: '<<',
       classNames: [classes.paginationBtn, classes.firstPageBtn],
-      attributes: { disabled: 'true', id: 'firstPageBtn' },
+      attributes: { disabled: 'true', id: `${handlers.pageName}FirstPageBtn` },
     });
     this.prevBtn = new Component({
       tagName: 'button',
       text: '<',
       classNames: [classes.paginationBtn, classes.prevBtn],
-      attributes: { disabled: 'true', id: 'prevBtn' },
+      attributes: { disabled: 'true', id: `${handlers.pageName}PrevBtn` },
     });
     this.nextBtn = new Component({
       tagName: 'button',
       text: '>',
       classNames: [classes.paginationBtn, classes.nextBtn],
-      attributes: { id: 'nextBtn' },
+      attributes: { id: `${handlers.pageName}NextBtn` },
     });
     this.lastPageBtn = new Component({
       tagName: 'button',
       text: '>>',
       classNames: [classes.paginationBtn, classes.lastPageBtn],
-      attributes: { id: 'lastPageBtn' },
+      attributes: { id: `${handlers.pageName}LastPageBtn` },
     });
     this.paginationWrapper = new Component({
       tagName: 'div',
