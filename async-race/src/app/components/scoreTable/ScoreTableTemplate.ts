@@ -12,7 +12,7 @@ export default function createScoreTableTemplate(): string {
         <th class="${classes.timeValue} scope="col" id="timeValue">Best Time, s</th>
       </tr>
     </thead>
-    <tbody class="s${classes.scoreTableBody}">
+    <tbody class="${classes.scoreTableBody}">
       
     </tbody>
     <tfoot class="${classes.scoreFooter}">

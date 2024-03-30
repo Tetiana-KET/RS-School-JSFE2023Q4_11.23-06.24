@@ -1,9 +1,11 @@
 import classes from './Winners.module.css';
 import { Component } from '../../components/Component';
 import { Pagination } from '../../components/pagination/Pagination';
-import { togglePaginationBtnsState } from '../../utils/RenderingUI';
+import { createWinnersList, togglePaginationBtnsState, updatePageTitle } from '../../utils/RenderingUI';
 import { createPageTitle } from '../../components/pageTitle';
 import createScoreTableTemplate from '../../components/scoreTable/ScoreTableTemplate';
+import { getWinnerCar, getWinners } from '../../utils/InteractionAPI';
+import WinnerLine from '../../components/scoreTable/ScoreTableWinnerLine';
 
 export default class WinnersView extends Component {
   private titleWrap: Component<HTMLDivElement>;
@@ -28,8 +30,21 @@ export default class WinnersView extends Component {
     });
     this.appendElements(this.titleWrap, this.winnersTableContainer, this.paginationWrap);
     this.setPaginationPageNum();
+    getWinners(this.currentPage, this.WINNES_PER_PAGE);
+    this.togglePagination();
   }
 
+  private togglePagination(): void {
+    const nextBtn = this.paginationWrap.getNode().querySelector('#winnerNextBtn') as HTMLButtonElement;
+    const lastBtn = this.paginationWrap.getNode().querySelector('#winnerLastPageBtn') as HTMLButtonElement;
+    if (this.lastPage === 1) {
+      nextBtn.setAttribute('disabled', 'true');
+      lastBtn.setAttribute('disabled', 'true');
+    } else if (this.lastPage > 1) {
+      nextBtn.removeAttribute('disabled');
+      lastBtn.removeAttribute('disabled');
+    }
+  }
   private appendElements(
     titleWrapper: Component<HTMLElement>,
     winnersTableContainer: Component<HTMLElement>,
@@ -40,10 +55,31 @@ export default class WinnersView extends Component {
     this.append(titleWrapper);
     this.append(winnersTableContainer);
     this.append(paginationWrapper);
+    this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
   }
 
   private createWinnersTitle(page: number): string {
     return createPageTitle(page, classes, 'winners');
+  }
+
+  private async createWinnerView(currentPage: number, WINNERS_PER_PAGE: number): Promise<void> {
+    const [winners, winnersCount] = await createWinnersList(currentPage, WINNERS_PER_PAGE);
+    const container = this.winnersTableContainer.getNode().querySelector(`tbody`) as HTMLTableSectionElement;
+    container.innerHTML = '';
+
+    for (const winnerData of winners) {
+      const { id } = winnerData;
+      try {
+        const winnerInfo = await getWinnerCar(id);
+
+        const row = new WinnerLine(winnerData, winnerInfo);
+        const rowElement = row.getElement();
+        container?.append(rowElement);
+      } catch (error) {
+        console.error('Error fetching winner car:', error);
+      }
+    }
+    updatePageTitle(winnersCount, currentPage, 'winners', this.lastPage);
   }
 
   // click first page pagination button

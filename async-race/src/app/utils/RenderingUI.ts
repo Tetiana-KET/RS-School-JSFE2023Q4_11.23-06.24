@@ -1,11 +1,12 @@
-import { GarageInterface } from '../interfaces/car.interface';
+import { GarageInterface, WinnersInterface } from '../interfaces/car.interface';
 
-import { getCars } from './InteractionAPI';
+import { getCars, getWinners } from './InteractionAPI';
 
 export function updatePageTitle(carsCount: number, currentPage: number, pageName: string, lastPage: number = 1): void {
   const titleWrapper = document.querySelector(`#${pageName}CarsCount h2`);
+  const text = pageName === 'garage' ? 'Cars in Garage:' : 'Total Winners:';
   if (titleWrapper) {
-    titleWrapper.innerHTML = `<h2>Cars in Garage: ( ${carsCount} )</h2>`;
+    titleWrapper.innerHTML = `<h2>${text} ( ${carsCount} )</h2>`;
   }
   const pageNumberWrapper = document.querySelector(`#${pageName}pageNumber`);
   if (pageNumberWrapper) {
@@ -18,6 +19,13 @@ export async function createCarsInGarage(page: number, limit: number): Promise<[
   const carsInGarage = await cars;
   const totalCars = total;
   return [carsInGarage, totalCars];
+}
+
+export async function createWinnersList(page: number, limit: number): Promise<[WinnersInterface, number]> {
+  const [winners, winnersCount] = await getWinners(page, limit);
+  const winnersList = await winners;
+  const totalWinners = winnersCount;
+  return [winnersList, totalWinners];
 }
 
 export function togglePaginationBtnsState(currentPage: number, lastPage: number, pageName: string): void {
@@ -41,4 +49,14 @@ export function togglePaginationBtnsState(currentPage: number, lastPage: number,
     lastPageBtn.setAttribute('disabled', 'true');
     nextBtn.setAttribute('disabled', 'true');
   }
+}
+
+export function createSvg(classes: CSSModuleClasses, id: number, color: string): SVGSVGElement {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+  use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `/sprite.svg#car${(id % 7) + 1}`);
+  svg.classList.add(classes.carSvg);
+  svg.style.fill = color;
+  svg.append(use);
+  return svg;
 }
