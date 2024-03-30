@@ -1,6 +1,7 @@
 import type { Component } from './components/Component';
 
 import { SiteWrapper } from './pageConstructor';
+import { directToPage } from './utils/RenderingUI';
 
 class App {
   private siteWrapper: Component;
@@ -12,6 +13,7 @@ class App {
 
   public start(): void {
     this.root.append(this.siteWrapper.getNode());
+    directToPage();
   }
 }
 const app = new App(SiteWrapper(), document.body);
