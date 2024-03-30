@@ -2,6 +2,26 @@ import { GarageInterface, WinnersInterface } from '../interfaces/car.interface';
 
 import { getCars, getWinners } from './InteractionAPI';
 
+export function directToPage(): void {
+  const garageBtn = document.querySelector('#toGarageBtn') as HTMLButtonElement;
+  const winnerBtn = document.querySelector('#toWinnersBtn') as HTMLButtonElement;
+  const winners = document.querySelector('#winnersSection') as HTMLElement;
+  const garage = document.querySelector('#garageSection') as HTMLElement;
+
+  garageBtn.addEventListener('click', () => {
+    garage.style.display = 'flex';
+    winners.style.display = 'none';
+    garageBtn.setAttribute('disabled', 'true');
+    winnerBtn.removeAttribute('disabled');
+  });
+  winnerBtn.addEventListener('click', () => {
+    winners.style.display = 'flex';
+    garage.style.display = 'none';
+    winnerBtn.setAttribute('disabled', 'true');
+    garageBtn.removeAttribute('disabled');
+  });
+}
+
 export function updatePageTitle(carsCount: number, currentPage: number, pageName: string, lastPage: number = 1): void {
   const titleWrapper = document.querySelector(`#${pageName}CarsCount h2`);
   const text = pageName === 'garage' ? 'Cars in Garage:' : 'Total Winners:';

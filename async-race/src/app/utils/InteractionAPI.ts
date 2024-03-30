@@ -74,8 +74,6 @@ export const getWinners = async (page: number, limit: number): GetWinnersRespons
     const response = await fetch(`${serverUrl}${path.winners}?_page=${page}&_limit=${limit}`);
     const winnersCount = Number(response.headers.get('X-Total-Count')) || 0;
     const winners = await response.json();
-    console.log(winners);
-    console.log(winnersCount);
 
     return [winners, winnersCount];
   } catch (err) {
@@ -88,6 +86,5 @@ export const getWinnerCar = async (thisId: number): Promise<CarOptions> => {
   const id = thisId;
   const response: Response = await fetch(`${serverUrl}${path.garage}/${id}`);
   const winnerData: CarOptions = await response.json();
-  console.log(winnerData);
   return winnerData;
 };

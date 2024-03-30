@@ -17,7 +17,7 @@ export default class WinnersView extends Component {
   private paginationWrap: Pagination;
 
   constructor() {
-    super({ tagName: 'section', classNames: [classes.winners], children: [] });
+    super({ tagName: 'section', classNames: [classes.winners], attributes: { id: 'winnersSection' } });
     this.titleWrap = new Component({ tagName: 'div', classNames: [classes.titleWrapper] });
     this.titleWrap.getNode().innerHTML = this.createWinnersTitle(this.currentPage);
     this.winnersTableContainer = new Component({ tagName: 'div', classNames: [classes.winnersTableContainer] });
@@ -80,12 +80,13 @@ export default class WinnersView extends Component {
       }
     }
     updatePageTitle(winnersCount, currentPage, 'winners', this.lastPage);
+    this.togglePagination();
   }
 
   // click first page pagination button
   private onFirstClick = async (): Promise<void> => {
     this.currentPage = 1;
-    // await this.createWinnersView();
+    await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
   };
@@ -93,7 +94,7 @@ export default class WinnersView extends Component {
   // click prev page pagination button
   private onPrevClick = async (): Promise<void> => {
     this.currentPage -= 1;
-    // await this.createWinnersView();
+    await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
   };
@@ -101,7 +102,7 @@ export default class WinnersView extends Component {
   // click next page pagination button
   private onNextClick = async (): Promise<void> => {
     this.currentPage += 1;
-    // await this.createWinnersView();
+    await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
   };
@@ -109,7 +110,7 @@ export default class WinnersView extends Component {
   // click last page pagination button
   private onLastClick = async (): Promise<void> => {
     this.currentPage = this.lastPage;
-    // await this.createWinnersView();
+    await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
   };

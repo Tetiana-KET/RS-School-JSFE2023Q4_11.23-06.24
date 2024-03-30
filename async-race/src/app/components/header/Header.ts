@@ -33,7 +33,7 @@ export class Header extends Component {
       tagName: 'button',
       classNames: [classes.button, classes.garageButton],
       text: 'Garage',
-      attributes: { type: 'button' },
+      attributes: { type: 'button', id: 'toGarageBtn', disabled: 'true' },
     });
 
     this.buttonsWrap.append(this.garageButton);
@@ -41,7 +41,7 @@ export class Header extends Component {
       tagName: 'button',
       classNames: [classes.button, classes.winnersButton],
       text: 'Winners',
-      attributes: { type: 'button' },
+      attributes: { type: 'button', id: 'toWinnersBtn' },
     });
     this.buttonsWrap.append(this.winnersButton);
   }

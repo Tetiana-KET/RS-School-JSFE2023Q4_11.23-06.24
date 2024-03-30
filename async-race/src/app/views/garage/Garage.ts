@@ -21,7 +21,7 @@ export default class GarageView extends Component {
   private CarModelGenerator = new CarModelGenerator();
 
   constructor() {
-    super({ tagName: 'section', classNames: [classes.garage] });
+    super({ tagName: 'section', classNames: [classes.garage], attributes: { id: 'garageSection' } });
     this.titleWrap = new Component({ tagName: 'div', classNames: [classes.titleWrapper] });
     this.garageRaceContainer = new Component({ tagName: 'div', classNames: [classes.garageRaceContainer] });
     this.formWrap = new Component({ tagName: 'div', classNames: [classes.settings] });
@@ -38,6 +38,7 @@ export default class GarageView extends Component {
     this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     this.generateBtnAddListener();
     this.setPaginationPageNum();
+    this.togglePagination();
   }
 
   private setPaginationPageNum(): void {
@@ -90,6 +91,7 @@ export default class GarageView extends Component {
     });
     this.lastPage = this.updateLastPage(total);
     updatePageTitle(total, currentPage, 'garage', this.lastPage);
+    this.togglePagination();
   }
 
   private updateLastPage(totalCars: number): number {
@@ -108,6 +110,18 @@ export default class GarageView extends Component {
   private onStopCar = async (input: { id: number }): Promise<void> => {
     console.log(`car with id="${input.id}" Stopped`);
   };
+
+  private togglePagination(): void {
+    const nextBtn = this.paginationWrap.getNode().querySelector('#garageNextBtn') as HTMLButtonElement;
+    const lastBtn = this.paginationWrap.getNode().querySelector('#garageLastPageBtn') as HTMLButtonElement;
+    if (this.lastPage === 1) {
+      nextBtn.setAttribute('disabled', 'true');
+      lastBtn.setAttribute('disabled', 'true');
+    } else if (this.lastPage > 1) {
+      nextBtn.removeAttribute('disabled');
+      lastBtn.removeAttribute('disabled');
+    }
+  }
 
   // click first page pagination button
   private onFirstClick = async (): Promise<void> => {
