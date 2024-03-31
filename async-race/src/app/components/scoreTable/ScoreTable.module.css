@@ -24,11 +24,11 @@
 
 .score-headers {
   font-size: 1.3dvw;
-  height: 70px;
+  height: 65px;
 }
 
 .score-table tr {
-  height: 70px;
+  height: 65px;
 }
 .score-headers-items {
 }
@@ -44,7 +44,7 @@
 }
 
 .car-name {
-  width: 40%;
+  width: 50%;
 }
 
 .wins-count {

@@ -69,6 +69,7 @@ export const updateCar = async (carData: CarOptions): Promise<void> => {
   }
 };
 
+// winners
 export const getWinners = async (page: number, limit: number): GetWinnersResponse => {
   try {
     const response = await fetch(`${serverUrl}${path.winners}?_page=${page}&_limit=${limit}`);
@@ -87,4 +88,19 @@ export const getWinnerCar = async (thisId: number): Promise<CarOptions> => {
   const response: Response = await fetch(`${serverUrl}${path.garage}/${id}`);
   const winnerData: CarOptions = await response.json();
   return winnerData;
+};
+
+export const deleteWinner = async (thisId: number): Promise<void> => {
+  const id = thisId;
+
+  try {
+    const response = await fetch(`${serverUrl}${path.winners}/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      console.error('Failed to delete car. Status:', response.status);
+    }
+  } catch (error) {
+    console.error('Error updating server state:', error);
+  }
 };

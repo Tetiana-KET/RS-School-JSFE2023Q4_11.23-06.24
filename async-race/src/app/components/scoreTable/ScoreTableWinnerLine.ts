@@ -5,15 +5,16 @@ import { Component } from '../Component';
 import { createSvg } from '../../utils/RenderingUI';
 
 export default class WinnerLine {
+  private rowNum: number;
   private id: number;
   private wins: number;
   private time: number;
-  private rowNum: number = 1;
   private color: string = '';
   private carName: string = '';
   private element: Component<HTMLElement>;
 
-  constructor(options: WinnerOptions, winnerInfo: CarOptions) {
+  constructor(options: WinnerOptions, winnerInfo: CarOptions, rowNum: number) {
+    this.rowNum = rowNum;
     this.id = options.id;
     this.wins = options.wins;
     this.time = options.time;

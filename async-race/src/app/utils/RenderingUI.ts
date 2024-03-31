@@ -9,12 +9,14 @@ export function directToPage(): void {
   const garage = document.querySelector('#garageSection') as HTMLElement;
 
   garageBtn.addEventListener('click', () => {
+    window.location.hash = 'garage';
     garage.style.display = 'flex';
     winners.style.display = 'none';
     garageBtn.setAttribute('disabled', 'true');
     winnerBtn.removeAttribute('disabled');
   });
   winnerBtn.addEventListener('click', () => {
+    window.location.hash = 'winners';
     winners.style.display = 'flex';
     garage.style.display = 'none';
     winnerBtn.setAttribute('disabled', 'true');

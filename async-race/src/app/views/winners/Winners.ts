@@ -4,13 +4,14 @@ import { Pagination } from '../../components/pagination/Pagination';
 import { createWinnersList, togglePaginationBtnsState, updatePageTitle } from '../../utils/RenderingUI';
 import { createPageTitle } from '../../components/pageTitle';
 import createScoreTableTemplate from '../../components/scoreTable/ScoreTableTemplate';
-import { getWinnerCar, getWinners } from '../../utils/InteractionAPI';
+import { getWinnerCar } from '../../utils/InteractionAPI';
 import WinnerLine from '../../components/scoreTable/ScoreTableWinnerLine';
+import { eventBus } from '../../utils/eventBus';
 
 export default class WinnersView extends Component {
   private titleWrap: Component<HTMLDivElement>;
   private winnersTableContainer: Component<HTMLDivElement>;
-
+  private rowNum: number = 1;
   private WINNES_PER_PAGE: number = 10;
   private currentPage: number = 1;
   private lastPage: number = 1;
@@ -28,12 +29,37 @@ export default class WinnersView extends Component {
       onLastClick: this.onLastClick,
       pageName: 'winner',
     });
+
     this.appendElements(this.titleWrap, this.winnersTableContainer, this.paginationWrap);
+    this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
     this.setPaginationPageNum();
-    getWinners(this.currentPage, this.WINNES_PER_PAGE);
     this.togglePagination();
+
+    // event listener to handle car deletion event
+    eventBus.subscribe('carDeleted', async () => {
+      this.rowNum = 1;
+      this.winnersTableContainer.destroyChildren();
+      this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
+      await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
+      this.setPaginationPageNum();
+    });
   }
 
+  private appendElements(
+    titleWrapper: Component<HTMLElement>,
+    winnersTableContainer: Component<HTMLElement>,
+    paginationWrapper: Component<HTMLElement>
+  ): void {
+    const container = winnersTableContainer;
+    container.getNode().innerHTML = createScoreTableTemplate();
+    this.append(titleWrapper);
+    this.append(winnersTableContainer);
+    this.append(paginationWrapper);
+  }
+
+  private createWinnersTitle(page: number): string {
+    return createPageTitle(page, classes, 'winners');
+  }
   private togglePagination(): void {
     const nextBtn = this.paginationWrap.getNode().querySelector('#winnerNextBtn') as HTMLButtonElement;
     const lastBtn = this.paginationWrap.getNode().querySelector('#winnerLastPageBtn') as HTMLButtonElement;
@@ -45,40 +71,34 @@ export default class WinnersView extends Component {
       lastBtn.removeAttribute('disabled');
     }
   }
-  private appendElements(
-    titleWrapper: Component<HTMLElement>,
-    winnersTableContainer: Component<HTMLElement>,
-    paginationWrapper: Component<HTMLElement>
-  ): void {
-    const container = winnersTableContainer;
-    container.getNode().innerHTML = createScoreTableTemplate();
-    this.append(titleWrapper);
-    this.append(winnersTableContainer);
-    this.append(paginationWrapper);
-    this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
-  }
 
-  private createWinnersTitle(page: number): string {
-    return createPageTitle(page, classes, 'winners');
+  private updateLastPage(winnersCount: number): number {
+    return Math.ceil(winnersCount / this.WINNES_PER_PAGE);
   }
 
   private async createWinnerView(currentPage: number, WINNERS_PER_PAGE: number): Promise<void> {
     const [winners, winnersCount] = await createWinnersList(currentPage, WINNERS_PER_PAGE);
     const container = this.winnersTableContainer.getNode().querySelector(`tbody`) as HTMLTableSectionElement;
-    container.innerHTML = '';
-
+    if (currentPage === 1) {
+      this.rowNum = 1;
+    } else {
+      this.rowNum = Number(`${currentPage - 1}1`);
+    }
     for (const winnerData of winners) {
       const { id } = winnerData;
       try {
         const winnerInfo = await getWinnerCar(id);
 
-        const row = new WinnerLine(winnerData, winnerInfo);
+        const row = new WinnerLine(winnerData, winnerInfo, this.rowNum);
         const rowElement = row.getElement();
         container?.append(rowElement);
       } catch (error) {
         console.error('Error fetching winner car:', error);
       }
+
+      this.rowNum += 1;
     }
+    this.lastPage = this.updateLastPage(winnersCount);
     updatePageTitle(winnersCount, currentPage, 'winners', this.lastPage);
     this.togglePagination();
   }
@@ -86,6 +106,10 @@ export default class WinnersView extends Component {
   // click first page pagination button
   private onFirstClick = async (): Promise<void> => {
     this.currentPage = 1;
+
+    this.winnersTableContainer.destroyChildren();
+    this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
+
     await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
@@ -94,6 +118,10 @@ export default class WinnersView extends Component {
   // click prev page pagination button
   private onPrevClick = async (): Promise<void> => {
     this.currentPage -= 1;
+
+    this.winnersTableContainer.destroyChildren();
+    this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
+
     await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
@@ -102,6 +130,10 @@ export default class WinnersView extends Component {
   // click next page pagination button
   private onNextClick = async (): Promise<void> => {
     this.currentPage += 1;
+
+    this.winnersTableContainer.destroyChildren();
+    this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
+
     await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
@@ -110,6 +142,10 @@ export default class WinnersView extends Component {
   // click last page pagination button
   private onLastClick = async (): Promise<void> => {
     this.currentPage = this.lastPage;
+
+    this.winnersTableContainer.destroyChildren();
+    this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
+
     await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');

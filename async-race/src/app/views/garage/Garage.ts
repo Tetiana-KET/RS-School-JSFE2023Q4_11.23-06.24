@@ -6,8 +6,9 @@ import CarModelGenerator from '../../utils/carModelGenerator';
 import { createFormWrapper } from './garage.templates';
 import { CreatedCarOptions } from '../../interfaces/car.interface';
 import { createCarsInGarage, togglePaginationBtnsState, updatePageTitle } from '../../utils/RenderingUI';
-import { createCar, deleteCar, updateCar } from '../../utils/InteractionAPI';
+import { createCar, deleteCar, deleteWinner, updateCar } from '../../utils/InteractionAPI';
 import { createPageTitle } from '../../components/pageTitle';
+import { eventBus } from '../../utils/eventBus';
 
 export default class GarageView extends Component {
   private formWrap: Component<HTMLDivElement>;
@@ -100,6 +101,8 @@ export default class GarageView extends Component {
 
   private onDeleteCar = async (input: { id: number }): Promise<void> => {
     await deleteCar(input.id);
+    eventBus.emit('carDeleted', { carId: input.id });
+    await deleteWinner(input.id);
     await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
   };
 
