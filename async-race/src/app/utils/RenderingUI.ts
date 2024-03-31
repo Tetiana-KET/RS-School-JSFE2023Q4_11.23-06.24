@@ -76,7 +76,7 @@ export function togglePaginationBtnsState(currentPage: number, lastPage: number,
 export function createSvg(classes: CSSModuleClasses, id: number, color: string): SVGSVGElement {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-  use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `/sprite.svg#car${(id % 7) + 1}`);
+  use.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `./sprite.svg#car${(id % 7) + 1}`);
   svg.classList.add(classes.carSvg);
   svg.style.fill = color;
   svg.append(use);
