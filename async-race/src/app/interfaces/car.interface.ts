@@ -15,5 +15,10 @@ export interface CreatedCarOptions {
   color: string;
 }
 
+export interface RaceParameters {
+  velocity: number;
+  distance: number;
+}
+
 export type GarageInterface = CarOptions[];
 export type WinnersInterface = WinnerOptions[];

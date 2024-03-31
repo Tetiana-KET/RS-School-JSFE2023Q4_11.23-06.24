@@ -25,12 +25,17 @@ export default class Car {
   }
 
   private createCarElement(): Component<HTMLElement> {
-    const startButton = new Component({ tagName: 'button', text: 'Start', classNames: [classes.startBtn, classes.button] });
+    const startButton = new Component({
+      tagName: 'button',
+      text: 'Start',
+      classNames: [classes.startBtn, classes.button],
+      attributes: { id: 'startBtn' },
+    });
     const stopButton = new Component({
       tagName: 'button',
       text: 'Stop',
       classNames: [classes.stopBtn, classes.button],
-      attributes: { disabled: 'true' },
+      attributes: { disabled: 'true', id: 'stopBtn' },
     });
     const selectButton = new Component({ tagName: 'button', text: 'Select', classNames: [classes.selectBtn, classes.button] });
     const deleteButton = new Component({ tagName: 'button', text: 'Delete', classNames: [classes.deleteBtn, classes.button] });
@@ -46,17 +51,15 @@ export default class Car {
       children: [startButton, stopButton, selectButton, deleteButton, nameSpan],
     });
     this.clickHandler(startButton, stopButton, selectButton, deleteButton);
-
     const svg = createSvg(classes, this.id, this.color);
     const carIconWrap = new Component({ tagName: 'div', classNames: [classes.carIconWrap] });
-
     carIconWrap.getNode().appendChild(svg);
     const track = new Component({ tagName: 'div', classNames: [classes.carTrack], children: [carIconWrap] });
     const carTrackWrap = new Component({
       tagName: 'div',
       classNames: [classes.carTrackWrap],
       children: [track, controls],
-      attributes: { id: `${this.id}` },
+      attributes: { id: `car${this.id}` },
     });
     return carTrackWrap;
   }
@@ -91,12 +94,10 @@ export default class Car {
   }
 
   private clickStartButtonHandler(): void {
-    console.log(`start`, this);
     this.handlers.onStartClick({ id: this.id });
   }
 
   private clickStopButtonHandler(): void {
-    console.log(`stop`, this);
     this.handlers.onStopClick({ id: this.id });
   }
 

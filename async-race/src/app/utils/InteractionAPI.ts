@@ -1,4 +1,5 @@
-import { CarOptions, CreatedCarOptions, GarageInterface, WinnersInterface } from '../interfaces/car.interface';
+import { CarOptions, CreatedCarOptions, GarageInterface, RaceParameters, WinnersInterface } from '../interfaces/car.interface';
+import { disableStopBtn, enableStopBtn } from '../views/carTrack/enableStopButton';
 
 const serverUrl: string = 'http://localhost:3000';
 const path = {
@@ -104,3 +105,46 @@ export const deleteWinner = async (thisId: number): Promise<void> => {
     console.error('Error updating server state:', error);
   }
 };
+
+// START ENGINE
+export async function startCarEngine(carId: number): Promise<RaceParameters> {
+  const response: Response = await fetch(`${serverUrl}${path.engine}?id=${carId}&status=started`, {
+    method: 'PATCH',
+  });
+  const raceParameters: RaceParameters = await response.json();
+  return raceParameters;
+}
+
+// STOP ENGINE
+export async function stopEngine(carId: number): Promise<RaceParameters> {
+  const response: Response = await fetch(`${serverUrl}${path.engine}?id=${carId}&status=stopped`, {
+    method: 'PATCH',
+  });
+  const raceParameters: RaceParameters = await response.json();
+  console.log(`Car with ID ${carId} was stopped`);
+  setTimeout(() => {
+    disableStopBtn(carId);
+  }, 500);
+
+  return raceParameters;
+}
+
+// switch engine to DRIVE mode
+export async function switchToDriveMode(carId: number): Promise<void> {
+  try {
+    const response = await fetch(`${serverUrl}${path.engine}?id=${carId}&status=drive`, {
+      method: 'PATCH',
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Switched to drive mode:', data);
+      enableStopBtn(carId);
+      // handleSuccess
+    } else {
+      document.querySelector('#startBtn')?.removeAttribute('disabled');
+      console.error('Failed to switch to drive mode:', response.status);
+    }
+  } catch (error) {
+    console.error('Error switching to drive mode:', error);
+  }
+}

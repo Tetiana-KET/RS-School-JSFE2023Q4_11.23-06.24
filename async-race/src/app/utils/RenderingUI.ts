@@ -1,6 +1,6 @@
 import { GarageInterface, WinnersInterface } from '../interfaces/car.interface';
 
-import { getCars, getWinners } from './InteractionAPI';
+import { getCars, getWinners, switchToDriveMode } from './InteractionAPI';
 
 export function directToPage(): void {
   const garageBtn = document.querySelector('#toGarageBtn') as HTMLButtonElement;
@@ -81,4 +81,10 @@ export function createSvg(classes: CSSModuleClasses, id: number, color: string):
   svg.style.fill = color;
   svg.append(use);
   return svg;
+}
+
+export async function startCarEngineAnimation(carId: number): Promise<void> {
+  const carElement = document.querySelector(`#car${carId} svg`) as SVGSVGElement;
+  carElement.setAttribute('engine', 'started');
+  await switchToDriveMode(carId);
 }

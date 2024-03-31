@@ -5,8 +5,8 @@ import Car from '../carTrack/CarTrack';
 import CarModelGenerator from '../../utils/carModelGenerator';
 import { createFormWrapper } from './garage.templates';
 import { CreatedCarOptions } from '../../interfaces/car.interface';
-import { createCarsInGarage, togglePaginationBtnsState, updatePageTitle } from '../../utils/RenderingUI';
-import { createCar, deleteCar, deleteWinner, updateCar } from '../../utils/InteractionAPI';
+import { createCarsInGarage, startCarEngineAnimation, togglePaginationBtnsState, updatePageTitle } from '../../utils/RenderingUI';
+import { createCar, deleteCar, deleteWinner, startCarEngine, stopEngine, updateCar } from '../../utils/InteractionAPI';
 import { createPageTitle } from '../../components/pageTitle';
 import { eventBus } from '../../utils/eventBus';
 
@@ -107,11 +107,22 @@ export default class GarageView extends Component {
   };
 
   private onStartCar = async (input: { id: number }): Promise<void> => {
-    console.log(`car with id="${input.id}" Started`);
+    document.querySelector('#startBtn')?.setAttribute('disabled', 'true');
+    const { velocity, distance } = await startCarEngine(input.id);
+    const transitionTime = distance / velocity;
+
+    console.log(`
+    car with id="${input.id}" Started
+    velocity: ${velocity}
+    distance: ${distance}
+    transitionTime: ${transitionTime}
+    `);
+
+    startCarEngineAnimation(input.id);
   };
 
   private onStopCar = async (input: { id: number }): Promise<void> => {
-    console.log(`car with id="${input.id}" Stopped`);
+    stopEngine(input.id);
   };
 
   private togglePagination(): void {
