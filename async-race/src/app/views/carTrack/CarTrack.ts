@@ -49,6 +49,7 @@ export default class Car {
       tagName: 'div',
       classNames: [classes.carTrackControls],
       children: [startButton, stopButton, selectButton, deleteButton, nameSpan],
+      attributes: { 'data-attribute': 'carTrackControls' },
     });
     this.clickHandler(startButton, stopButton, selectButton, deleteButton);
     const svg = createSvg(classes, this.id, this.color);

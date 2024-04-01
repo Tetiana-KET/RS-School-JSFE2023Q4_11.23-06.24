@@ -20,9 +20,18 @@ export function disableStopBtn(carId: number): void {
   });
 }
 
-export function disableAllBtns(carId: number): void {
+export function disableCarBtns(carId: number): void {
   const carElementButtons = Array.from(document.querySelectorAll(`#car${carId} button`)) as HTMLButtonElement[];
   carElementButtons.forEach(btn => {
     btn.setAttribute('disabled', 'true');
   });
 }
+
+// export function disableAllCarsBtns(): void {
+//   const carButtons = Array.from(document.querySelectorAll(`.${classes.carTrackControls}`));
+//   console.log(document.querySelectorAll(`div[data-attribute="carTrackControls"]`));
+//   carButtons.forEach(btn => {
+//     btn.setAttribute('disabled', 'true');
+//   });
+// }
+// disableAllCarsBtns();

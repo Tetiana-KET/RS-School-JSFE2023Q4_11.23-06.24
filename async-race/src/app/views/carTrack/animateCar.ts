@@ -1,5 +1,5 @@
 import { convertSecondsToHumanReadable } from '../../utils/commonUtils';
-import { disableStopBtn, enableStopBtn } from './enableStopButton';
+import { disableStopBtn, enableStopBtn } from './CarButtonsToggler';
 import startSound from '../../../assets/sounds/car-engine-starting-43705.mp3';
 
 // animate car movement

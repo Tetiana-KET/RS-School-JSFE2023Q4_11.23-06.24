@@ -1,6 +1,6 @@
 import { CarOptions, CreatedCarOptions, GarageInterface, RaceParameters, WinnersInterface } from '../interfaces/car.interface';
 import { playStartSound, startCarRaceAnimation } from '../views/carTrack/animateCar';
-import { disableStopBtn } from '../views/carTrack/enableStopButton';
+import { disableStopBtn } from '../views/carTrack/CarButtonsToggler';
 
 const serverUrl: string = 'http://localhost:3000';
 const path = {
