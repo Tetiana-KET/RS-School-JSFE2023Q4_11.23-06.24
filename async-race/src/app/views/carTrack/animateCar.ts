@@ -1,5 +1,6 @@
 import { convertSecondsToHumanReadable } from '../../utils/commonUtils';
 import { enableStopBtn } from './enableStopButton';
+import startSound from '../../../assets/sounds/car-engine-starting-43705.mp3';
 
 // animate car movement
 export function startCarRaceAnimation(distance: number, velocity: number, carId: number, containerLength: number): void {
@@ -30,4 +31,11 @@ export function startCarRaceAnimation(distance: number, velocity: number, carId:
   };
 
   animationFrameId = requestAnimationFrame(move);
+}
+
+export function playStartSound(speed: number, startTime: number): void {
+  const audio = new Audio(startSound);
+  audio.playbackRate = speed; // Set the playback speed
+  audio.currentTime = startTime; // Set the start time
+  audio.play();
 }

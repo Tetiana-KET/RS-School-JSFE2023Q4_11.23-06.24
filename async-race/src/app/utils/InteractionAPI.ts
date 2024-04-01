@@ -1,5 +1,5 @@
 import { CarOptions, CreatedCarOptions, GarageInterface, RaceParameters, WinnersInterface } from '../interfaces/car.interface';
-import { startCarRaceAnimation } from '../views/carTrack/animateCar';
+import { playStartSound, startCarRaceAnimation } from '../views/carTrack/animateCar';
 import { disableStopBtn } from '../views/carTrack/enableStopButton';
 
 const serverUrl: string = 'http://localhost:3000';
@@ -149,10 +149,9 @@ export async function switchToDriveMode(carId: number): Promise<void> {
 }
 
 export async function startCarEngineAnimation(distance: number, velocity: number, carId: number, containerLength: number): Promise<void> {
+  playStartSound(1, 1);
   const carElement = document.querySelector(`#car${carId} #carIconWrap${carId}`) as HTMLDivElement;
   carElement.setAttribute('engine', 'started');
-
   startCarRaceAnimation(distance, velocity, carId, containerLength);
-
   await switchToDriveMode(carId);
 }
