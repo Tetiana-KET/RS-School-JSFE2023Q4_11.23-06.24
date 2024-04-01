@@ -97,6 +97,10 @@
   background-size: cover;
   background-position: center;
 }
+.car-icon-wrap[returned='true']:after {
+  content: '';
+  display: none;
+}
 
 .button[disabled] {
   pointer-events: none;
@@ -107,5 +111,15 @@
   .button:hover {
     box-shadow: 0px 4px 12px var(--box-shadow-hover);
     background-color: var(--blue-color);
+  }
+}
+
+@media (max-width: 740px) {
+  .car-icon-wrap {
+    max-width: 70px;
+  }
+
+  .car-icon-wrap .car-svg {
+    max-width: 70px;
   }
 }

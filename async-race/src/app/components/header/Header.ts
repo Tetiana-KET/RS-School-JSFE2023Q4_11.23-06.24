@@ -1,6 +1,5 @@
 import { Component } from '../Component';
 import classes from './Header.module.css';
-// document.getElementById('foo').className = classes.red
 
 export class Header extends Component {
   private headerContainer: Component<HTMLDivElement>;

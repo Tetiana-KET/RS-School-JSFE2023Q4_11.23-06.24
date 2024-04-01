@@ -123,9 +123,7 @@ export async function stopEngine(carId: number): Promise<RaceParameters> {
   });
   const raceParameters: RaceParameters = await response.json();
   console.log(`Car with ID ${carId} was stopped`);
-  setTimeout(() => {
-    disableStopBtn(carId);
-  }, 500);
+  disableStopBtn(carId);
 
   return raceParameters;
 }

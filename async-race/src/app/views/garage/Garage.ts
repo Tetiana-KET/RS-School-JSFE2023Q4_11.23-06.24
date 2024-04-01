@@ -109,23 +109,23 @@ export default class GarageView extends Component {
 
   private onStartCar = async (input: { id: number }): Promise<void> => {
     const trackLength = document.querySelector(`#car${input.id}`)?.clientWidth || 0;
-    disableAllBtns(input.id);
-
     const { velocity, distance } = await startCarEngine(input.id);
-    const transitionTime = distance / velocity;
-
-    console.log(`
-    car with id="${input.id}" Started
-    velocity: ${velocity}
-    distance: ${distance}
-    transitionTime: ${transitionTime}
-    `);
-
+    disableAllBtns(input.id);
     startCarEngineAnimation(distance, velocity, input.id, trackLength);
   };
 
   private onStopCar = async (input: { id: number }): Promise<void> => {
-    stopEngine(input.id);
+    disableAllBtns(input.id);
+    const carElement = document.querySelector(`#car${input.id} #carIconWrap${input.id}`) as HTMLDivElement;
+    try {
+      await stopEngine(input.id).then(() => {
+        carElement.setAttribute('engine', 'stopped');
+      });
+    } catch {
+      throw new Error();
+    }
+    carElement.style.transform = `translateX(${0}px)`;
+    carElement.setAttribute('returned', 'true');
   };
 
   private togglePagination(): void {

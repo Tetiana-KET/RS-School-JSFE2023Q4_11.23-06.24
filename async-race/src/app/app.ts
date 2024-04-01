@@ -13,6 +13,7 @@ class App {
 
   public start(): void {
     this.root.append(this.siteWrapper.getNode());
+    window.location.hash = 'garage';
     directToPage();
   }
 }
