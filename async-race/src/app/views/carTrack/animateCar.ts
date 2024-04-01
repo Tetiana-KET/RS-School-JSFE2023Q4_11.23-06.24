@@ -1,16 +1,15 @@
 import { convertSecondsToHumanReadable } from '../../utils/commonUtils';
+import { enableStopBtn } from './enableStopButton';
 
 // animate car movement
-export async function startCarRaceAnimation(distance: number, velocity: number, carId: number, containerLength: number): Promise<void> {
+export function startCarRaceAnimation(distance: number, velocity: number, carId: number, containerLength: number): void {
   const carElement = document.querySelector(`#car${carId} #carIconWrap${carId}`) as HTMLDivElement;
-
+  enableStopBtn(carId);
+  let animationFrameId: number;
   const startTime = Date.now();
   const currDistance = 0;
-
   const trackLength = containerLength / 1.1;
   const speed = trackLength / (distance / velocity / 1000);
-
-  const isEngineWork = true;
 
   const move = (): void => {
     const timePassed = Date.now() - startTime;
@@ -19,14 +18,16 @@ export async function startCarRaceAnimation(distance: number, velocity: number, 
 
     carElement.style.transform = `translateX(${newPosition}px)`;
 
-    if (newPosition < trackLength && isEngineWork) {
+    if (newPosition < trackLength && carElement.getAttribute('engine') === 'started') {
       requestAnimationFrame(move);
-    } else if (isEngineWork) {
+    } else if (newPosition < trackLength && carElement.getAttribute('engine') === 'burn') {
+      cancelAnimationFrame(animationFrameId);
+    } else {
       const duration = convertSecondsToHumanReadable(timePassed);
       console.log(`FINISH IN: `, duration);
       // handleFinish(); // if engine is still running after reaching end of track
     }
   };
 
-  requestAnimationFrame(move);
+  animationFrameId = requestAnimationFrame(move);
 }

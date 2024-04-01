@@ -9,6 +9,7 @@ import { createCarsInGarage, togglePaginationBtnsState, updatePageTitle } from '
 import { createCar, deleteCar, deleteWinner, startCarEngine, startCarEngineAnimation, stopEngine, updateCar } from '../../utils/InteractionAPI';
 import { createPageTitle } from '../../components/pageTitle';
 import { eventBus } from '../../utils/eventBus';
+import { disableAllBtns } from '../carTrack/enableStopButton';
 
 export default class GarageView extends Component {
   private formWrap: Component<HTMLDivElement>;
@@ -108,7 +109,7 @@ export default class GarageView extends Component {
 
   private onStartCar = async (input: { id: number }): Promise<void> => {
     const trackLength = document.querySelector(`#car${input.id}`)?.clientWidth || 0;
-    document.querySelector(`#startBtn${input.id}`)?.setAttribute('disabled', 'true');
+    disableAllBtns(input.id);
 
     const { velocity, distance } = await startCarEngine(input.id);
     const transitionTime = distance / velocity;

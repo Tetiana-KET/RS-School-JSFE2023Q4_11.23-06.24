@@ -1,6 +1,6 @@
 import { CarOptions, CreatedCarOptions, GarageInterface, RaceParameters, WinnersInterface } from '../interfaces/car.interface';
 import { startCarRaceAnimation } from '../views/carTrack/animateCar';
-import { disableStopBtn, enableStopBtn } from '../views/carTrack/enableStopButton';
+import { disableStopBtn } from '../views/carTrack/enableStopButton';
 
 const serverUrl: string = 'http://localhost:3000';
 const path = {
@@ -131,17 +131,12 @@ export async function stopEngine(carId: number): Promise<RaceParameters> {
 }
 
 // switch engine to DRIVE mode
-export async function switchToDriveMode(distance: number, velocity: number, carId: number, containerLength: number): Promise<void> {
+export async function switchToDriveMode(carId: number): Promise<void> {
   try {
     const response = await fetch(`${serverUrl}${path.engine}?id=${carId}&status=drive`, {
       method: 'PATCH',
     });
-    if (response.ok) {
-      const data = await response.json();
-      console.log('Switched to drive mode:', data);
-      startCarRaceAnimation(distance, velocity, carId, containerLength);
-      enableStopBtn(carId);
-    } else if (response.status === 500) {
+    if (response.status === 500) {
       const carElement = document.querySelector(`#car${carId} #carIconWrap${carId}`) as HTMLDivElement;
       carElement.setAttribute('engine', 'burn');
     } else {
@@ -156,8 +151,8 @@ export async function switchToDriveMode(distance: number, velocity: number, carI
 export async function startCarEngineAnimation(distance: number, velocity: number, carId: number, containerLength: number): Promise<void> {
   const carElement = document.querySelector(`#car${carId} #carIconWrap${carId}`) as HTMLDivElement;
   carElement.setAttribute('engine', 'started');
-  setTimeout(() => {
-    carElement.removeAttribute('engine');
-  }, 500);
-  await switchToDriveMode(distance, velocity, carId, containerLength);
+
+  startCarRaceAnimation(distance, velocity, carId, containerLength);
+
+  await switchToDriveMode(carId);
 }

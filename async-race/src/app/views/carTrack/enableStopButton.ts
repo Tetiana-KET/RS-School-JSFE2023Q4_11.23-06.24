@@ -19,3 +19,10 @@ export function disableStopBtn(carId: number): void {
     }
   });
 }
+
+export function disableAllBtns(carId: number): void {
+  const carElementButtons = Array.from(document.querySelectorAll(`#car${carId} button`)) as HTMLButtonElement[];
+  carElementButtons.forEach(btn => {
+    btn.setAttribute('disabled', 'true');
+  });
+}
