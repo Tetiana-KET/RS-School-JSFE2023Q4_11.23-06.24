@@ -36,6 +36,7 @@
 .car-track {
   margin-bottom: 10px;
   position: relative;
+  border-bottom: 2px dashed var(--white-color);
 }
 
 .car-track::before {
@@ -52,7 +53,8 @@
 }
 
 .car-icon-wrap {
-  border-bottom: 2px dashed var(--white-color);
+  position: relative;
+  max-width: 90px;
 }
 
 .car-icon-wrap .car-svg {
@@ -65,21 +67,35 @@
     transform: translateY(0);
   }
   25% {
-    transform: translateY(-1px);
+    transform: translateY(-1.5px);
   }
   50% {
-    transform: translateY(1px);
+    transform: translateY(1.5px);
   }
   75% {
-    transform: translateY(-1px);
+    transform: translateY(-1.5px);
   }
   100% {
     transform: translateY(0);
   }
 }
 
-.car-svg[engine='started'] {
+.car-icon-wrap[engine='started'] {
   animation: shake 0.5s ease-in-out;
+}
+
+.car-icon-wrap[engine='burn']:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 29px;
+  right: 4%;
+  top: -26%;
+  background-image: url('../../../assets/icons/fire.gif');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .button[disabled] {

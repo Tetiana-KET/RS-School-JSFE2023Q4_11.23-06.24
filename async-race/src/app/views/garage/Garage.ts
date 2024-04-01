@@ -5,8 +5,8 @@ import Car from '../carTrack/CarTrack';
 import CarModelGenerator from '../../utils/carModelGenerator';
 import { createFormWrapper } from './garage.templates';
 import { CreatedCarOptions } from '../../interfaces/car.interface';
-import { createCarsInGarage, startCarEngineAnimation, togglePaginationBtnsState, updatePageTitle } from '../../utils/RenderingUI';
-import { createCar, deleteCar, deleteWinner, startCarEngine, stopEngine, updateCar } from '../../utils/InteractionAPI';
+import { createCarsInGarage, togglePaginationBtnsState, updatePageTitle } from '../../utils/RenderingUI';
+import { createCar, deleteCar, deleteWinner, startCarEngine, startCarEngineAnimation, stopEngine, updateCar } from '../../utils/InteractionAPI';
 import { createPageTitle } from '../../components/pageTitle';
 import { eventBus } from '../../utils/eventBus';
 
@@ -107,7 +107,9 @@ export default class GarageView extends Component {
   };
 
   private onStartCar = async (input: { id: number }): Promise<void> => {
-    document.querySelector('#startBtn')?.setAttribute('disabled', 'true');
+    const trackLength = document.querySelector(`#car${input.id}`)?.clientWidth || 0;
+    document.querySelector(`#startBtn${input.id}`)?.setAttribute('disabled', 'true');
+
     const { velocity, distance } = await startCarEngine(input.id);
     const transitionTime = distance / velocity;
 
@@ -118,7 +120,7 @@ export default class GarageView extends Component {
     transitionTime: ${transitionTime}
     `);
 
-    startCarEngineAnimation(input.id);
+    startCarEngineAnimation(distance, velocity, input.id, trackLength);
   };
 
   private onStopCar = async (input: { id: number }): Promise<void> => {

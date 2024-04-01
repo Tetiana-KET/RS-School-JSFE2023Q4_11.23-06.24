@@ -29,13 +29,13 @@ export default class Car {
       tagName: 'button',
       text: 'Start',
       classNames: [classes.startBtn, classes.button],
-      attributes: { id: 'startBtn' },
+      attributes: { id: `startBtn${this.id}` },
     });
     const stopButton = new Component({
       tagName: 'button',
       text: 'Stop',
       classNames: [classes.stopBtn, classes.button],
-      attributes: { disabled: 'true', id: 'stopBtn' },
+      attributes: { disabled: 'true', id: `stopBtn${this.id}` },
     });
     const selectButton = new Component({ tagName: 'button', text: 'Select', classNames: [classes.selectBtn, classes.button] });
     const deleteButton = new Component({ tagName: 'button', text: 'Delete', classNames: [classes.deleteBtn, classes.button] });
@@ -52,7 +52,7 @@ export default class Car {
     });
     this.clickHandler(startButton, stopButton, selectButton, deleteButton);
     const svg = createSvg(classes, this.id, this.color);
-    const carIconWrap = new Component({ tagName: 'div', classNames: [classes.carIconWrap] });
+    const carIconWrap = new Component({ tagName: 'div', classNames: [classes.carIconWrap], attributes: { id: `carIconWrap${this.id}` } });
     carIconWrap.getNode().appendChild(svg);
     const track = new Component({ tagName: 'div', classNames: [classes.carTrack], children: [carIconWrap] });
     const carTrackWrap = new Component({
