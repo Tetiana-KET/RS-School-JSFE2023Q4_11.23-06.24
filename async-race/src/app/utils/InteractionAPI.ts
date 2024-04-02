@@ -1,3 +1,4 @@
+import { showWinnerModal } from '../components/modal/modal';
 import { CarOptions, CreatedCarOptions, GarageInterface, RaceParameters, WinnerOptions, WinnersInterface } from '../interfaces/car.interface';
 import { playStartSound, startCarRaceAnimation } from '../views/carTrack/animateCar';
 import { disableStopBtn } from '../views/carTrack/CarButtonsToggler';
@@ -261,6 +262,8 @@ export async function startRace(cars: Element[]): Promise<void> {
     });
     const winnerData = await Promise.race(startPromises);
     console.log('Winner:', winnerData.id);
+    // Get the name of the winning car
+    const { name } = await getWinnerCar(winnerData.id);
     // Send winnerId to the server
     try {
       await setWinner(winnerData);
@@ -270,7 +273,7 @@ export async function startRace(cars: Element[]): Promise<void> {
       console.error('Error sending winner to server:', error);
     }
     // Show modal
-    // showWinnerModal(winnerId);
+    showWinnerModal(winnerData, name);
     const driveModePromises = cars.map(async car => {
       const currentId = Number(car.getAttribute('id')?.slice(3));
       await switchToDriveMode(currentId);
