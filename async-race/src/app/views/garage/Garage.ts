@@ -254,8 +254,7 @@ export default class GarageView extends Component {
     this.disableAllButtons();
     const cars = Array.from(this.garageRaceContainer.getNode().children);
     try {
-      await resetRace(cars, this.onStopCar);
-      await startRace(cars, this.onStartCar).then(() => {
+      await startRace(cars).then(() => {
         const resetRaceBtn = this.formWrap.getNode().querySelector(`#resetRaceBtn`) as HTMLButtonElement;
         resetRaceBtn.removeAttribute('disabled');
       });

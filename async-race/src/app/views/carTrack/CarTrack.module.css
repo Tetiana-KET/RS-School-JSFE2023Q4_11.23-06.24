@@ -97,7 +97,13 @@
   background-size: cover;
   background-position: center;
 }
+
 .car-icon-wrap[returned='true']:after {
+  content: '';
+  display: none;
+}
+
+.car-icon-wrap[engine='onFinish']:after {
   content: '';
   display: none;
 }

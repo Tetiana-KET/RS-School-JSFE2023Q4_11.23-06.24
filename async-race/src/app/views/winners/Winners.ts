@@ -43,6 +43,14 @@ export default class WinnersView extends Component {
       await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
       this.setPaginationPageNum();
     });
+
+    // event listener to handle new Winner event
+    eventBus.subscribe('newWinnerSet', async () => {
+      this.winnersTableContainer.destroyChildren();
+      this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
+      await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
+      this.setPaginationPageNum();
+    });
   }
 
   private appendElements(

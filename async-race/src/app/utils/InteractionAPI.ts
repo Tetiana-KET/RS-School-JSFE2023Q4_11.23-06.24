@@ -1,6 +1,7 @@
-import { CarOptions, CreatedCarOptions, GarageInterface, RaceParameters, WinnersInterface } from '../interfaces/car.interface';
+import { CarOptions, CreatedCarOptions, GarageInterface, RaceParameters, WinnerOptions, WinnersInterface } from '../interfaces/car.interface';
 import { playStartSound, startCarRaceAnimation } from '../views/carTrack/animateCar';
 import { disableStopBtn } from '../views/carTrack/CarButtonsToggler';
+import { eventBus } from './eventBus';
 
 const serverUrl: string = 'http://localhost:3000';
 const path = {
@@ -107,6 +108,77 @@ export const deleteWinner = async (thisId: number): Promise<void> => {
   }
 };
 
+export const getWinner = async (id: number): Promise<WinnerOptions | null> => {
+  let response;
+  try {
+    response = await fetch(`${serverUrl}${path.winners}/${id}`);
+  } catch (error) {
+    if (error instanceof Error) {
+      return null;
+    }
+  }
+  if (response?.ok) {
+    const winner = await response.json();
+
+    return winner; // id wins time
+  }
+  return null;
+};
+
+export const createWinner = async (newWinner: WinnerOptions): Promise<WinnerOptions> => {
+  const response = await fetch(`${serverUrl}${path.winners}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newWinner),
+  });
+
+  const createdWinner: WinnerOptions = await response.json();
+  return createdWinner; // id wins time
+};
+
+export const updateWinner = async (winner: WinnerOptions): Promise<void> => {
+  const { id } = winner;
+  const newData = {
+    wins: winner.wins,
+    time: winner.time,
+  };
+  let response;
+  try {
+    response = await fetch(`${serverUrl}${path.winners}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newData),
+    });
+  } catch (error) {
+    console.error('Error updating server state:', error);
+    console.error(response?.status);
+  }
+};
+
+export async function setWinner(winnerData: { id: number; time: number }): Promise<void> {
+  const winner = await getWinner(winnerData.id);
+  if (winner === null) {
+    const newWinner: WinnerOptions = {
+      id: winnerData.id,
+      wins: 1,
+      time: winnerData.time,
+    };
+    await createWinner(newWinner);
+  } else {
+    const updatedWinner: WinnerOptions = {
+      id: winnerData.id,
+      wins: winner.wins + 1,
+      time: Math.min(winnerData.time, winner.time),
+    };
+
+    await updateWinner(updatedWinner);
+  }
+}
+
 // START ENGINE
 export async function startCarEngine(carId: number): Promise<RaceParameters> {
   const response: Response = await fetch(`${serverUrl}${path.engine}?id=${carId}&status=started`, {
@@ -169,26 +241,41 @@ export async function resetRace(cars: Element[], callback: (input: { id: number 
   }
 }
 
-// export async function getRaceWinner(): Promise<WinnerOptions> {
-
-// }
-// export async function sendWinnerToServer(winner: WinnerOptions): Promise<void> {
-
-// }
-
 // START RACE
-export async function startRace(cars: Element[], callback: (input: { id: number }) => void): Promise<void> {
+export async function startRace(cars: Element[]): Promise<void> {
   try {
-    await Promise.all(
-      cars.map(child => {
-        const currentId = Number(child.getAttribute('id')?.slice(3));
-        return callback({ id: currentId });
-      })
-    );
-
-    // Get winner and send to server
-    // const winner = await getRaceWinner();
-    // await sendWinnerToServer(winner);
+    const preparePromises = cars.map(async car => {
+      const currentId = Number(car.getAttribute('id')?.slice(3));
+      const { velocity, distance } = await startCarEngine(currentId);
+      return { currentId, velocity, distance };
+    });
+    const carInfos = await Promise.all(preparePromises);
+    const startPromises = carInfos.map(({ currentId, velocity, distance }) => {
+      return new Promise<{ id: number; time: number }>(resolve => {
+        playStartSound(1, 1);
+        const carElement = document.querySelector(`#car${currentId} #carIconWrap${currentId}`) as HTMLDivElement;
+        const trackLength = document.querySelector(`#car${currentId}`)?.clientWidth || 0;
+        carElement.setAttribute('engine', 'started');
+        startCarRaceAnimation(distance, velocity, currentId, trackLength).then(({ id, time }) => resolve({ id, time }));
+      });
+    });
+    const winnerData = await Promise.race(startPromises);
+    console.log('Winner:', winnerData.id);
+    // Send winnerId to the server
+    try {
+      await setWinner(winnerData);
+      console.log('Winner sent to server:', winnerData.id);
+      eventBus.emit('newWinnerSet', { carId: winnerData.id });
+    } catch (error) {
+      console.error('Error sending winner to server:', error);
+    }
+    // Show modal
+    // showWinnerModal(winnerId);
+    const driveModePromises = cars.map(async car => {
+      const currentId = Number(car.getAttribute('id')?.slice(3));
+      await switchToDriveMode(currentId);
+    });
+    await Promise.all(driveModePromises);
   } catch (error) {
     console.error('Error starting race:', error);
   }

@@ -1,5 +1,4 @@
 import { GarageInterface, WinnersInterface } from '../interfaces/car.interface';
-
 import { getCars, getWinners } from './InteractionAPI';
 
 export function directToPage(): void {
