@@ -7,6 +7,8 @@ export function startCarRaceAnimation(distance: number, velocity: number, carId:
   const carElement = document.querySelector(`#car${carId} #carIconWrap${carId}`) as HTMLDivElement;
   carElement.removeAttribute('returned');
   enableStopBtn(carId);
+  const resetRaceBtn = document.querySelector(`#resetRaceBtn`) as HTMLButtonElement;
+  resetRaceBtn.removeAttribute('disabled');
   let animationFrameId: number;
   const startTime = Date.now();
   const currDistance = 0;

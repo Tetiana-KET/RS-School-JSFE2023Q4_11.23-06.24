@@ -6,7 +6,17 @@ import CarModelGenerator from '../../utils/carModelGenerator';
 import { createFormWrapper } from './garage.templates';
 import { CreatedCarOptions } from '../../interfaces/car.interface';
 import { createCarsInGarage, togglePaginationBtnsState, updatePageTitle } from '../../utils/RenderingUI';
-import { createCar, deleteCar, deleteWinner, startCarEngine, startCarEngineAnimation, stopEngine, updateCar } from '../../utils/InteractionAPI';
+import {
+  createCar,
+  deleteCar,
+  deleteWinner,
+  resetRace,
+  startCarEngine,
+  startCarEngineAnimation,
+  startRace,
+  stopEngine,
+  updateCar,
+} from '../../utils/InteractionAPI';
 import { createPageTitle } from '../../components/pageTitle';
 import { eventBus } from '../../utils/eventBus';
 import { disableCarBtns } from '../carTrack/CarButtonsToggler';
@@ -120,6 +130,7 @@ export default class GarageView extends Component {
   };
 
   private onStartCar = async (input: { id: number }): Promise<void> => {
+    this.disableAllButtons();
     const trackLength = document.querySelector(`#car${input.id}`)?.clientWidth || 0;
     const { velocity, distance } = await startCarEngine(input.id);
     disableCarBtns(input.id);
@@ -228,36 +239,40 @@ export default class GarageView extends Component {
     updateBtn.disabled = true;
   }
 
-  private handleStartRaceBtnClick(): void {
-    Array.from(this.garageRaceContainer.getNode().children).forEach(child => {
-      const currentId = Number(child.getAttribute('id')?.slice(3));
-      this.onStopCar({ id: currentId })
-        .then(() => {
-          const startRaceBtn = this.formWrap.getNode().querySelector(`#startRaceBtn`) as HTMLButtonElement;
-          const resetRaceBtn = this.formWrap.getNode().querySelector(`#resetRaceBtn`) as HTMLButtonElement;
-          startRaceBtn.removeAttribute('disabled');
-          resetRaceBtn.setAttribute('disabled', 'true');
-        })
-        .then(() => {
-          this.onStartCar({ id: currentId }).then(() => {
-            const startRaceBtn = this.formWrap.getNode().querySelector(`#startRaceBtn`) as HTMLButtonElement;
-            const resetRaceBtn = this.formWrap.getNode().querySelector(`#resetRaceBtn`) as HTMLButtonElement;
-            startRaceBtn.setAttribute('disabled', 'true');
-            resetRaceBtn.removeAttribute('disabled');
-          });
-        });
-    });
+  private disableAllButtons(): void {
+    const startRaceBtn = this.formWrap.getNode().querySelector(`#startRaceBtn`) as HTMLButtonElement;
+    const resetRaceBtn = this.formWrap.getNode().querySelector(`#resetRaceBtn`) as HTMLButtonElement;
+    const generateCarsBtn = this.formWrap.getNode().querySelector(`#generateCarsBtn`) as HTMLButtonElement;
+
+    resetRaceBtn.setAttribute('disabled', 'true');
+    generateCarsBtn.setAttribute('disabled', 'true');
+    startRaceBtn.setAttribute('disabled', 'true');
   }
 
-  private handleResetRaceBtnClick(): void {
-    Array.from(this.garageRaceContainer.getNode().children).forEach(child => {
-      const currentId = Number(child.getAttribute('id')?.slice(3));
-      this.onStopCar({ id: currentId }).then(() => {
-        const startRaceBtn = this.formWrap.getNode().querySelector(`#startRaceBtn`) as HTMLButtonElement;
+  // CLICK START RACE
+  private async handleStartRaceBtnClick(): Promise<void> {
+    this.disableAllButtons();
+    const cars = Array.from(this.garageRaceContainer.getNode().children);
+    try {
+      await resetRace(cars, this.onStopCar);
+      await startRace(cars, this.onStartCar).then(() => {
         const resetRaceBtn = this.formWrap.getNode().querySelector(`#resetRaceBtn`) as HTMLButtonElement;
-        startRaceBtn.removeAttribute('disabled');
-        resetRaceBtn.setAttribute('disabled', 'true');
+        resetRaceBtn.removeAttribute('disabled');
       });
+    } catch (error) {
+      console.error('Error starting race:', error);
+    }
+  }
+
+  // click RESET
+  private async handleResetRaceBtnClick(): Promise<void> {
+    this.disableAllButtons();
+    const cars = Array.from(this.garageRaceContainer.getNode().children);
+    await resetRace(cars, this.onStopCar).then(() => {
+      const startRaceBtn = this.formWrap.getNode().querySelector(`#startRaceBtn`) as HTMLButtonElement;
+      const generateCarsBtn = this.formWrap.getNode().querySelector(`#generateCarsBtn`) as HTMLButtonElement;
+      startRaceBtn.removeAttribute('disabled');
+      generateCarsBtn.removeAttribute('disabled');
     });
   }
 

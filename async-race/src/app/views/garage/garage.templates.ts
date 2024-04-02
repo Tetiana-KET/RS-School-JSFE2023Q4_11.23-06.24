@@ -19,6 +19,6 @@ export function createFormWrapper(classes: CSSModuleClasses): string {
       <div class="${classes.garageMenuButtons}">
         <button class="${classes.raceBtn} ${classes.button}" id="startRaceBtn">Start Race</button>
         <button class="${classes.resetBtn} ${classes.button}" id="resetRaceBtn" disabled>Reset</button>
-        <button class="${classes.generateBtn} ${classes.button}">Generate cars</button>
+        <button class="${classes.generateBtn} ${classes.button}" id="generateCarsBtn">Generate cars</button>
       </div>`;
 }

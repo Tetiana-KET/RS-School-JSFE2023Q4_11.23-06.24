@@ -146,10 +146,50 @@ export async function switchToDriveMode(carId: number): Promise<void> {
   }
 }
 
+// start car animation
 export async function startCarEngineAnimation(distance: number, velocity: number, carId: number, containerLength: number): Promise<void> {
   playStartSound(1, 1);
   const carElement = document.querySelector(`#car${carId} #carIconWrap${carId}`) as HTMLDivElement;
   carElement.setAttribute('engine', 'started');
   startCarRaceAnimation(distance, velocity, carId, containerLength);
   await switchToDriveMode(carId);
+}
+
+// reset all cars
+export async function resetRace(cars: Element[], callback: (input: { id: number }) => void): Promise<void> {
+  try {
+    await Promise.all(
+      cars.map(child => {
+        const currentId = Number(child.getAttribute('id')?.slice(3));
+        return callback({ id: currentId });
+      })
+    );
+  } catch (error) {
+    console.error('Error resetting race:', error);
+  }
+}
+
+// export async function getRaceWinner(): Promise<WinnerOptions> {
+
+// }
+// export async function sendWinnerToServer(winner: WinnerOptions): Promise<void> {
+
+// }
+
+// START RACE
+export async function startRace(cars: Element[], callback: (input: { id: number }) => void): Promise<void> {
+  try {
+    await Promise.all(
+      cars.map(child => {
+        const currentId = Number(child.getAttribute('id')?.slice(3));
+        return callback({ id: currentId });
+      })
+    );
+
+    // Get winner and send to server
+    // const winner = await getRaceWinner();
+    // await sendWinnerToServer(winner);
+  } catch (error) {
+    console.error('Error starting race:', error);
+  }
 }
