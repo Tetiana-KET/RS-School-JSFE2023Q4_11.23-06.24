@@ -42,8 +42,8 @@ export async function createCarsInGarage(page: number, limit: number): Promise<[
   return [carsInGarage, totalCars];
 }
 
-export async function createWinnersList(page: number, limit: number): Promise<[WinnersInterface, number]> {
-  const [winners, winnersCount] = await getWinners(page, limit);
+export async function createWinnersList(page: number, limit: number, sortBy: string, order: string): Promise<[WinnersInterface, number]> {
+  const [winners, winnersCount] = await getWinners(page, limit, sortBy, order);
   const winnersList = await winners;
   const totalWinners = winnersCount;
   return [winnersList, totalWinners];

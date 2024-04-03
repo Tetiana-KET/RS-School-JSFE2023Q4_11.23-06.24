@@ -8,8 +8,8 @@ export default function createScoreTableTemplate(): string {
         <th class="${classes.scoreHeadersPosition} scope="col" id="colNum">№.</th>
         <th class="${classes.carImg} scope="col" id="carImg">Car</th>
         <th class="${classes.carName} scope="col" id="carName">Car Name</th>
-        <th class="${classes.winsCount} scope="col" id="winsCount">Wins</th>
-        <th class="${classes.timeValue} scope="col" id="timeValue">Best Time, s</th>
+        <th class="${classes.winsCount} scope="col" id="winsCount">Wins <span></span></th>
+        <th class="${classes.timeValue} scope="col" id="timeValue">Time, s <span data-sorted="ASC"></span></th>
       </tr>
     </thead>
     <tbody class="${classes.scoreTableBody}">

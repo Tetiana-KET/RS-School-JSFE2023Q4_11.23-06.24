@@ -51,6 +51,38 @@ export default class WinnersView extends Component {
       await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
       this.setPaginationPageNum();
     });
+    this.addListenerToSortBtns();
+  }
+
+  private addListenerToSortBtns(): void {
+    const sortByWins = this.winnersTableContainer.getNode().querySelector(`#winsCount span`) as HTMLSpanElement;
+    const sortByTime = this.winnersTableContainer.getNode().querySelector(`#timeValue span`) as HTMLSpanElement;
+    sortByWins.addEventListener('click', async () => {
+      if (sortByWins.getAttribute('data-sorted') === 'ASC') {
+        sortByWins.setAttribute('data-sorted', 'DESC');
+        await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE, 'wins', 'DESC');
+      } else if (sortByWins.getAttribute('data-sorted') === 'DESC') {
+        sortByWins.setAttribute('data-sorted', 'ASC');
+        await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE, 'wins', 'ASC');
+      } else {
+        sortByWins.setAttribute('data-sorted', 'ASC');
+        sortByTime.removeAttribute('data-sorted');
+        await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE, 'wins', 'ASC');
+      }
+    });
+    sortByTime.addEventListener('click', async () => {
+      if (sortByTime.getAttribute('data-sorted') === 'ASC') {
+        sortByTime.setAttribute('data-sorted', 'DESC');
+        await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE, 'time', 'DESC');
+      } else if (sortByWins.getAttribute('data-sorted') === 'DESC') {
+        sortByTime.setAttribute('data-sorted', 'ASC');
+        await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE, 'time', 'ASC');
+      } else {
+        sortByTime.setAttribute('data-sorted', 'ASC');
+        sortByWins.removeAttribute('data-sorted');
+        await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE, 'time', 'ASC');
+      }
+    });
   }
 
   private appendElements(
@@ -84,9 +116,14 @@ export default class WinnersView extends Component {
     return Math.ceil(winnersCount / this.WINNES_PER_PAGE);
   }
 
-  private async createWinnerView(currentPage: number, WINNERS_PER_PAGE: number): Promise<void> {
-    const [winners, winnersCount] = await createWinnersList(currentPage, WINNERS_PER_PAGE);
+  // _sort = ['id' | 'wins' | 'time'];
+
+  // _order = ['ASC' | 'DESC'];
+
+  private async createWinnerView(currentPage: number, WINNERS_PER_PAGE: number, sortBy: string = 'time', order: string = 'ASC'): Promise<void> {
+    const [winners, winnersCount] = await createWinnersList(currentPage, WINNERS_PER_PAGE, sortBy, order);
     const container = this.winnersTableContainer.getNode().querySelector(`tbody`) as HTMLTableSectionElement;
+    container.innerHTML = '';
     if (currentPage === 1) {
       this.rowNum = 1;
     } else {

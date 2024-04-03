@@ -16,6 +16,7 @@
 .score-table {
   width: 100%;
   overflow: auto;
+  font-size: 1.2dvw;
 }
 
 .score-table tr {
@@ -23,7 +24,6 @@
 }
 
 .score-headers {
-  font-size: 1.3dvw;
   height: 65px;
 }
 
@@ -44,15 +44,32 @@
 }
 
 .car-name {
-  width: 50%;
+  width: 45%;
 }
 
 .wins-count {
-  width: 8%;
+  position: relative;
+  width: 12%;
+}
+
+.wins-count span,
+.timeValue span {
+  position: absolute;
+  top: 0;
+  right: 5%;
+  display: block;
+  height: 100%;
+  width: 20px;
+  background-image: url('../../../assets/icons/sort.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
 }
 
 .timeValue {
-  width: 14%;
+  position: relative;
+  width: 15%;
 }
 
 .score-table th,
@@ -64,4 +81,23 @@
 .car-svg {
   max-width: 90px;
   max-height: 40px;
+}
+
+@media (max-width: 1650px) {
+  .score-table {
+    font-size: 1.8dvw;
+  }
+}
+@media (max-width: 900px) {
+  .wins-count span,
+  .timeValue span {
+    width: 15px;
+  }
+}
+
+@media (max-width: 900px) {
+  .wins-count span,
+  .timeValue span {
+    width: 12px;
+  }
 }

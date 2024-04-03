@@ -1,8 +1,5 @@
 console.log(`
-Привет, если можешь, не спеши. Еще доделаю сортировку. 
-На данный момент: Score: 205  / 215
-Не реализованно -  
-- [ ] Sorting Functionality (10 points): Allow users to sort the table by the number of wins and best time, in ascending or descending order.
+Привет, все пункты выполнены Score: 215  / 215
 
 ## Evaluation Criteria for "Async Race"
 **🏁 Basic Structure (85 points)**
@@ -32,9 +29,9 @@ console.log(`
     - [x] Start Race Button (15 points): Implement a button to start the race for all cars on the current page.
     - [x] Reset Race Button (10 points): Create a button to reset the race, returning all cars to their starting positions.
     - [x] Winner Announcement (10 points): After some car finishes first user should see the message contains car's name that shows which one has won.
-  - [ ] **5. 🏆 Winners View (45 points)**
+  - [x] **5. 🏆 Winners View (45 points)**
     - [x] Display Winners (15 points): After some car wins it should be displayed at the "Winners view" table.
     - [x] Pagination for Winners (10 points): Implement pagination for the "Winners" view, with 10 winners per page.
     - [x] Winners Table (10 points): include car's №, image, name, number of wins, and best time in seconds. 
     - [x] If the same car wins more than once the number of wins should be incremented while best time should be saved
-    - [ ] Sorting Functionality (10 points): Allow users to sort the table by the number of wins and best time, in ascending or descending order.`);
+    - [x] Sorting Functionality (10 points): Allow users to sort the table by the number of wins and best time, in ascending or descending order.`);

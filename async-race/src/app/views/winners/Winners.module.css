@@ -26,3 +26,9 @@
   border-radius: 6px;
   text-align: center;
 }
+
+@media (max-width: 1200px) {
+  .winners {
+    padding: 12px 15px;
+  }
+}

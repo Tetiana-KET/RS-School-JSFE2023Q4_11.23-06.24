@@ -74,9 +74,9 @@ export const updateCar = async (carData: CarOptions): Promise<void> => {
 };
 
 // winners
-export const getWinners = async (page: number, limit: number): GetWinnersResponse => {
+export const getWinners = async (page: number, limit: number, sortBy: string, order: string): GetWinnersResponse => {
   try {
-    const response = await fetch(`${serverUrl}${path.winners}?_page=${page}&_limit=${limit}`);
+    const response = await fetch(`${serverUrl}${path.winners}?_page=${page}&_limit=${limit}&_sort=${sortBy}&_order=${order}`);
     const winnersCount = Number(response.headers.get('X-Total-Count')) || 0;
     const winners = await response.json();
 

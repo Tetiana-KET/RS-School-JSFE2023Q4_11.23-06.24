@@ -27,5 +27,5 @@ export function showWinnerModal(winnerData: { id: number; time: number }, name: 
 
   setTimeout(() => {
     popup?.removeAttribute('active');
-  }, 3000);
+  }, 2000);
 }
