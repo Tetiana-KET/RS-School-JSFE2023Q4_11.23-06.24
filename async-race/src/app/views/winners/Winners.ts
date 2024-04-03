@@ -69,6 +69,7 @@ export default class WinnersView extends Component {
         sortByTime.removeAttribute('data-sorted');
         await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE, 'wins', 'ASC');
       }
+      togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
     });
     sortByTime.addEventListener('click', async () => {
       if (sortByTime.getAttribute('data-sorted') === 'ASC') {
@@ -82,6 +83,7 @@ export default class WinnersView extends Component {
         sortByWins.removeAttribute('data-sorted');
         await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE, 'time', 'ASC');
       }
+      togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
     });
   }
 
@@ -115,10 +117,6 @@ export default class WinnersView extends Component {
   private updateLastPage(winnersCount: number): number {
     return Math.ceil(winnersCount / this.WINNES_PER_PAGE);
   }
-
-  // _sort = ['id' | 'wins' | 'time'];
-
-  // _order = ['ASC' | 'DESC'];
 
   private async createWinnerView(currentPage: number, WINNERS_PER_PAGE: number, sortBy: string = 'time', order: string = 'ASC'): Promise<void> {
     const [winners, winnersCount] = await createWinnersList(currentPage, WINNERS_PER_PAGE, sortBy, order);
@@ -156,6 +154,7 @@ export default class WinnersView extends Component {
     this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
 
     await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
+    this.addListenerToSortBtns();
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
   };
@@ -168,6 +167,7 @@ export default class WinnersView extends Component {
     this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
 
     await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
+    this.addListenerToSortBtns();
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
   };
@@ -180,6 +180,7 @@ export default class WinnersView extends Component {
     this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
 
     await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
+    this.addListenerToSortBtns();
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
   };
@@ -192,6 +193,7 @@ export default class WinnersView extends Component {
     this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
 
     await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
+    this.addListenerToSortBtns();
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'winner');
   };

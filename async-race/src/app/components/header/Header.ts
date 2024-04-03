@@ -20,7 +20,7 @@ export class Header extends Component {
     // logo
     this.headerLogo = new Component({
       tagName: 'h2',
-      text: 'Async Rase',
+      text: 'Async Raсe',
       classNames: [classes.headerLogo],
     });
     this.headerContainer.append(this.headerLogo);
