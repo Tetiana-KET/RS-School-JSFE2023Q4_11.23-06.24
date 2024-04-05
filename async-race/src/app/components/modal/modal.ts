@@ -24,7 +24,9 @@ export function showWinnerModal(winnerData: { id: number; time: number }, name: 
   winnerNameEl.innerText = `${name}`;
   winnerIdEl.innerHTML = `${winnerData.id}`;
   popup?.setAttribute('active', 'true');
-
+  popup?.addEventListener('click', () => {
+    popup?.removeAttribute('active');
+  });
   setTimeout(() => {
     popup?.removeAttribute('active');
   }, 2000);
