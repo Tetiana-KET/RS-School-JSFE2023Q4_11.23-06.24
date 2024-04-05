@@ -49,6 +49,7 @@ export default class WinnersView extends Component {
       this.winnersTableContainer.destroyChildren();
       this.winnersTableContainer.getNode().innerHTML = createScoreTableTemplate();
       await this.createWinnerView(this.currentPage, this.WINNES_PER_PAGE);
+      this.addListenerToSortBtns();
       this.setPaginationPageNum();
     });
     this.addListenerToSortBtns();
