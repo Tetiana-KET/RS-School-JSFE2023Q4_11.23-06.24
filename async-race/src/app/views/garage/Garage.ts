@@ -169,6 +169,9 @@ export default class GarageView extends Component {
     await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'garage');
+    this.enableAllButtons();
+    const resetRaceBtn = document.querySelector(`#resetRaceBtn`) as HTMLButtonElement;
+    resetRaceBtn.setAttribute('disabled', 'true');
   };
 
   // click prev page pagination button
@@ -177,6 +180,9 @@ export default class GarageView extends Component {
     await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'garage');
+    this.enableAllButtons();
+    const resetRaceBtn = document.querySelector(`#resetRaceBtn`) as HTMLButtonElement;
+    resetRaceBtn.setAttribute('disabled', 'true');
   };
 
   // click next page pagination button
@@ -185,6 +191,9 @@ export default class GarageView extends Component {
     await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'garage');
+    this.enableAllButtons();
+    const resetRaceBtn = document.querySelector(`#resetRaceBtn`) as HTMLButtonElement;
+    resetRaceBtn.setAttribute('disabled', 'true');
   };
 
   // click last page pagination button
@@ -193,6 +202,9 @@ export default class GarageView extends Component {
     await this.createGarageView(this.garageRaceContainer.getNode(), this.currentPage, this.CARS_LIMIT);
     this.setPaginationPageNum();
     togglePaginationBtnsState(this.currentPage, this.lastPage, 'garage');
+    this.enableAllButtons();
+    const resetRaceBtn = document.querySelector(`#resetRaceBtn`) as HTMLButtonElement;
+    resetRaceBtn.setAttribute('disabled', 'true');
   };
 
   // Create Name
@@ -247,6 +259,16 @@ export default class GarageView extends Component {
     resetRaceBtn.setAttribute('disabled', 'true');
     generateCarsBtn.setAttribute('disabled', 'true');
     startRaceBtn.setAttribute('disabled', 'true');
+  }
+
+  private enableAllButtons(): void {
+    const startRaceBtn = this.formWrap.getNode().querySelector(`#startRaceBtn`) as HTMLButtonElement;
+    const resetRaceBtn = this.formWrap.getNode().querySelector(`#resetRaceBtn`) as HTMLButtonElement;
+    const generateCarsBtn = this.formWrap.getNode().querySelector(`#generateCarsBtn`) as HTMLButtonElement;
+
+    resetRaceBtn.removeAttribute('disabled');
+    generateCarsBtn.removeAttribute('disabled');
+    startRaceBtn.removeAttribute('disabled');
   }
 
   // CLICK START RACE
