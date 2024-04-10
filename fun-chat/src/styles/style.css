@@ -55,4 +55,5 @@ button {
   width: 100%;
   max-width: 1650px;
   margin: 0 auto;
+  overflow-y: auto;
 }

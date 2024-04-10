@@ -2,13 +2,14 @@ import { Component } from './components/Component';
 import { Footer } from './components/footer/Footer';
 import { Header } from './components/header/Header';
 
-class SiteWrapperComponent extends Component {
+class SiteWrapperComponent extends Component<'div'> {
   constructor() {
     const headerComponent = new Header();
-    const mainComponent = new Component({ tagName: 'main', classNames: ['main'], children: [] });
+    const mainComponent = new Component<'main'>('main', { className: 'main' });
     const footerComponent = new Footer();
 
-    super({ tagName: 'div', classNames: ['site-wrapper'], children: [headerComponent, mainComponent, footerComponent] });
+    super('div', { className: 'site-wrapper', id: 'siteWrapper' });
+    this.appendChildren([headerComponent, mainComponent, footerComponent]);
   }
 }
 

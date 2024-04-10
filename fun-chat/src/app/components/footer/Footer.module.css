@@ -1,13 +1,13 @@
 /* FOOTER */
 .footer {
-  width: 100%;
-  height: 7vh;
   display: flex;
   align-items: center;
-  padding: 10px 35px;
-  background: rgba(3, 6, 25, 0.7);
-  opacity: 0.9;
+  height: 7vh;
+  padding: 12px 35px;
+  color: var(--white-color);
+  background: rgba(21, 3, 43, 0.7);
   box-shadow: 0px -3px 3px var(--box-shadow);
+  opacity: 0.9;
   transition: all 0.5s;
 }
 
@@ -32,7 +32,7 @@
   height: 30px;
   display: flex;
   align-items: center;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 900;
   transition: all 0.5s;
 }

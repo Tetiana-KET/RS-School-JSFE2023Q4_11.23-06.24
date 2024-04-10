@@ -1,15 +1,14 @@
-// Footer.ts
 import { Component } from '../Component';
 import classes from './Footer.module.css';
 
-export class Footer extends Component {
+export class Footer extends Component<'footer'> {
   constructor() {
-    super({ tagName: 'footer', classNames: [classes.footer] });
+    super('footer', { className: `${classes.footer}` });
     this.render();
   }
 
   private render(): void {
-    this.node.innerHTML = `
+    this.element.innerHTML = `
     <div class="${classes.footerContainer}">
       <ul class="${classes.socialItems} ${classes.developer}">
         <li class="${classes.socialItem}">

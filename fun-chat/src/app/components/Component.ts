@@ -9,6 +9,8 @@ export type ComponentCreateOptions<Tag extends HTMLElementTag> = {
   text?: string;
   id?: string;
   element?: HTMLElementTagNameMap[Tag];
+  children?: Component<Tag>[];
+  attributes?: { [key: string]: string | boolean };
 };
 
 const elementToComponentMap: WeakMap<HTMLElementTagNameMap[HTMLElementTag] | ChildNode, Component<HTMLElementTag>> = new WeakMap();
@@ -60,8 +62,9 @@ export class Component<Tag extends HTMLElementTag> {
    * @param {string=} options.text - Text content of the element.
    * @param {string=} options.id - id of the element.
    */
+
   constructor(entity: Tag | HTMLElementTagNameMap[Tag], options?: ComponentCreateOptions<Tag>) {
-    const { className = '', text = '', id = undefined } = options ?? {};
+    const { className = '', text = '', id = undefined, children = [] } = options ?? {};
 
     if (!isHTMLElementTag<Tag>(entity) && isSome<HTMLElementInstance>(entity) && Component.findComponentOf(entity)) {
       throw new Error(`Component of ${String(entity)} already exists`);
@@ -70,6 +73,10 @@ export class Component<Tag extends HTMLElementTag> {
 
     if (id) {
       node.id = id;
+    }
+
+    if (children) {
+      this.appendChildren(children);
     }
 
     node.className = className;
