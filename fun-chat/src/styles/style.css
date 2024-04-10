@@ -1,0 +1,58 @@
+:root {
+  --white-color: #ffffff;
+  --black-color: #000000;
+  --blue-color: #088095;
+  --warning-color: #eb1212;
+  --box-shadow: rgb(13, 96, 111);
+  --box-shadow-hover: rgb(36, 199, 228);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--white-color);
+  background-color: var(--black-color);
+  background: linear-gradient(315deg, #02343d 0%, #0d011b 74%) fixed;
+  font-family: 'Inter';
+  font-size: 20px;
+  font-weight: 400;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--black-color);
+  border-radius: 0 0 3px 0;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--blue-color);
+  border-radius: 3px;
+}
+
+.site-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+button {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+
+.main {
+  min-height: 86vh;
+  width: 100%;
+  max-width: 1650px;
+  margin: 0 auto;
+}
