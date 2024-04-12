@@ -24,14 +24,12 @@ export class Header extends Component<'header'> {
       className: `${classes.button}`,
       text: 'About',
       id: 'infoButton',
-      attributes: { type: 'button' },
-    });
+    }).setAttribute('type', 'button');
     this.logOutButton = new Component('button', {
       className: `${classes.button}`,
       text: 'Log out',
       id: 'logOutButton',
-      attributes: { type: 'button' },
-    });
+    }).setAttribute('type', 'button');
 
     this.buttonsWrap.appendChildren([this.infoButton, this.logOutButton]);
     this.headerContainer.appendChildren([this.headerLogo, this.userInfo, this.buttonsWrap]);

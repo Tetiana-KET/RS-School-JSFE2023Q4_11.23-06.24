@@ -1,11 +1,12 @@
 import { Component } from './components/Component';
 import { Footer } from './components/footer/Footer';
 import { Header } from './components/header/Header';
+import { MainContent } from './components/mainContent/MainContent';
 
 class SiteWrapperComponent extends Component<'div'> {
   constructor() {
     const headerComponent = new Header();
-    const mainComponent = new Component<'main'>('main', { className: 'main' });
+    const mainComponent = new MainContent();
     const footerComponent = new Footer();
 
     super('div', { className: 'site-wrapper', id: 'siteWrapper' });

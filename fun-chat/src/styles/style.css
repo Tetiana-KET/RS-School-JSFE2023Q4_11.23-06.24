@@ -49,11 +49,3 @@ button {
   background: none;
   cursor: pointer;
 }
-
-.main {
-  min-height: 86vh;
-  width: 100%;
-  max-width: 1650px;
-  margin: 0 auto;
-  overflow-y: auto;
-}
