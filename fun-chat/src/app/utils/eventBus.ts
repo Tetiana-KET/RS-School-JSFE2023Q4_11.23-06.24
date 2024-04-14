@@ -18,8 +18,4 @@ class EventBus<T> {
   }
 }
 
-interface CarDeletedEventData {
-  carId: number;
-}
-
-export const eventBus = new EventBus<CarDeletedEventData>(); // Create an instance of EventBus
+export const eventBus = new EventBus<Event>();

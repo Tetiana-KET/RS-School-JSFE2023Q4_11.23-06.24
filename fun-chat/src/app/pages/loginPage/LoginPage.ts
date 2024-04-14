@@ -1,6 +1,7 @@
 import { Component } from '../../components/Component';
 import { LoginController } from '../../controllers/loginController';
 import type { User } from '../../interfaces';
+import { eventBus } from '../../utils/eventBus';
 import classes from './LoginPage.module.css';
 
 export class LoginPage extends Component<'div'> {
@@ -15,6 +16,7 @@ export class LoginPage extends Component<'div'> {
   private loginTooltip: Component<'span'>;
   private passwordTooltip: Component<'span'>;
   private formTitle: Component<'h2'>;
+  private errorMessage: Component<'p'>;
 
   private isLoginValid = false;
   private isPasswordValid = false;
@@ -35,11 +37,15 @@ export class LoginPage extends Component<'div'> {
       .setAttribute('type', 'submit')
       .setAttribute('disabled', 'true');
     this.infoButton = new Component('button', { className: classes.formButton, text: 'About', id: 'infoButton' }).setAttribute('type', 'button');
+    this.errorMessage = new Component('p', { className: classes.errorMessage });
 
     this.setFormElements();
     this.setEventListenerToForm();
     this.setInputsProperties();
     this.appendChild(this.form);
+    eventBus.subscribe('authError', event => {
+      this.drawErrorMessage(event);
+    });
   }
 
   private setEventListenerToForm(): void {
@@ -110,7 +116,6 @@ export class LoginPage extends Component<'div'> {
     const userData: User = {
       login: this.getLogin(),
       password: this.getPassword(),
-      // setSessionStorage()
     };
     this.controller.handleFormSubmit(userData);
   }
@@ -121,5 +126,14 @@ export class LoginPage extends Component<'div'> {
 
   protected getPassword(): string {
     return this.passwordInput.element.value;
+  }
+
+  private drawErrorMessage(message: Event): void {
+    this.errorMessage.element.textContent = `${message}`;
+    this.form.appendChild(this.errorMessage);
+    setTimeout(() => {
+      this.errorMessage.destroy();
+      this.passwordInput.element.value = '';
+    }, 2000);
   }
 }

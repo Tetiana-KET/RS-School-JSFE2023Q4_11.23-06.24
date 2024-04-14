@@ -15,3 +15,12 @@ export interface AuthMessage {
     user: User;
   };
 }
+
+export interface EventResponse {
+  id: string;
+  type: string;
+  payload: {
+    user?: { login: string; isLogined: boolean };
+    error?: string;
+  };
+}

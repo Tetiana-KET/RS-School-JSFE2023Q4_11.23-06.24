@@ -1,4 +1,5 @@
 import type { AuthMessage } from '../interfaces';
+import { eventBus } from '../utils/eventBus';
 
 export class WebSocketAPI {
   public ws: WebSocket;
@@ -22,10 +23,11 @@ export class WebSocketAPI {
   }
 
   private handleMessage(event: MessageEvent): void {
-    const data = JSON.parse(event.data);
-
-    if (data.type === 'ERROR') {
-      this.errorMessage = data.payload.error;
+    const responseData = JSON.parse(event.data);
+    console.log(`response: `, responseData);
+    if (responseData.type === 'ERROR') {
+      this.errorMessage = responseData.payload.error;
+      eventBus.emit('authError', responseData.payload.error);
     }
   }
 }
