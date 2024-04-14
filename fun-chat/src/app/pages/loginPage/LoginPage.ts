@@ -1,29 +1,39 @@
 import { Component } from '../../components/Component';
+import { LoginController } from '../../controllers/loginController';
+import type User from '../../models/UserModel';
 import classes from './LoginPage.module.css';
 
 export class LoginPage extends Component<'div'> {
+  private controller: LoginController;
   private form: Component<'form'>;
-  private firstNameInput: Component<'input'>;
-  private lastNameInput: Component<'input'>;
+  private passwordInput: Component<'input'>;
+  private loginInput: Component<'input'>;
   private loginButton: Component<'button'>;
   private infoButton: Component<'button'>;
-  private firstNameLabel: Component<'label'>;
-  private lastNameLabel: Component<'label'>;
-  private firstNameTooltip: Component<'span'>;
-  private surnameTooltip: Component<'span'>;
+  private loginLabel: Component<'label'>;
+  private passwordLabel: Component<'label'>;
+  private loginTooltip: Component<'span'>;
+  private passwordTooltip: Component<'span'>;
   private formTitle: Component<'h2'>;
+
+  private isLoginValid = false;
+  private isPasswordValid = false;
 
   constructor() {
     super('div', { className: `${classes.loginPage}`, id: 'loginPage' });
+    this.controller = new LoginController();
+
     this.form = new Component('form', { className: `${classes.loginForm}`, id: 'loginForm' });
     this.formTitle = new Component('h2', { className: `${classes.loginFormTitle}`, text: 'login', id: 'loginForm' });
-    this.surnameTooltip = new Component('span');
-    this.firstNameTooltip = new Component('span');
-    this.firstNameInput = new Component('input', { id: 'firstName', className: classes.loginFormInput });
-    this.lastNameInput = new Component('input', { id: 'lastName', className: classes.loginFormInput });
-    this.firstNameLabel = new Component('label', { text: 'First Name', className: classes.loginFormLabel });
-    this.lastNameLabel = new Component('label', { text: 'Last Name', className: classes.loginFormLabel });
-    this.loginButton = new Component('button', { className: classes.formButton, text: 'Login', id: 'loginBtn' }).setAttribute('type', 'submit');
+    this.loginTooltip = new Component('span', { text: '' });
+    this.passwordTooltip = new Component('span');
+    this.loginInput = new Component('input', { id: 'loginInput', className: classes.loginFormInput });
+    this.passwordInput = new Component('input', { id: 'passwordInput', className: classes.loginFormInput });
+    this.loginLabel = new Component('label', { text: 'Login', className: classes.loginFormLabel });
+    this.passwordLabel = new Component('label', { text: 'Password', className: classes.loginFormLabel });
+    this.loginButton = new Component('button', { className: classes.formButton, text: 'Log in', id: 'loginBtn' })
+      .setAttribute('type', 'submit')
+      .setAttribute('disabled', 'true');
     this.infoButton = new Component('button', { className: classes.formButton, text: 'About', id: 'infoButton' }).setAttribute('type', 'button');
 
     this.setFormElements();
@@ -33,58 +43,79 @@ export class LoginPage extends Component<'div'> {
   }
 
   private setEventListenerToForm(): void {
-    // this.firstNameInput.element.addEventListener('input', this.checkFormValidity.bind(this));
-    // this.lastNameInput.element.addEventListener('input', this.checkFormValidity.bind(this));
+    this.loginInput.element.addEventListener('input', this.inputLoginOnChange.bind(this));
+    this.passwordInput.element.addEventListener('input', this.inputPasswordOnChange.bind(this));
     this.form.element.addEventListener('submit', event => {
       event.preventDefault();
-      this.handleFormSubmit();
+      this.onFormSubmit();
     });
   }
 
   private setInputsProperties(): void {
-    this.surnameTooltip.element.classList.add(classes.inputTooltip, classes.inputTooltipSurname);
-    this.firstNameTooltip.element.classList.add(classes.inputTooltip, classes.inputTooltipName);
+    this.passwordTooltip.element.classList.add(classes.inputTooltip, classes.inputTooltipPassword);
+    this.loginTooltip.element.classList.add(classes.inputTooltip, classes.inputTooltipName);
 
-    this.firstNameInput
+    this.loginInput
       .setAttribute('type', 'text')
       .setAttribute('required', 'true')
-      .setAttribute('name', 'fname')
-      .setAttribute('placeholder', 'First Name')
-      .setAttribute('minlength', '3');
+      .setAttribute('name', 'loginForm')
+      .setAttribute('placeholder', 'Login')
+      .setAttribute('minlength', '4');
 
-    this.lastNameInput
-      .setAttribute('type', 'text')
+    this.passwordInput
+      .setAttribute('type', 'password')
       .setAttribute('required', 'true')
-      .setAttribute('name', 'lastName')
-      .setAttribute('placeholder', 'Last Name')
-      .setAttribute('minlength', '3');
+      .setAttribute('name', 'loginForm')
+      .setAttribute('placeholder', 'Password')
+      .setAttribute('minlength', '8');
   }
 
   private setFormElements(): void {
-    this.firstNameLabel.appendChild(this.firstNameTooltip);
-    this.lastNameLabel.appendChild(this.surnameTooltip);
+    this.loginLabel.appendChild(this.loginTooltip);
+    this.passwordLabel.appendChild(this.passwordTooltip);
     this.form.appendChildren([
       this.formTitle,
-      this.firstNameLabel,
-      this.firstNameInput,
-      this.lastNameLabel,
-      this.lastNameInput,
+      this.loginLabel,
+      this.loginInput,
+      this.passwordLabel,
+      this.passwordInput,
       this.loginButton,
       this.infoButton,
     ]);
   }
 
-  private handleFormSubmit(): void {
-    // const firstName = this.getFirstName();
-    // const surname = this.getSurname();
-    // const isLoggedIn = true;
+  private inputLoginOnChange(): boolean {
+    const userNameInputValue = this.loginInput.element.value.trim();
+    this.isLoginValid = this.controller.handleUserNameValidation(userNameInputValue);
+    this.loginButton.element.disabled = !this.loginBtnIsDisabled();
+    return this.isLoginValid;
   }
 
-  protected getFirstName(): string {
-    return this.firstNameInput.element.value;
+  private inputPasswordOnChange(): boolean {
+    const userPasswordValue = this.passwordInput.element.value.trim();
+    this.isPasswordValid = this.controller.handlePasswordValidation(userPasswordValue);
+    this.loginButton.element.disabled = !this.loginBtnIsDisabled();
+    return this.isPasswordValid;
   }
 
-  protected getSurname(): string {
-    return this.lastNameInput.element.value;
+  private loginBtnIsDisabled(): boolean {
+    return this.isPasswordValid && this.isLoginValid;
+  }
+
+  private onFormSubmit(): void {
+    const userData: User = {
+      userName: this.getLogin(),
+      password: this.getPassword(),
+      isLogged: true,
+    };
+    this.controller.handleFormSubmit(userData);
+  }
+
+  protected getLogin(): string {
+    return this.loginInput.element.value;
+  }
+
+  protected getPassword(): string {
+    return this.passwordInput.element.value;
   }
 }
