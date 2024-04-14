@@ -1,14 +1,15 @@
-import type User from './UserModel';
+import type { CurrentUser, User } from '../interfaces';
 
 export class ChatModel {
-  private user: User;
+  private currentUser: CurrentUser;
   private usersBase: User[] = [];
 
   constructor() {
-    this.user = {
-      userName: '',
+    this.currentUser = {
+      login: '',
       password: '',
-      isLogged: false,
+      id: '',
+      isOnline: false,
     };
   }
 
@@ -21,21 +22,19 @@ export class ChatModel {
 
   // Validation for password
   public validatePassword(password: string): boolean {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\\da-zA-Z]).{6,}$/;
-    const isPasswordValid = passwordRegex.test(password) && password.length >= 6;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\\da-zA-Z]).{8,}$/;
+    const isPasswordValid = passwordRegex.test(password) && password.length >= 8;
     return isPasswordValid;
+  }
+
+  public setCurrentUserData(userData: User): void {
+    this.currentUser.login = userData.login;
+    this.currentUser.password = userData.password;
+    console.log(this.currentUser);
   }
 
   public handleFormSubmit(): void {
     // const firstName = this.getFirstName();
     // const surname = this.getSurname();
-    // const isLoggedIn = true;
-  }
-
-  public setCurrentUserData(userData: User): void {
-    this.user.userName = userData.userName;
-    this.user.password = userData.password;
-    this.user.isLogged = userData.isLogged;
-    console.log(this.user);
   }
 }

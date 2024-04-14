@@ -1,6 +1,6 @@
 import { Component } from '../../components/Component';
 import { LoginController } from '../../controllers/loginController';
-import type User from '../../models/UserModel';
+import type { User } from '../../interfaces';
 import classes from './LoginPage.module.css';
 
 export class LoginPage extends Component<'div'> {
@@ -108,9 +108,9 @@ export class LoginPage extends Component<'div'> {
 
   private onFormSubmit(): void {
     const userData: User = {
-      userName: this.getLogin(),
+      login: this.getLogin(),
       password: this.getPassword(),
-      isLogged: true,
+      // setSessionStorage()
     };
     this.controller.handleFormSubmit(userData);
   }

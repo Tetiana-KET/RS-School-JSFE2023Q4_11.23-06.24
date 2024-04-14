@@ -47,3 +47,8 @@ export function getUserInfoFromLocalStorage(): {
   const userData = localStorage.getItem('userData');
   return userData ? JSON.parse(userData) : null;
 }
+
+// generate random number
+export function generateRandomNumber(): number {
+  return Math.floor(Math.random() * 10000) + 1;
+}
