@@ -29,7 +29,9 @@ export class Header extends Component<'header'> {
       className: `${classes.button}`,
       text: 'Log out',
       id: 'logOutButton',
-    }).setAttribute('type', 'button');
+    })
+      .setAttribute('type', 'button')
+      .setAttribute('disabled', 'true');
 
     this.buttonsWrap.appendChildren([this.infoButton, this.logOutButton]);
     this.headerContainer.appendChildren([this.headerLogo, this.userInfo, this.buttonsWrap]);

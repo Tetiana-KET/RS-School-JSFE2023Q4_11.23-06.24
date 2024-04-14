@@ -4,7 +4,7 @@ import type { User } from '../../interfaces';
 import { eventBus } from '../../utils/eventBus';
 import classes from './LoginPage.module.css';
 
-export class LoginPage extends Component<'div'> {
+export class LoginPage extends Component<'section'> {
   private controller: LoginController;
   private form: Component<'form'>;
   private passwordInput: Component<'input'>;
@@ -22,7 +22,7 @@ export class LoginPage extends Component<'div'> {
   private isPasswordValid = false;
 
   constructor() {
-    super('div', { className: `${classes.loginPage}`, id: 'loginPage' });
+    super('section', { className: `${classes.loginPage}`, id: 'loginPage' });
     this.controller = new LoginController();
 
     this.form = new Component('form', { className: `${classes.loginForm}`, id: 'loginForm' });
