@@ -52,6 +52,7 @@
 
 .login-form-input::placeholder {
   font-size: 20px;
+  letter-spacing: normal;
 }
 
 .last-name-input {

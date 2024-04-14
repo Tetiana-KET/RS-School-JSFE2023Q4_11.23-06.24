@@ -25,8 +25,8 @@ export class LoginPage extends Component<'div'> {
 
     this.form = new Component('form', { className: `${classes.loginForm}`, id: 'loginForm' });
     this.formTitle = new Component('h2', { className: `${classes.loginFormTitle}`, text: 'login', id: 'loginForm' });
-    this.loginTooltip = new Component('span', { text: '' });
-    this.passwordTooltip = new Component('span');
+    this.loginTooltip = new Component('span', { text: 'Requires both upper and lower case letters' });
+    this.passwordTooltip = new Component('span', { text: 'Requires upper and lower case letters and digits' });
     this.loginInput = new Component('input', { id: 'loginInput', className: classes.loginFormInput });
     this.passwordInput = new Component('input', { id: 'passwordInput', className: classes.loginFormInput });
     this.loginLabel = new Component('label', { text: 'Login', className: classes.loginFormLabel });
@@ -59,14 +59,14 @@ export class LoginPage extends Component<'div'> {
       .setAttribute('type', 'text')
       .setAttribute('required', 'true')
       .setAttribute('name', 'loginForm')
-      .setAttribute('placeholder', 'Login')
+      .setAttribute('placeholder', 'Login, min length 4 symbols')
       .setAttribute('minlength', '4');
 
     this.passwordInput
       .setAttribute('type', 'password')
       .setAttribute('required', 'true')
       .setAttribute('name', 'loginForm')
-      .setAttribute('placeholder', 'Password')
+      .setAttribute('placeholder', 'Password, min length 6 symbols')
       .setAttribute('minlength', '8');
   }
 
@@ -88,6 +88,8 @@ export class LoginPage extends Component<'div'> {
     const userNameInputValue = this.loginInput.element.value.trim();
     this.isLoginValid = this.controller.handleUserNameValidation(userNameInputValue);
     this.loginButton.element.disabled = !this.loginBtnIsDisabled();
+    this.loginTooltip.element.style.opacity = this.isLoginValid ? '0' : '1';
+    this.loginTooltip.element.style.visibility = this.isLoginValid ? 'hidden' : 'visible';
     return this.isLoginValid;
   }
 
@@ -95,6 +97,8 @@ export class LoginPage extends Component<'div'> {
     const userPasswordValue = this.passwordInput.element.value.trim();
     this.isPasswordValid = this.controller.handlePasswordValidation(userPasswordValue);
     this.loginButton.element.disabled = !this.loginBtnIsDisabled();
+    this.passwordTooltip.element.style.opacity = this.isPasswordValid ? '0' : '1';
+    this.passwordTooltip.element.style.visibility = this.isPasswordValid ? 'hidden' : 'visible';
     return this.isPasswordValid;
   }
 
