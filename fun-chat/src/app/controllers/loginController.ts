@@ -2,6 +2,7 @@ import type { AuthMessage, User } from '../interfaces';
 import { ChatModel } from '../models/ChatModel';
 import { WebSocketAPI } from '../services/WebSocketAPI';
 import { generateRandomNumber } from '../utils/commonUtils';
+import { eventBus } from '../utils/eventBus';
 
 export class LoginController {
   private chatModel: ChatModel;
@@ -20,7 +21,7 @@ export class LoginController {
     return this.chatModel.validatePassword(password);
   }
 
-  public handleFormSubmit(userData: User): void {
+  public handleFormSubmit(event: SubmitEvent, userData: User): void {
     const authMessage: AuthMessage = {
       id: generateRandomNumber().toString(),
       type: 'USER_LOGIN',
@@ -30,5 +31,6 @@ export class LoginController {
     };
     this.webSocketAPI.userAuthentication(authMessage);
     this.chatModel.setCurrentUserData(userData);
+    eventBus.emit('successLogin', event);
   }
 }

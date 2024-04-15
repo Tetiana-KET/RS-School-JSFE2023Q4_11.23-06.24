@@ -1,8 +1,10 @@
 import type { CurrentUser, User } from '../interfaces';
+import { Router } from '../pages/Router';
 
 export class ChatModel {
   private currentUser: CurrentUser;
   private usersBase: User[] = [];
+  public router: Router;
 
   constructor() {
     this.currentUser = {
@@ -11,6 +13,7 @@ export class ChatModel {
       id: '',
       isOnline: false,
     };
+    this.router = new Router();
   }
 
   // Validation for username

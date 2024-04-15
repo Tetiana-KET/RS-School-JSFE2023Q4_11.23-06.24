@@ -46,6 +46,8 @@ export class LoginPage extends Component<'section'> {
     eventBus.subscribe('authError', event => {
       this.drawErrorMessage(event);
     });
+    this.infoButton.element.addEventListener('click', this.onAboutBtnClick.bind(this));
+    eventBus.subscribe('aboutBtnClicked', this.disableBtn.bind(this));
   }
 
   private setEventListenerToForm(): void {
@@ -53,8 +55,16 @@ export class LoginPage extends Component<'section'> {
     this.passwordInput.element.addEventListener('input', this.inputPasswordOnChange.bind(this));
     this.form.element.addEventListener('submit', event => {
       event.preventDefault();
-      this.onFormSubmit();
+      this.onFormSubmit(event);
     });
+  }
+
+  private onAboutBtnClick(event: MouseEvent): void {
+    eventBus.emit('aboutBtnClicked', event);
+  }
+
+  private disableBtn(): void {
+    this.infoButton.element.disabled = true;
   }
 
   private setInputsProperties(): void {
@@ -112,12 +122,12 @@ export class LoginPage extends Component<'section'> {
     return this.isPasswordValid && this.isLoginValid;
   }
 
-  private onFormSubmit(): void {
+  private onFormSubmit(event: SubmitEvent): void {
     const userData: User = {
       login: this.getLogin(),
       password: this.getPassword(),
     };
-    this.controller.handleFormSubmit(userData);
+    this.controller.handleFormSubmit(event, userData);
   }
 
   protected getLogin(): string {

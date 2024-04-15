@@ -1,3 +1,4 @@
+import { eventBus } from '../../utils/eventBus';
 import { Component } from '../Component';
 import classes from './Header.module.css';
 
@@ -35,5 +36,31 @@ export class Header extends Component<'header'> {
 
     this.buttonsWrap.appendChildren([this.infoButton, this.logOutButton]);
     this.headerContainer.appendChildren([this.headerLogo, this.userInfo, this.buttonsWrap]);
+    this.infoButton.element.addEventListener('click', this.onAboutBtnClick.bind(this));
+    this.logOutButton.element.addEventListener('click', this.onLogoutBtnClick.bind(this));
+    eventBus.subscribe('aboutBtnClicked', this.disableAboutBtn.bind(this));
+    eventBus.subscribe('successLogin', this.enableLogoutBtn.bind(this));
+    // eventBus.subscribe('logout', this.disableLogoutBtn.bind(this));
+  }
+
+  private onAboutBtnClick(event: MouseEvent): void {
+    eventBus.emit('aboutBtnClicked', event);
+  }
+
+  private onLogoutBtnClick(event: MouseEvent): void {
+    this.disableLogoutBtn();
+    eventBus.emit('logout', event);
+  }
+
+  private disableAboutBtn(): void {
+    this.infoButton.element.disabled = true;
+  }
+
+  private enableLogoutBtn(): void {
+    this.logOutButton.element.disabled = false;
+  }
+
+  private disableLogoutBtn(): void {
+    this.logOutButton.element.disabled = true;
   }
 }
