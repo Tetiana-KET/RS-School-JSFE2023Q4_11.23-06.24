@@ -1,23 +1,23 @@
 import { Component } from '../../components/Component';
-import { AboutPageController } from '../../controllers/aboutPageController';
+import { Controller } from '../../controllers/Controller';
 
 import classes from './AboutPage.module.css';
 
 export class AboutPage extends Component<'section'> {
-  private controller: AboutPageController;
+  private controller: Controller;
   private aboutPageWrapper: Component<'div'>;
   private aboutPageTitle: Component<'h2'>;
   private aboutPageDescription: Component<'p'>;
-  private aboutPageButton: Component<'button'>;
+  private aboutPageBackButton: Component<'button'>;
   private aboutPageDeveloper: Component<'a'>;
 
   constructor() {
     super('section', { className: `${classes.aboutPage}`, id: 'aboutPage' });
-    this.controller = new AboutPageController();
+    this.controller = new Controller();
     this.aboutPageWrapper = new Component('div', { className: `${classes.aboutPageWrapper}`, id: 'aboutPageWrapper' });
     this.aboutPageTitle = new Component('h2', { className: `${classes.aboutPageTitle}`, text: 'Welcome to Fun Chat' });
     this.aboutPageDescription = new Component('p', { className: `${classes.aboutPageDescription}` });
-    this.aboutPageButton = new Component('button', { className: `${classes.aboutPageButton}`, text: 'Back', id: 'aboutPageButton' }).setAttribute(
+    this.aboutPageBackButton = new Component('button', { className: `${classes.aboutPageButton}`, text: 'Back', id: 'aboutPageButton' }).setAttribute(
       'type',
       'button'
     );
@@ -26,7 +26,7 @@ export class AboutPage extends Component<'section'> {
     this.setPageElements();
     this.setDeveloperProperties();
     this.appendChild(this.aboutPageWrapper);
-    this.aboutPageButton.element.addEventListener('click', this.onButtonClick.bind(this));
+    this.aboutPageBackButton.element.addEventListener('click', this.onBackButtonClick.bind(this));
   }
 
   private setAboutPageDescription(): void {
@@ -41,14 +41,14 @@ export class AboutPage extends Component<'section'> {
   }
 
   private setPageElements(): void {
-    this.aboutPageWrapper.appendChildren([this.aboutPageTitle, this.aboutPageDescription, this.aboutPageDeveloper, this.aboutPageButton]);
+    this.aboutPageWrapper.appendChildren([this.aboutPageTitle, this.aboutPageDescription, this.aboutPageDeveloper, this.aboutPageBackButton]);
   }
 
   private setDeveloperProperties(): void {
     this.aboutPageDeveloper.setAttribute('href', 'https://github.com/Tetiana-KET').setAttribute('target', '_blank').setTextContent('Tetiana-KET');
   }
 
-  private onButtonClick(): void {
-    this.controller.handleButtonClick();
+  private onBackButtonClick(event: MouseEvent): void {
+    this.controller.handleBackButtonClick(event);
   }
 }

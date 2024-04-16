@@ -29,5 +29,9 @@ export class WebSocketAPI {
       this.errorMessage = responseData.payload.error;
       eventBus.emit('authError', responseData.payload.error);
     }
+    if (responseData.type === 'USER_LOGIN') {
+      eventBus.emit('successLogin', event);
+      window.location.hash = '#chat';
+    }
   }
 }

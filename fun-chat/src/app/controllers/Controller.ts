@@ -4,8 +4,8 @@ import { WebSocketAPI } from '../services/WebSocketAPI';
 import { generateRandomNumber } from '../utils/commonUtils';
 import { eventBus } from '../utils/eventBus';
 
-export class LoginController {
-  private chatModel: ChatModel;
+export class Controller {
+  public chatModel: ChatModel;
   private webSocketAPI: WebSocketAPI;
 
   constructor() {
@@ -31,6 +31,10 @@ export class LoginController {
     };
     this.webSocketAPI.userAuthentication(authMessage);
     this.chatModel.setCurrentUserData(userData);
-    eventBus.emit('successLogin', event);
+  }
+
+  public handleBackButtonClick(event: MouseEvent): void {
+    eventBus.emit('backButtonClicked', event);
+    window.history.go(-1);
   }
 }

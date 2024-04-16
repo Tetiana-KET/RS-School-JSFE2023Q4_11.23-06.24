@@ -1,10 +1,9 @@
 import type { CurrentUser, User } from '../interfaces';
-import { Router } from '../pages/Router';
 
 export class ChatModel {
   private currentUser: CurrentUser;
   private usersBase: User[] = [];
-  public router: Router;
+  private previousPage = '';
 
   constructor() {
     this.currentUser = {
@@ -13,7 +12,15 @@ export class ChatModel {
       id: '',
       isOnline: false,
     };
-    this.router = new Router();
+  }
+
+  public setPreviousPage(url: string): void {
+    this.previousPage = url;
+    console.log(this.previousPage);
+  }
+
+  public getPreviousPage(): string {
+    return this.previousPage;
   }
 
   // Validation for username
@@ -34,10 +41,5 @@ export class ChatModel {
     this.currentUser.login = userData.login;
     this.currentUser.password = userData.password;
     console.log(this.currentUser);
-  }
-
-  public handleFormSubmit(): void {
-    // const firstName = this.getFirstName();
-    // const surname = this.getSurname();
   }
 }

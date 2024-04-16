@@ -1,3 +1,4 @@
+import { Controller } from '../../controllers/Controller';
 import { eventBus } from '../../utils/eventBus';
 import { Component } from '../Component';
 import classes from './Header.module.css';
@@ -10,10 +11,11 @@ export class Header extends Component<'header'> {
   private logOutButton: Component<'button'>;
   private userInfo: Component<'div'>;
   private userName: string | null = null;
+  private controller: Controller;
 
   constructor() {
     super('header', { className: `${classes.header}`, id: 'header' });
-
+    this.controller = new Controller();
     this.headerContainer = new Component('div', { className: `${classes.headerContainer}`, id: 'headerContainer' });
     this.appendChild(this.headerContainer);
 
@@ -40,20 +42,27 @@ export class Header extends Component<'header'> {
     this.logOutButton.element.addEventListener('click', this.onLogoutBtnClick.bind(this));
     eventBus.subscribe('aboutBtnClicked', this.disableAboutBtn.bind(this));
     eventBus.subscribe('successLogin', this.enableLogoutBtn.bind(this));
-    // eventBus.subscribe('logout', this.disableLogoutBtn.bind(this));
+    eventBus.subscribe('logout', this.disableLogoutBtn.bind(this));
+    eventBus.subscribe('backButtonClicked', this.enableAboutBtn.bind(this));
   }
 
   private onAboutBtnClick(event: MouseEvent): void {
+    window.location.hash = '#about';
     eventBus.emit('aboutBtnClicked', event);
   }
 
   private onLogoutBtnClick(event: MouseEvent): void {
+    window.location.hash = '';
     this.disableLogoutBtn();
     eventBus.emit('logout', event);
   }
 
   private disableAboutBtn(): void {
     this.infoButton.element.disabled = true;
+  }
+
+  private enableAboutBtn(): void {
+    this.infoButton.element.disabled = false;
   }
 
   private enableLogoutBtn(): void {

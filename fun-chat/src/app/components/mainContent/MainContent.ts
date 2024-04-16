@@ -1,49 +1,59 @@
-import { MainContentController } from '../../controllers/mainContentController';
+import { Controller } from '../../controllers/Controller';
 import { AboutPage } from '../../pages/aboutPage/AboutPage';
 import { ChatPage } from '../../pages/chatPage/ChatPage';
 import { LoginPage } from '../../pages/loginPage/LoginPage';
+import { Router } from '../../pages/Router';
 import { eventBus } from '../../utils/eventBus';
 import { Component } from '../Component';
 import classes from './MainContent.module.css';
 
 export class MainContent extends Component<'main'> {
-  private controller: MainContentController;
+  private controller: Controller;
+  private router: Router;
   private loginPage: LoginPage;
   private aboutPage: AboutPage;
   private chatPage: ChatPage;
   constructor() {
     super('main', { className: `${classes.main}`, id: 'main' });
-
-    this.controller = new MainContentController();
+    this.controller = new Controller();
     this.loginPage = new LoginPage();
     this.aboutPage = new AboutPage();
     this.chatPage = new ChatPage();
     this.appendChild(this.loginPage);
-    this.controller.chatModel.router.addRoute('#/login', () => this.appendChild(this.loginPage));
-    this.controller.chatModel.router.addRoute('#/about', () => this.appendChild(this.aboutPage));
-    this.controller.chatModel.router.addRoute('#/chat', () => this.appendChild(this.chatPage));
-    this.controller.chatModel.router.navigateTo(window.location.pathname);
 
-    eventBus.subscribe('aboutBtnClicked', this.navigateToAboutPage.bind(this));
-    eventBus.subscribe('successLogin', this.navigateToChatPage.bind(this));
-    eventBus.subscribe('logout', this.navigateToLoginPage.bind(this));
+    this.router = new Router(this.setPageContent.bind(this));
+
+    eventBus.subscribe('aboutBtnClicked', this.setPageContent.bind(this));
+    eventBus.subscribe('successLogin', this.setPageContent.bind(this));
+    eventBus.subscribe('logout', this.setPageContent.bind(this));
+  }
+
+  private setPageContent(): void {
+    const location = window.location.hash;
+    if (location === '') {
+      this.navigateToLoginPage();
+    } else if (location === '#chat') {
+      this.navigateToChatPage();
+    } else if (location === '#about') {
+      this.navigateToAboutPage();
+    }
   }
 
   private navigateToAboutPage(): void {
     this.destroyChildren();
     this.aboutPage = new AboutPage();
-    this.controller.navigateToAbout();
+    this.appendChild(this.aboutPage);
   }
 
   private navigateToChatPage(): void {
     this.destroyChildren();
     this.chatPage = new ChatPage();
-    this.controller.navigateToChat();
+    this.appendChild(this.chatPage);
   }
 
   private navigateToLoginPage(): void {
     this.destroyChildren();
     this.loginPage = new LoginPage();
-    this.controller.navigateToLogin();
+    this.appendChild(this.loginPage);
   }
 }

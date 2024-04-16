@@ -1,11 +1,11 @@
 import { Component } from '../../components/Component';
-import { LoginController } from '../../controllers/loginController';
+import { Controller } from '../../controllers/Controller';
 import type { User } from '../../interfaces';
 import { eventBus } from '../../utils/eventBus';
 import classes from './LoginPage.module.css';
 
 export class LoginPage extends Component<'section'> {
-  private controller: LoginController;
+  private controller: Controller;
   private form: Component<'form'>;
   private passwordInput: Component<'input'>;
   private loginInput: Component<'input'>;
@@ -23,7 +23,7 @@ export class LoginPage extends Component<'section'> {
 
   constructor() {
     super('section', { className: `${classes.loginPage}`, id: 'loginPage' });
-    this.controller = new LoginController();
+    this.controller = new Controller();
 
     this.form = new Component('form', { className: `${classes.loginForm}`, id: 'loginForm' });
     this.formTitle = new Component('h2', { className: `${classes.loginFormTitle}`, text: 'login', id: 'loginForm' });
@@ -43,11 +43,13 @@ export class LoginPage extends Component<'section'> {
     this.setEventListenerToForm();
     this.setInputsProperties();
     this.appendChild(this.form);
+
     eventBus.subscribe('authError', event => {
       this.drawErrorMessage(event);
     });
     this.infoButton.element.addEventListener('click', this.onAboutBtnClick.bind(this));
     eventBus.subscribe('aboutBtnClicked', this.disableBtn.bind(this));
+    eventBus.subscribe('backButtonClicked', this.enableBtn.bind(this));
   }
 
   private setEventListenerToForm(): void {
@@ -60,11 +62,16 @@ export class LoginPage extends Component<'section'> {
   }
 
   private onAboutBtnClick(event: MouseEvent): void {
+    window.location.hash = '#about';
     eventBus.emit('aboutBtnClicked', event);
   }
 
   private disableBtn(): void {
     this.infoButton.element.disabled = true;
+  }
+
+  private enableBtn(): void {
+    this.infoButton.element.disabled = false;
   }
 
   private setInputsProperties(): void {

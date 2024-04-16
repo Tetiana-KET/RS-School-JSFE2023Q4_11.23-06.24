@@ -30,3 +30,5 @@ export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 WithOptional<T, K> - это тип данных, который берет объект T и делает определенные ключи K необязательными,
 в результате создавая новый тип данных, где указанные свойства могут быть или не быть при использовании этого типа. */
 export type WithOptional<T, K extends keyof T> = Omit<T, K> & { [P in K]?: T[P] };
+
+export type Callback<T> = (attr: T) => void | Promise<void>;

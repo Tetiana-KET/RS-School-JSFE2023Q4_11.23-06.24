@@ -1,30 +1,50 @@
+import type { Callback } from '../utils/types';
+
+export enum Routes {
+  Login = '',
+  Chat = '#chat',
+  About = '#about',
+}
+
+// check route
+export function checkRoute(route: string): Routes {
+  if (Routes.Login.includes(route)) {
+    return Routes.Login;
+  }
+  if (Routes.Chat.includes(route)) {
+    return Routes.Chat;
+  }
+  if (Routes.About.includes(route)) {
+    return Routes.About;
+  }
+  return Routes.Login;
+}
+
 export class Router {
-  routes: Record<string, () => void>;
+  private setPage: Callback<string>;
+  public currentPage: Routes;
 
-  constructor() {
-    this.routes = {};
-    // Add a default route for the root path ("/")
-    this.addRoute('/', () => {
-      // Handle the root path navigation, for example, navigate to the login page
-      this.navigateTo('#/login');
-    });
+  constructor(setPageContent: Callback<string>) {
+    this.currentPage = Routes.Login;
+    this.setPage = setPageContent;
 
-    // Listen for hashchange events to handle hash-based routing
-    window.addEventListener('hashchange', () => {
-      const route = window.location.hash.slice(1); // Remove the leading '#' symbol
-      this.navigateTo(route);
-    });
+    window.onhashchange = (): void => {
+      this.handleLocation();
+    };
+
+    window.onload = (): void => {
+      this.handleLocation();
+    };
   }
 
-  addRoute(path: string, callback: () => void): void {
-    this.routes[path] = callback;
+  public handleLocation(): void {
+    const route = window.location.hash;
+    this.currentPage = checkRoute(route);
+
+    this.setPage(this.currentPage);
   }
 
-  navigateTo(path: string): void {
-    if (this.routes[path]) {
-      this.routes[path]();
-    } else {
-      console.error(`Route not found: ${path}`);
-    }
-  }
+  // public navigateTo(location: string): void {
+  //   window.history.pushState({}, '', location);
+  // }
 }
