@@ -2,7 +2,7 @@ import type { CurrentUser, User } from '../interfaces';
 
 export class ChatModel {
   private currentUser: CurrentUser;
-  private usersBase: User[] = [];
+  // private usersBase: User[] = [];
   private previousPage = '';
 
   constructor() {

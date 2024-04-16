@@ -1,4 +1,4 @@
-import { Controller } from '../../controllers/Controller';
+// import { Controller } from '../../controllers/Controller';
 import { eventBus } from '../../utils/eventBus';
 import { Component } from '../Component';
 import classes from './Header.module.css';
@@ -11,11 +11,11 @@ export class Header extends Component<'header'> {
   private logOutButton: Component<'button'>;
   private userInfo: Component<'div'>;
   private userName: string | null = null;
-  private controller: Controller;
+  // private controller: Controller;
 
   constructor() {
     super('header', { className: `${classes.header}`, id: 'header' });
-    this.controller = new Controller();
+    // this.controller = new Controller();
     this.headerContainer = new Component('div', { className: `${classes.headerContainer}`, id: 'headerContainer' });
     this.appendChild(this.headerContainer);
 

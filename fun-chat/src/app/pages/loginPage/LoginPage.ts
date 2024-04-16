@@ -57,7 +57,7 @@ export class LoginPage extends Component<'section'> {
     this.passwordInput.element.addEventListener('input', this.inputPasswordOnChange.bind(this));
     this.form.element.addEventListener('submit', event => {
       event.preventDefault();
-      this.onFormSubmit(event);
+      this.onFormSubmit();
     });
   }
 
@@ -129,12 +129,12 @@ export class LoginPage extends Component<'section'> {
     return this.isPasswordValid && this.isLoginValid;
   }
 
-  private onFormSubmit(event: SubmitEvent): void {
+  private onFormSubmit(): void {
     const userData: User = {
       login: this.getLogin(),
       password: this.getPassword(),
     };
-    this.controller.handleFormSubmit(event, userData);
+    this.controller.handleFormSubmit(userData);
   }
 
   protected getLogin(): string {

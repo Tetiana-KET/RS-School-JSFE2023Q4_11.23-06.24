@@ -1,4 +1,4 @@
-import { Controller } from '../../controllers/Controller';
+// import { Controller } from '../../controllers/Controller';
 import { AboutPage } from '../../pages/aboutPage/AboutPage';
 import { ChatPage } from '../../pages/chatPage/ChatPage';
 import { LoginPage } from '../../pages/loginPage/LoginPage';
@@ -8,20 +8,21 @@ import { Component } from '../Component';
 import classes from './MainContent.module.css';
 
 export class MainContent extends Component<'main'> {
-  private controller: Controller;
+  // private controller: Controller;
   private router: Router;
   private loginPage: LoginPage;
   private aboutPage: AboutPage;
   private chatPage: ChatPage;
   constructor() {
     super('main', { className: `${classes.main}`, id: 'main' });
-    this.controller = new Controller();
+    // this.controller = new Controller();
     this.loginPage = new LoginPage();
     this.aboutPage = new AboutPage();
     this.chatPage = new ChatPage();
     this.appendChild(this.loginPage);
 
     this.router = new Router(this.setPageContent.bind(this));
+    console.log(this.router);
 
     eventBus.subscribe('aboutBtnClicked', this.setPageContent.bind(this));
     eventBus.subscribe('successLogin', this.setPageContent.bind(this));

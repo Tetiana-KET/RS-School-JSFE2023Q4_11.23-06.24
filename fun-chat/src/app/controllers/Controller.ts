@@ -21,7 +21,7 @@ export class Controller {
     return this.chatModel.validatePassword(password);
   }
 
-  public handleFormSubmit(event: SubmitEvent, userData: User): void {
+  public handleFormSubmit(userData: User): void {
     const authMessage: AuthMessage = {
       id: generateRandomNumber().toString(),
       type: 'USER_LOGIN',
