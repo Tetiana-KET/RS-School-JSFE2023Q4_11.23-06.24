@@ -32,6 +32,11 @@
   height: 35px;
 }
 
+.button[disabled='false'] {
+  pointer-events: all;
+  opacity: 1;
+}
+
 @keyframes fadeInDown {
   from {
     opacity: 0;

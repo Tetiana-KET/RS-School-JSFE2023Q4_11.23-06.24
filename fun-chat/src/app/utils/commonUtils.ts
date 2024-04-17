@@ -1,4 +1,4 @@
-import type { CurrentUser, UserLoginResponse } from '../interfaces';
+import type { CurrentUser } from '../interfaces';
 import type { ConstructorOf, Nullable, NullLike } from './types';
 
 export function isNull<T>(value: Nullable<T>): value is NullLike {
@@ -55,26 +55,31 @@ export function generateRandomNumber(): number {
 }
 
 // set user to session storage
-export function setSessionStorage(response: UserLoginResponse): void {
-  const currentUser: CurrentUser = {
-    login: response.payload.user.login,
-    isLogined: response.payload.user.isLogined,
-    id: response.id,
-  };
-
-  console.log(`currentUser `, currentUser);
-  const userString = JSON.stringify(currentUser);
+export function setSessionStorage(user: CurrentUser): void {
+  const userString = JSON.stringify(user);
   sessionStorage.setItem('user', userString);
 }
 
 // get user from session storage
 export function getUserFromSessionStorage(): CurrentUser | null {
-  // Retrieve the user string from sessionStorage
   const userString = sessionStorage.getItem('user');
-  // If userString is null, return null
   if (!userString) {
     return null;
   }
-  // Parse the user string back to an object using JSON.parse
   return JSON.parse(userString);
+}
+
+export function getUserIdFromSessionStorage(): string {
+  const userString = sessionStorage.getItem('user') || '';
+  const currentUser: CurrentUser = JSON.parse(userString);
+  return currentUser.id;
+}
+
+export function isLoggedFromSessionStorage(): boolean {
+  const userString = sessionStorage.getItem('user') || '';
+  if (userString) {
+    const currentUser: CurrentUser = JSON.parse(userString);
+    return currentUser.isLogined;
+  }
+  return false;
 }

@@ -1,6 +1,6 @@
-import type { AuthMessage } from '../interfaces';
-import { setSessionStorage } from '../utils/commonUtils';
-import { eventBus, eventSuccessLoginBus } from '../utils/eventBus';
+import type { AuthMessage, CurrentUser } from '../interfaces';
+import { getUserIdFromSessionStorage, setSessionStorage } from '../utils/commonUtils';
+import { eventBus } from '../utils/eventBus';
 
 export class WebSocketAPI {
   public ws: WebSocket;
@@ -12,32 +12,57 @@ export class WebSocketAPI {
   }
 
   public userAuthentication(message: AuthMessage): void {
-    console.log(message);
+    console.log(`userAuthentication message: `, message);
     if (this.ws.readyState === WebSocket.OPEN) {
       this.ws.send(JSON.stringify(message));
-      console.log(`message was send`);
     } else {
       this.ws.addEventListener('open', () => {
         this.ws.send(JSON.stringify(message));
       });
     }
+    const currentUser: CurrentUser = {
+      login: message.payload.user.login,
+      password: message.payload.user.password,
+      isLogined: false,
+      id: message.id,
+    };
+    setSessionStorage(currentUser);
   }
 
-  public userLogout(): void {}
+  public userLogout(login: string, password: string): void {
+    const message: AuthMessage = {
+      id: getUserIdFromSessionStorage(),
+      type: 'USER_LOGOUT',
+      payload: {
+        user: {
+          login,
+          password,
+        },
+      },
+    };
+    this.ws.send(JSON.stringify(message));
+  }
 
   private handleMessage(event: MessageEvent): void {
     const responseData = JSON.parse(event.data);
-    console.log(`response: `, responseData);
+
     if (responseData.type === 'ERROR') {
       this.errorMessage = responseData.payload.error;
       eventBus.emit('authError', responseData.payload.error);
     }
     if (responseData.type === 'USER_LOGIN') {
-      eventSuccessLoginBus.emit('successLogin', responseData);
+      eventBus.emit('successLogin', responseData);
       window.location.hash = '#chat';
-      setSessionStorage(responseData);
+      const currentUserString = sessionStorage.getItem('user');
+      if (currentUserString) {
+        const currentUser: CurrentUser = JSON.parse(currentUserString);
+        currentUser.isLogined = responseData.payload.user.isLogined;
+        setSessionStorage(currentUser);
+      }
     }
     if (responseData.type === 'USER_LOGOUT') {
+      sessionStorage.clear();
+      window.location.hash = '';
       eventBus.emit('userLoggedOut', responseData);
     }
   }

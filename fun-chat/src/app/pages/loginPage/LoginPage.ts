@@ -48,9 +48,10 @@ export class LoginPage extends Component<'section'> {
     eventBus.subscribe('authError', event => {
       this.drawErrorMessage(event);
     });
-    this.infoButton.element.addEventListener('click', this.onAboutBtnClick.bind(this));
     eventBus.subscribe('aboutBtnClicked', this.disableBtn.bind(this));
     eventBus.subscribe('backButtonClicked', this.enableBtn.bind(this));
+
+    this.infoButton.element.addEventListener('click', this.onAboutBtnClick.bind(this));
   }
 
   private setEventListenerToForm(): void {

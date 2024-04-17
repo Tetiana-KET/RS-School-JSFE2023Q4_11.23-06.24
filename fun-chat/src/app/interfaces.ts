@@ -25,13 +25,13 @@ export interface EventResponse {
   };
 }
 
-export interface UserLoginResponse {
-  id: string;
-  type: string;
-  payload: {
-    user: {
-      login: string;
-      isLogined: boolean;
-    };
-  };
-}
+// export interface UserLoginResponse {
+//   id: string;
+//   type: string;
+//   payload: {
+//     user: {
+//       login: string;
+//       isLogined: boolean;
+//     };
+//   };
+// }
