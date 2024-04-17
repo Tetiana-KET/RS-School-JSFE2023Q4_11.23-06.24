@@ -1,3 +1,4 @@
+import type { CurrentUser, UserLoginResponse } from '../interfaces';
 import type { ConstructorOf, Nullable, NullLike } from './types';
 
 export function isNull<T>(value: Nullable<T>): value is NullLike {
@@ -51,4 +52,29 @@ export function getUserInfoFromLocalStorage(): {
 // generate random number
 export function generateRandomNumber(): number {
   return Math.floor(Math.random() * 10000) + 1;
+}
+
+// set user to session storage
+export function setSessionStorage(response: UserLoginResponse): void {
+  const currentUser: CurrentUser = {
+    login: response.payload.user.login,
+    isLogined: response.payload.user.isLogined,
+    id: response.id,
+  };
+
+  console.log(`currentUser `, currentUser);
+  const userString = JSON.stringify(currentUser);
+  sessionStorage.setItem('user', userString);
+}
+
+// get user from session storage
+export function getUserFromSessionStorage(): CurrentUser | null {
+  // Retrieve the user string from sessionStorage
+  const userString = sessionStorage.getItem('user');
+  // If userString is null, return null
+  if (!userString) {
+    return null;
+  }
+  // Parse the user string back to an object using JSON.parse
+  return JSON.parse(userString);
 }

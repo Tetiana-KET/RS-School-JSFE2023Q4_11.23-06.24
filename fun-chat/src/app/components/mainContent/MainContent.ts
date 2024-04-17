@@ -3,7 +3,7 @@ import { AboutPage } from '../../pages/aboutPage/AboutPage';
 import { ChatPage } from '../../pages/chatPage/ChatPage';
 import { LoginPage } from '../../pages/loginPage/LoginPage';
 import { Router } from '../../pages/Router';
-import { eventBus } from '../../utils/eventBus';
+import { eventBus, eventSuccessLoginBus } from '../../utils/eventBus';
 import { Component } from '../Component';
 import classes from './MainContent.module.css';
 
@@ -25,34 +25,34 @@ export class MainContent extends Component<'main'> {
     console.log(this.router);
 
     eventBus.subscribe('aboutBtnClicked', this.setPageContent.bind(this));
-    eventBus.subscribe('successLogin', this.setPageContent.bind(this));
+    eventSuccessLoginBus.subscribe('successLogin', this.setPageContent.bind(this));
     eventBus.subscribe('logout', this.setPageContent.bind(this));
   }
 
   private setPageContent(): void {
     const location = window.location.hash;
     if (location === '') {
-      this.navigateToLoginPage();
+      this.drawLoginPage();
     } else if (location === '#chat') {
-      this.navigateToChatPage();
+      this.drawChatPage();
     } else if (location === '#about') {
-      this.navigateToAboutPage();
+      this.drawAboutPage();
     }
   }
 
-  private navigateToAboutPage(): void {
+  private drawAboutPage(): void {
     this.destroyChildren();
     this.aboutPage = new AboutPage();
     this.appendChild(this.aboutPage);
   }
 
-  private navigateToChatPage(): void {
+  private drawChatPage(): void {
     this.destroyChildren();
     this.chatPage = new ChatPage();
     this.appendChild(this.chatPage);
   }
 
-  private navigateToLoginPage(): void {
+  private drawLoginPage(): void {
     this.destroyChildren();
     this.loginPage = new LoginPage();
     this.appendChild(this.loginPage);

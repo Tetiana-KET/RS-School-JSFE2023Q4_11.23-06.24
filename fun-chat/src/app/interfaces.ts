@@ -1,11 +1,11 @@
 export interface User {
   login: string;
-  password: string;
+  password?: string;
 }
 
 export interface CurrentUser extends User {
   id: string;
-  isOnline: boolean;
+  isLogined: boolean;
 }
 
 export interface AuthMessage {
@@ -22,5 +22,16 @@ export interface EventResponse {
   payload: {
     user?: { login: string; isLogined: boolean };
     error?: string;
+  };
+}
+
+export interface UserLoginResponse {
+  id: string;
+  type: string;
+  payload: {
+    user: {
+      login: string;
+      isLogined: boolean;
+    };
   };
 }

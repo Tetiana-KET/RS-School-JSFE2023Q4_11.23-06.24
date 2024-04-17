@@ -1,5 +1,6 @@
 import type { AuthMessage } from '../interfaces';
-import { eventBus } from '../utils/eventBus';
+import { setSessionStorage } from '../utils/commonUtils';
+import { eventBus, eventSuccessLoginBus } from '../utils/eventBus';
 
 export class WebSocketAPI {
   public ws: WebSocket;
@@ -30,8 +31,9 @@ export class WebSocketAPI {
       eventBus.emit('authError', responseData.payload.error);
     }
     if (responseData.type === 'USER_LOGIN') {
-      eventBus.emit('successLogin', event);
+      eventSuccessLoginBus.emit('successLogin', responseData);
       window.location.hash = '#chat';
+      setSessionStorage(responseData);
     }
   }
 }

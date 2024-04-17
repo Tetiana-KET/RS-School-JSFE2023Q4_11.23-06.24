@@ -1,27 +1,23 @@
-import type { CurrentUser, User } from '../interfaces';
+// import type { CurrentUser, UserLoginResponse } from '../interfaces';
 
 export class ChatModel {
-  private currentUser: CurrentUser;
+  // private currentUser: CurrentUser;
   // private usersBase: User[] = [];
-  private previousPage = '';
 
-  constructor() {
-    this.currentUser = {
-      login: '',
-      password: '',
-      id: '',
-      isOnline: false,
-    };
-  }
+  // constructor() {
+  //   this.currentUser = {
+  //     login: '',
+  //     id: '',
+  //     isLogined: false,
+  //   };
+  // }
 
-  public setPreviousPage(url: string): void {
-    this.previousPage = url;
-    console.log(this.previousPage);
-  }
-
-  public getPreviousPage(): string {
-    return this.previousPage;
-  }
+  // public setCurrentUser(responseData: UserLoginResponse): void {
+  //   // this.currentUser.login = responseData.payload.user.login;
+  //   // this.currentUser.isLogined = responseData.payload.user.isLogined;
+  //   // this.currentUser.id = responseData.id;
+  //   console.log(`currentUser `, this.currentUser);
+  // }
 
   // Validation for username
   public validateUserName(userName: string): boolean {
@@ -35,11 +31,5 @@ export class ChatModel {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\\da-zA-Z]).{8,}$/;
     const isPasswordValid = passwordRegex.test(password) && password.length >= 8;
     return isPasswordValid;
-  }
-
-  public setCurrentUserData(userData: User): void {
-    this.currentUser.login = userData.login;
-    this.currentUser.password = userData.password;
-    console.log(this.currentUser);
   }
 }

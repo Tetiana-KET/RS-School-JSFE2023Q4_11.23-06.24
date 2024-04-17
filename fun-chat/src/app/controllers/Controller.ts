@@ -30,7 +30,6 @@ export class Controller {
       },
     };
     this.webSocketAPI.userAuthentication(authMessage);
-    this.chatModel.setCurrentUserData(userData);
   }
 
   public handleBackButtonClick(event: MouseEvent): void {
