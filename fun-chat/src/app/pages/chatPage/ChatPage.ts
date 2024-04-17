@@ -1,9 +1,7 @@
 import { Component } from '../../components/Component';
-// import { Controller } from '../../controllers/Controller';
 import classes from './ChatPage.module.css';
 
 export class ChatPage extends Component<'section'> {
-  // private controller: Controller;
   private aside: Component<'aside'>;
   private contactSearch: Component<'input'>;
   private usersList: Component<'ul'>;
@@ -20,7 +18,7 @@ export class ChatPage extends Component<'section'> {
 
   constructor() {
     super('section', { className: `${classes.chatPage}`, id: 'chatPage' });
-    // this.controller = new Controller();
+
     this.aside = new Component('aside', { className: `${classes.chatPageAside}`, id: 'chatPageAside' });
     this.contactSearch = new Component('input', { className: `${classes.asideContactSearch}`, id: 'asideContactSearch' });
     this.usersList = new Component('ul', { className: `${classes.asideUsersList}`, id: 'asideUsersList' });

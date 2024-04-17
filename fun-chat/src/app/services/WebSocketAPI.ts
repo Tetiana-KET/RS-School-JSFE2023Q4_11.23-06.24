@@ -23,6 +23,8 @@ export class WebSocketAPI {
     }
   }
 
+  public userLogout(): void {}
+
   private handleMessage(event: MessageEvent): void {
     const responseData = JSON.parse(event.data);
     console.log(`response: `, responseData);
@@ -34,6 +36,9 @@ export class WebSocketAPI {
       eventSuccessLoginBus.emit('successLogin', responseData);
       window.location.hash = '#chat';
       setSessionStorage(responseData);
+    }
+    if (responseData.type === 'USER_LOGOUT') {
+      eventBus.emit('userLoggedOut', responseData);
     }
   }
 }

@@ -1,10 +1,9 @@
 import { Component } from '../../components/Component';
-import { Controller } from '../../controllers/Controller';
+import { eventBus } from '../../utils/eventBus';
 
 import classes from './AboutPage.module.css';
 
 export class AboutPage extends Component<'section'> {
-  private controller: Controller;
   private aboutPageWrapper: Component<'div'>;
   private aboutPageTitle: Component<'h2'>;
   private aboutPageDescription: Component<'p'>;
@@ -13,7 +12,6 @@ export class AboutPage extends Component<'section'> {
 
   constructor() {
     super('section', { className: `${classes.aboutPage}`, id: 'aboutPage' });
-    this.controller = new Controller();
     this.aboutPageWrapper = new Component('div', { className: `${classes.aboutPageWrapper}`, id: 'aboutPageWrapper' });
     this.aboutPageTitle = new Component('h2', { className: `${classes.aboutPageTitle}`, text: 'Welcome to Fun Chat' });
     this.aboutPageDescription = new Component('p', { className: `${classes.aboutPageDescription}` });
@@ -49,6 +47,7 @@ export class AboutPage extends Component<'section'> {
   }
 
   private onBackButtonClick(event: MouseEvent): void {
-    this.controller.handleBackButtonClick(event);
+    window.history.go(-1);
+    eventBus.emit('backButtonClicked', event);
   }
 }

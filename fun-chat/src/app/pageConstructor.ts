@@ -1,7 +1,7 @@
 import { Component } from './components/Component';
 import { Footer } from './components/footer/Footer';
 import { Header } from './components/header/Header';
-import { MainContent } from './components/mainContent/MainContent';
+import { MainContent } from './pages/view/mainContent/MainContent';
 
 class SiteWrapperComponent extends Component<'div'> {
   constructor() {

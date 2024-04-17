@@ -1,11 +1,12 @@
 import { Component } from '../../components/Component';
-import { Controller } from '../../controllers/Controller';
+
+import { LoginController } from '../../controllers/loginController';
 import type { User } from '../../interfaces';
 import { eventBus } from '../../utils/eventBus';
 import classes from './LoginPage.module.css';
 
 export class LoginPage extends Component<'section'> {
-  private controller: Controller;
+  private controller: LoginController;
   private form: Component<'form'>;
   private passwordInput: Component<'input'>;
   private loginInput: Component<'input'>;
@@ -23,7 +24,7 @@ export class LoginPage extends Component<'section'> {
 
   constructor() {
     super('section', { className: `${classes.loginPage}`, id: 'loginPage' });
-    this.controller = new Controller();
+    this.controller = new LoginController();
 
     this.form = new Component('form', { className: `${classes.loginForm}`, id: 'loginForm' });
     this.formTitle = new Component('h2', { className: `${classes.loginFormTitle}`, text: 'login', id: 'loginForm' });
@@ -109,7 +110,7 @@ export class LoginPage extends Component<'section'> {
 
   private inputLoginOnChange(): boolean {
     const userNameInputValue = this.loginInput.element.value.trim();
-    this.isLoginValid = this.controller.handleUserNameValidation(userNameInputValue);
+    this.isLoginValid = this.controller.validateUserName(userNameInputValue);
     this.loginButton.element.disabled = !this.loginBtnIsDisabled();
     this.loginTooltip.element.style.opacity = this.isLoginValid ? '0' : '1';
     this.loginTooltip.element.style.visibility = this.isLoginValid ? 'hidden' : 'visible';
@@ -118,7 +119,7 @@ export class LoginPage extends Component<'section'> {
 
   private inputPasswordOnChange(): boolean {
     const userPasswordValue = this.passwordInput.element.value.trim();
-    this.isPasswordValid = this.controller.handlePasswordValidation(userPasswordValue);
+    this.isPasswordValid = this.controller.validatePassword(userPasswordValue);
     this.loginButton.element.disabled = !this.loginBtnIsDisabled();
     this.passwordTooltip.element.style.opacity = this.isPasswordValid ? '0' : '1';
     this.passwordTooltip.element.style.visibility = this.isPasswordValid ? 'hidden' : 'visible';

@@ -1,10 +1,10 @@
 // import { Controller } from '../../controllers/Controller';
-import { AboutPage } from '../../pages/aboutPage/AboutPage';
-import { ChatPage } from '../../pages/chatPage/ChatPage';
-import { LoginPage } from '../../pages/loginPage/LoginPage';
-import { Router } from '../../pages/Router';
-import { eventBus, eventSuccessLoginBus } from '../../utils/eventBus';
-import { Component } from '../Component';
+import { AboutPage } from '../../aboutPage/AboutPage';
+import { ChatPage } from '../../chatPage/ChatPage';
+import { LoginPage } from '../../loginPage/LoginPage';
+import { Router } from '../../Router';
+import { eventBus, eventSuccessLoginBus } from '../../../utils/eventBus';
+import { Component } from '../../../components/Component';
 import classes from './MainContent.module.css';
 
 export class MainContent extends Component<'main'> {
