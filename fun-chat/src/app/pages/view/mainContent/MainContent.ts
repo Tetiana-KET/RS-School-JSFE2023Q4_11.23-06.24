@@ -55,7 +55,7 @@ export class MainContent extends Component<'main'> {
 
       if (currUser) {
         const authMessage: AuthMessage = {
-          id: currUser.id,
+          id: currUser.id || '',
           type: 'USER_LOGIN',
           payload: {
             user: {
