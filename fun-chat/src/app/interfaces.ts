@@ -16,6 +16,20 @@ export interface AuthMessage {
   };
 }
 
+export interface RequestForAllUsers {
+  id: string;
+  type: string;
+  payload: null;
+}
+
+export interface ResponseForAllUsers {
+  id: string;
+  type: string;
+  payload: {
+    users: [];
+  };
+}
+
 export interface EventResponse {
   id: string;
   type: string;

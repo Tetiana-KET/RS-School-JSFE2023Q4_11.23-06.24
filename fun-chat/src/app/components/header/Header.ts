@@ -1,5 +1,5 @@
 import type { CurrentUser } from '../../interfaces';
-import { WebSocketAPI } from '../../services/WebSocketAPI';
+import type { WebSocketAPI } from '../../services/WebSocketAPI';
 import { isLoggedFromSessionStorage } from '../../utils/commonUtils';
 import { eventBus } from '../../utils/eventBus';
 import { Component } from '../Component';
@@ -15,9 +15,9 @@ export class Header extends Component<'header'> {
   private userName: string | null = null;
   private webSocketAPI: WebSocketAPI;
 
-  constructor() {
+  constructor(webSocketAPI: WebSocketAPI) {
     super('header', { className: `${classes.header}`, id: 'header' });
-    this.webSocketAPI = new WebSocketAPI();
+    this.webSocketAPI = webSocketAPI;
     this.headerContainer = new Component('div', { className: `${classes.headerContainer}`, id: 'headerContainer' });
     this.appendChild(this.headerContainer);
 

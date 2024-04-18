@@ -1,11 +1,11 @@
 import type { AuthMessage, User } from '../interfaces';
-import { WebSocketAPI } from '../services/WebSocketAPI';
+import type { WebSocketAPI } from '../services/WebSocketAPI';
 import { generateRandomNumber } from '../utils/commonUtils';
 
 export class LoginController {
   private webSocketAPI: WebSocketAPI;
-  constructor() {
-    this.webSocketAPI = new WebSocketAPI();
+  constructor(webSocketAPI: WebSocketAPI) {
+    this.webSocketAPI = webSocketAPI;
   }
 
   // Validation for username

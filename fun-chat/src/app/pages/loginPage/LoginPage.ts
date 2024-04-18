@@ -2,6 +2,7 @@ import { Component } from '../../components/Component';
 
 import { LoginController } from '../../controllers/loginController';
 import type { User } from '../../interfaces';
+import type { WebSocketAPI } from '../../services/WebSocketAPI';
 import { eventBus } from '../../utils/eventBus';
 import classes from './LoginPage.module.css';
 
@@ -21,10 +22,11 @@ export class LoginPage extends Component<'section'> {
 
   private isLoginValid = false;
   private isPasswordValid = false;
-
-  constructor() {
+  public webSocketAPI: WebSocketAPI;
+  constructor(webSocketAPI: WebSocketAPI) {
     super('section', { className: `${classes.loginPage}`, id: 'loginPage' });
-    this.controller = new LoginController();
+    this.webSocketAPI = webSocketAPI;
+    this.controller = new LoginController(this.webSocketAPI);
 
     this.form = new Component('form', { className: `${classes.loginForm}`, id: 'loginForm' });
     this.formTitle = new Component('h2', { className: `${classes.loginFormTitle}`, text: 'login', id: 'loginForm' });

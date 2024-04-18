@@ -5,16 +5,19 @@ import { Router } from '../../Router';
 import { Component } from '../../../components/Component';
 import classes from './MainContent.module.css';
 import { isLoggedFromSessionStorage, setUserNameInHeader } from '../../../utils/commonUtils';
+import type { WebSocketAPI } from '../../../services/WebSocketAPI';
 
 export class MainContent extends Component<'main'> {
   private router: Router;
   private loginPage: LoginPage;
   private aboutPage: AboutPage;
   private chatPage: ChatPage;
-  constructor() {
+  public webSocketAPI: WebSocketAPI;
+  constructor(webSocketAPI: WebSocketAPI) {
     super('main', { className: `${classes.main}`, id: 'main' });
+    this.webSocketAPI = webSocketAPI;
 
-    this.loginPage = new LoginPage();
+    this.loginPage = new LoginPage(this.webSocketAPI);
     this.aboutPage = new AboutPage();
     this.chatPage = new ChatPage();
     this.appendChild(this.loginPage);
@@ -65,7 +68,7 @@ export class MainContent extends Component<'main'> {
 
   private drawLoginPage(): void {
     this.destroyChildren();
-    this.loginPage = new LoginPage();
+    this.loginPage = new LoginPage(this.webSocketAPI);
     this.appendChild(this.loginPage);
   }
 }

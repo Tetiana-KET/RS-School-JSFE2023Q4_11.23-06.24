@@ -2,14 +2,17 @@ import { Component } from './components/Component';
 import { Footer } from './components/footer/Footer';
 import { Header } from './components/header/Header';
 import { MainContent } from './pages/view/mainContent/MainContent';
+import { WebSocketAPI } from './services/WebSocketAPI';
 
 class SiteWrapperComponent extends Component<'div'> {
+  public webSocketAPI: WebSocketAPI;
   constructor() {
-    const headerComponent = new Header();
-    const mainComponent = new MainContent();
+    super('div', { className: 'site-wrapper', id: 'siteWrapper' });
+    this.webSocketAPI = new WebSocketAPI();
+    const headerComponent = new Header(this.webSocketAPI);
+    const mainComponent = new MainContent(this.webSocketAPI);
     const footerComponent = new Footer();
 
-    super('div', { className: 'site-wrapper', id: 'siteWrapper' });
     this.appendChildren([headerComponent, mainComponent, footerComponent]);
   }
 }
