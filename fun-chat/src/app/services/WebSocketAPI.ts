@@ -9,10 +9,6 @@ export class WebSocketAPI {
   constructor() {
     this.ws = new WebSocket('ws://127.0.0.1:4000');
     this.ws.addEventListener('message', this.handleMessage.bind(this));
-    this.ws.addEventListener('open', () => {
-      this.getAllAuthenticatedUsers();
-      this.getAllUnauthorizedUsers();
-    });
   }
 
   public userAuthentication(userData: User): void {

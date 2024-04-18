@@ -1,10 +1,12 @@
 import { Component } from '../../components/Component';
+import { UserLine } from '../../components/userLine/userLine';
+import type { User } from '../../interfaces';
 import classes from './ChatPage.module.css';
 
 export class ChatPage extends Component<'section'> {
   private aside: Component<'aside'>;
   private contactSearch: Component<'input'>;
-  private usersList: Component<'ul'>;
+  public usersList: Component<'ul'>;
   private dialogContainer: Component<'article'>;
   private dialogHeader: Component<'h3'>;
   private dialogHeaderUserName: Component<'span'>;
@@ -42,5 +44,14 @@ export class ChatPage extends Component<'section'> {
     this.dialogForm.appendChildren([this.dialogInput, this.dialogFormButton]);
     this.dialogContainer.appendChildren([this.dialogHeader, this.dialogBody, this.dialogForm]);
     this.appendChildren([this.aside, this.dialogContainer]);
+  }
+
+  public renderUsers(users: User[], root: HTMLElement): void {
+    users.forEach(user => {
+      const name = user.login;
+      const isLogged = user.isLogined || false;
+      const userLineElement = new UserLine(name, isLogged);
+      root.append(userLineElement.element);
+    });
   }
 }

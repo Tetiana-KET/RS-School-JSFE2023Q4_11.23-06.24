@@ -7,6 +7,7 @@ import classes from './MainContent.module.css';
 import { getUserFromSessionStorage, isLoggedFromSessionStorage, setUserNameInHeader } from '../../../utils/commonUtils';
 import type { WebSocketAPI } from '../../../services/WebSocketAPI';
 import type { AuthMessage } from '../../../interfaces';
+import { ChatController } from '../../../controllers/chatController';
 
 export class MainContent extends Component<'main'> {
   private router: Router;
@@ -14,6 +15,7 @@ export class MainContent extends Component<'main'> {
   private aboutPage: AboutPage;
   private chatPage: ChatPage;
   public webSocketAPI: WebSocketAPI;
+  private chatController: ChatController;
 
   constructor(webSocketAPI: WebSocketAPI) {
     super('main', { className: `${classes.main}`, id: 'main' });
@@ -22,6 +24,8 @@ export class MainContent extends Component<'main'> {
     this.loginPage = new LoginPage(this.webSocketAPI);
     this.aboutPage = new AboutPage();
     this.chatPage = new ChatPage();
+    this.chatController = new ChatController(this.webSocketAPI, this.chatPage);
+
     this.appendChild(this.loginPage);
 
     this.router = new Router(this.setPageContent.bind(this));
@@ -29,6 +33,7 @@ export class MainContent extends Component<'main'> {
     window.addEventListener('unload', () => {
       this.setPageContent();
     });
+    this.chatController.start();
   }
 
   private setPageContent(): void {
@@ -82,6 +87,8 @@ export class MainContent extends Component<'main'> {
     this.destroyChildren();
     this.chatPage = new ChatPage();
     this.appendChild(this.chatPage);
+    this.webSocketAPI.getAllAuthenticatedUsers();
+    this.webSocketAPI.getAllUnauthorizedUsers();
   }
 
   private drawLoginPage(): void {
