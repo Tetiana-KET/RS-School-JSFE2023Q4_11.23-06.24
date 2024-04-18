@@ -36,7 +36,7 @@ export class Header extends Component<'header'> {
       id: 'logOutButton',
     })
       .setAttribute('type', 'button')
-      .setAttribute('disabled', `${!isLoggedFromSessionStorage()}`);
+      .setAttribute('disabled', '');
 
     this.buttonsWrap.appendChildren([this.infoButton, this.logOutButton]);
     this.headerContainer.appendChildren([this.headerLogo, this.userInfo, this.buttonsWrap]);
@@ -45,6 +45,7 @@ export class Header extends Component<'header'> {
     eventBus.subscribe('aboutBtnClicked', this.disableAboutBtn.bind(this));
     eventBus.subscribe('successLogin', this.handleSuccessLogin.bind(this));
     eventBus.subscribe('backButtonClicked', this.enableAboutBtn.bind(this));
+    this.checkIsUserLogged();
   }
 
   private setUserNameInHeader(): void {
@@ -53,6 +54,14 @@ export class Header extends Component<'header'> {
       const currentUser: CurrentUser = JSON.parse(currentUserString);
       this.userName = currentUser.login;
       this.userInfo.element.textContent = `User: ${this.userName}`;
+    }
+  }
+
+  private checkIsUserLogged(): void {
+    if (isLoggedFromSessionStorage()) {
+      this.enableLogoutBtn();
+    } else {
+      this.disableLogoutBtn();
     }
   }
 
@@ -77,25 +86,27 @@ export class Header extends Component<'header'> {
     }
 
     if (login && password) {
+      console.log(`login && password`);
       this.webSocketAPI.userLogout(login, password);
     }
   }
 
   private disableAboutBtn(): void {
-    this.infoButton.element.disabled = true;
+    this.infoButton.element.setAttribute('disabled', '');
   }
 
   private enableAboutBtn(): void {
-    this.infoButton.element.disabled = false;
+    this.infoButton.element.removeAttribute('disabled');
   }
 
   private enableLogoutBtn(): void {
-    this.logOutButton.element.disabled = false;
+    this.logOutButton.element.removeAttribute('disabled');
   }
 
   private disableLogoutBtn(): void {
-    this.logOutButton.element.disabled = true;
+    this.logOutButton.element.setAttribute('disabled', '');
   }
+
   private handleSuccessLogin(): void {
     this.setUserNameInHeader();
     this.enableLogoutBtn();

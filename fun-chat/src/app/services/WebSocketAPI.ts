@@ -1,4 +1,4 @@
-import type { AuthMessage, CurrentUser, RequestForAllUsers } from '../interfaces';
+import type { AuthMessage, CurrentUser, RequestForAllUsers, User } from '../interfaces';
 import { generateRandomNumber, getUserIdFromSessionStorage, setSessionStorage } from '../utils/commonUtils';
 import { eventBus } from '../utils/eventBus';
 
@@ -15,19 +15,28 @@ export class WebSocketAPI {
     });
   }
 
-  public userAuthentication(message: AuthMessage): void {
+  public userAuthentication(userData: User): void {
+    const authMessage: AuthMessage = {
+      id: generateRandomNumber().toString(),
+      type: 'USER_LOGIN',
+      payload: {
+        user: userData,
+      },
+    };
+
     if (this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(JSON.stringify(message));
+      this.ws.send(JSON.stringify(authMessage));
     } else {
       this.ws.addEventListener('open', () => {
-        this.ws.send(JSON.stringify(message));
+        this.ws.send(JSON.stringify(authMessage));
       });
     }
+
     const currentUser: CurrentUser = {
-      login: message.payload.user.login,
-      password: message.payload.user.password,
+      login: authMessage.payload.user.login,
+      password: authMessage.payload.user.password,
       isLogined: false,
-      id: message.id,
+      id: authMessage.id,
     };
     setSessionStorage(currentUser);
   }
@@ -43,6 +52,7 @@ export class WebSocketAPI {
         },
       },
     };
+    console.log(`USER_LOGOUT REQUEST message`, message);
     this.ws.send(JSON.stringify(message));
   }
 
@@ -73,6 +83,7 @@ export class WebSocketAPI {
     }
 
     if (responseData.type === 'USER_LOGIN') {
+      console.log('USER_LOGIN RESPONSE');
       eventBus.emit('successLogin', responseData);
       window.location.hash = '#chat';
       const currentUserString = sessionStorage.getItem('user');
@@ -84,6 +95,7 @@ export class WebSocketAPI {
     }
 
     if (responseData.type === 'USER_LOGOUT') {
+      console.log('USER_LOGOUT RESPONSE');
       sessionStorage.clear();
       window.location.hash = '';
       eventBus.emit('userLoggedOut', responseData);
