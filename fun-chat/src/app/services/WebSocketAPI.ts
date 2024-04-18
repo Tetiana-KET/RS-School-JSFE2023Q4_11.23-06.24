@@ -1,6 +1,6 @@
-import type { AuthMessage, CurrentUser, RequestForAllUsers, User } from '../interfaces';
+import type { AuthMessage, RequestForAllUsers, User } from '../interfaces';
 import { generateRandomNumber, getUserIdFromSessionStorage, setSessionStorage } from '../utils/commonUtils';
-import { eventBus } from '../utils/eventBus';
+import { eventBus, eventGetUsersBus } from '../utils/eventBus';
 
 export class WebSocketAPI {
   public ws: WebSocket;
@@ -32,7 +32,7 @@ export class WebSocketAPI {
       });
     }
 
-    const currentUser: CurrentUser = {
+    const currentUser: User = {
       login: authMessage.payload.user.login,
       password: authMessage.payload.user.password,
       isLogined: false,
@@ -88,7 +88,7 @@ export class WebSocketAPI {
       window.location.hash = '#chat';
       const currentUserString = sessionStorage.getItem('user');
       if (currentUserString) {
-        const currentUser: CurrentUser = JSON.parse(currentUserString);
+        const currentUser: User = JSON.parse(currentUserString);
         currentUser.isLogined = responseData.payload.user.isLogined;
         setSessionStorage(currentUser);
       }
@@ -102,13 +102,11 @@ export class WebSocketAPI {
     }
 
     if (responseData.type === 'USER_ACTIVE') {
-      eventBus.emit('USER_ACTIVE_data', responseData);
-      console.log('USER_ACTIVE_data', responseData);
+      eventGetUsersBus.emit('USER_ACTIVE_data', responseData);
     }
 
     if (responseData.type === 'USER_INACTIVE') {
-      eventBus.emit('USER_INACTIVE_data', responseData);
-      console.log('USER_INACTIVE_data', responseData);
+      eventGetUsersBus.emit('USER_INACTIVE_data', responseData);
     }
   }
 }

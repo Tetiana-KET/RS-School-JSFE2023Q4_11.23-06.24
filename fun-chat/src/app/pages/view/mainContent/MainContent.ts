@@ -14,6 +14,7 @@ export class MainContent extends Component<'main'> {
   private aboutPage: AboutPage;
   private chatPage: ChatPage;
   public webSocketAPI: WebSocketAPI;
+
   constructor(webSocketAPI: WebSocketAPI) {
     super('main', { className: `${classes.main}`, id: 'main' });
     this.webSocketAPI = webSocketAPI;

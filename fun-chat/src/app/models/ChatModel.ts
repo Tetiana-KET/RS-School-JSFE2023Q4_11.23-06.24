@@ -1,31 +1,26 @@
-// import type { CurrentUser, UserLoginResponse } from '../interfaces';
+import type { User } from '../interfaces';
 
 export class ChatModel {
-  // private currentUser: CurrentUser;
-  // private usersBase: User[] = [];
-  // constructor() {
-  //   this.currentUser = {
-  //     login: '',
-  //     id: '',
-  //     isLogined: false,
-  //   };
-  // }
-  // public setCurrentUser(responseData: UserLoginResponse): void {
-  //   // this.currentUser.login = responseData.payload.user.login;
-  //   // this.currentUser.isLogined = responseData.payload.user.isLogined;
-  //   // this.currentUser.id = responseData.id;
-  //   console.log(`currentUser `, this.currentUser);
-  // }
-  // // Validation for username
-  // public validateUserName(userName: string): boolean {
-  //   const usernameRegex = /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z_-]*\d?[a-zA-Z_-]*$/;
-  //   const isUsernameValid = usernameRegex.test(userName) && userName.length >= 4;
-  //   return isUsernameValid;
-  // }
-  // // Validation for password
-  // public validatePassword(password: string): boolean {
-  //   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\\da-zA-Z]).{8,}$/;
-  //   const isPasswordValid = passwordRegex.test(password) && password.length >= 8;
-  //   return isPasswordValid;
-  // }
+  private activeUsers: User[] = [];
+  private inactiveUsers: User[] = [];
+  // constructor() {}
+  public updateActiveUsers(users: User[]): void {
+    this.activeUsers.push(...users);
+    //  rendering function to update the UI HERE
+    this.renderActiveUsers();
+  }
+  public updateInactiveUsers(users: User[]): void {
+    this.inactiveUsers.push(...users);
+    // rendering function to update the UI HERE
+    this.renderInactiveUsers();
+  }
+  private renderActiveUsers(): void {
+    // render active users on the page
+    console.log('Active Users:', this.activeUsers);
+  }
+
+  private renderInactiveUsers(): void {
+    //  render inactive users on the page
+    console.log('Inactive Users:', this.inactiveUsers);
+  }
 }

@@ -1,3 +1,5 @@
+import type { UsersResponseData } from '../interfaces';
+
 type Listener<T> = (data: T) => void;
 
 class EventBus<T> {
@@ -19,4 +21,4 @@ class EventBus<T> {
 }
 
 export const eventBus = new EventBus<Event>();
-// export const eventSuccessLoginBus = new EventBus<UserLoginResponse>();
+export const eventGetUsersBus = new EventBus<UsersResponseData>();

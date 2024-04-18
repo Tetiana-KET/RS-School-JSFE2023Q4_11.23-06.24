@@ -5,7 +5,6 @@ export class ChatPage extends Component<'section'> {
   private aside: Component<'aside'>;
   private contactSearch: Component<'input'>;
   private usersList: Component<'ul'>;
-  // private userLine: Component<'li'>;
   private dialogContainer: Component<'article'>;
   private dialogHeader: Component<'h3'>;
   private dialogHeaderUserName: Component<'span'>;
@@ -22,7 +21,6 @@ export class ChatPage extends Component<'section'> {
     this.aside = new Component('aside', { className: `${classes.chatPageAside}`, id: 'chatPageAside' });
     this.contactSearch = new Component('input', { className: `${classes.asideContactSearch}`, id: 'asideContactSearch' });
     this.usersList = new Component('ul', { className: `${classes.asideUsersList}`, id: 'asideUsersList' });
-    // this.userLine = new Component('li', { className: `${classes.asideUserLine}`, id: 'asideUserLine' });
     this.dialogContainer = new Component('article', { className: `${classes.chatPageDialog}`, id: 'chatPageDialog' });
     this.dialogHeader = new Component('h3', { className: `${classes.dialogHeader}`, id: 'dialogHeader' });
     this.dialogHeaderUserName = new Component('span', { className: `${classes.dialogHeaderUserName}`, text: 'Tatiana-KET', id: 'dialogUserName' });

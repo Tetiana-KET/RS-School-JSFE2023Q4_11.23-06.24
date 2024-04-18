@@ -1,4 +1,4 @@
-import type { CurrentUser } from '../../interfaces';
+import type { User } from '../../interfaces';
 import type { WebSocketAPI } from '../../services/WebSocketAPI';
 import { isLoggedFromSessionStorage } from '../../utils/commonUtils';
 import { eventBus } from '../../utils/eventBus';
@@ -51,7 +51,7 @@ export class Header extends Component<'header'> {
   private setUserNameInHeader(): void {
     const currentUserString = sessionStorage.getItem('user');
     if (currentUserString) {
-      const currentUser: CurrentUser = JSON.parse(currentUserString);
+      const currentUser: User = JSON.parse(currentUserString);
       this.userName = currentUser.login;
       this.userInfo.element.textContent = `User: ${this.userName}`;
     }
