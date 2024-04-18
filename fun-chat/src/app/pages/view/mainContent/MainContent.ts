@@ -4,7 +4,7 @@ import { LoginPage } from '../../loginPage/LoginPage';
 import { Router } from '../../Router';
 import { Component } from '../../../components/Component';
 import classes from './MainContent.module.css';
-import { isLoggedFromSessionStorage } from '../../../utils/commonUtils';
+import { isLoggedFromSessionStorage, setUserNameInHeader } from '../../../utils/commonUtils';
 
 export class MainContent extends Component<'main'> {
   private router: Router;
@@ -28,9 +28,17 @@ export class MainContent extends Component<'main'> {
 
   private setPageContent(): void {
     const location = window.location.hash;
+
     if (!isLoggedFromSessionStorage()) {
       if (location === '#chat') {
         window.location.hash = '';
+      }
+    }
+
+    if (isLoggedFromSessionStorage()) {
+      const userInfo = document.getElementById('userInfo');
+      if (userInfo) {
+        userInfo.textContent = `User: ${setUserNameInHeader()}`;
       }
     }
 

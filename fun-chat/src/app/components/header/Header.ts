@@ -22,7 +22,7 @@ export class Header extends Component<'header'> {
     this.appendChild(this.headerContainer);
 
     this.headerLogo = new Component('h2', { className: `${classes.headerLogo}`, text: 'Fun Chat' });
-    this.userInfo = new Component('div', { className: `${classes.userInfo}` });
+    this.userInfo = new Component('div', { className: `${classes.userInfo}`, id: 'userInfo' });
     this.buttonsWrap = new Component('div', { className: `${classes.buttonsWrap}` });
 
     this.infoButton = new Component('button', {
