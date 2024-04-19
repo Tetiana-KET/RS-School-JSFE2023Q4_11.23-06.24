@@ -47,7 +47,7 @@ export class MainContent extends Component<'main'> {
       const currUser = getUserFromSessionStorage();
 
       if (userInfo) {
-        userInfo.textContent = `User: ${setUserNameInHeader()}`;
+        userInfo.textContent = `${setUserNameInHeader()}`;
       }
 
       if (currUser) {

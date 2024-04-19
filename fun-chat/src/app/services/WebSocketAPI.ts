@@ -47,7 +47,6 @@ export class WebSocketAPI {
         },
       },
     };
-    console.log(`USER_LOGOUT REQUEST message`, message);
     this.ws.send(JSON.stringify(message));
   }
 

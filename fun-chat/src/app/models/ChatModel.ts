@@ -8,19 +8,21 @@ export class ChatModel {
   public currentUser: User | null = null;
 
   public updateActiveUsers(users: User[]): void {
-    this.activeUsers = users;
+    this.activeUsers = users.filter(user => {
+      return user.login !== this.currentUser?.login;
+    });
   }
 
   public updateInactiveUsers(users: User[]): void {
     this.inactiveUsers = users;
   }
 
-  public removeCurrentUserFromUsersList(): void {
-    const currUserIndex = this.activeUsers.findIndex(user => user.login === this.currentUser?.login);
-    if (currUserIndex && currUserIndex !== -1) {
-      this.activeUsers.splice(currUserIndex, 1);
-    }
-  }
+  // public removeCurrentUserFromUsersList(): void {
+  //   const currUserIndex = this.activeUsers.findIndex(user => user.login === this.currentUser?.login);
+  //   if (currUserIndex && currUserIndex !== -1) {
+  //     this.activeUsers.splice(currUserIndex, 1);
+  //   }
+  // }
 
   public setCurrentUser(user: User): void {
     this.currentUser = user;

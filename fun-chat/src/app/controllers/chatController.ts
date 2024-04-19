@@ -19,7 +19,7 @@ export class ChatController {
       this.chatModel.updateActiveUsers(responseData.payload.users);
       const asideUsersList = document.getElementById('asideUsersList');
       if (asideUsersList) {
-        this.chatModel.removeCurrentUserFromUsersList();
+        // this.chatModel.removeCurrentUserFromUsersList();
         this.chatPage.renderUsers(this.chatModel.activeUsers, asideUsersList);
       }
     });
