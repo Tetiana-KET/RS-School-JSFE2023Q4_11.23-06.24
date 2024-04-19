@@ -55,4 +55,8 @@ export class ChatController {
       this.chatPage.drawNewLoggedUser(UserToUpdate, asideUsersList);
     }
   }
+
+  public start(): void {
+    this.webSocketAPI.start();
+  }
 }

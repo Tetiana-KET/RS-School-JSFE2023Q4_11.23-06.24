@@ -8,7 +8,6 @@ export class WebSocketAPI {
 
   constructor() {
     this.ws = new WebSocket('ws://127.0.0.1:4000');
-    this.ws.addEventListener('message', this.handleMessage.bind(this));
   }
 
   public userAuthentication(userData: User): void {
@@ -99,5 +98,9 @@ export class WebSocketAPI {
     if (responseData.type === 'USER_EXTERNAL_LOGOUT') {
       eventExternalUserBus.emit('USER_EXTERNAL_LOGOUT', responseData);
     }
+  }
+
+  public start(): void {
+    this.ws.addEventListener('message', this.handleMessage.bind(this));
   }
 }

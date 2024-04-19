@@ -30,6 +30,7 @@ export class MainContent extends Component<'main'> {
     window.addEventListener('unload', () => {
       this.setPageContent();
     });
+    this.chatController.start();
   }
 
   private setPageContent(): void {
