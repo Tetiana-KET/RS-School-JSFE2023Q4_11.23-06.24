@@ -1,6 +1,7 @@
 import { Component } from '../../components/Component';
 import { UserLine } from '../../components/userLine/userLine';
 import type { User } from '../../interfaces';
+import { eventSearchInputChangedBus } from '../../utils/eventBus';
 import classes from './ChatPage.module.css';
 
 export class ChatPage extends Component<'section'> {
@@ -31,8 +32,15 @@ export class ChatPage extends Component<'section'> {
     this.dialogForm = new Component('form', { className: `${classes.dialogForm}`, id: 'dialogForm' });
     this.dialogInput = new Component('input', { className: `${classes.dialogInput}`, id: 'dialogInput' });
     this.dialogFormButton = new Component('button', { className: `${classes.dialogFormButton}`, text: 'Send', id: 'dialogFormButton' });
-
+    this.handleSearchInputChange();
     this.constructPage();
+  }
+
+  public handleSearchInputChange(): void {
+    this.contactSearch.element.addEventListener('input', () => {
+      const searchString = this.contactSearch.element.value.trim();
+      eventSearchInputChangedBus.emit('searchInputChanged', searchString);
+    });
   }
 
   private constructPage(): void {

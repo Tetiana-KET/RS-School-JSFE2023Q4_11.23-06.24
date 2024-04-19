@@ -3,7 +3,7 @@ import { ChatModel } from '../models/ChatModel';
 import type { ChatPage } from '../pages/chatPage/ChatPage';
 import type { WebSocketAPI } from '../services/WebSocketAPI';
 import { getUserFromSessionStorage } from '../utils/commonUtils';
-import { eventGetUsersBus, eventExternalUserBus, eventNewUserAuthBus, eventBus } from '../utils/eventBus';
+import { eventGetUsersBus, eventExternalUserBus, eventNewUserAuthBus, eventBus, eventSearchInputChangedBus } from '../utils/eventBus';
 
 export class ChatController {
   public chatModel: ChatModel;
@@ -46,11 +46,16 @@ export class ChatController {
     });
     eventNewUserAuthBus.subscribe('newUserAuth', this.callDrawNewUser.bind(this));
     eventBus.subscribe('successLogin', this.setCurUser.bind(this));
+    eventSearchInputChangedBus.subscribe('searchInputChanged', this.callSearchHandler.bind(this));
   }
 
   // private setListeners(): void {
 
   // }
+
+  private callSearchHandler(searchString: string): void {
+    this.chatModel.searchUser(searchString, this.chatPage.renderUsers);
+  }
 
   private callDrawNewUser(UserToUpdate: User): void {
     if (UserToUpdate.login !== this.chatModel.currentUser?.login) {

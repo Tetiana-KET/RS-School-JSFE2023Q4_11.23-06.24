@@ -24,3 +24,4 @@ export const eventBus = new EventBus<Event>();
 export const eventGetUsersBus = new EventBus<UsersResponseData>();
 export const eventExternalUserBus = new EventBus<EventResponse>();
 export const eventNewUserAuthBus = new EventBus<User>();
+export const eventSearchInputChangedBus = new EventBus<string>();

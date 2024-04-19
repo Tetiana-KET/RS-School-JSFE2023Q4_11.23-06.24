@@ -36,8 +36,21 @@ export class ChatModel {
       this.inactiveUsers[inActiveUserIndex].isLogined = UserToUpdate.isLogined;
       this.activeUsers.push(...this.inactiveUsers.splice(inActiveUserIndex, 1));
     } else if (activeUserIndex === -1 && inActiveUserIndex === -1) {
-      // this.addNewActiveUsers(UserToUpdate);
       eventNewUserAuthBus.emit('newUserAuth', UserToUpdate);
+    }
+  }
+
+  public searchUser(userToSearch: string, callback: (users: User[], root: HTMLElement) => void): void {
+    const asideUsersList = document.getElementById('asideUsersList');
+
+    const users = [...this.activeUsers, ...this.inactiveUsers];
+    const filteredUsers = users.filter(user => {
+      return user.login.toLowerCase().includes(userToSearch.toLowerCase());
+    });
+
+    if (asideUsersList) {
+      asideUsersList.innerHTML = '';
+      callback(filteredUsers, asideUsersList);
     }
   }
 }
