@@ -5,21 +5,25 @@ export class ChatModel {
   public activeUsers: User[] = [];
   public inactiveUsers: User[] = [];
   public allUsers: User[] = [];
-
-  // constructor() {}
+  public currentUser: User | null = null;
 
   public updateActiveUsers(users: User[]): void {
     this.activeUsers = users;
-    console.log('active Users:', this.activeUsers);
   }
 
   public updateInactiveUsers(users: User[]): void {
     this.inactiveUsers = users;
-    console.log('Inactive Users:', this.inactiveUsers);
   }
 
-  public addNewActiveUsers(user: User): void {
-    this.activeUsers.push(user);
+  public removeCurrentUserFromUsersList(): void {
+    const currUserIndex = this.activeUsers.findIndex(user => user.login === this.currentUser?.login);
+    if (currUserIndex && currUserIndex !== -1) {
+      this.activeUsers.splice(currUserIndex, 1);
+    }
+  }
+
+  public setCurrentUser(user: User): void {
+    this.currentUser = user;
   }
 
   public updateUserStatusArrays(UserToUpdate: User): void {
@@ -32,7 +36,7 @@ export class ChatModel {
       this.inactiveUsers[inActiveUserIndex].isLogined = UserToUpdate.isLogined;
       this.activeUsers.push(...this.inactiveUsers.splice(inActiveUserIndex, 1));
     } else if (activeUserIndex === -1 && inActiveUserIndex === -1) {
-      this.addNewActiveUsers(UserToUpdate);
+      // this.addNewActiveUsers(UserToUpdate);
       eventNewUserAuthBus.emit('newUserAuth', UserToUpdate);
     }
   }

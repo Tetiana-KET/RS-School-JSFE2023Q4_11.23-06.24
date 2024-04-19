@@ -59,7 +59,7 @@ export class ChatPage extends Component<'section'> {
     const name = user.login;
     const isLogged = user.isLogined || false;
     const userLineElement = new UserLine(name, isLogged);
-    root.append(userLineElement.element);
+    root.prepend(userLineElement.element);
   }
 
   public displayUpdatedStatus(user: User): void {

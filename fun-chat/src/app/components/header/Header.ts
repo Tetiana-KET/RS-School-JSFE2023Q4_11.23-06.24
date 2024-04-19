@@ -53,7 +53,7 @@ export class Header extends Component<'header'> {
     if (currentUserString) {
       const currentUser: User = JSON.parse(currentUserString);
       this.userName = currentUser.login;
-      this.userInfo.element.textContent = `User: ${this.userName}`;
+      this.userInfo.element.textContent = `${this.userName}`;
     }
   }
 
@@ -71,7 +71,6 @@ export class Header extends Component<'header'> {
   }
 
   private onLogoutBtnClick(): void {
-    console.log(`click`);
     this.userInfo.element.textContent = '';
     this.disableLogoutBtn();
 
@@ -86,7 +85,6 @@ export class Header extends Component<'header'> {
     }
 
     if (login && password) {
-      console.log(`login && password`);
       this.webSocketAPI.userLogout(login, password);
     }
   }
