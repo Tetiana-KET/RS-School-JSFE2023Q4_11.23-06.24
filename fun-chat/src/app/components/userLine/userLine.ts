@@ -8,9 +8,9 @@ export class UserLine extends Component<'li'> {
   constructor(name: string, status: boolean) {
     super('li', { className: `${classes.userLine}` });
     this.setAttribute('id', `${name}`);
-    this.userLineName = new Component('span', { className: `${classes.userLineName}`, id: `userLine_${name}` }).setTextContent(`${name}`);
+    this.userLineName = new Component('span', { className: `${classes.userLineName}`, id: `userLineName_${name}` }).setTextContent(`${name}`);
 
-    this.userLineStatus = new Component('span', { className: `${classes.userLineStatus}`, id: `userLine_${name}` }).setAttribute(
+    this.userLineStatus = new Component('span', { className: `${classes.userLineStatus}`, id: `userLineStatus_${name}` }).setAttribute(
       'data-status',
       `${status}`
     );

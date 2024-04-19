@@ -20,20 +20,16 @@ export class MainContent extends Component<'main'> {
   constructor(webSocketAPI: WebSocketAPI) {
     super('main', { className: `${classes.main}`, id: 'main' });
     this.webSocketAPI = webSocketAPI;
-
     this.loginPage = new LoginPage(this.webSocketAPI);
     this.aboutPage = new AboutPage();
     this.chatPage = new ChatPage();
     this.chatController = new ChatController(this.webSocketAPI, this.chatPage);
-
     this.appendChild(this.loginPage);
-
     this.router = new Router(this.setPageContent.bind(this));
     console.log(this.router);
     window.addEventListener('unload', () => {
       this.setPageContent();
     });
-    this.chatController.start();
   }
 
   private setPageContent(): void {

@@ -30,7 +30,7 @@ export class LoginPage extends Component<'section'> {
 
     this.form = new Component('form', { className: `${classes.loginForm}`, id: 'loginForm' });
     this.formTitle = new Component('h2', { className: `${classes.loginFormTitle}`, text: 'login', id: 'loginForm' });
-    this.loginTooltip = new Component('span', { text: 'Requires both upper and lower case letters' });
+    this.loginTooltip = new Component('span', { text: 'Use both upper and lower case English letters' });
     this.passwordTooltip = new Component('span', { text: 'Requires upper and lower case letters and digits' });
     this.loginInput = new Component('input', { id: 'loginInput', className: classes.loginFormInput });
     this.passwordInput = new Component('input', { id: 'passwordInput', className: classes.loginFormInput });
@@ -86,7 +86,7 @@ export class LoginPage extends Component<'section'> {
       .setAttribute('type', 'text')
       .setAttribute('required', 'true')
       .setAttribute('name', 'loginForm')
-      .setAttribute('placeholder', 'Login, min length 4 symbols')
+      .setAttribute('placeholder', 'min length 4 chars, "-" and "_" allowed')
       .setAttribute('minlength', '4');
 
     this.passwordInput

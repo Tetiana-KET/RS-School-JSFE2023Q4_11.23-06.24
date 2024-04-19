@@ -25,8 +25,8 @@ export class ChatPage extends Component<'section'> {
     this.usersList = new Component('ul', { className: `${classes.asideUsersList}`, id: 'asideUsersList' });
     this.dialogContainer = new Component('article', { className: `${classes.chatPageDialog}`, id: 'chatPageDialog' });
     this.dialogHeader = new Component('h3', { className: `${classes.dialogHeader}`, id: 'dialogHeader' });
-    this.dialogHeaderUserName = new Component('span', { className: `${classes.dialogHeaderUserName}`, text: 'Tatiana-KET', id: 'dialogUserName' });
-    this.dialogHeaderUserStatus = new Component('span', { className: `${classes.dialogHeaderUserStatus}`, text: 'online', id: 'dialogUserStatus' });
+    this.dialogHeaderUserName = new Component('span', { className: `${classes.dialogHeaderUserName}`, id: 'dialogUserName' });
+    this.dialogHeaderUserStatus = new Component('span', { className: `${classes.dialogHeaderUserStatus}`, id: 'dialogUserStatus' });
     this.dialogBody = new Component('div', { className: `${classes.dialogBody}`, id: 'dialogBody' });
     this.dialogForm = new Component('form', { className: `${classes.dialogForm}`, id: 'dialogForm' });
     this.dialogInput = new Component('input', { className: `${classes.dialogInput}`, id: 'dialogInput' });
@@ -53,5 +53,21 @@ export class ChatPage extends Component<'section'> {
       const userLineElement = new UserLine(name, isLogged);
       root.append(userLineElement.element);
     });
+  }
+
+  public drawNewLoggedUser(user: User, root: HTMLElement): void {
+    const name = user.login;
+    const isLogged = user.isLogined || false;
+    const userLineElement = new UserLine(name, isLogged);
+    root.append(userLineElement.element);
+  }
+
+  public displayUpdatedStatus(user: User): void {
+    const name = user.login;
+    const isLogged = user.isLogined || false;
+    const statusElement = document.getElementById(`userLineStatus_${name}`);
+    if (statusElement) {
+      statusElement.setAttribute('data-status', `${isLogged}`);
+    }
   }
 }

@@ -69,6 +69,16 @@ export function getUserFromSessionStorage(): User | null {
   return JSON.parse(userString);
 }
 
+// update session storage
+export function updateSessionStorage(isLogged: boolean): void {
+  const currentUserString = sessionStorage.getItem('user');
+  if (currentUserString) {
+    const currentUser: User = JSON.parse(currentUserString);
+    currentUser.isLogined = isLogged;
+    setSessionStorage(currentUser);
+  }
+}
+
 export function getUserIdFromSessionStorage(): string {
   const userString = sessionStorage.getItem('user') || '';
   const currentUser: User = JSON.parse(userString);

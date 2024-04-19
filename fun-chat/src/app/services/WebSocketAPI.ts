@@ -1,6 +1,6 @@
 import type { AuthMessage, RequestForAllUsers, User } from '../interfaces';
-import { generateRandomNumber, getUserIdFromSessionStorage, setSessionStorage } from '../utils/commonUtils';
-import { eventBus, eventGetUsersBus } from '../utils/eventBus';
+import { generateRandomNumber, getUserIdFromSessionStorage, setSessionStorage, updateSessionStorage } from '../utils/commonUtils';
+import { eventBus, eventGetUsersBus, eventExternalUserBus } from '../utils/eventBus';
 
 export class WebSocketAPI {
   public ws: WebSocket;
@@ -72,37 +72,32 @@ export class WebSocketAPI {
 
   private handleMessage(event: MessageEvent): void {
     const responseData = JSON.parse(event.data);
-
     if (responseData.type === 'ERROR') {
       this.errorMessage = responseData.payload.error;
       eventBus.emit('authError', responseData.payload.error);
     }
-
     if (responseData.type === 'USER_LOGIN') {
-      console.log('USER_LOGIN RESPONSE');
       eventBus.emit('successLogin', responseData);
       window.location.hash = '#chat';
-      const currentUserString = sessionStorage.getItem('user');
-      if (currentUserString) {
-        const currentUser: User = JSON.parse(currentUserString);
-        currentUser.isLogined = responseData.payload.user.isLogined;
-        setSessionStorage(currentUser);
-      }
+      const { isLogined } = responseData.payload.user;
+      updateSessionStorage(isLogined);
     }
-
     if (responseData.type === 'USER_LOGOUT') {
-      console.log('USER_LOGOUT RESPONSE');
       sessionStorage.clear();
       window.location.hash = '';
       eventBus.emit('userLoggedOut', responseData);
     }
-
     if (responseData.type === 'USER_ACTIVE') {
       eventGetUsersBus.emit('USER_ACTIVE_data', responseData);
     }
-
     if (responseData.type === 'USER_INACTIVE') {
       eventGetUsersBus.emit('USER_INACTIVE_data', responseData);
+    }
+    if (responseData.type === 'USER_EXTERNAL_LOGIN') {
+      eventExternalUserBus.emit('USER_EXTERNAL_LOGIN', responseData);
+    }
+    if (responseData.type === 'USER_EXTERNAL_LOGOUT') {
+      eventExternalUserBus.emit('USER_EXTERNAL_LOGOUT', responseData);
     }
   }
 }
