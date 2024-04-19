@@ -1,7 +1,7 @@
 import { Component } from '../../components/Component';
 import { UserLine } from '../../components/userLine/userLine';
 import type { User } from '../../interfaces';
-import { eventSearchInputChangedBus } from '../../utils/eventBus';
+import { eventSearchInputChangedBus, eventUserSelectedBus } from '../../utils/eventBus';
 import classes from './ChatPage.module.css';
 
 export class ChatPage extends Component<'section'> {
@@ -33,6 +33,7 @@ export class ChatPage extends Component<'section'> {
     this.dialogInput = new Component('input', { className: `${classes.dialogInput}`, id: 'dialogInput' });
     this.dialogFormButton = new Component('button', { className: `${classes.dialogFormButton}`, text: 'Send', id: 'dialogFormButton' });
     this.handleSearchInputChange();
+    this.handleSelectUserToChatWith();
     this.constructPage();
   }
 
@@ -41,6 +42,32 @@ export class ChatPage extends Component<'section'> {
       const searchString = this.contactSearch.element.value.trim();
       eventSearchInputChangedBus.emit('searchInputChanged', searchString);
     });
+  }
+
+  public handleSelectUserToChatWith(): void {
+    this.usersList.element.addEventListener('click', (e: MouseEvent) => {
+      if (e.target instanceof HTMLElement) {
+        const selectedUserLineElement = e.target.closest('li');
+        if (selectedUserLineElement) {
+          const id = selectedUserLineElement.getAttribute('id') || '';
+          eventUserSelectedBus.emit('userToChatWithSelected', selectedUserLineElement);
+          this.displaySelectedUserInDialogue(id);
+        }
+      }
+    });
+  }
+
+  private displaySelectedUserInDialogue(id: string): void {
+    const name = document.getElementById(`userLineName_${id}`)?.innerText;
+    const status = document.getElementById(`userLineStatus_${id}`)?.getAttribute('data-status');
+    if (name && status) {
+      this.setUserInfoToGialogHeader(name, status);
+    }
+  }
+
+  private setUserInfoToGialogHeader(name: string, status: string): void {
+    this.dialogHeaderUserName.element.textContent = name;
+    this.dialogHeaderUserStatus.element.textContent = status === 'true' ? 'Online' : 'Offline';
   }
 
   private constructPage(): void {
