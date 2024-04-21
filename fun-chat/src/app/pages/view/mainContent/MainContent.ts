@@ -6,7 +6,7 @@ import { Component } from '../../../components/Component';
 import classes from './MainContent.module.css';
 import { getUserFromSessionStorage, isLoggedFromSessionStorage, setUserNameInHeader } from '../../../utils/commonUtils';
 import type { WebSocketAPI } from '../../../services/WebSocketAPI';
-import type { AuthMessage } from '../../../interfaces';
+import type { AuthMessage, User } from '../../../interfaces';
 import { ChatController } from '../../../controllers/chatController';
 
 export class MainContent extends Component<'main'> {
@@ -45,23 +45,11 @@ export class MainContent extends Component<'main'> {
     if (isLoggedFromSessionStorage()) {
       const userInfo = document.getElementById('userInfo');
       const currUser = getUserFromSessionStorage();
-
       if (userInfo) {
         userInfo.textContent = `${setUserNameInHeader()}`;
       }
-
       if (currUser) {
-        const authMessage: AuthMessage = {
-          id: currUser.id || '',
-          type: 'USER_LOGIN',
-          payload: {
-            user: {
-              login: currUser.login,
-              password: currUser.password,
-            },
-          },
-        };
-        this.webSocketAPI.ws.send(JSON.stringify(authMessage));
+        this.reLogUser(currUser);
       }
     }
 
@@ -71,6 +59,26 @@ export class MainContent extends Component<'main'> {
       this.drawChatPage();
     } else if (location === '#about') {
       this.drawAboutPage();
+    }
+  }
+
+  private reLogUser(currUser: User): void {
+    const authMessage: AuthMessage = {
+      id: currUser.id || '',
+      type: 'USER_LOGIN',
+      payload: {
+        user: {
+          login: currUser.login,
+          password: currUser.password,
+        },
+      },
+    };
+    if (this.webSocketAPI.ws.readyState === WebSocket.OPEN) {
+      this.webSocketAPI.ws.send(JSON.stringify(authMessage));
+    } else {
+      this.webSocketAPI.ws.addEventListener('open', () => {
+        this.webSocketAPI.ws.send(JSON.stringify(authMessage));
+      });
     }
   }
 
@@ -84,8 +92,15 @@ export class MainContent extends Component<'main'> {
     this.destroyChildren();
     this.chatPage = new ChatPage();
     this.appendChild(this.chatPage);
-    this.webSocketAPI.getAllAuthenticatedUsers();
-    this.webSocketAPI.getAllUnauthorizedUsers();
+    if (this.webSocketAPI.ws.readyState === WebSocket.OPEN) {
+      this.webSocketAPI.getAllAuthenticatedUsers();
+      this.webSocketAPI.getAllUnauthorizedUsers();
+    } else {
+      this.webSocketAPI.ws.addEventListener('open', () => {
+        this.webSocketAPI.getAllAuthenticatedUsers();
+        this.webSocketAPI.getAllUnauthorizedUsers();
+      });
+    }
   }
 
   private drawLoginPage(): void {
