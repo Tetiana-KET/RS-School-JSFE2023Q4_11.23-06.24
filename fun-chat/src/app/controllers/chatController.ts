@@ -91,8 +91,5 @@ export class ChatController {
   public start(): void {
     this.setCurUser();
     this.webSocketAPI.start();
-    // console.log(`this.chatPage`, this.chatPage.renderDialogBodyText);
-    console.log(this.chatModel.mode);
-    // this.chatPage.renderDialogBodyText(this.chatModel.mode);
   }
 }

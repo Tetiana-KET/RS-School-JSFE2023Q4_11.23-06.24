@@ -37,12 +37,24 @@ export class ChatPage extends Component<'section'> {
     this.handleSearchInputChange();
     this.handleSelectUserToChatWith();
     this.constructPage();
+    this.handleDialogueInputChange();
   }
 
   public handleSearchInputChange(): void {
     this.contactSearch.element.addEventListener('input', () => {
       const searchString = this.contactSearch.element.value.trim();
       eventSearchInputChangedBus.emit('searchInputChanged', searchString);
+    });
+  }
+
+  public handleDialogueInputChange(): void {
+    this.dialogInput.element.addEventListener('input', () => {
+      const messageString = this.dialogInput.element.value;
+      if (messageString) {
+        this.dialogFormButton.element.removeAttribute('disabled');
+      } else {
+        this.dialogFormButton.element.setAttribute('disabled', '');
+      }
     });
   }
 
