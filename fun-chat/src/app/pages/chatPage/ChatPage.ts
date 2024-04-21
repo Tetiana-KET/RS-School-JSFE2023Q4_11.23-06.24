@@ -14,8 +14,9 @@ export class ChatPage extends Component<'section'> {
   private dialogHeaderUserStatus: Component<'span'>;
 
   private dialogBody: Component<'div'>;
+  private dialogBodyText: Component<'span'>;
   private dialogForm: Component<'form'>;
-  private dialogInput: Component<'input'>;
+  public dialogInput: Component<'input'>;
   private dialogFormButton: Component<'button'>;
 
   constructor() {
@@ -29,6 +30,7 @@ export class ChatPage extends Component<'section'> {
     this.dialogHeaderUserName = new Component('span', { className: `${classes.dialogHeaderUserName}`, id: 'dialogUserName' });
     this.dialogHeaderUserStatus = new Component('span', { className: `${classes.dialogHeaderUserStatus}`, id: 'dialogUserStatus' });
     this.dialogBody = new Component('div', { className: `${classes.dialogBody}`, id: 'dialogBody' });
+    this.dialogBodyText = new Component('span', { className: `${classes.dialogBodyText}`, id: 'dialogBodyText' });
     this.dialogForm = new Component('form', { className: `${classes.dialogForm}`, id: 'dialogForm' });
     this.dialogInput = new Component('input', { className: `${classes.dialogInput}`, id: 'dialogInput' });
     this.dialogFormButton = new Component('button', { className: `${classes.dialogFormButton}`, text: 'Send', id: 'dialogFormButton' });
@@ -71,14 +73,33 @@ export class ChatPage extends Component<'section'> {
   }
 
   private constructPage(): void {
-    this.dialogFormButton.setAttribute('disabled', 'true');
-    this.dialogInput.setAttribute('placeholder', 'Enter your message...');
+    this.dialogFormButton.setAttribute('disabled', '').setAttribute('type', 'submit');
+    this.dialogInput.setAttribute('placeholder', 'Enter your message...').setAttribute('disabled', '');
     this.contactSearch.setAttribute('placeholder', 'Search...');
     this.aside.appendChildren([this.contactSearch, this.usersList]);
     this.dialogHeader.appendChildren([this.dialogHeaderUserName, this.dialogHeaderUserStatus]);
     this.dialogForm.appendChildren([this.dialogInput, this.dialogFormButton]);
+    this.dialogBody.appendChild(this.dialogBodyText);
     this.dialogContainer.appendChildren([this.dialogHeader, this.dialogBody, this.dialogForm]);
     this.appendChildren([this.aside, this.dialogContainer]);
+    this.renderDialogBodyText();
+  }
+
+  public renderDialogBodyText(mode = 'default', targetElement: HTMLElement = this.dialogBodyText.element): void {
+    const el = targetElement;
+    let text;
+    switch (mode) {
+      case 'userSelected':
+        text = 'Enter your first message...';
+        break;
+      case 'dialogStarted':
+        text = '';
+        break;
+      default:
+        text = 'Select a user to send a message...';
+        break;
+    }
+    el.innerText = `${text}`;
   }
 
   public renderUsers(users: User[], root: HTMLElement): void {

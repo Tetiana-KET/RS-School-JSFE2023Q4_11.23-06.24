@@ -3,7 +3,14 @@ import { ChatModel } from '../models/ChatModel';
 import type { ChatPage } from '../pages/chatPage/ChatPage';
 import type { WebSocketAPI } from '../services/WebSocketAPI';
 import { getUserFromSessionStorage } from '../utils/commonUtils';
-import { eventGetUsersBus, eventExternalUserBus, eventNewUserAuthBus, eventBus, eventSearchInputChangedBus } from '../utils/eventBus';
+import {
+  eventGetUsersBus,
+  eventExternalUserBus,
+  eventNewUserAuthBus,
+  eventBus,
+  eventSearchInputChangedBus,
+  eventUserSelectedBus,
+} from '../utils/eventBus';
 
 export class ChatController {
   public chatModel: ChatModel;
@@ -19,7 +26,6 @@ export class ChatController {
       this.chatModel.updateActiveUsers(responseData.payload.users);
       const asideUsersList = document.getElementById('asideUsersList');
       if (asideUsersList) {
-        // this.chatModel.removeCurrentUserFromUsersList();
         this.chatPage.renderUsers(this.chatModel.activeUsers, asideUsersList);
       }
     });
@@ -47,11 +53,20 @@ export class ChatController {
     eventNewUserAuthBus.subscribe('newUserAuth', this.callDrawNewUser.bind(this));
     eventBus.subscribe('successLogin', this.setCurUser.bind(this));
     eventSearchInputChangedBus.subscribe('searchInputChanged', this.callSearchHandler.bind(this));
+    eventUserSelectedBus.subscribe('userToChatWithSelected', this.userToChatWithSelectedHandler.bind(this));
   }
 
-  // private setListeners(): void {
-
-  // }
+  private userToChatWithSelectedHandler(): void {
+    const spanText = document.getElementById('dialogBodyText');
+    const dialogInput = document.getElementById('dialogInput');
+    this.chatModel.mode = 'userSelected';
+    if (spanText) {
+      this.chatPage.renderDialogBodyText(this.chatModel.mode, spanText);
+    }
+    if (dialogInput) {
+      dialogInput.removeAttribute('disabled');
+    }
+  }
 
   private callSearchHandler(searchString: string): void {
     this.chatModel.searchUser(searchString, this.chatPage.renderUsers);
@@ -76,5 +91,8 @@ export class ChatController {
   public start(): void {
     this.setCurUser();
     this.webSocketAPI.start();
+    // console.log(`this.chatPage`, this.chatPage.renderDialogBodyText);
+    console.log(this.chatModel.mode);
+    // this.chatPage.renderDialogBodyText(this.chatModel.mode);
   }
 }

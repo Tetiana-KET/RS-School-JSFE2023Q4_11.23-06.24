@@ -79,6 +79,17 @@
   height: calc(100% - 82px);
   position: relative;
   overflow-y: scroll;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.dialog-body_text {
+  display: block;
+  text-align: center;
+  font-size: 26px;
+  opacity: 0.6;
 }
 
 .dialog-form {
@@ -89,6 +100,10 @@
 
 .dialog-input {
   width: calc(99% - 100px);
+}
+.dialog-input[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .dialog-form-button {

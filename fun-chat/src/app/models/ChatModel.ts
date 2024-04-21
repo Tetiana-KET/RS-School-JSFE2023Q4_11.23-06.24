@@ -6,6 +6,7 @@ export class ChatModel {
   public inactiveUsers: User[] = [];
   public allUsers: User[] = [];
   public currentUser: User | null = null;
+  public mode = 'default';
 
   public updateActiveUsers(users: User[]): void {
     this.activeUsers = users.filter(user => {
