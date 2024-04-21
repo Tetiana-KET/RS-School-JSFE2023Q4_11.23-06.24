@@ -1,3 +1,4 @@
+import { MessageComponent } from '../components/message/messageComponent';
 import type { User } from '../interfaces';
 import { ChatModel } from '../models/ChatModel';
 import type { ChatPage } from '../pages/chatPage/ChatPage';
@@ -10,6 +11,7 @@ import {
   eventBus,
   eventSearchInputChangedBus,
   eventUserSelectedBus,
+  eventMessageSentBus,
 } from '../utils/eventBus';
 
 export class ChatController {
@@ -54,6 +56,23 @@ export class ChatController {
     eventBus.subscribe('successLogin', this.setCurUser.bind(this));
     eventSearchInputChangedBus.subscribe('searchInputChanged', this.callSearchHandler.bind(this));
     eventUserSelectedBus.subscribe('userToChatWithSelected', this.userToChatWithSelectedHandler.bind(this));
+    eventMessageSentBus.subscribe('eventMessageSent', this.messageSentHandler.bind(this));
+  }
+
+  private messageSentHandler(message: string): void {
+    const el = document.getElementById('dialogBodyText');
+    const dialogBody = document.getElementById('dialogBody');
+    this.chatModel.mode = 'dialogStarted';
+    if (el) {
+      this.chatPage.renderDialogBodyText(this.chatModel.mode, el);
+    }
+    const messageText = message;
+    const messageBlock = new MessageComponent();
+    messageBlock.messageText.element.innerText = messageText;
+    messageBlock.messageContent.setAttribute('data-user', 'current');
+    if (dialogBody) {
+      dialogBody.append(messageBlock.element);
+    }
   }
 
   private userToChatWithSelectedHandler(): void {

@@ -1,7 +1,7 @@
 import { Component } from '../../components/Component';
 import { UserLine } from '../../components/userLine/userLine';
 import type { User } from '../../interfaces';
-import { eventSearchInputChangedBus, eventUserSelectedBus } from '../../utils/eventBus';
+import { eventMessageSentBus, eventSearchInputChangedBus, eventUserSelectedBus } from '../../utils/eventBus';
 import classes from './ChatPage.module.css';
 
 export class ChatPage extends Component<'section'> {
@@ -13,7 +13,7 @@ export class ChatPage extends Component<'section'> {
   private dialogHeaderUserName: Component<'span'>;
   private dialogHeaderUserStatus: Component<'span'>;
 
-  private dialogBody: Component<'div'>;
+  public dialogBody: Component<'div'>;
   private dialogBodyText: Component<'span'>;
   private dialogForm: Component<'form'>;
   public dialogInput: Component<'input'>;
@@ -38,6 +38,7 @@ export class ChatPage extends Component<'section'> {
     this.handleSelectUserToChatWith();
     this.constructPage();
     this.handleDialogueInputChange();
+    this.dialogForm.element.addEventListener('submit', this.onFormSubmit.bind(this));
   }
 
   public handleSearchInputChange(): void {
@@ -57,6 +58,20 @@ export class ChatPage extends Component<'section'> {
       }
     });
   }
+
+  private onFormSubmit(event: Event): void {
+    event.preventDefault();
+    const message = this.dialogInput.element.value;
+    this.dialogInput.element.value = '';
+    this.dialogFormButton.element.setAttribute('disabled', '');
+
+    eventMessageSentBus.emit('eventMessageSent', message);
+  }
+
+  // в контролере
+  // public handleFormSubmit(userData: User): void {
+  //   this.webSocketAPI.userAuthentication(userData);
+  // }
 
   public handleSelectUserToChatWith(): void {
     this.usersList.element.addEventListener('click', (e: MouseEvent) => {
