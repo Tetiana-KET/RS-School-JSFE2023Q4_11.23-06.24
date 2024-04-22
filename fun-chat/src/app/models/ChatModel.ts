@@ -15,7 +15,7 @@ export class ChatModel {
   public messages: Record<string, MessageData[]> = {};
 
   // Метод для добавления сообщения в массив всех сообщений
-  public addMessage(recipient: string, message: MessageData): void {
+  public addMessageToStore(recipient: string, message: MessageData): void {
     if (!this.messages[recipient]) {
       this.messages[recipient] = [];
     }

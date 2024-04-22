@@ -137,3 +137,22 @@ export function getCurrentDateTime(): string {
 
   return formattedDateTime;
 }
+
+export function scrollToNewMessage(container: HTMLElement, messageBlock: HTMLElement): void {
+  const dialogBody = container;
+  // Вычисляем высоту контейнера и высоту окна просмотра
+  const containerHeight = dialogBody.clientHeight;
+  const windowHeight = window.innerHeight;
+
+  // Если контейнер не заполнен до конца окна просмотра, прокручиваем до самого низа
+  if (dialogBody.scrollHeight <= windowHeight) {
+    dialogBody.scrollTop = dialogBody.scrollHeight;
+  } else {
+    // Вычисляем, сколько прокрутить, чтобы первое новое сообщение было видно внизу контейнера
+    const newMessageHeight = messageBlock.offsetHeight;
+    const newScrollTop = dialogBody.scrollHeight - containerHeight + newMessageHeight;
+
+    // Прокручиваем контейнер до новой позиции прокрутки
+    dialogBody.scrollTop = newScrollTop;
+  }
+}

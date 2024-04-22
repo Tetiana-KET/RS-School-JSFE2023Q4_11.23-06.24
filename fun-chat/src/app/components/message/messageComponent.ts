@@ -4,7 +4,7 @@ import classes from './messageComponent.module.css';
 type MessageOptions = {
   message: string;
   time: string;
-  status: boolean;
+  status?: boolean | undefined;
   from: string;
   attributeValue: string;
 };

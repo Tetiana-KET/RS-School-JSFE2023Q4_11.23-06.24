@@ -66,9 +66,9 @@ export interface MSGSentServerResponse {
       text: string;
       datetime: number;
       status: {
-        isDelivered?: boolean;
-        isReaded?: boolean;
-        isEdited?: boolean;
+        isDelivered?: boolean | undefined;
+        isReaded?: boolean | undefined;
+        isEdited?: boolean | undefined;
       };
     };
   };
@@ -81,9 +81,9 @@ export interface MessageData {
   text: string;
   datetime: number;
   status: {
-    isDelivered?: boolean;
-    isReaded?: boolean;
-    isEdited?: boolean;
+    isDelivered?: boolean | undefined;
+    isReaded?: boolean | undefined;
+    isEdited?: boolean | undefined;
   };
 }
 

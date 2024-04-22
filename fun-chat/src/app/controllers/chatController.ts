@@ -1,9 +1,9 @@
 import { MessageComponent } from '../components/message/messageComponent';
-import type { FetchHistoryResponse, User } from '../interfaces';
+import type { FetchHistoryResponse, MSGSentServerResponse, User } from '../interfaces';
 import { ChatModel } from '../models/ChatModel';
 import type { ChatPage } from '../pages/chatPage/ChatPage';
 import type { WebSocketAPI } from '../services/WebSocketAPI';
-import { formatDateTimeFromTimestamp, getCurrentDateTime, getUserFromSessionStorage } from '../utils/commonUtils';
+import { formatDateTimeFromTimestamp, getCurrentDateTime, getUserFromSessionStorage, scrollToNewMessage } from '../utils/commonUtils';
 import {
   eventGetUsersBus,
   eventExternalUserBus,
@@ -13,6 +13,7 @@ import {
   eventUserSelectedBus,
   eventMessageSentBus,
   eventFetchHistoryBus,
+  eventMSGSentServerResponseBus,
 } from '../utils/eventBus';
 
 export class ChatController {
@@ -62,10 +63,31 @@ export class ChatController {
     eventSearchInputChangedBus.subscribe('searchInputChanged', this.callSearchHandler.bind(this));
     eventUserSelectedBus.subscribe('userToChatWithSelected', this.userToChatWithSelectedHandler.bind(this));
     eventMessageSentBus.subscribe('eventMessageSent', this.messageSentHandler.bind(this));
-    // eventMSGSentServerResponseBus.subscribe('MSG_SEND', this.messageSentToServerHandler.bind(this));
+    eventMSGSentServerResponseBus.subscribe('MSG_SEND', this.messageSentFromServerHandler.bind(this));
     eventFetchHistoryBus.subscribe('MSG_FROM_USER_Fetched', this.historyFetchedHandler.bind(this));
   }
 
+  // after got response from server render for recipient
+  private messageSentFromServerHandler(responseData: MSGSentServerResponse): void {
+    const { datetime, text, from, to } = responseData.payload.message;
+
+    this.chatModel.addMessageToStore(to, responseData.payload.message);
+    const message = text;
+    const dialogBody = document.getElementById('dialogBody');
+    const time = formatDateTimeFromTimestamp(datetime);
+
+    if (dialogBody && this.chatModel.mode === 'dialogStarted' && this.chatModel.currentUser?.login === `${to}`) {
+      const options = { time, message, from, attributeValue: 'recipient' };
+      const messageBlock = new MessageComponent();
+      messageBlock.setMessageData(options);
+      dialogBody.append(messageBlock.element);
+      scrollToNewMessage(dialogBody, messageBlock.element);
+    }
+
+    console.log(`MessagesStore `, this.chatModel.messages);
+  }
+
+  // when send a msg render for sender
   private messageSentHandler(message: string): void {
     // default message in chat body
     const el = document.getElementById('dialogBodyText');
@@ -82,16 +104,16 @@ export class ChatController {
     messageBlock.setMessageData(options);
     if (dialogBody && this.chatModel.mode === 'dialogStarted') {
       dialogBody.append(messageBlock.element);
+      scrollToNewMessage(dialogBody, messageBlock.element);
     }
     // send message to server
     this.webSocketAPI.sendMessage(message, this.chatModel.recipient);
   }
 
+  // when open a dialogue check the history and render all messages
   private historyFetchedHandler(data: FetchHistoryResponse): void {
-    console.log(data.payload.messages.length);
     const { length } = data.payload.messages;
     const { messages } = data.payload;
-    console.log(messages);
     const dialogBody = document.getElementById('dialogBody');
     if (dialogBody) {
       dialogBody.innerHTML = '';
@@ -101,7 +123,6 @@ export class ChatController {
       const el = document.getElementById('dialogBodyText');
 
       if (el) {
-        console.log(`this.chatModel.mode`, this.chatModel.mode);
         this.chatPage.renderDialogBodyText(this.chatModel.mode, el);
       }
 
@@ -117,16 +138,11 @@ export class ChatController {
         messageBlock.setMessageData(options);
 
         if (dialogBody) {
-          console.log(messageBlock.element);
           dialogBody.append(messageBlock.element);
         }
       });
     }
   }
-
-  // after got response from server
-  // private messageSentToServerHandler(responseData: MSGSentServerResponse): void {
-  // }
 
   private userToChatWithSelectedHandler(id: string): void {
     this.chatModel.recipient = id;
