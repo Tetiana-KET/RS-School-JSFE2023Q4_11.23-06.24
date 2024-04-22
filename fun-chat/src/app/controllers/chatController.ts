@@ -1,9 +1,9 @@
 import { MessageComponent } from '../components/message/messageComponent';
-import type { User } from '../interfaces';
+import type { MSGSentServerResponse, User } from '../interfaces';
 import { ChatModel } from '../models/ChatModel';
 import type { ChatPage } from '../pages/chatPage/ChatPage';
 import type { WebSocketAPI } from '../services/WebSocketAPI';
-import { getUserFromSessionStorage } from '../utils/commonUtils';
+import { formatDateTimeFromTimestamp, getUserFromSessionStorage } from '../utils/commonUtils';
 import {
   eventGetUsersBus,
   eventExternalUserBus,
@@ -12,6 +12,7 @@ import {
   eventSearchInputChangedBus,
   eventUserSelectedBus,
   eventMessageSentBus,
+  eventMSGSentServerResponseBus,
 } from '../utils/eventBus';
 
 export class ChatController {
@@ -57,25 +58,49 @@ export class ChatController {
     eventSearchInputChangedBus.subscribe('searchInputChanged', this.callSearchHandler.bind(this));
     eventUserSelectedBus.subscribe('userToChatWithSelected', this.userToChatWithSelectedHandler.bind(this));
     eventMessageSentBus.subscribe('eventMessageSent', this.messageSentHandler.bind(this));
+    eventMSGSentServerResponseBus.subscribe('MSG_SEND', this.messageSentToServerHandler.bind(this));
   }
 
   private messageSentHandler(message: string): void {
+    // default message in chat body
     const el = document.getElementById('dialogBodyText');
-    const dialogBody = document.getElementById('dialogBody');
     this.chatModel.mode = 'dialogStarted';
     if (el) {
       this.chatPage.renderDialogBodyText(this.chatModel.mode, el);
     }
+    // send message to server
     const messageText = message;
+    this.webSocketAPI.sendMessage(messageText, this.chatModel.recipient);
+  }
+
+  // after got response from server
+  private messageSentToServerHandler(responseData: MSGSentServerResponse): void {
+    const dialogBody = document.getElementById('dialogBody');
+
+    const time = formatDateTimeFromTimestamp(responseData.payload.message.datetime);
+    const status = responseData.payload.message.status.isDelivered || false;
+    const message = responseData.payload.message.text;
+
+    let { from } = responseData.payload.message;
+    const attributeValue = this.chatModel.currentUser?.login === from ? 'current' : 'recipient';
+    from = this.chatModel.currentUser?.login === from ? 'You' : from;
+
+    const options = { time, status, message, from, attributeValue };
+
+    console.log(options);
+
     const messageBlock = new MessageComponent();
-    messageBlock.messageText.element.innerText = messageText;
-    messageBlock.messageContent.setAttribute('data-user', 'current');
+    messageBlock.setMessageData(options);
+
     if (dialogBody) {
       dialogBody.append(messageBlock.element);
     }
   }
 
-  private userToChatWithSelectedHandler(): void {
+  private userToChatWithSelectedHandler(id: string): void {
+    this.chatModel.recipient = id;
+    console.log(`this.chatModel.recipient `, this.chatModel.recipient);
+
     const spanText = document.getElementById('dialogBodyText');
     const dialogInput = document.getElementById('dialogInput');
     this.chatModel.mode = 'userSelected';

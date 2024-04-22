@@ -13,6 +13,17 @@ export interface AuthMessage {
   };
 }
 
+export interface Message {
+  id: string;
+  type: string;
+  payload: {
+    message: {
+      to: string;
+      text: string;
+    };
+  };
+}
+
 export interface RequestForAllUsers {
   id: string;
   type: string;
@@ -41,5 +52,24 @@ export interface UsersResponseData {
   type: string;
   payload: {
     users: User[];
+  };
+}
+
+export interface MSGSentServerResponse {
+  id: string;
+  type: 'MSG_SEND';
+  payload: {
+    message: {
+      id: string;
+      from: string;
+      to: string;
+      text: string;
+      datetime: number;
+      status: {
+        isDelivered?: boolean;
+        isReaded?: boolean;
+        isEdited?: boolean;
+      };
+    };
   };
 }

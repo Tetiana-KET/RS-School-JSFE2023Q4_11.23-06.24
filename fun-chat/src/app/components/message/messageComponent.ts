@@ -1,6 +1,14 @@
 import { Component } from '../Component';
 import classes from './messageComponent.module.css';
 
+type MessageOptions = {
+  message: string;
+  time: string;
+  status: boolean;
+  from: string;
+  attributeValue: string;
+};
+
 export class MessageComponent extends Component<'div'> {
   public messageContent: Component<'div'>;
   private messageHeader: Component<'div'>;
@@ -15,15 +23,11 @@ export class MessageComponent extends Component<'div'> {
 
     this.messageContent = new Component('div', { className: `${classes.messageContent}`, id: 'messageContent' });
     this.messageHeader = new Component('div', { className: `${classes.messageHeader}`, id: 'messageHeader' });
-    this.messageHeaderDate = new Component('label', {
-      className: `${classes.messageHeaderDate}`,
-      id: 'messageHeaderDate',
-      text: '21.04.2024, 16:53:42',
-    });
-    this.messageHeaderUser = new Component('label', { className: `${classes.messageHeaderUser}`, id: 'messageHeaderUser', text: 'You' });
+    this.messageHeaderDate = new Component('label', { className: `${classes.messageHeaderDate}`, id: 'messageHeaderDate' });
+    this.messageHeaderUser = new Component('label', { className: `${classes.messageHeaderUser}`, id: 'messageHeaderUser' });
     this.messageText = new Component('div', { className: `${classes.messageText}`, id: 'messageText' });
     this.messageFooter = new Component('div', { className: `${classes.messageFooter}`, id: 'messageFooter' });
-    this.messageFooterStatus = new Component('label', { className: `${classes.messageFooterStatus}`, id: 'messageFooterStatus', text: 'delivered' });
+    this.messageFooterStatus = new Component('label', { className: `${classes.messageFooterStatus}`, id: 'messageFooterStatus' });
 
     this.buildMessageElement();
   }
@@ -33,5 +37,14 @@ export class MessageComponent extends Component<'div'> {
     this.messageFooter.appendChild(this.messageFooterStatus);
     this.messageContent.appendChildren([this.messageHeader, this.messageText, this.messageFooter]);
     this.appendChild(this.messageContent);
+  }
+
+  public setMessageData(options: MessageOptions): void {
+    const { message, time, status, from, attributeValue } = options;
+    this.messageText.element.innerText = message;
+    this.messageHeaderDate.element.innerText = time;
+    this.messageFooterStatus.element.innerText = status ? 'delivered' : '';
+    this.messageHeaderUser.element.innerText = from;
+    this.messageContent.setAttribute('data-user', `${attributeValue}`);
   }
 }

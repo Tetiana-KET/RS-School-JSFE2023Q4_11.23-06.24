@@ -68,18 +68,13 @@ export class ChatPage extends Component<'section'> {
     eventMessageSentBus.emit('eventMessageSent', message);
   }
 
-  // в контролере
-  // public handleFormSubmit(userData: User): void {
-  //   this.webSocketAPI.userAuthentication(userData);
-  // }
-
   public handleSelectUserToChatWith(): void {
     this.usersList.element.addEventListener('click', (e: MouseEvent) => {
       if (e.target instanceof HTMLElement) {
         const selectedUserLineElement = e.target.closest('li');
         if (selectedUserLineElement) {
           const id = selectedUserLineElement.getAttribute('id') || '';
-          eventUserSelectedBus.emit('userToChatWithSelected', selectedUserLineElement);
+          eventUserSelectedBus.emit('userToChatWithSelected', id);
           this.displaySelectedUserInDialogue(id);
         }
       }

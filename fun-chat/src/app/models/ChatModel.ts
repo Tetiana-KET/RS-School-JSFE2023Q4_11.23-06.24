@@ -6,6 +6,7 @@ export class ChatModel {
   public inactiveUsers: User[] = [];
   public allUsers: User[] = [];
   public currentUser: User | null = null;
+  public recipient = '';
   public mode = 'default';
 
   public updateActiveUsers(users: User[]): void {
@@ -17,13 +18,6 @@ export class ChatModel {
   public updateInactiveUsers(users: User[]): void {
     this.inactiveUsers = users;
   }
-
-  // public removeCurrentUserFromUsersList(): void {
-  //   const currUserIndex = this.activeUsers.findIndex(user => user.login === this.currentUser?.login);
-  //   if (currUserIndex && currUserIndex !== -1) {
-  //     this.activeUsers.splice(currUserIndex, 1);
-  //   }
-  // }
 
   public setCurrentUser(user: User): void {
     this.currentUser = user;

@@ -1,6 +1,6 @@
-import type { AuthMessage, RequestForAllUsers, User } from '../interfaces';
+import type { AuthMessage, Message, RequestForAllUsers, User } from '../interfaces';
 import { generateRandomNumber, getUserIdFromSessionStorage, setSessionStorage, updateSessionStorage } from '../utils/commonUtils';
-import { eventBus, eventGetUsersBus, eventExternalUserBus } from '../utils/eventBus';
+import { eventBus, eventGetUsersBus, eventExternalUserBus, eventMSGSentServerResponseBus } from '../utils/eventBus';
 
 export class WebSocketAPI {
   public ws: WebSocket;
@@ -44,6 +44,20 @@ export class WebSocketAPI {
         user: {
           login,
           password,
+        },
+      },
+    };
+    this.ws.send(JSON.stringify(message));
+  }
+
+  public sendMessage(messageString: string, sendTo: string): void {
+    const message: Message = {
+      id: getUserIdFromSessionStorage(),
+      type: 'MSG_SEND',
+      payload: {
+        message: {
+          to: sendTo,
+          text: messageString,
         },
       },
     };
@@ -96,6 +110,9 @@ export class WebSocketAPI {
     }
     if (responseData.type === 'USER_EXTERNAL_LOGOUT') {
       eventExternalUserBus.emit('USER_EXTERNAL_LOGOUT', responseData);
+    }
+    if (responseData.type === 'MSG_SEND') {
+      eventMSGSentServerResponseBus.emit('MSG_SEND', responseData);
     }
   }
 
