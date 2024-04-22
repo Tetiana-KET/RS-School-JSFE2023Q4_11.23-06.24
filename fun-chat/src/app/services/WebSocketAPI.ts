@@ -1,6 +1,6 @@
-import type { AuthMessage, Message, RequestForAllUsers, User } from '../interfaces';
+import type { AuthMessage, FetchHistoryRequest, Message, RequestForAllUsers, User } from '../interfaces';
 import { generateRandomNumber, getUserIdFromSessionStorage, setSessionStorage, updateSessionStorage } from '../utils/commonUtils';
-import { eventBus, eventGetUsersBus, eventExternalUserBus, eventMSGSentServerResponseBus } from '../utils/eventBus';
+import { eventBus, eventGetUsersBus, eventExternalUserBus, eventMSGSentServerResponseBus, eventFetchHistoryBus } from '../utils/eventBus';
 
 export class WebSocketAPI {
   public ws: WebSocket;
@@ -64,6 +64,19 @@ export class WebSocketAPI {
     this.ws.send(JSON.stringify(message));
   }
 
+  public fetchMessageHistoryWithUser(login: string): void {
+    const message: FetchHistoryRequest = {
+      id: getUserIdFromSessionStorage(),
+      type: 'MSG_FROM_USER',
+      payload: {
+        user: {
+          login: `${login}`,
+        },
+      },
+    };
+    this.ws.send(JSON.stringify(message));
+  }
+
   public getAllAuthenticatedUsers(): void {
     const message: RequestForAllUsers = {
       id: generateRandomNumber().toString(),
@@ -113,6 +126,9 @@ export class WebSocketAPI {
     }
     if (responseData.type === 'MSG_SEND') {
       eventMSGSentServerResponseBus.emit('MSG_SEND', responseData);
+    }
+    if (responseData.type === 'MSG_FROM_USER') {
+      eventFetchHistoryBus.emit('MSG_FROM_USER_Fetched', responseData);
     }
   }
 

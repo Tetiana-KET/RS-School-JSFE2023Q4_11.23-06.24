@@ -1,4 +1,4 @@
-import type { EventResponse, MSGSentServerResponse, User, UsersResponseData } from '../interfaces';
+import type { EventResponse, FetchHistoryResponse, MSGSentServerResponse, User, UsersResponseData } from '../interfaces';
 
 type Listener<T> = (data: T) => void;
 
@@ -28,3 +28,4 @@ export const eventSearchInputChangedBus = new EventBus<string>();
 export const eventUserSelectedBus = new EventBus<string>();
 export const eventMessageSentBus = new EventBus<string>();
 export const eventMSGSentServerResponseBus = new EventBus<MSGSentServerResponse>();
+export const eventFetchHistoryBus = new EventBus<FetchHistoryResponse>();

@@ -118,3 +118,22 @@ export function formatDateTimeFromTimestamp(timestamp: number): string {
 
   return formattedDateTime;
 }
+
+export function getCurrentDateTime(): string {
+  const currentDate = new Date();
+
+  // Получаем день, месяц и год
+  const day = currentDate.getDate().toString().padStart(2, '0');
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+  const year = currentDate.getFullYear();
+
+  // Получаем часы, минуты и секунды
+  const hours = currentDate.getHours().toString().padStart(2, '0');
+  const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+  const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+  // Форматируем дату и время в нужном формате
+  const formattedDateTime = `${day}.${month}.${year}, ${hours}:${minutes}:${seconds}`;
+
+  return formattedDateTime;
+}

@@ -1,4 +1,4 @@
-import type { User } from '../interfaces';
+import type { MessageData, User } from '../interfaces';
 import { eventNewUserAuthBus } from '../utils/eventBus';
 
 export class ChatModel {
@@ -8,6 +8,19 @@ export class ChatModel {
   public currentUser: User | null = null;
   public recipient = '';
   public mode = 'default';
+
+  // Объект сообщений для каждого пользователя
+  // Record - встроенный обобщенный тип данных, используется для определения типа объекта,
+  // где ключи имеют определенный тип (K здесь строка) и значения имеют определенный тип (V здесь массив сообщений).
+  public messages: Record<string, MessageData[]> = {};
+
+  // Метод для добавления сообщения в массив всех сообщений
+  public addMessage(recipient: string, message: MessageData): void {
+    if (!this.messages[recipient]) {
+      this.messages[recipient] = [];
+    }
+    this.messages[recipient].push(message);
+  }
 
   public updateActiveUsers(users: User[]): void {
     this.activeUsers = users.filter(user => {

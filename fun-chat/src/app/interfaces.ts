@@ -73,3 +73,34 @@ export interface MSGSentServerResponse {
     };
   };
 }
+
+export interface MessageData {
+  id: string;
+  from: string;
+  to: string;
+  text: string;
+  datetime: number;
+  status: {
+    isDelivered?: boolean;
+    isReaded?: boolean;
+    isEdited?: boolean;
+  };
+}
+
+export interface FetchHistoryRequest {
+  id: string;
+  type: 'MSG_FROM_USER';
+  payload: {
+    user: {
+      login: string;
+    };
+  };
+}
+
+export interface FetchHistoryResponse {
+  id: string;
+  type: 'MSG_FROM_USER';
+  payload: {
+    messages: MessageData[];
+  };
+}
