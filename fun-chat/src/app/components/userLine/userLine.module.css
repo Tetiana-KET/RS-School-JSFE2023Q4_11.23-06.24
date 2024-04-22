@@ -22,6 +22,25 @@
   background-color: var(--warning-color);
 }
 
+.user-line_Counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  margin-left: auto;
+  border-radius: 50%;
+  border: 1px solid var(--white-color);
+  font-size: 12px;
+  background-color: rgba(13, 96, 111, 0.5);
+  color: var(--white-color);
+  visibility: hidden;
+}
+
+.user-line_Counter[visible] {
+  visibility: visible;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .user-line:hover {
     background-color: rgba(13, 96, 111, 0.5);

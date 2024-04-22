@@ -4,6 +4,7 @@ import classes from './userLine.module.css';
 export class UserLine extends Component<'li'> {
   private userLineName: Component<'span'>;
   private userLineStatus: Component<'span'>;
+  public userLineCounter: Component<'span'>;
 
   constructor(name: string, status: boolean) {
     super('li', { className: `${classes.userLine}` });
@@ -14,6 +15,8 @@ export class UserLine extends Component<'li'> {
       'data-status',
       `${status}`
     );
-    this.appendChildren([this.userLineStatus, this.userLineName]);
+
+    this.userLineCounter = new Component('span', { className: `${classes.userLineCounter}`, id: `userLineCounter_${name}` });
+    this.appendChildren([this.userLineStatus, this.userLineName, this.userLineCounter]);
   }
 }
