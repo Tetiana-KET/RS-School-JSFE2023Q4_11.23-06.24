@@ -14,6 +14,12 @@ export class ChatModel {
   // где ключи имеют определенный тип (K здесь строка) и значения имеют определенный тип (V здесь массив сообщений).
   public messages: Record<string, MessageData[]> = {};
 
+  public setStatus(name: string): boolean {
+    return this.activeUsers.some(user => {
+      return user.login === name;
+    });
+  }
+
   // Метод для добавления сообщения в массив всех сообщений
   public addMessageToStore(recipient: string, message: MessageData): void {
     if (!this.messages[recipient]) {

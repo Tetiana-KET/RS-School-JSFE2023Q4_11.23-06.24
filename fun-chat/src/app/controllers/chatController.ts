@@ -1,9 +1,9 @@
 import { MessageComponent } from '../components/message/messageComponent';
-import type { FetchHistoryResponse, MSGSentServerResponse, User } from '../interfaces';
+import type { EventResponse, FetchHistoryResponse, MSGSentServerResponse, User } from '../interfaces';
 import { ChatModel } from '../models/ChatModel';
 import type { ChatPage } from '../pages/chatPage/ChatPage';
 import type { WebSocketAPI } from '../services/WebSocketAPI';
-import { formatDateTimeFromTimestamp, getCurrentDateTime, getUserFromSessionStorage, scrollToNewMessage } from '../utils/commonUtils';
+import { getUserFromSessionStorage, scrollToNewMessage } from '../utils/commonUtils';
 import {
   eventGetUsersBus,
   eventExternalUserBus,
@@ -44,20 +44,8 @@ export class ChatController {
         this.chatPage.renderUsers(this.chatModel.inactiveUsers, asideUsersList);
       }
     });
-    eventExternalUserBus.subscribe('USER_EXTERNAL_LOGIN', responseData => {
-      const { user } = responseData.payload;
-      if (user) {
-        this.chatPage.displayUpdatedStatus(user);
-        this.chatModel.updateUserStatusArrays(user);
-      }
-    });
-    eventExternalUserBus.subscribe('USER_EXTERNAL_LOGOUT', responseData => {
-      const { user } = responseData.payload;
-      if (user) {
-        this.chatPage.displayUpdatedStatus(user);
-        this.chatModel.updateUserStatusArrays(user);
-      }
-    });
+    eventExternalUserBus.subscribe('USER_EXTERNAL_LOGIN', this.handleUSER_EXTERNAL_LOG_IN_OUT.bind(this));
+    eventExternalUserBus.subscribe('USER_EXTERNAL_LOGOUT', this.handleUSER_EXTERNAL_LOG_IN_OUT.bind(this));
     eventNewUserAuthBus.subscribe('newUserAuth', this.callDrawNewUser.bind(this));
     eventBus.subscribe('successLogin', this.setCurUser.bind(this));
     eventSearchInputChangedBus.subscribe('searchInputChanged', this.callSearchHandler.bind(this));
@@ -67,17 +55,37 @@ export class ChatController {
     eventFetchHistoryBus.subscribe('MSG_FROM_USER_Fetched', this.historyFetchedHandler.bind(this));
   }
 
+  private handleUSER_EXTERNAL_LOG_IN_OUT(responseData: EventResponse): void {
+    const { user } = responseData.payload;
+    if (user) {
+      this.chatPage.displayUpdatedStatus(user);
+      this.chatModel.updateUserStatusArrays(user);
+    }
+    if (user && this.chatModel.recipient === user.login) {
+      this.chatPage.updateStatusInDialogueHeader(user);
+    }
+    if (responseData.type === 'USER_EXTERNAL_LOGIN') {
+      Array.from(document.querySelectorAll('label[data-user="sensing-status"]')).forEach(label => {
+        const el = label;
+        el.textContent = 'delivered';
+      });
+    }
+  }
+
   // after got response from server render for recipient
   private messageSentFromServerHandler(responseData: MSGSentServerResponse): void {
     const { datetime, text, from, to } = responseData.payload.message;
+    const status = responseData.payload.message.status.isDelivered;
+    console.log(responseData);
 
+    const dialogueOpenWith = document.getElementById('dialogUserName')?.innerText;
     this.chatModel.addMessageToStore(to, responseData.payload.message);
     const message = text;
     const dialogBody = document.getElementById('dialogBody');
-    const time = formatDateTimeFromTimestamp(datetime);
+    // const time = formatDateTimeFromTimestamp(datetime);
 
-    if (dialogBody && this.chatModel.mode === 'dialogStarted' && this.chatModel.currentUser?.login === `${to}`) {
-      const options = { time, message, from, attributeValue: 'recipient' };
+    if (dialogBody && this.chatModel.mode === 'dialogStarted' && this.chatModel.currentUser?.login === to && dialogueOpenWith === to) {
+      const options = { datetime, message, from, attributeValue: 'recipient', status };
       const messageBlock = new MessageComponent();
       messageBlock.setMessageData(options);
       dialogBody.append(messageBlock.element);
@@ -98,8 +106,11 @@ export class ChatController {
 
     // render own sent message
     const dialogBody = document.getElementById('dialogBody');
-    const time = getCurrentDateTime();
-    const options = { time, status: true, message, from: 'You', attributeValue: 'current' };
+    const datetime = new Date().getTime();
+    console.log(datetime);
+    const to = document.getElementById('dialogUserName')?.textContent || '';
+    const status = this.chatModel.setStatus(to);
+    const options = { datetime, status, message, from: 'You', attributeValue: 'current' };
     const messageBlock = new MessageComponent();
     messageBlock.setMessageData(options);
     if (dialogBody && this.chatModel.mode === 'dialogStarted') {
@@ -127,13 +138,13 @@ export class ChatController {
       }
 
       messages.forEach(item => {
-        const time = formatDateTimeFromTimestamp(item.datetime);
+        const { datetime } = item;
         const status = item.status.isDelivered || false;
         const message = item.text;
         let { from } = item;
         const attributeValue = this.chatModel.currentUser?.login === from ? 'current' : 'recipient';
         from = this.chatModel.currentUser?.login === from ? 'You' : from;
-        const options = { time, status, message, from, attributeValue };
+        const options = { datetime, status, message, from, attributeValue };
         const messageBlock = new MessageComponent();
         messageBlock.setMessageData(options);
 
@@ -163,9 +174,18 @@ export class ChatController {
   }
 
   private callDrawNewUser(UserToUpdate: User): void {
+    console.log(`UserToUpdate `, UserToUpdate);
+    console.log(`this.chatModel.activeUsers.includes(UserToUpdate): `, this.chatModel.activeUsers.includes(UserToUpdate));
+    console.log(`this.chatModel.inactiveUsers.includes(UserToUpdate): `, this.chatModel.inactiveUsers.includes(UserToUpdate));
     if (UserToUpdate.login !== this.chatModel.currentUser?.login) {
       const asideUsersList = document.getElementById('asideUsersList');
+      if (this.chatModel.activeUsers.includes(UserToUpdate) && this.chatModel.inactiveUsers.includes(UserToUpdate)) {
+        console.log(`from inside if before RETURN`);
+        return;
+      }
+      console.log(`from OUTside if before drawNewLoggedUser`);
       if (asideUsersList) {
+        console.log(`from inside if before drawNewLoggedUser`);
         this.chatPage.drawNewLoggedUser(UserToUpdate, asideUsersList);
       }
     }

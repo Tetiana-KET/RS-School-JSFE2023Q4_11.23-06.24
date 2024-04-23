@@ -137,6 +137,8 @@ export class ChatPage extends Component<'section'> {
     const name = user.login;
     const isLogged = user.isLogined || false;
     const userLineElement = new UserLine(name, isLogged);
+
+    console.log(`draw user`, user);
     root.prepend(userLineElement.element);
   }
 
@@ -144,8 +146,19 @@ export class ChatPage extends Component<'section'> {
     const name = user.login;
     const isLogged = user.isLogined || false;
     const statusElement = document.getElementById(`userLineStatus_${name}`);
+
     if (statusElement) {
       statusElement.setAttribute('data-status', `${isLogged}`);
     }
   }
+
+  public updateStatusInDialogueHeader(user: User): void {
+    const isLogged = user.isLogined || false;
+    const dialogueStatusElement = document.getElementById(`dialogUserStatus`);
+    if (dialogueStatusElement) {
+      dialogueStatusElement.innerText = isLogged ? 'online' : 'offline';
+    }
+  }
+
+  public updateMessageStatus(): void {}
 }

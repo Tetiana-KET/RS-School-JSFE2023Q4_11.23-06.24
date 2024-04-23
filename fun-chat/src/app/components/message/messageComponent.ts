@@ -1,9 +1,10 @@
+import { formatDateTimeFromTimestamp } from '../../utils/commonUtils';
 import { Component } from '../Component';
 import classes from './messageComponent.module.css';
 
 type MessageOptions = {
   message: string;
-  time: string;
+  datetime: number;
   status?: boolean | undefined;
   from: string;
   attributeValue: string;
@@ -40,11 +41,13 @@ export class MessageComponent extends Component<'div'> {
   }
 
   public setMessageData(options: MessageOptions): void {
-    const { message, time, status, from, attributeValue } = options;
+    const { message, datetime, status, from, attributeValue } = options;
     this.messageText.element.innerText = message;
-    this.messageHeaderDate.element.innerText = time;
-    this.messageFooterStatus.element.innerText = status ? 'delivered' : '';
+    this.messageHeaderDate.element.innerText = formatDateTimeFromTimestamp(datetime);
+    this.messageFooterStatus.element.innerText = status ? 'delivered' : 'sent';
     this.messageHeaderUser.element.innerText = from;
     this.messageContent.setAttribute('data-user', `${attributeValue}`);
+    this.messageFooterStatus.setAttribute('data-user', `sensing-status`);
+    this.setAttribute('id', `${datetime}`);
   }
 }
