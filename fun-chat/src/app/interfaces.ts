@@ -104,3 +104,20 @@ export interface FetchHistoryResponse {
     messages: MessageData[];
   };
 }
+
+export interface MessageReadStatusChange {
+  id: string;
+  type: 'MSG_READ';
+  payload: {
+    message: {
+      id: string;
+      status?: {
+        isReaded: boolean;
+      };
+    };
+  };
+}
+
+export type MessageDataMap = {
+  [key: string]: MessageData[];
+};

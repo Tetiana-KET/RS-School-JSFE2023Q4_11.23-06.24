@@ -1,6 +1,6 @@
 import { Component } from '../../components/Component';
 import { UserLine } from '../../components/userLine/userLine';
-import type { User } from '../../interfaces';
+import type { MessageDataMap, User } from '../../interfaces';
 import { eventMessageSentBus, eventSearchInputChangedBus, eventUserSelectedBus } from '../../utils/eventBus';
 import classes from './ChatPage.module.css';
 
@@ -124,11 +124,23 @@ export class ChatPage extends Component<'section'> {
     el.innerText = `${text}`;
   }
 
-  public renderUsers(users: User[], root: HTMLElement): void {
+  public renderUsers(users: User[], root: HTMLElement, messageMap?: MessageDataMap): void {
+    console.log(`messageMap`, messageMap);
     users.forEach(user => {
       const name = user.login;
       const isLogged = user.isLogined || false;
+
       const userLineElement = new UserLine(name, isLogged);
+
+      if (messageMap && Object.entries(messageMap).length !== 0) {
+        Object.entries(messageMap).forEach(([key, value]) => {
+          if (key === name) {
+            userLineElement.userLineCounter.element.textContent = `${value.length}`;
+            userLineElement.userLineCounter.setAttribute('data-visible', 'true');
+          }
+        });
+      }
+
       root.append(userLineElement.element);
     });
   }

@@ -1,4 +1,4 @@
-import type { MessageData, User } from '../interfaces';
+import type { MessageData, MessageDataMap, User } from '../interfaces';
 import { eventNewUserAuthBus } from '../utils/eventBus';
 
 export class ChatModel {
@@ -56,7 +56,7 @@ export class ChatModel {
     }
   }
 
-  public searchUser(userToSearch: string, callback: (users: User[], root: HTMLElement) => void): void {
+  public searchUser(userToSearch: string, callback: (users: User[], root: HTMLElement, messageMap?: MessageDataMap) => void): void {
     const asideUsersList = document.getElementById('asideUsersList');
 
     const users = [...this.activeUsers, ...this.inactiveUsers];

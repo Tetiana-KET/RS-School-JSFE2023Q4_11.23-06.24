@@ -1,6 +1,13 @@
-import type { AuthMessage, FetchHistoryRequest, Message, RequestForAllUsers, User } from '../interfaces';
+import type { AuthMessage, FetchHistoryRequest, Message, MessageReadStatusChange, RequestForAllUsers, User } from '../interfaces';
 import { generateRandomNumber, getUserIdFromSessionStorage, setSessionStorage, updateSessionStorage } from '../utils/commonUtils';
-import { eventBus, eventGetUsersBus, eventExternalUserBus, eventMSGSentServerResponseBus, eventFetchHistoryBus } from '../utils/eventBus';
+import {
+  eventBus,
+  eventGetUsersBus,
+  eventExternalUserBus,
+  eventMSGSentServerResponseBus,
+  eventFetchHistoryBus,
+  eventMessageReadBus,
+} from '../utils/eventBus';
 
 export class WebSocketAPI {
   public ws: WebSocket;
@@ -95,6 +102,19 @@ export class WebSocketAPI {
     this.ws.send(JSON.stringify(message));
   }
 
+  public MessageReadStatusChange(id: string): void {
+    const message: MessageReadStatusChange = {
+      id: generateRandomNumber().toString(),
+      type: 'MSG_READ',
+      payload: {
+        message: {
+          id,
+        },
+      },
+    };
+    this.ws.send(JSON.stringify(message));
+  }
+
   private handleMessage(event: MessageEvent): void {
     const responseData = JSON.parse(event.data);
     if (responseData.type === 'ERROR') {
@@ -129,6 +149,9 @@ export class WebSocketAPI {
     }
     if (responseData.type === 'MSG_FROM_USER') {
       eventFetchHistoryBus.emit('MSG_FROM_USER_Fetched', responseData);
+    }
+    if (responseData.type === 'MSG_READ') {
+      eventMessageReadBus.emit('MSG_READ', responseData);
     }
   }
 

@@ -37,7 +37,7 @@
   visibility: hidden;
 }
 
-.user-line_Counter[visible] {
+.user-line_Counter[data-visible='true'] {
   visibility: visible;
 }
 

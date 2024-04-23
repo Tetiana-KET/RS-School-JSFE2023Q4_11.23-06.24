@@ -1,5 +1,5 @@
 import { MessageComponent } from '../components/message/messageComponent';
-import type { EventResponse, FetchHistoryResponse, MSGSentServerResponse, User } from '../interfaces';
+import type { EventResponse, FetchHistoryResponse, MessageDataMap, MessageReadStatusChange, MSGSentServerResponse, User } from '../interfaces';
 import { ChatModel } from '../models/ChatModel';
 import type { ChatPage } from '../pages/chatPage/ChatPage';
 import type { WebSocketAPI } from '../services/WebSocketAPI';
@@ -14,17 +14,20 @@ import {
   eventMessageSentBus,
   eventFetchHistoryBus,
   eventMSGSentServerResponseBus,
+  eventMessageReadBus,
 } from '../utils/eventBus';
 
 export class ChatController {
   public chatModel: ChatModel;
   private webSocketAPI: WebSocketAPI;
   public chatPage: ChatPage;
+  private messageMap: MessageDataMap;
 
   constructor(webSocketAPI: WebSocketAPI, chatPage: ChatPage) {
     this.webSocketAPI = webSocketAPI;
     this.chatPage = chatPage;
     this.chatModel = new ChatModel();
+    this.messageMap = {};
 
     this.addSubscriptions();
   }
@@ -34,14 +37,14 @@ export class ChatController {
       this.chatModel.updateActiveUsers(responseData.payload.users);
       const asideUsersList = document.getElementById('asideUsersList');
       if (asideUsersList) {
-        this.chatPage.renderUsers(this.chatModel.activeUsers, asideUsersList);
+        this.chatPage.renderUsers(this.chatModel.activeUsers, asideUsersList, this.messageMap);
       }
     });
     eventGetUsersBus.subscribe('USER_INACTIVE_data', responseData => {
       this.chatModel.updateInactiveUsers(responseData.payload.users);
       const asideUsersList = document.getElementById('asideUsersList');
       if (asideUsersList) {
-        this.chatPage.renderUsers(this.chatModel.inactiveUsers, asideUsersList);
+        this.chatPage.renderUsers(this.chatModel.inactiveUsers, asideUsersList, this.messageMap);
       }
     });
     eventExternalUserBus.subscribe('USER_EXTERNAL_LOGIN', this.handleUSER_EXTERNAL_LOG_IN_OUT.bind(this));
@@ -53,6 +56,11 @@ export class ChatController {
     eventMessageSentBus.subscribe('eventMessageSent', this.messageSentHandler.bind(this));
     eventMSGSentServerResponseBus.subscribe('MSG_SEND', this.messageSentFromServerHandler.bind(this));
     eventFetchHistoryBus.subscribe('MSG_FROM_USER_Fetched', this.historyFetchedHandler.bind(this));
+    eventMessageReadBus.subscribe('MSG_READ', this.messageReadHandler.bind(this));
+  }
+
+  private messageReadHandler(data: MessageReadStatusChange): void {
+    console.log(data);
   }
 
   private handleUSER_EXTERNAL_LOG_IN_OUT(responseData: EventResponse): void {
@@ -76,13 +84,10 @@ export class ChatController {
   private messageSentFromServerHandler(responseData: MSGSentServerResponse): void {
     const { datetime, text, from, to } = responseData.payload.message;
     const status = responseData.payload.message.status.isDelivered;
-    console.log(responseData);
 
     const dialogueOpenWith = document.getElementById('dialogUserName')?.innerText;
-    this.chatModel.addMessageToStore(to, responseData.payload.message);
     const message = text;
     const dialogBody = document.getElementById('dialogBody');
-    // const time = formatDateTimeFromTimestamp(datetime);
 
     if (dialogBody && this.chatModel.mode === 'dialogStarted' && this.chatModel.currentUser?.login === to && dialogueOpenWith === to) {
       const options = { datetime, message, from, attributeValue: 'recipient', status };
@@ -91,8 +96,6 @@ export class ChatController {
       dialogBody.append(messageBlock.element);
       scrollToNewMessage(dialogBody, messageBlock.element);
     }
-
-    console.log(`MessagesStore `, this.chatModel.messages);
   }
 
   // when send a msg render for sender
@@ -174,27 +177,37 @@ export class ChatController {
   }
 
   private callDrawNewUser(UserToUpdate: User): void {
-    console.log(`UserToUpdate `, UserToUpdate);
-    console.log(`this.chatModel.activeUsers.includes(UserToUpdate): `, this.chatModel.activeUsers.includes(UserToUpdate));
-    console.log(`this.chatModel.inactiveUsers.includes(UserToUpdate): `, this.chatModel.inactiveUsers.includes(UserToUpdate));
     if (UserToUpdate.login !== this.chatModel.currentUser?.login) {
       const asideUsersList = document.getElementById('asideUsersList');
       if (this.chatModel.activeUsers.includes(UserToUpdate) && this.chatModel.inactiveUsers.includes(UserToUpdate)) {
-        console.log(`from inside if before RETURN`);
         return;
       }
-      console.log(`from OUTside if before drawNewLoggedUser`);
       if (asideUsersList) {
-        console.log(`from inside if before drawNewLoggedUser`);
         this.chatPage.drawNewLoggedUser(UserToUpdate, asideUsersList);
       }
     }
   }
 
+  private setUnreadMessages(): void {
+    this.chatModel.activeUsers.forEach(user => {
+      this.webSocketAPI.fetchMessageHistoryWithUser(user.login);
+    });
+    this.chatModel.inactiveUsers.forEach(user => {
+      this.webSocketAPI.fetchMessageHistoryWithUser(user.login);
+    });
+  }
+
   private setCurUser(): void {
     const user = getUserFromSessionStorage();
+    // Восстанавливаем messageMap из сессионного хранилища
+    // const storedMessageMap = sessionStorage.getItem('messageMap');
+    // if (storedMessageMap) {
+    //   this.messageMap = JSON.parse(storedMessageMap);
+    // }
+
     if (user) {
       this.chatModel.setCurrentUser(user);
+      this.setUnreadMessages();
     }
   }
 
