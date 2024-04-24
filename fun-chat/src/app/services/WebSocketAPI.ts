@@ -1,4 +1,4 @@
-import type { AuthMessage, FetchHistoryRequest, Message, MessageReadStatusChange, RequestForAllUsers, User } from '../interfaces';
+import type { AuthMessage, EditMsgOption, FetchHistoryRequest, Message, MessageReadStatusChange, RequestForAllUsers, User } from '../interfaces';
 import { generateRandomNumber, getUserIdFromSessionStorage, setSessionStorage, updateSessionStorage } from '../utils/commonUtils';
 import {
   eventBus,
@@ -8,6 +8,7 @@ import {
   eventFetchHistoryBus,
   eventMessageReadBus,
   eventDeleteMsgResponseBus,
+  eventEditMsgResponseBus,
 } from '../utils/eventBus';
 
 export class WebSocketAPI {
@@ -137,6 +138,29 @@ export class WebSocketAPI {
     this.ws.send(JSON.stringify(message));
   }
 
+  public MessageTextEditing(option: EditMsgOption): void {
+    const message: {
+      id: string;
+      type: string;
+      payload: {
+        message: {
+          id: string;
+          text: string;
+        };
+      };
+    } = {
+      id: generateRandomNumber().toString(),
+      type: 'MSG_EDIT',
+      payload: {
+        message: {
+          id: option.id,
+          text: option.text,
+        },
+      },
+    };
+    this.ws.send(JSON.stringify(message));
+  }
+
   private handleMessage(event: MessageEvent): void {
     const responseData = JSON.parse(event.data);
     if (responseData.type === 'ERROR') {
@@ -182,6 +206,9 @@ export class WebSocketAPI {
     }
     if (responseData.type === 'MSG_DELETE') {
       eventDeleteMsgResponseBus.emit('MSG_DELETE', responseData);
+    }
+    if (responseData.type === 'MSG_EDIT') {
+      eventEditMsgResponseBus.emit('MSG_EDIT_response', responseData);
     }
   }
 

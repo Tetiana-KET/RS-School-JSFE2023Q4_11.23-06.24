@@ -1,6 +1,6 @@
 import type { MessageData } from '../../interfaces';
 import { formatDateTimeFromTimestamp, getMessageStatus } from '../../utils/commonUtils';
-import { eventDeleteMsgBtnClickedBus } from '../../utils/eventBus';
+import { eventDeleteMsgBtnClickedBus, eventEditMsgBtnClickedBus } from '../../utils/eventBus';
 import { Component } from '../Component';
 import classes from './messageComponent.module.css';
 
@@ -23,7 +23,7 @@ export class MessageComponent extends Component<'div'> {
     this.messageHeader = new Component('div', { className: `${classes.messageHeader}`, id: 'messageHeader' });
     this.messageHeaderDate = new Component('label', { className: `${classes.messageHeaderDate}`, id: 'messageHeaderDate' });
     this.messageHeaderUser = new Component('label', { className: `${classes.messageHeaderUser}`, id: 'messageHeaderUser' });
-    this.messageText = new Component('div', { className: `${classes.messageText}`, id: 'messageText' });
+    this.messageText = new Component('div', { className: `${classes.messageText}` });
     this.messageFooter = new Component('div', { className: `${classes.messageFooter}`, id: 'messageFooter' });
     this.messageFooterStatus = new Component('label', { className: `${classes.messageFooterStatus}`, id: 'messageFooterStatus' });
     this.editMessageWrap = new Component('div', { className: `${classes.editMessageWrap}`, id: 'editMessageWrap' });
@@ -52,9 +52,15 @@ export class MessageComponent extends Component<'div'> {
     this.messageContent.setAttribute('data-user', `${attributeValue}`);
     this.messageFooterStatus.setAttribute('data-user', `sensing-status`);
     this.setAttribute('id', `${id}`);
+    this.messageText.setAttribute('id', `messageText_${id}`);
+    this.messageFooterStatus.setAttribute('id', `status_${id}`);
     this.editMessageWrap.setAttribute('data-user', `${attributeValue}`);
     this.editMessage.element.addEventListener('click', () => {
-      console.log(`editMessage`, this.element.id);
+      const option = {
+        id: this.element.id,
+        text: this.messageText.element.textContent || '',
+      };
+      eventEditMsgBtnClickedBus.emit('editMsgBtnClicked', option);
     });
     this.deleteMessage.element.addEventListener('click', () => {
       eventDeleteMsgBtnClickedBus.emit('deleteMsgBtnClicked', this.element.id);

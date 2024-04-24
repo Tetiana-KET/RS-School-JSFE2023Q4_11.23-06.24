@@ -1,6 +1,8 @@
 import { MessageComponent } from '../components/message/messageComponent';
 import type {
   DeleteResponse,
+  EditMsgOption,
+  EditResponse,
   EventResponse,
   FetchHistoryResponse,
   MessageDataMap,
@@ -25,6 +27,9 @@ import {
   eventMessageReadBus,
   eventDeleteMsgBtnClickedBus,
   eventDeleteMsgResponseBus,
+  eventEditMsgBtnClickedBus,
+  eventMessageEditBus,
+  eventEditMsgResponseBus,
 } from '../utils/eventBus';
 
 export class ChatController {
@@ -32,6 +37,7 @@ export class ChatController {
   private webSocketAPI: WebSocketAPI;
   public chatPage: ChatPage;
   private messageMap: MessageDataMap;
+  private messageToEditId = '';
 
   constructor(webSocketAPI: WebSocketAPI, chatPage: ChatPage) {
     this.webSocketAPI = webSocketAPI;
@@ -69,6 +75,48 @@ export class ChatController {
     eventMessageReadBus.subscribe('MSG_READ', this.messageReadHandler.bind(this));
     eventDeleteMsgBtnClickedBus.subscribe('deleteMsgBtnClicked', this.deleteMsgHandler.bind(this));
     eventDeleteMsgResponseBus.subscribe('MSG_DELETE', this.deleteMsgResponseHandler.bind(this));
+    eventEditMsgBtnClickedBus.subscribe('editMsgBtnClicked', this.editMsgHandler.bind(this));
+    eventMessageEditBus.subscribe('eventMessageEdit', this.editedMsgTextHandler.bind(this));
+    eventEditMsgResponseBus.subscribe('MSG_EDIT_response', this.editMsgResponseHandler.bind(this));
+  }
+
+  private editMsgHandler(option: EditMsgOption): void {
+    const oldText = option.text;
+    const input = document.getElementById('dialogInput');
+    const button = document.getElementById('dialogFormButton');
+
+    if (button) {
+      button.removeAttribute('disabled');
+    }
+
+    if (input && input instanceof HTMLInputElement) {
+      input.setAttribute('data-isedited', 'true');
+      input.focus();
+      input.value = oldText;
+      this.messageToEditId = option.id;
+    }
+  }
+
+  private editedMsgTextHandler(message: string): void {
+    const option = {
+      id: this.messageToEditId,
+      text: message,
+    };
+    this.webSocketAPI.MessageTextEditing(option);
+  }
+
+  private editMsgResponseHandler(response: EditResponse): void {
+    console.log(`editMsgResponseHandler`, response);
+    const { isEdited } = response.payload.message.status;
+    const { id } = response.payload.message;
+    const { text } = response.payload.message;
+    const messageContainer = document.getElementById(`${id}`);
+    const messageTextEl = document.getElementById(`messageText_${id}`);
+    const messageFooterStatusEl = document.getElementById(`status_${id}`);
+    if (isEdited && messageContainer && messageTextEl && messageFooterStatusEl) {
+      messageTextEl.textContent = text;
+      messageFooterStatusEl.textContent = 'edited';
+    }
   }
 
   private messageReadHandler(data: MessageReadStatusChange): void {
@@ -181,8 +229,11 @@ export class ChatController {
         const messageBlock = new MessageComponent();
         messageBlock.setMessageData(options, attributeValue);
 
+        // TODO прокрутка в конец, нужно будет пересчитать на не прочитанные сообщения
         if (dialogBody) {
           dialogBody.append(messageBlock.element);
+
+          dialogBody.scrollTop = dialogBody.scrollHeight;
         }
       });
     }

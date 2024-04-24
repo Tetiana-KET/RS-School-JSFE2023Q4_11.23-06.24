@@ -3,7 +3,7 @@ import './styles/style.css';
 import './app/app';
 
 console.log(` Привет, прямо сейчас 24.04. делаю удаление и редактирование сообщений. Не проверяй пока пожалуйста, Спасибо
-Score 205 / 250
+Score 215 / 250
   - [x] **1. User Authentication Page (+30)**
     - [x] (+10) The authentication form validates the entered data based on at least two different criteria.
     - [x] (+5) The user is unable to submit an authentication request with data that has not passed validation.
@@ -41,7 +41,7 @@ Score 205 / 250
     - [x] (+5) If no recipient is selected, the message send button and message input field must be inactive (or hidden), and there must be a message in the message history field indicating the need to select a recipient.
     - [x] (+5) Sending a message to a user is possible both by clicking the send button with the mouse or by pressing the "Enter" key without the need to focus on the send button.
     - [x] (+10) The user can delete their own previously sent messages.
-    - [ ] (+10) The user can edit the text of their own previously sent messages.
+    - [x] (+10) The user can edit the text of their own previously sent messages.
 
   - [x] **7. Message Content (on the main page) (+25)**
     - [x] (+15) Messages include the time of sending, sender's username, message delivery status, message text, and indication of whether the message has been edited.

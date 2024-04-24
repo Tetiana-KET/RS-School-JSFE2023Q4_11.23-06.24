@@ -134,3 +134,33 @@ export type DeleteResponse = {
     };
   };
 };
+
+export type EditRequest = {
+  id: string;
+  type: 'MSG_EDIT';
+  payload: {
+    message: {
+      id: string;
+      text: string;
+    };
+  };
+};
+
+export type EditResponse = {
+  id: string;
+  type: 'MSG_EDIT';
+  payload: {
+    message: {
+      id: string;
+      text: string;
+      status: {
+        isEdited: boolean;
+      };
+    };
+  };
+};
+
+export type EditMsgOption = {
+  id: string;
+  text: string;
+};

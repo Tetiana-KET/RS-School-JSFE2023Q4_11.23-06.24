@@ -1,5 +1,7 @@
 import type {
   DeleteResponse,
+  EditMsgOption,
+  EditResponse,
   EventResponse,
   FetchHistoryResponse,
   MessageReadStatusChange,
@@ -40,3 +42,7 @@ export const eventFetchHistoryBus = new EventBus<FetchHistoryResponse>();
 export const eventMessageReadBus = new EventBus<MessageReadStatusChange>();
 export const eventDeleteMsgBtnClickedBus = new EventBus<string>();
 export const eventDeleteMsgResponseBus = new EventBus<DeleteResponse>();
+
+export const eventEditMsgBtnClickedBus = new EventBus<EditMsgOption>();
+export const eventMessageEditBus = new EventBus<string>();
+export const eventEditMsgResponseBus = new EventBus<EditResponse>();

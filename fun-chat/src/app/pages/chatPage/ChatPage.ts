@@ -1,7 +1,7 @@
 import { Component } from '../../components/Component';
 import { UserLine } from '../../components/userLine/userLine';
 import type { MessageDataMap, User } from '../../interfaces';
-import { eventMessageSentBus, eventSearchInputChangedBus, eventUserSelectedBus } from '../../utils/eventBus';
+import { eventMessageEditBus, eventMessageSentBus, eventSearchInputChangedBus, eventUserSelectedBus } from '../../utils/eventBus';
 import classes from './ChatPage.module.css';
 
 export class ChatPage extends Component<'section'> {
@@ -65,7 +65,12 @@ export class ChatPage extends Component<'section'> {
     this.dialogInput.element.value = '';
     this.dialogFormButton.element.setAttribute('disabled', '');
 
-    eventMessageSentBus.emit('eventMessageSent', message);
+    if (this.dialogInput.element.hasAttribute('data-isedited')) {
+      this.dialogInput.element.removeAttribute('data-isedited');
+      eventMessageEditBus.emit('eventMessageEdit', message);
+    } else {
+      eventMessageSentBus.emit('eventMessageSent', message);
+    }
   }
 
   public handleSelectUserToChatWith(): void {
