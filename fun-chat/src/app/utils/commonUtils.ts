@@ -159,11 +159,11 @@ export function scrollToNewMessage(container: HTMLElement, messageBlock: HTMLEle
 
 export function getMessageStatus(status: { isDelivered?: boolean; isReaded?: boolean; isEdited?: boolean }): string {
   switch (true) {
-    case status.isReaded && status.isEdited:
+    case status.isReaded || status.isEdited:
       return 'edited';
     case status.isReaded && !status.isEdited:
       return 'read';
-    case !status.isReaded && status.isDelivered:
+    case status.isReaded || status.isDelivered:
       return 'delivered';
     default:
       return 'sent';

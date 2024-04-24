@@ -44,9 +44,9 @@ export class MessageComponent extends Component<'div'> {
   public setMessageData(options: MessageData, attributeValue: string): void {
     console.log(options);
     const { text, datetime, from, status, id } = options;
+    const statusString = getMessageStatus(status);
     this.messageText.element.innerText = text;
     this.messageHeaderDate.element.innerText = formatDateTimeFromTimestamp(datetime);
-    const statusString = getMessageStatus(status);
     this.messageFooterStatus.element.innerText = statusString;
     this.messageHeaderUser.element.innerText = from;
     this.messageContent.setAttribute('data-user', `${attributeValue}`);
