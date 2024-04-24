@@ -1,4 +1,4 @@
-import type { User } from '../interfaces';
+import type { MessageData, MSGSentServerResponse, User } from '../interfaces';
 import type { ConstructorOf, Nullable, NullLike } from './types';
 
 export function isNull<T>(value: Nullable<T>): value is NullLike {
@@ -155,4 +155,29 @@ export function scrollToNewMessage(container: HTMLElement, messageBlock: HTMLEle
     // Прокручиваем контейнер до новой позиции прокрутки
     dialogBody.scrollTop = newScrollTop;
   }
+}
+
+export function getMessageStatus(status: { isDelivered?: boolean; isReaded?: boolean; isEdited?: boolean }): string {
+  switch (true) {
+    case status.isReaded && status.isEdited:
+      return 'edited';
+    case status.isReaded && !status.isEdited:
+      return 'read';
+    case !status.isReaded && status.isDelivered:
+      return 'delivered';
+    default:
+      return 'sent';
+  }
+}
+
+export function setOptions(responseData: MSGSentServerResponse): MessageData {
+  const { id } = responseData.payload.message;
+  const { datetime } = responseData.payload.message;
+  const { text } = responseData.payload.message;
+  const { from } = responseData.payload.message;
+  const { to } = responseData.payload.message;
+  const { status } = responseData.payload.message;
+
+  const options = { datetime, status, text, from, to, id };
+  return options;
 }

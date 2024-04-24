@@ -77,7 +77,7 @@ export interface MSGSentServerResponse {
 export interface MessageData {
   id: string;
   from: string;
-  to: string;
+  to?: string;
   text: string;
   datetime: number;
   status: {

@@ -28,7 +28,11 @@ export class AboutPage extends Component<'section'> {
   }
 
   private setAboutPageDescription(): void {
-    this.aboutPageDescription.element.textContent = `An interactive chat application developed as part of the RSSchool JS/FE 2023Q4 course. 
+    this.aboutPageDescription.element.textContent = `
+    Привет, прямо сейчас 24.04. делаю удаление и редактирование сообщений. Не проверяй пока пожалуйста, Спасибо
+    И в консоли вывела самооценку, чтоб удобнее ;)
+    
+    An interactive chat application developed as part of the RSSchool JS/FE 2023Q4 course. 
       Fun Chat provides users with a platform to engage in real-time communication through text messages.
       Key Features:
       Real-time Messaging: Engage in real-time conversations with other users.

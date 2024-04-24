@@ -3,7 +3,7 @@ import type { EventResponse, FetchHistoryResponse, MessageDataMap, MessageReadSt
 import { ChatModel } from '../models/ChatModel';
 import type { ChatPage } from '../pages/chatPage/ChatPage';
 import type { WebSocketAPI } from '../services/WebSocketAPI';
-import { getUserFromSessionStorage, scrollToNewMessage } from '../utils/commonUtils';
+import { getUserFromSessionStorage, scrollToNewMessage, setOptions } from '../utils/commonUtils';
 import {
   eventGetUsersBus,
   eventExternalUserBus,
@@ -82,17 +82,23 @@ export class ChatController {
 
   // after got response from server render for recipient
   private messageSentFromServerHandler(responseData: MSGSentServerResponse): void {
-    const { datetime, text, from, to } = responseData.payload.message;
-    const status = responseData.payload.message.status.isDelivered;
-
+    const options = setOptions(responseData);
     const dialogueOpenWith = document.getElementById('dialogUserName')?.innerText;
-    const message = text;
     const dialogBody = document.getElementById('dialogBody');
-
-    if (dialogBody && this.chatModel.mode === 'dialogStarted' && this.chatModel.currentUser?.login === to && dialogueOpenWith === to) {
-      const options = { datetime, message, from, attributeValue: 'recipient', status };
+    console.log(`after got response from server render for recipient`);
+    console.log(dialogBody);
+    console.log(this.chatModel.mode === 'dialogStarted');
+    console.log(this.chatModel.currentUser?.login === options.to);
+    console.log(dialogueOpenWith === options.from);
+    // console.log();
+    if (
+      dialogBody &&
+      this.chatModel.mode === 'dialogStarted' &&
+      this.chatModel.currentUser?.login === options.to &&
+      dialogueOpenWith === options.from
+    ) {
       const messageBlock = new MessageComponent();
-      messageBlock.setMessageData(options);
+      messageBlock.setMessageData(options, 'recipient');
       dialogBody.append(messageBlock.element);
       scrollToNewMessage(dialogBody, messageBlock.element);
     }
@@ -110,12 +116,18 @@ export class ChatController {
     // render own sent message
     const dialogBody = document.getElementById('dialogBody');
     const datetime = new Date().getTime();
-    console.log(datetime);
+    const id = datetime.toString();
     const to = document.getElementById('dialogUserName')?.textContent || '';
-    const status = this.chatModel.setStatus(to);
-    const options = { datetime, status, message, from: 'You', attributeValue: 'current' };
+    const status = {
+      isDelivered: this.chatModel.setStatus(to),
+      isReaded: false,
+      isEdited: false,
+    };
+    const text = message;
+
+    const options = { datetime, status, text, from: 'You', id };
     const messageBlock = new MessageComponent();
-    messageBlock.setMessageData(options);
+    messageBlock.setMessageData(options, 'current');
     if (dialogBody && this.chatModel.mode === 'dialogStarted') {
       dialogBody.append(messageBlock.element);
       scrollToNewMessage(dialogBody, messageBlock.element);
@@ -141,15 +153,16 @@ export class ChatController {
       }
 
       messages.forEach(item => {
+        const { id } = item;
         const { datetime } = item;
-        const status = item.status.isDelivered || false;
-        const message = item.text;
+        const { text } = item;
         let { from } = item;
+        const { status } = item;
         const attributeValue = this.chatModel.currentUser?.login === from ? 'current' : 'recipient';
         from = this.chatModel.currentUser?.login === from ? 'You' : from;
-        const options = { datetime, status, message, from, attributeValue };
+        const options = { datetime, status, text, from, id };
         const messageBlock = new MessageComponent();
-        messageBlock.setMessageData(options);
+        messageBlock.setMessageData(options, attributeValue);
 
         if (dialogBody) {
           dialogBody.append(messageBlock.element);
@@ -199,11 +212,6 @@ export class ChatController {
 
   private setCurUser(): void {
     const user = getUserFromSessionStorage();
-    // Восстанавливаем messageMap из сессионного хранилища
-    // const storedMessageMap = sessionStorage.getItem('messageMap');
-    // if (storedMessageMap) {
-    //   this.messageMap = JSON.parse(storedMessageMap);
-    // }
 
     if (user) {
       this.chatModel.setCurrentUser(user);

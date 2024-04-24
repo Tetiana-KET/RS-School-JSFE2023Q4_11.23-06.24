@@ -1,14 +1,7 @@
-import { formatDateTimeFromTimestamp } from '../../utils/commonUtils';
+import type { MessageData } from '../../interfaces';
+import { formatDateTimeFromTimestamp, getMessageStatus } from '../../utils/commonUtils';
 import { Component } from '../Component';
 import classes from './messageComponent.module.css';
-
-type MessageOptions = {
-  message: string;
-  datetime: number;
-  status?: boolean | undefined;
-  from: string;
-  attributeValue: string;
-};
 
 export class MessageComponent extends Component<'div'> {
   public messageContent: Component<'div'>;
@@ -40,14 +33,16 @@ export class MessageComponent extends Component<'div'> {
     this.appendChild(this.messageContent);
   }
 
-  public setMessageData(options: MessageOptions): void {
-    const { message, datetime, status, from, attributeValue } = options;
-    this.messageText.element.innerText = message;
+  public setMessageData(options: MessageData, attributeValue: string): void {
+    console.log(options);
+    const { text, datetime, from, status, id } = options;
+    this.messageText.element.innerText = text;
     this.messageHeaderDate.element.innerText = formatDateTimeFromTimestamp(datetime);
-    this.messageFooterStatus.element.innerText = status ? 'delivered' : 'sent';
+    const statusString = getMessageStatus(status);
+    this.messageFooterStatus.element.innerText = statusString;
     this.messageHeaderUser.element.innerText = from;
     this.messageContent.setAttribute('data-user', `${attributeValue}`);
     this.messageFooterStatus.setAttribute('data-user', `sensing-status`);
-    this.setAttribute('id', `${datetime}`);
+    this.setAttribute('id', `${id}`);
   }
 }
