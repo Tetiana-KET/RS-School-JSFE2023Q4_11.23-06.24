@@ -148,10 +148,12 @@ export class ChatPage extends Component<'section'> {
   public drawNewLoggedUser(user: User, root: HTMLElement): void {
     const name = user.login;
     const isLogged = user.isLogined || false;
-    const userLineElement = new UserLine(name, isLogged);
 
-    console.log(`draw user`, user);
-    root.prepend(userLineElement.element);
+    if (isLogged === true) {
+      console.log(`draw user`, user);
+      const userLineElement = new UserLine(name, isLogged);
+      root.prepend(userLineElement.element);
+    }
   }
 
   public displayUpdatedStatus(user: User): void {
