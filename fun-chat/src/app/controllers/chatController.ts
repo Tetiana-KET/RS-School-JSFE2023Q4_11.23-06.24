@@ -1,5 +1,13 @@
 import { MessageComponent } from '../components/message/messageComponent';
-import type { EventResponse, FetchHistoryResponse, MessageDataMap, MessageReadStatusChange, MSGSentServerResponse, User } from '../interfaces';
+import type {
+  DeleteResponse,
+  EventResponse,
+  FetchHistoryResponse,
+  MessageDataMap,
+  MessageReadStatusChange,
+  MSGSentServerResponse,
+  User,
+} from '../interfaces';
 import { ChatModel } from '../models/ChatModel';
 import type { ChatPage } from '../pages/chatPage/ChatPage';
 import type { WebSocketAPI } from '../services/WebSocketAPI';
@@ -15,6 +23,8 @@ import {
   eventFetchHistoryBus,
   eventMSGSentServerResponseBus,
   eventMessageReadBus,
+  eventDeleteMsgBtnClickedBus,
+  eventDeleteMsgResponseBus,
 } from '../utils/eventBus';
 
 export class ChatController {
@@ -57,10 +67,35 @@ export class ChatController {
     eventMSGSentServerResponseBus.subscribe('MSG_SEND', this.messageSentFromServerHandler.bind(this));
     eventFetchHistoryBus.subscribe('MSG_FROM_USER_Fetched', this.historyFetchedHandler.bind(this));
     eventMessageReadBus.subscribe('MSG_READ', this.messageReadHandler.bind(this));
+    eventDeleteMsgBtnClickedBus.subscribe('deleteMsgBtnClicked', this.deleteMsgHandler.bind(this));
+    eventDeleteMsgResponseBus.subscribe('MSG_DELETE', this.deleteMsgResponseHandler.bind(this));
   }
 
   private messageReadHandler(data: MessageReadStatusChange): void {
     console.log(data);
+  }
+
+  private deleteMsgHandler(msgId: string): void {
+    console.log(`deleteMessage`, msgId);
+    this.webSocketAPI.messageDeletion(msgId);
+  }
+
+  private deleteMsgResponseHandler(response: DeleteResponse): void {
+    const deletedMessageId = response.payload.message.id;
+    const { isDeleted } = response.payload.message.status;
+    if (isDeleted) {
+      this.deleteMessageFromPage(deletedMessageId);
+    }
+  }
+
+  private deleteMessageFromPage(msgId: string): void {
+    const messageElement = document.getElementById(msgId);
+    if (messageElement) {
+      messageElement.style.opacity = '0';
+      setTimeout(() => {
+        messageElement.remove();
+      }, 1500);
+    }
   }
 
   private handleUSER_EXTERNAL_LOG_IN_OUT(responseData: EventResponse): void {
@@ -85,20 +120,28 @@ export class ChatController {
     const options = setOptions(responseData);
     const dialogueOpenWith = document.getElementById('dialogUserName')?.innerText;
     const dialogBody = document.getElementById('dialogBody');
-    console.log(`after got response from server render for recipient`);
-    console.log(dialogBody);
-    console.log(this.chatModel.mode === 'dialogStarted');
-    console.log(this.chatModel.currentUser?.login === options.to);
-    console.log(dialogueOpenWith === options.from);
-    // console.log();
+    const messageBlock = new MessageComponent();
     if (
       dialogBody &&
       this.chatModel.mode === 'dialogStarted' &&
       this.chatModel.currentUser?.login === options.to &&
       dialogueOpenWith === options.from
     ) {
-      const messageBlock = new MessageComponent();
       messageBlock.setMessageData(options, 'recipient');
+      dialogBody.append(messageBlock.element);
+      scrollToNewMessage(dialogBody, messageBlock.element);
+    }
+
+    // render for sender
+    if (dialogBody && this.chatModel.currentUser?.login === options.from && dialogueOpenWith === options.to) {
+      // default message in chat body
+      const el = document.getElementById('dialogBodyText');
+      this.chatModel.mode = 'dialogStarted';
+      if (el) {
+        this.chatPage.renderDialogBodyText(this.chatModel.mode, el);
+      }
+
+      messageBlock.setMessageData(options, 'current');
       dialogBody.append(messageBlock.element);
       scrollToNewMessage(dialogBody, messageBlock.element);
     }
@@ -106,32 +149,6 @@ export class ChatController {
 
   // when send a msg render for sender
   private messageSentHandler(message: string): void {
-    // default message in chat body
-    const el = document.getElementById('dialogBodyText');
-    this.chatModel.mode = 'dialogStarted';
-    if (el) {
-      this.chatPage.renderDialogBodyText(this.chatModel.mode, el);
-    }
-
-    // render own sent message
-    const dialogBody = document.getElementById('dialogBody');
-    const datetime = new Date().getTime();
-    const id = datetime.toString();
-    const to = document.getElementById('dialogUserName')?.textContent || '';
-    const status = {
-      isDelivered: this.chatModel.setStatus(to),
-      isReaded: false,
-      isEdited: false,
-    };
-    const text = message;
-
-    const options = { datetime, status, text, from: 'You', id };
-    const messageBlock = new MessageComponent();
-    messageBlock.setMessageData(options, 'current');
-    if (dialogBody && this.chatModel.mode === 'dialogStarted') {
-      dialogBody.append(messageBlock.element);
-      scrollToNewMessage(dialogBody, messageBlock.element);
-    }
     // send message to server
     this.webSocketAPI.sendMessage(message, this.chatModel.recipient);
   }

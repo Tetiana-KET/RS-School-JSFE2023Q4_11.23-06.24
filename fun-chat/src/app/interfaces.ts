@@ -121,3 +121,16 @@ export interface MessageReadStatusChange {
 export type MessageDataMap = {
   [key: string]: MessageData[];
 };
+
+export type DeleteResponse = {
+  id: string;
+  type: string;
+  payload: {
+    message: {
+      id: string;
+      status: {
+        isDeleted: boolean;
+      };
+    };
+  };
+};

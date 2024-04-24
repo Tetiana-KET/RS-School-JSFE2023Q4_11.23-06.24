@@ -7,6 +7,7 @@ import {
   eventMSGSentServerResponseBus,
   eventFetchHistoryBus,
   eventMessageReadBus,
+  eventDeleteMsgResponseBus,
 } from '../utils/eventBus';
 
 export class WebSocketAPI {
@@ -115,6 +116,27 @@ export class WebSocketAPI {
     this.ws.send(JSON.stringify(message));
   }
 
+  public messageDeletion(msgId: string): void {
+    const message: {
+      id: string;
+      type: string;
+      payload: {
+        message: {
+          id: string;
+        };
+      };
+    } = {
+      id: generateRandomNumber().toString(),
+      type: 'MSG_DELETE',
+      payload: {
+        message: {
+          id: msgId,
+        },
+      },
+    };
+    this.ws.send(JSON.stringify(message));
+  }
+
   private handleMessage(event: MessageEvent): void {
     const responseData = JSON.parse(event.data);
     if (responseData.type === 'ERROR') {
@@ -144,6 +166,11 @@ export class WebSocketAPI {
     if (responseData.type === 'USER_EXTERNAL_LOGOUT') {
       eventExternalUserBus.emit('USER_EXTERNAL_LOGOUT', responseData);
     }
+    this.handleResponseMessage(event);
+  }
+
+  private handleResponseMessage(event: MessageEvent): void {
+    const responseData = JSON.parse(event.data);
     if (responseData.type === 'MSG_SEND') {
       eventMSGSentServerResponseBus.emit('MSG_SEND', responseData);
     }
@@ -152,6 +179,9 @@ export class WebSocketAPI {
     }
     if (responseData.type === 'MSG_READ') {
       eventMessageReadBus.emit('MSG_READ', responseData);
+    }
+    if (responseData.type === 'MSG_DELETE') {
+      eventDeleteMsgResponseBus.emit('MSG_DELETE', responseData);
     }
   }
 
