@@ -106,16 +106,17 @@ export class ChatController {
   }
 
   private editMsgResponseHandler(response: EditResponse): void {
-    console.log(`editMsgResponseHandler`, response);
     const { isEdited } = response.payload.message.status;
     const { id } = response.payload.message;
     const { text } = response.payload.message;
     const messageContainer = document.getElementById(`${id}`);
     const messageTextEl = document.getElementById(`messageText_${id}`);
-    const messageFooterStatusEl = document.getElementById(`status_${id}`);
-    if (isEdited && messageContainer && messageTextEl && messageFooterStatusEl) {
+    const messageFooterEditStatusEl = document.getElementById(`editStatus_${id}`);
+    const messageHeaderUser = document.getElementById(`messageHeaderUser_${id}`)?.innerText;
+
+    if (isEdited && messageContainer && messageTextEl && messageFooterEditStatusEl && messageHeaderUser) {
       messageTextEl.textContent = text;
-      messageFooterStatusEl.textContent = 'edited';
+      messageFooterEditStatusEl.textContent = isEdited === true ? 'edited' : '';
     }
   }
 

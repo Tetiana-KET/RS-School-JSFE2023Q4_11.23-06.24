@@ -2,7 +2,7 @@ import './styles/normalize.css';
 import './styles/style.css';
 import './app/app';
 
-console.log(` Привет, прямо сейчас 24.04. делаю удаление и редактирование сообщений. Не проверяй пока пожалуйста, Спасибо
+console.log(` 
 Score 215 / 250
   - [x] **1. User Authentication Page (+30)**
     - [x] (+10) The authentication form validates the entered data based on at least two different criteria.

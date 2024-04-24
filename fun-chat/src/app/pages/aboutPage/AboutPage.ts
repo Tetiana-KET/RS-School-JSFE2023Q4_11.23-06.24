@@ -29,9 +29,7 @@ export class AboutPage extends Component<'section'> {
 
   private setAboutPageDescription(): void {
     this.aboutPageDescription.element.textContent = `
-    Привет, прямо сейчас 24.04. доделываю редактирование сообщений. 
-    Еще надеюсь счетчики сделать. Не проверяй пока пожалуйста, проверь завтра. Спасибо
-    И в консоли вывела самооценку, чтоб удобнее ;) 
+    Привет, в консоли вывела самооценку, чтоб удобнее ;) 
     
     An interactive chat application developed as part of the RSSchool JS/FE 2023Q4 course. 
       Fun Chat provides users with a platform to engage in real-time communication through text messages.

@@ -50,7 +50,7 @@ export class ChatPage extends Component<'section'> {
 
   public handleDialogueInputChange(): void {
     this.dialogInput.element.addEventListener('input', () => {
-      const messageString = this.dialogInput.element.value;
+      const messageString = this.dialogInput.element.value.trim();
       if (messageString) {
         this.dialogFormButton.element.removeAttribute('disabled');
       } else {

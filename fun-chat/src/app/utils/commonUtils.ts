@@ -157,19 +157,6 @@ export function scrollToNewMessage(container: HTMLElement, messageBlock: HTMLEle
   }
 }
 
-export function getMessageStatus(status: { isDelivered?: boolean; isReaded?: boolean; isEdited?: boolean }): string {
-  switch (true) {
-    case status.isReaded || status.isEdited:
-      return 'edited';
-    case status.isReaded && !status.isEdited:
-      return 'read';
-    case status.isReaded || status.isDelivered:
-      return 'delivered';
-    default:
-      return 'sent';
-  }
-}
-
 export function setOptions(responseData: MSGSentServerResponse): MessageData {
   const { id } = responseData.payload.message;
   const { datetime } = responseData.payload.message;

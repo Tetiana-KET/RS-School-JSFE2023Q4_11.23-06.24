@@ -89,7 +89,7 @@
 }
 .message-footer_status {
 }
-
-.message-content[data-user='recipient'] .message-footer_status {
-  visibility: hidden;
+.message-footer-status-wrap {
+  display: flex;
+  gap: 10px;
 }

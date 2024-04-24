@@ -28,6 +28,7 @@
     "no-console": "off",
     "no-await-in-loop": "off",
     "class-methods-use-this": "off",
+    "no-nested-ternary": "off",
     "no-restricted-syntax": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
