@@ -163,7 +163,7 @@ export class ChatController {
     }
   }
 
-  // after got response from server render for recipient
+  // after got response from server render message
   private messageSentFromServerHandler(responseData: MSGSentServerResponse): void {
     const options = setOptions(responseData);
     const dialogueOpenWith = document.getElementById('dialogUserName')?.innerText;
@@ -176,7 +176,7 @@ export class ChatController {
       dialogueOpenWith === options.from
     ) {
       messageBlock.setMessageData(options, 'recipient');
-      dialogBody.append(messageBlock.element);
+      dialogBody.prepend(messageBlock.element);
       scrollToNewMessage(dialogBody, messageBlock.element);
     }
 
@@ -190,7 +190,7 @@ export class ChatController {
       }
 
       messageBlock.setMessageData(options, 'current');
-      dialogBody.append(messageBlock.element);
+      dialogBody.prepend(messageBlock.element);
       scrollToNewMessage(dialogBody, messageBlock.element);
     }
   }
@@ -231,7 +231,7 @@ export class ChatController {
 
         // TODO прокрутка в конец, нужно будет пересчитать на не прочитанные сообщения
         if (dialogBody) {
-          dialogBody.append(messageBlock.element);
+          dialogBody.prepend(messageBlock.element);
 
           dialogBody.scrollTop = dialogBody.scrollHeight;
         }
