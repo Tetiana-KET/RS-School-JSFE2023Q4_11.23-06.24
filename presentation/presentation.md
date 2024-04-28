@@ -1,5 +1,5 @@
 🎥 **VIDEO: [link](https://www.youtube.com/watch?v=Ex10GjRSxys)**
-📷 **PRESENTATION: [link](https://662e28923c7ed9abe653036d--sunny-moonbeam-a5aa78.netlify.app/#/7)**
+📷 **PRESENTATION: [link](https://662e28923c7ed9abe653036d--sunny-moonbeam-a5aa78.netlify.app/)**
 📝 **Speaker Notes**
 
 1. Title Slide: Exploring React.js
