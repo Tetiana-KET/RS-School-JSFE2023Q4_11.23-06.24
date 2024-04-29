@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+		/>
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css" />
+		<link rel="stylesheet" href="dist/reveal.css" />
+		<link rel="stylesheet" href="dist/theme/black.css" />
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" />
+	</head>
+	<body>
+		<div class="reveal" style="position: relative">
+			<div class="slides">
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 140px;
+							height: auto;
+							position: absolute;
+							top: -14%;
+							left: 7%;
+						"
+					/>
+					<h3>Exploring React.js</h3>
+					<h6>The library for creation user interfaces from components</h6>
+					<ul>
+						<li>We will delve into brief react history</li>
+						<li>Explore the core concepts of React.js</li>
+						<li>Learn how to create and nest components</li>
+						<li>How to add markup and styles</li>
+						<li>How to display data</li>
+					</ul>
+					<aside class="notes">
+						Today, We'll dive into the React.js library, that has become
+						extremely popular nowadays. It allows developers to create reusable
+						UI components, making it easier to manage complex user interfaces in
+						large-scale web applications, by building user interfaces out of
+						individual pieces called components. In todays presentation, We will
+						delve into brief react history, Explore the core concepts of
+						React.js, Learn how to create and nest components, How to add markup
+						and styles, and how display data
+					</aside>
+				</section>
+
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<h3>Introduction to React.js</h3>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 140px;
+							height: auto;
+							position: absolute;
+							top: 130%;
+							left: 0%;
+						"
+					/>
+
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 140px;
+							height: auto;
+							position: absolute;
+							top: -32%;
+							left: 86%;
+						"
+					/>
+					<ul>
+						<li>It was first released in may 2013</li>
+						<li><b>Fun Fact:</b> The audience was skeptical</li>
+						<li><b>2014</b> - The year of Expansion</li>
+						<li><b>2016</b> – React becomes mainstream</li>
+					</ul>
+					<aside class="notes">
+						Back in 2011, the developers at Facebook started to face some issues
+						with code maintenance. So, Jordan Walke built a prototype that made
+						the process more efficient, and this marks the birth of React.js. It
+						was first released in may 2013. Fun Fact: The audience was
+						skeptical. Most people thought React was a huge step backward. 2014
+						is The year of Expansion when React had gradually gained its
+						reputation nd from 2016 – React becomes mainstream
+					</aside>
+				</section>
+
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<h3>Core Concepts of React.js</h3>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 130px;
+							height: auto;
+							position: absolute;
+							top: 20%;
+							right: 0%;
+						"
+					/>
+					<h6>Virtual DOM</h6>
+					<ul>
+						<li>What is the Virtual DOM?</li>
+						<li>How Does It Work?</li>
+						<li>Benefits of the Virtual DOM?</li>
+					</ul>
+					<aside class="notes">
+						ReactJS core concepts include components, VDOM , JSX, state, and
+						props. The Virtual DOM is an abstract representation of the actual
+						DOM. It’s stored in memory and is not directly visible to users.
+						React maintains a lightweight copy of the UI in the Virtual DOM. The
+						VDOM serves as an intermediary between your React components and the
+						real DOM. Understanding the Virtual DOM can help developers write
+						more efficient and performant ReactJS applications. When you make
+						changes to your React components (e.g., updating state or props),
+						React creates a new Virtual DOM. React then compares this new VDOM
+						with the previous one. It identifies the differences between the two
+						representations. Finally, React updates only the necessary parts of
+						the real DOM based on these diffs. Benefits of the Virtual DOM:
+						Efficiency: By minimizing direct DOM manipulation, React improves
+						performance. Batch Updates: React batches multiple changes together,
+						reducing the number of DOM updates. Declarative API: You describe
+						the desired UI state, and React handles the rest. Abstraction:
+						Developers don’t need to manually manipulate attributes or events on
+						the real DOM.
+					</aside>
+				</section>
+
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 130px;
+							height: auto;
+							position: absolute;
+							top: 20%;
+							right: 0%;
+						"
+					/>
+					<h3>Core Concepts of React.js</h3>
+					<h6 style="margin-top: 20px">Components</h6>
+					<ul>
+						<li style="list-style-type: none">What is a React Component?</li>
+						<li style="list-style-type: none">Why do we need it?</li>
+						<li style="list-style-type: none">
+							The key points about components?
+						</li>
+					</ul>
+
+					<img
+						src="./images/component.png"
+						alt="img"
+						style="width: 740px; height: auto; margin: 15px 0 5px"
+					/>
+					<aside class="notes">
+						In React, a component is a reusable building block, a piece of the
+						UI that has its own logic and appearance. Components allow you to
+						break down your application into smaller, manageable parts. A
+						component can be as small as a button, or as large as an entire
+						page. The key points about components are: Modularity: Components
+						promote modularity by dividing your UI into smaller, self-contained
+						units. Reusability: You can reuse components across different parts
+						of your application. Composition: Components can be combined to
+						create more complex UIs.
+					</aside>
+				</section>
+
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 130px;
+							height: auto;
+							position: absolute;
+							top: 0%;
+							left: 0%;
+						"
+					/>
+					<h3>Core Concepts of React.js</h3>
+					<h6 style="margin-top: 15px">Creating and nesting components</h6>
+					<ul>
+						<li style="list-style-type: none">
+							React components are JavaScript functions that return markup, you
+							can nest one component into another
+						</li>
+					</ul>
+
+					<img
+						src="./images/code_example.PNG"
+						alt="code_example"
+						style="margin-bottom: 0"
+					/>
+					<aside class="notes">
+						Functional Components are simple JavaScript functions that return
+						JSX (JavaScript XML) elements. Once you’ve declared one component,
+						you can nest it into another component. Notice that React component
+						names must always start with a capital letter, while HTML tags must
+						be lowercase.
+					</aside>
+				</section>
+
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 130px;
+							height: auto;
+							position: absolute;
+							top: 0%;
+							left: 0%;
+						"
+					/>
+					<h3>Core Concepts of React.js</h3>
+					<ul style="margin-top: 50px">
+						<li style="list-style-type: none; margin-bottom: 20px">
+							Class components are ES6 classes that extend
+						</li>
+						<li
+							style="
+								list-style-type: none;
+								margin-bottom: 20px;
+								text-align: center;
+							"
+						>
+							<code>React.Component</code>
+						</li>
+						<li style="list-style-type: none; margin-bottom: 20px">
+							They have a render() method that returns JSX
+						</li>
+					</ul>
+
+					<pre>
+							<code>
+			class Badge extends React.Component {
+				render() {
+					return <h1>Hello, my name is {this.props.name}</h1>;
+				}
+			}
+							</code>
+						</pre>
+					<aside class="notes">
+						Class Components are ES6 classes that extend React.Component. They
+						are still supported by React, but are not recommend to be used in
+						new code. The only method you must define in a React.Component
+						subclass is called render(). All the other methods described on this
+						page are optional.
+					</aside>
+				</section>
+
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 130px;
+							height: auto;
+							position: absolute;
+							top: 0%;
+							right: 0%;
+						"
+					/>
+					<h3>Core Concepts of React.js</h3>
+					<h6 style="margin-top: 20px">JSX - JavaScript XML</h6>
+					<p>
+						a syntax extension for JavaScript that lets you write HTML-like
+						markup inside a JavaScript file
+					</p>
+					<img src="./images/code_exm.PNG" alt="" />
+					<aside class="notes">
+						JSX (JavaScript XML) is a syntax extension for JavaScript that lets
+						you write HTML-like markup inside a JavaScript file. NOTE it is
+						necessary to close tags. The component also can’t return multiple
+						JSX tags. They should be wrapped into a shared parent, like a div or
+						an empty angle brackets
+					</aside>
+				</section>
+
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 130px;
+							height: auto;
+							position: absolute;
+							top: 0%;
+							right: 0%;
+						"
+					/>
+					<h3>Core Concepts of React.js</h3>
+					<h6>ReactJS State vs Props</h6>
+					<ul>
+						<li style="margin-bottom: 15px">
+							Props are a way to pass the data or properties from one component
+							to another
+						</li>
+						<li>
+							State is a built-in object in React that allows components to
+							manage their own data
+						</li>
+					</ul>
+					<aside class="notes">
+						Props and state are both plain JavaScript objects. Props are a way
+						to pass the data or properties from one component to other
+						components. Whether you declare a component as a function or a
+						class, it must never modify its own props. All React components must
+						act like pure functions with respect to their props. State is a
+						built-in object in React that allows components to manage their own
+						data It exists and can be used inside the component, cannot be
+						accessed or modified outside the component. Works very similarly to
+						a variable that is declared inside a function that cannot be
+						accessed outside the scope of the function in javascript. State Can
+						be modified using this.setState. The main significant difference
+						between states and props is that props are used to transfer data
+						from a parent component to a child whereas states are used to manage
+						the data inside a component itself.
+					</aside>
+				</section>
+
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 50px;
+							height: auto;
+							position: absolute;
+							top: -4%;
+							left: 10%;
+						"
+					/>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 50px;
+							height: auto;
+							position: absolute;
+							top: -4%;
+							right: 10%;
+						"
+					/>
+					<h6>Adding styles</h6>
+					<img src="./images/class.PNG" alt="code" />
+					<aside class="notes">
+						In React, you specify a CSS class with className. It works the same
+						way as the HTML class attribute. Then you write the CSS rules for it
+						in a separate CSS file
+					</aside>
+				</section>
+
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 100px;
+							height: auto;
+							position: absolute;
+							top: -14%;
+							left: 0%;
+						"
+					/>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 100px;
+							height: auto;
+							position: absolute;
+							top: -14%;
+							right: 0%;
+						"
+					/>
+					<h6>Displaying data</h6>
+					<img src="./images/display1.png" alt="code" />
+					<img src="./images/display2.png" alt="code" />
+					<aside class="notes">
+						JSX lets you put markup into JavaScript. Curly braces let you embed
+						some variable from your code and display it to the user. You can
+						also pass variable to attributes, but you have to use curly braces.
+						In the example, className="avatar" passes the "avatar" string as the
+						CSS class, but src={user.imageUrl} reads the JavaScript
+						user.imageUrl variable value, and then passes that value as the src
+						attribute.
+					</aside>
+				</section>
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 50px;
+							height: auto;
+							position: absolute;
+							top: -4%;
+							left: 10%;
+						"
+					/>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 50px;
+							height: auto;
+							position: absolute;
+							top: -4%;
+							right: 10%;
+						"
+					/>
+					<h6>Displaying data</h6>
+					<img src="./images/stringConcat.PNG" alt="code" />
+					<aside class="notes">
+						You can put more complex expressions inside the JSX curly braces
+						too, for example, string concatenation. In this example, style={{}}
+						is not a special syntax, but a regular {} object inside the style={
+						} JSX curly braces. You can use the style attribute when your styles
+						depend on JavaScript variables.
+					</aside>
+				</section>
+				<section
+					data-background-gradient="linear-gradient(to left top, #06414b, #180133)"
+				>
+					<img
+						src="./images/png-transparent-js-react-js-logo-react-react-native-logos-icon.png"
+						alt="React Logo"
+						style="
+							width: 100px;
+							height: auto;
+							position: absolute;
+							top: -14%;
+							right: 0%;
+						"
+					/>
+					<h6>Summary</h6>
+					<ul style="font-size: 36px">
+						<li>
+							React is a declarative JavaScript library for creating user
+							interfaces
+						</li>
+						<li>A functional component in React is a JavaScript function</li>
+						<li>in React JSX, a syntax extension for JavaScript is used</li>
+						<li>React is built on maximum isolation of application parts</li>
+						<li>
+							Created components can be easily modified and reused in new
+							projects
+						</li>
+						<li>Virtual DOM helps achieve high application performance</li>
+					</ul>
+					<aside class="notes">
+						React is a declarative JavaScript library for creating user
+						interfaces. It allows you to assemble a complex UI from small,
+						isolated pieces of code called “components.” Components are the
+						building blocks of ReactJS applications and can be reused across
+						different parts of the application. ReactJS has become a popular
+						choice for building web applications due to its ease of use and
+						flexibility. Its virtual DOM allows for efficient rendering and
+						updating of components. Additionally, ReactJS provides a robust
+						ecosystem of libraries and tools, making it easy to integrate with
+						other frameworks and technologies. ReactJS also allows for code
+						reusability, which can save developers time and effort when building
+						complex applications. JSX is a syntax extension of JavaScript that
+						allows developers to write HTML-like code within JavaScript. Any
+						valid JavaScript expression inside curly braces are available.
+					</aside>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+			});
+		</script>
+	</body>
+</html>
