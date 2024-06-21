@@ -1,5 +1,8 @@
 ## Fun Chat 🚗
 
+![image](https://github.com/Tetiana-KET/RS-School-JSFE2023Q4/assets/99186560/36bb1f1a-bdc5-4d00-bf86-0107b4115798)
+
+
 **Task Objectives**
 
 - Familiarize yourself with the WebSocket connection protocol.
@@ -45,4 +48,5 @@ In the created .env file, set the SERVER_PORT parameter to 4000.
 If it is not possible to run the server using port 4000, you can use another port.
 
 ## [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/async-race/index.html#garage)
+## [Task Link] (https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/fun-chat)
 
