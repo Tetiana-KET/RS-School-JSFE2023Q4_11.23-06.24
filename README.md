@@ -9,6 +9,7 @@ My name is Tatiana. I'm an aspiring developer with a keen interest in front-end 
 ## About school
 
 [Rolling Scopes School](https://rs.school/) is a free educational program designed to teach programming and web development. The school provides extensive courses aimed at developing the skills of aspiring developers.
+
 Throughout my journey at Rolling Scopes School, I immersed myself in the role of a JS/Front-end developer and mastered essential tools such as Git for version control. I solidified my foundation in web development, covering HTML and CSS fundamentals, including advanced topics like Flexbox and responsive design principles. In JavaScript, I gained proficiency in core concepts such as functions, objects, arrays, and manipulating the DOM.
 
 I sharpened my skills using industry-standard tools like Chrome DevTools, Visual Studio Code, Terminal, and Figma. Additionally, I expanded my knowledge base by working with TypeScript and improving my ability to develop user interface components.
