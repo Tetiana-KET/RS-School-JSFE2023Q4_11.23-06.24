@@ -13,7 +13,3 @@ Tools: Leverage the HTML Presentation Framework Reveal for crafting your slides,
 ### [Deploy link](https://662e28923c7ed9abe653036d--sunny-moonbeam-a5aa78.netlify.app/)
 ### [Video link](https://www.youtube.com/watch?v=Ex10GjRSxys)
 ### [Task link](https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/presentation)
-
-<a href="https://code.visualstudio.com/" target="_blank">
-  ![image](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/assets/99186560/021660fd-3a27-44e4-b1d5-1e3fc5386d04)
-</a>
