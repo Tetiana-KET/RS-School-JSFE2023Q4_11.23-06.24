@@ -4,7 +4,8 @@ Nonograms is a puzzle game to reveal a hidden picture by looking at the number c
 
 In the current task you have to implement only binary version of the game
 
-![image](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/assets/99186560/9dcf83ef-004a-4abc-95b6-dc657aa150a5)
+![image](https://github.com/Tetiana-KET/RS-School-JSFE2023Q4/assets/99186560/b0d746d8-7aef-45ba-951b-e7c309d06d4b)
+
 
 ## Key skills
 
