@@ -48,5 +48,5 @@ In the created .env file, set the SERVER_PORT parameter to 4000.
 If it is not possible to run the server using port 4000, you can use another port.
 
 ## [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/async-race/index.html#garage)
-## [Task Link] (https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/fun-chat)
+## [Task Link](https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/fun-chat)
 
