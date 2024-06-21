@@ -2,6 +2,9 @@
 
 Educational project presented as a demo version for a Single page application (SPA) for managing a collection of cars, starting races and recording the result.
 
+![image](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/assets/99186560/379cd7b7-5e11-4847-bd97-fa07af338f1f)
+![image](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/assets/99186560/340242a0-b8ab-4d35-9f73-dd9822d64416)
+
 ## Key Features:
 
 - Two main views: "Garage" and "Winners", each with their name, page number, and a count of items in the database.
@@ -39,6 +42,7 @@ Educational project presented as a demo version for a Single page application (S
 - Start server: ```npm start```.
 
 ## [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/async-race/index.html#garage)
+## [Task Link](https://github.com/rolling-scopes-school/tasks/blob/master/stage2/tasks/async-race/README.md)
 
 ## Scripts available
 
