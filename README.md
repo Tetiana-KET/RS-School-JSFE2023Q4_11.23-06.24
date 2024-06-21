@@ -1,6 +1,6 @@
 ## Async Race 🚗
 
-Educational project presented as a demo version for a Single page application (SPA) for managing a collection of cars, starting races and recording the result.
+Async Race - SPA, is a game for demonstrating skills in working with animations and REST API. It is an interface for managing a collection of cars and their engines, which can start a cars race, determine the winner and show race statistics. The application was created as part of the JavaScript/Frontend course from The Rolling Scopes School in March 2023.
 
 ![image](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/assets/99186560/379cd7b7-5e11-4847-bd97-fa07af338f1f)
 ![image](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/assets/99186560/340242a0-b8ab-4d35-9f73-dd9822d64416)
