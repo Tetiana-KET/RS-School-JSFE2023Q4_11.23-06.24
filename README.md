@@ -9,8 +9,7 @@ Speaker Notes: Equip each slide with detailed speaker notes 📝 to guide your d
 Language: Use English 🇬🇧 for both your slides and speech to maintain clarity and reach a broader audience.
 Tools: Leverage the HTML Presentation Framework Reveal for crafting your slides, adding a professional touch to your presentation. Usage of platforms like slides.com or similar is not permitted; you must use native Reveal.js to create your slides.
 
-### Task: [link](https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/presentation)
-### Screenshot: 
 ![image](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/assets/99186560/021660fd-3a27-44e4-b1d5-1e3fc5386d04)
 ### [Deploy link](https://662e28923c7ed9abe653036d--sunny-moonbeam-a5aa78.netlify.app/)
 ### [Video link](https://www.youtube.com/watch?v=Ex10GjRSxys)
+### [Task link](https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/presentation)
