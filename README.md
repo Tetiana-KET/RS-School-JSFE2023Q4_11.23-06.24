@@ -20,4 +20,4 @@ Educational project presented as a demo version of an RSS Puzzle is an interacti
 - Linters: [**ESLint**](https://eslint.org/), [**Prettier**](https://prettier.io/)
 - Pre-push/Pre-commit: [**Husky**](https://typicode.github.io/husky/)
 
-## [Deploy](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/rss-puzzle/index.html)
+## [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/rss-puzzle/index.html)
