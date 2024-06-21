@@ -1,4 +1,4 @@
-## Async RaceFun Chat 🚗
+## Fun Chat 🚗
 
 **Task Objectives**
 
