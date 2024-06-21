@@ -20,15 +20,15 @@ A crucial aspect of my learning journey was the collaborative experience gained 
 
 In this repository you will find all my educational projects completed as part of the course. Each project is in its own separate branch. Here is a list of main branches and corresponding projects:
 
-| Task description Link                                                                                             | Deploy Link                                                                                                       |
-| ----------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------- |
-| [Coffee-house](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/coffee-house/coffee-house.md)     | [Coffee-house](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/coffee-house/pages/Home/index.html) |
-| [Nonograms-game](https://github.com/rolling-scopes-school/tasks/tree/master/tasks/nonograms)                      | [Nonograms-game](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/nonograms/index.html)             |
-| [Hangman-game](https://github.com/rolling-scopes-school/tasks/tree/master/stage1/tasks/hangman)                   | [Hangman-game](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/hangman/index.html)                 |
-| [Self-introduction ](https://github.com/rolling-scopes-school/tasks/tree/master/stage1/modules/self-introduction) | [Self-introduction](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/self-introduction/)            |
-| [Code Review](https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/code-review)                | [Code Review](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/pull/54)                            |
-| [Async Race](https://github.com/rolling-scopes-school/tasks/blob/master/stage2/tasks/async-race/README.md)        | [Async Race](https://github.com/Tetiana-KET/RS-School-JSFE2023Q4/tree/async-race/README.md)                       |
-| [Fun Chat](https://github.com/rolling-scopes-school/tasks/blob/master/stage2/tasks/fun-chat/README.md)            | [Fun Chat](https://github.com/Tetiana-KET/RS-School-JSFE2023Q4/tree/fun-chat/README.md)                           |
+| Branch name  | Task description Link                                                                                             | Deploy Link                                                                                                       |
+| ------------ | :---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| coffee-house | [Coffee-house](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/coffee-house/coffee-house.md)     | [Coffee-house](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/coffee-house/pages/Home/index.html) |
+| nonograms    | [Nonograms-game](https://github.com/rolling-scopes-school/tasks/tree/master/tasks/nonograms)                      | [Nonograms-game](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/nonograms/index.html)             |
+| hangman      | [Hangman-game](https://github.com/rolling-scopes-school/tasks/tree/master/stage1/tasks/hangman)                   | [Hangman-game](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/hangman/index.html)                 |
+| presentation | [Self-introduction ](https://github.com/rolling-scopes-school/tasks/tree/master/stage1/modules/self-introduction) | [Self-introduction](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/self-introduction/)            |
+| code-review  | [Code Review](https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/code-review)                | [Code Review](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/pull/54)                            |
+| async-race   | [Async Race](https://github.com/rolling-scopes-school/tasks/blob/master/stage2/tasks/async-race/README.md)        | [Async Race](https://github.com/Tetiana-KET/RS-School-JSFE2023Q4/tree/async-race/README.md)                       |
+| fun-chat     | [Fun Chat](https://github.com/rolling-scopes-school/tasks/blob/master/stage2/tasks/fun-chat/README.md)            | [Fun Chat](https://github.com/Tetiana-KET/RS-School-JSFE2023Q4/tree/fun-chat/README.md)                           |
 
 ## Technology stack I have studied and practiced
 
