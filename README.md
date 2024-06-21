@@ -28,7 +28,7 @@ Educational project presented as a demo version for a Single page application (S
 - Linters: [**ESLint**](https://eslint.org/), [**Prettier**](https://prettier.io/)
 - Pre-push/Pre-commit: [**Husky**](https://typicode.github.io/husky/)
 
-## Setup and Running
+## Setup and Running the Server
 
 **To test the app functionality, please clone [repo](https://github.com/mikhama/async-race-api) with a server and keep the server running during functionality review.**
 
@@ -39,24 +39,6 @@ Educational project presented as a demo version for a Single page application (S
 - Start server: ```npm start```.
 
 ## [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/async-race/index.html#garage)
-
-## Setup instructions
-
-1. Make sure you have node.js installed on your machine before proceeding with the setup or installation process.
-```
-node -v
-```
-2. Make sure nmp is installed by running
-```
-npm -v
-```
-3. Fork this repo.
-4. Clone your fork.
-5. Run `npm ci` in the root directory. This command will install dependencies based on the exact versions specified in the package-lock.json. It ensures a consistent and reproducible environment by installing dependencies exactly as specified, making it ideal for use in development, testing, and deployment workflows.
-You can use `npm ci` or `npm i` depending on your specific needs and requirements for dependency management.
-If you want to install dependencies exactly as specified in the package-lock.json file (ensuring consistency and reproducibility), you should use `npm ci`.
-If you're okay with potentially updating dependencies to their latest versions according to the specified version ranges in the package.json file, you can use `npm install` or `npm i`.
-6. Run `npm run dev` to start the development serve. If it works, then you are ready to make changes.
 
 ## Scripts available
 
