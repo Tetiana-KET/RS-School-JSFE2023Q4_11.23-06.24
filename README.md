@@ -1,4 +1,4 @@
-## Fun Chat 🚗
+## Fun Chat
 
 ![image](https://github.com/Tetiana-KET/RS-School-JSFE2023Q4/assets/99186560/36bb1f1a-bdc5-4d00-bf86-0107b4115798)
 
