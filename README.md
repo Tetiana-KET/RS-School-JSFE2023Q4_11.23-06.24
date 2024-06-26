@@ -1,7 +1,8 @@
 ## Coffee House
 
 Coffee House is a responsive and interactive two pages website
-
+### [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/coffee-house/pages/Home/index.html)
+### [Task Link](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/coffee-house/coffee-house.md)
 
 ## Key skills
 
@@ -21,5 +22,4 @@ Using JavaScript to implement the functionality specified in the [task](https://
 ![image](https://github.com/rolling-scopes-school/tetiana-ket-JSFE2023Q4/assets/99186560/1acc0229-2942-4f4b-90d5-6fec081cded5)
 
 
-## [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/coffee-house/pages/Home/index.html)
-## [Task Link](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/coffee-house/coffee-house.md)
+
