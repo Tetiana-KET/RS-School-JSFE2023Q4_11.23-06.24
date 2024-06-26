@@ -1,6 +1,16 @@
 ## Async Race 🚗
 
 Async Race - SPA, is a game for demonstrating skills in working with animations and REST API. It is an interface for managing a collection of cars and their engines, which can start a cars race, determine the winner and show race statistics. The application was created as part of the JavaScript/Frontend course from The Rolling Scopes School in March 2024.
+## Setup and Running the Server
+
+**To test the app functionality, please clone [repo](https://github.com/mikhama/async-race-api) with a server and keep the server running during functionality review.**
+
+- Use node 14.x or higher.
+- Clone this repo: ```git clone https://github.com/mikhama/async-race-api.git```.
+- Go to downloaded folder: ```cd async-race-api```.
+- Install dependencies: ```npm install```.
+- Start server: ```npm start```.
+- 
 ### [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/async-race/index.html#garage)
 ### [Task Link](https://github.com/rolling-scopes-school/tasks/blob/master/stage2/tasks/async-race/README.md)
 
@@ -32,16 +42,6 @@ Async Race - SPA, is a game for demonstrating skills in working with animations 
 - Builder: [**Vite**](https://vitejs.dev/)
 - Linters: [**ESLint**](https://eslint.org/), [**Prettier**](https://prettier.io/)
 - Pre-push/Pre-commit: [**Husky**](https://typicode.github.io/husky/)
-
-## Setup and Running the Server
-
-**To test the app functionality, please clone [repo](https://github.com/mikhama/async-race-api) with a server and keep the server running during functionality review.**
-
-- Use node 14.x or higher.
-- Clone this repo: ```git clone https://github.com/mikhama/async-race-api.git```.
-- Go to downloaded folder: ```cd async-race-api```.
-- Install dependencies: ```npm install```.
-- Start server: ```npm start```.
 
 ## Scripts available
 
