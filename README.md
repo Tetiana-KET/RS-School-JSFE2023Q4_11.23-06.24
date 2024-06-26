@@ -10,7 +10,7 @@ Async Race - SPA, is a game for demonstrating skills in working with animations 
 - Go to downloaded folder: ```cd async-race-api```.
 - Install dependencies: ```npm install```.
 - Start server: ```npm start```.
-- 
+  
 ### [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/async-race/index.html#garage)
 ### [Task Link](https://github.com/rolling-scopes-school/tasks/blob/master/stage2/tasks/async-race/README.md)
 
