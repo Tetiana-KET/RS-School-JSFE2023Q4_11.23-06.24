@@ -1,6 +1,8 @@
 ## Fun Chat
 
 An interactive chat application developed as part of the RSSchool JS/FE 2023Q4 course. Fun Chat provides users with a platform to engage in real-time communication through text messages. Key Features: Real-time Messaging: Engage in real-time conversations with other users. User Authentication: Securely log in to access the chat platform. Responsive Design: Enjoy a seamless experience across various devices and screen sizes. Experience the joy of real-time communication and connect with friends and colleagues in Fun Chat.
+### [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/fun-chat/)
+### [Task Link](https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/fun-chat)
 
 ![image](https://github.com/Tetiana-KET/RS-School-JSFE2023Q4/assets/99186560/36bb1f1a-bdc5-4d00-bf86-0107b4115798)
 
@@ -49,6 +51,5 @@ In the created .env file, set the SERVER_PORT parameter to 4000.
 
 If it is not possible to run the server using port 4000, you can use another port.
 
-## [Deploy Link](https://rolling-scopes-school.github.io/tetiana-ket-JSFE2023Q4/fun-chat/)
-## [Task Link](https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/fun-chat)
+
 
