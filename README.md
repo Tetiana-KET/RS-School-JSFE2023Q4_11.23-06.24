@@ -1,4 +1,4 @@
-# JavaScript / Front-end Course 01.11.2023 - 18.06.2023
+# JavaScript / Front-end Course 01.11.2023 - 18.06.2024
 
 Welcome to my repository where I showcase my projects from the JavaScript Front-End Development course I took as a part of my educational program in [Rolling Scopes School](https://rs.school/courses/javascript-ru).
 
